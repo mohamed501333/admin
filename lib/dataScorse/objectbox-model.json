@@ -1,0 +1,190 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:2015244925239452168",
+      "lastPropertyId": "13:3261639009652717753",
+      "name": "ChipBlockModel",
+      "properties": [
+        {
+          "id": "1:1790817178631293790",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3811530322767209551",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:6671159875649631399",
+          "name": "color",
+          "type": 9
+        },
+        {
+          "id": "4:8814152568559353469",
+          "name": "density",
+          "type": 8
+        },
+        {
+          "id": "5:3733810281531421738",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "6:3174536976192947366",
+          "name": "serial",
+          "type": 9
+        },
+        {
+          "id": "7:5798955569406690223",
+          "name": "number",
+          "type": 8
+        },
+        {
+          "id": "8:96514242531701386",
+          "name": "width",
+          "type": 8
+        },
+        {
+          "id": "9:5727796209942622936",
+          "name": "lenth",
+          "type": 8
+        },
+        {
+          "id": "10:3035959731439974874",
+          "name": "scissor",
+          "type": 8
+        },
+        {
+          "id": "11:7899842113936739697",
+          "name": "hight",
+          "type": 8
+        },
+        {
+          "id": "12:3574241914799094215",
+          "name": "wight",
+          "type": 8
+        },
+        {
+          "id": "13:3261639009652717753",
+          "name": "notes",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:97117940785492925",
+      "lastPropertyId": "4:9223158076297314543",
+      "name": "ChipFraction",
+      "properties": [
+        {
+          "id": "1:8376135679287693917",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4846088898683996665",
+          "name": "width",
+          "type": 8
+        },
+        {
+          "id": "3:4803332614112622551",
+          "name": "lenth",
+          "type": 8
+        },
+        {
+          "id": "4:9223158076297314543",
+          "name": "hight",
+          "type": 8
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:501138952087645226",
+      "lastPropertyId": "12:1850975540094892586",
+      "name": "ChipfinalProducut",
+      "properties": [
+        {
+          "id": "1:5942773127681590999",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1496649440216294200",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:6673775500635340521",
+          "name": "color",
+          "type": 9
+        },
+        {
+          "id": "4:8419808130356394852",
+          "name": "density",
+          "type": 8
+        },
+        {
+          "id": "5:2922816607494254128",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "6:1692453529083943286",
+          "name": "amount",
+          "type": 8
+        },
+        {
+          "id": "7:1440803366176324108",
+          "name": "number",
+          "type": 8
+        },
+        {
+          "id": "8:7959595773506429201",
+          "name": "width",
+          "type": 8
+        },
+        {
+          "id": "9:5366723079530702261",
+          "name": "lenth",
+          "type": 8
+        },
+        {
+          "id": "10:2144281151360239731",
+          "name": "hight",
+          "type": 8
+        },
+        {
+          "id": "11:4774758903985168373",
+          "name": "company",
+          "type": 9
+        },
+        {
+          "id": "12:1850975540094892586",
+          "name": "scissor",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:501138952087645226",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
