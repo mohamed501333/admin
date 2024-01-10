@@ -28,6 +28,13 @@ class BlocksStock extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () {
+                  context.gonext(context, Archived());
+                },
+                icon: const Icon(Icons.archive_sharp))
+          ],
           title: const Text("رصيد البلوكات"),
         ),
         body: Form(
@@ -299,7 +306,6 @@ class TheTable extends StatelessWidget {
                         .toList()
                         .reversed
                         .map((user) {
-                          print(blocks.blocks);
                           return TableRow(
                               decoration: BoxDecoration(
                                 color: blocks.search
@@ -482,6 +488,272 @@ class TheTable extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class Archived extends StatelessWidget {
+  Archived({super.key});
+  BlocksStockViewModel vm = BlocksStockViewModel();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("ارشيف المحزوفات"),
+      ),
+      body: ArchivedTheTable(vm: vm),
+    );
+  }
+}
+
+class ArchivedTheTable extends StatelessWidget {
+  const ArchivedTheTable({
+    super.key,
+    required this.vm,
+  });
+  final BlocksStockViewModel vm;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Consumer<BlockFirebasecontroller>(
+          builder: (context, blocks, child) {
+            blocks.runFilter(vm.blocknumbercontroller.text);
+            return Expanded(
+              flex: 4,
+              child: SingleChildScrollView(
+                reverse: true,
+                scrollDirection: Axis.horizontal,
+                child: SizedBox(
+                  width: 1300,
+                  child: ListView(
+                    children: [
+                      const HeaderOftable1(),
+                      Table(
+                        columnWidths: const {
+                          0: FlexColumnWidth(.8),
+                          1: FlexColumnWidth(1.2),
+                          2: FlexColumnWidth(1.2),
+                          3: FlexColumnWidth(1),
+                          4: FlexColumnWidth(3),
+                          5: FlexColumnWidth(3),
+                          6: FlexColumnWidth(1),
+                          7: FlexColumnWidth(1),
+                          8: FlexColumnWidth(1),
+                          9: FlexColumnWidth(1.6),
+                          10: FlexColumnWidth(.7),
+                          11: FlexColumnWidth(.7),
+                          12: FlexColumnWidth(1),
+                          13: FlexColumnWidth(1),
+                          14: FlexColumnWidth(1.8),
+                          15: FlexColumnWidth(.8),
+                          16: FlexColumnWidth(.8),
+                        },
+                        children: blocks.archived_blocks.reversed
+                            .sortedBy<num>((element) => element.actions
+                                .get_BlockDateOf(BlockAction.archive_block)
+                                .day)
+                            .reversed
+                            .take(context.read<SettingController>().s)
+                            .toList()
+                            .map((user) {
+                              return TableRow(
+                                  decoration: BoxDecoration(
+                                    color: blocks.search
+                                                    .sortedBy<num>(
+                                                        (element) => element.id)
+                                                    .indexOf(user) %
+                                                2 ==
+                                            0
+                                        ? Colors.blue[50]
+                                        : Colors.amber[50],
+                                  ),
+                                  children: [
+                                    Container(
+                                        padding: const EdgeInsets.all(4),
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              if (user.actions.if_action_exist(
+                                                      BlockAction.cut_block_on_H
+                                                          .getactionTitle) ==
+                                                  false) {
+                                                context
+                                                    .read<
+                                                        BlockFirebasecontroller>()
+                                                    .deleteblock(user);
+                                              }
+                                            },
+                                            child: const Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                            ))),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(child: Text(user.notes))),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                            child: Text(vm
+                                                .wight_of_notfinal(user)
+                                                .removeTrailingZeros))),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                            child: Text(vm
+                                                .wight_of_fractions(user)
+                                                .removeTrailingZeros))),
+                                    Column(
+                                      children: [
+                                        Container(
+                                            padding: const EdgeInsets.all(2),
+                                            child: Icon(user.actions
+                                                    .if_action_exist(BlockAction
+                                                        .consume_block
+                                                        .getactionTitle)
+                                                ? Icons.check
+                                                : Icons.close)),
+                                        user.actions.if_action_exist(BlockAction
+                                                .consume_block.getactionTitle)
+                                            ? Text(
+                                                DateFormat('dd-MM-yy/hh:mm a')
+                                                    .format(user.actions
+                                                        .get_BlockDateOf(
+                                                            BlockAction
+                                                                .consume_block))
+                                                    .toString()
+                                                    .toString()
+                                                    .toString())
+                                            : const SizedBox(),
+                                        user.actions.if_action_exist(BlockAction
+                                                    .consume_block
+                                                    .getactionTitle) ==
+                                                true
+                                            ? Text(user.actions
+                                                .get_block_Who_Of(
+                                                    BlockAction.consume_block))
+                                            : const SizedBox(),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Container(
+                                            padding: const EdgeInsets.all(2),
+                                            child: Icon(user.actions
+                                                    .if_action_exist(BlockAction
+                                                        .create_block
+                                                        .getactionTitle)
+                                                ? Icons.check
+                                                : Icons.close)),
+                                        user.actions.if_action_exist(BlockAction
+                                                .create_block.getactionTitle)
+                                            ? Text(
+                                                DateFormat('dd-MM-yy/hh:mm a')
+                                                    .format(user.actions
+                                                        .get_BlockDateOf(
+                                                            BlockAction
+                                                                .create_block))
+                                                    .toString()
+                                                    .toString()
+                                                    .toString())
+                                            : const SizedBox(),
+                                        user.actions.if_action_exist(BlockAction
+                                                    .create_block
+                                                    .getactionTitle) ==
+                                                true
+                                            ? Text(user.actions
+                                                .get_block_Who_Of(
+                                                    BlockAction.create_block))
+                                            : const SizedBox(),
+                                      ],
+                                    ),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                            child:
+                                                Text(user.OutTo.toString()))),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                            child: Text(
+                                                user.cumingFrom.toString()))),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                            child: Text(
+                                                user.Hscissor.toString()))),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                          child: Text(
+                                            user.serial.toString(),
+                                            style:
+                                                const TextStyle(fontSize: 14),
+                                          ),
+                                        )),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                          child: Text(user.type.toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w600)),
+                                        )),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                          child: Text(
+                                            user.density.toString(),
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        )),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                            child:
+                                                Text(user.color.toString()))),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                            child:
+                                                Text(user.wight.toString()))),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                          child: Text(
+                                              "${user.hight}*${user.width}*${user.lenth}"),
+                                        )),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                          child: Text(
+                                            user.number.toString(),
+                                            style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 221, 2, 75)),
+                                          ),
+                                        )),
+                                    Container(
+                                        padding: const EdgeInsets.all(2),
+                                        child: Center(
+                                            child: Text(
+                                                "${1 + blocks.search.sortedBy<num>((element) => element.id).indexOf(user)}"))),
+                                  ]);
+                            })
+                            .toList()
+                            .reversed
+                            .toList(),
+                        border: TableBorder.all(width: 1, color: Colors.black),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

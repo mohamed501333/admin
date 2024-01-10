@@ -18,6 +18,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
           .onValue
           .listen((event) {
         x.clear();
+        archived_blocks.clear();
         blocks.clear();
         if (event.snapshot.value != null) {
           Map<Object?, Object?> map =
@@ -29,6 +30,10 @@ class BlockFirebasecontroller extends ChangeNotifier {
               element.actions
                   .if_action_exist(BlockAction.archive_block.getactionTitle) ==
               false));
+          archived_blocks.addAll(x.where((element) =>
+              element.actions
+                  .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+              true));
         }
 
         notifyListeners();
@@ -38,10 +43,32 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
   List<BlockModel> x = [];
   List<BlockModel> blocks = [];
+  List<BlockModel> archived_blocks = [];
   List<BlockModel> search = [];
+
   // c() {
   //   for (var el in blocks.where((element) => element.serial == "D26s101223")) {
-  //     FirebaseDatabase.instance.ref("blocks/${el.id}");
+  //     BlockModel e = BlockModel(
+  //         id: el.id,
+  //         color: "اصفر",
+  //         density: el.density,
+  //         type: el.type,
+  //         serial: el.serial,
+  //         number: el.number,
+  //         Rcissor: el.Rcissor,
+  //         Hscissor: el.Hscissor,
+  //         width: el.width,
+  //         lenth: el.lenth,
+  //         hight: el.hight,
+  //         wight: el.wight,
+  //         cumingFrom: el.cumingFrom,
+  //         OutTo: el.OutTo,
+  //         notes: el.notes,
+  //         fractions: el.fractions,
+  //         actions: el.actions,
+  //         notfinals: el.notfinals);
+
+  //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
   //   }
   // }
 
