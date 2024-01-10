@@ -11,7 +11,7 @@ workflows:
         distribution_type: development
         bundle_identifier: io.codemagic.cmswiftly
       vars:
-        BUNDLE_ID: "io.codemagic.cmswiftly"
+        BUNDLE_ID: "io.codemagic.cmflutteryaml"
         XCODE_WORKSPACE: "CodemagicSample.xcworkspace" # <-- Put the name of your Xcode workspace here
         XCODE_SCHEME: "CodemagicSample" # <-- Put the name of your Xcode scheme here
         APP_STORE_APPLE_ID: 1555555551
