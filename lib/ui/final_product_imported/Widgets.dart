@@ -183,7 +183,7 @@ class DropDdowenForOrders_sizes extends StatelessWidget {
                     .map((e) => DropdownMenuItem(
                           value: e,
                           child: Text(
-                              "${e.lenth.removeTrailingZeros}*${e.widti.removeTrailingZeros}*${e.hight.removeTrailingZeros}>>>${e.type}"),
+                              "${e.color}>>${e.density}ك>>${e.lenth.removeTrailingZeros}*${e.widti.removeTrailingZeros}*${e.hight.removeTrailingZeros}>>>${e.type}"),
                         ))
                     .toList(),
                 onChanged: (v) {
