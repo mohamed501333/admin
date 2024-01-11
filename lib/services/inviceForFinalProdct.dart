@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, file_names, non_constant_identifier_names
 
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as d;
@@ -30,7 +30,7 @@ class finalProductInvoice {
         build: (context) {
           return [
             Padding(
-                padding: EdgeInsets.all(45),
+                padding: const EdgeInsets.all(45),
                 child: Column(children: [
                   Row(children: [
                     Image(
@@ -173,7 +173,7 @@ total(Invoice invoice) {
                           ),
                         ),
                         Text(
-                          '${totalWightAmount}',
+                          '$totalWightAmount',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),

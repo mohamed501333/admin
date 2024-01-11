@@ -124,7 +124,7 @@ header2(x) {
 }
 
 headerOfTitleOfItems() {
-  TextStyle style = TextStyle(fontSize: 22);
+  TextStyle style = const TextStyle(fontSize: 22);
   return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
@@ -159,7 +159,7 @@ headerOfTitleOfItems() {
 }
 
 Items() {
-  TextStyle style = TextStyle(fontSize: 19);
+  TextStyle style = const TextStyle(fontSize: 19);
   return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(

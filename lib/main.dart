@@ -117,9 +117,9 @@ class Commons {
   static const gradientBackgroundColorStart = Color(0xFF4D0F29);
   static const popupItemBackColor = Color(0xFFDADADB);
   static List<Color> dashColor = [
-    Color(0xff1AB0B0),
-    Color(0xffFF7544),
-    Color(0xffFA5A7D),
-    Color(0xff8676FE)
+    const Color(0xff1AB0B0),
+    const Color(0xffFF7544),
+    const Color(0xffFA5A7D),
+    const Color(0xff8676FE)
   ];
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names, empty_catches
+// ignore_for_file: file_names, non_constant_identifier_names, empty_catches, avoid_function_literals_in_foreach_calls
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

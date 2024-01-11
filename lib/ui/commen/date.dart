@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:provider/provider.dart';

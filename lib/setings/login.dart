@@ -5,7 +5,7 @@ import 'package:jason_company/main.dart';
 import 'package:jason_company/ui/main/main_view.dart';
 
 class MyloginPage extends StatefulWidget {
-  const MyloginPage({Key? key}) : super(key: key);
+  const MyloginPage({super.key});
 
   @override
   State<MyloginPage> createState() => _MyStatefulWidgetState();

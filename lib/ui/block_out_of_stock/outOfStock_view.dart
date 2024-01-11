@@ -48,7 +48,7 @@ class OutOfStockView extends StatelessWidget {
                       Column(
                         children: [
                           DropDdowenFor_blockColor(b: b.blocks),
-                          DropDdowen_forCode(),
+                          const DropDdowen_forCode(),
                         ],
                       ),
                     ],

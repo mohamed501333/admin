@@ -45,12 +45,12 @@ class FractionFirebaseController extends ChangeNotifier {
   }
 
   deleteFractions(List<int> ids) {
-    ids.forEach((id) {
+    for (var id in ids) {
       try {
         FirebaseDatabase.instance.ref("fractions/$id").remove();
         fractions.clear();
         notifyListeners();
       } catch (e) {}
-    });
+    }
   }
 }

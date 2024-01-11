@@ -66,7 +66,7 @@ class Buttoms extends StatelessWidget {
     return Row(
       children: [
         ChipsForBlocks(),
-        pagination(),
+        const pagination(),
         ElevatedButton(
             onPressed: () {
               if (vm.formKey.currentState!.validate()) {
