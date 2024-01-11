@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters
+// ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters, empty_catches
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
@@ -28,29 +28,20 @@ class FractionFirebaseController extends ChangeNotifier {
         }
         notifyListeners();
       });
-    } catch (e) {
-      print(e);
-      print("erorr on get fractions");
-    }
+    } catch (e) {}
   }
 
   List<FractionModel> fractions = [];
 
   addfraction(List<FractionModel> fractions) async {
-    print("try erorr on add fractions");
     try {
-      fractions.forEach((element) {
+      for (var element in fractions) {
         FirebaseDatabase.instance
             .ref("fractions/${element.id}")
             .set(element.toJson())
-            .then((value) {
-          print("adeddddd to fradtion");
-        });
-      });
-    } catch (e) {
-      print(e);
-      print("erorr on add fractions");
-    }
+            .then((value) {});
+      }
+    } catch (e) {}
   }
 
   deleteFractions(List<int> ids) {
@@ -59,10 +50,7 @@ class FractionFirebaseController extends ChangeNotifier {
         FirebaseDatabase.instance.ref("fractions/$id").remove();
         fractions.clear();
         notifyListeners();
-        print("erorr on get fractions");
-      } catch (e) {
-        print(e);
-      }
+      } catch (e) {}
     });
   }
 }

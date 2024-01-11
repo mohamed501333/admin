@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters
+// ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters, empty_catches
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,6 @@ class final_prodcut_controller extends ChangeNotifier {
           .orderByKey()
           .onValue
           .listen((event) {
-        print("get final product");
         finalproducts.clear();
         initalData.clear();
         if (event.snapshot.value != null) {
@@ -34,10 +33,7 @@ class final_prodcut_controller extends ChangeNotifier {
         notifyListeners();
         context.read<OrderController>().Refrsh_ui();
       });
-    } catch (e) {
-      print(e);
-      print("erorr on get finalprodcuts");
-    }
+    } catch (e) {}
   }
 
   List<FinalProductModel> finalproducts = [];
@@ -50,9 +46,7 @@ class final_prodcut_controller extends ChangeNotifier {
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
       notifyListeners();
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   addinvoice(List<FinalProductModel> finalss) {
@@ -61,11 +55,7 @@ class final_prodcut_controller extends ChangeNotifier {
       try {
         FirebaseDatabase.instance.ref("finalproducts/${x.id}").set(x.toJson());
         notifyListeners();
-
-        print("erorr on get cu");
-      } catch (e) {
-        print(e);
-      }
+      } catch (e) {}
     }
   }
 
@@ -77,11 +67,7 @@ class final_prodcut_controller extends ChangeNotifier {
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
       notifyListeners();
-
-      print("erorr on get cu");
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   incert_finalProduct_from_cutingUnit(FinalProductModel user) {
@@ -92,11 +78,7 @@ class final_prodcut_controller extends ChangeNotifier {
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
       notifyListeners();
-
-      print("erorr on get cu");
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   incert_finalProduct_from_Others(FinalProductModel user) {
@@ -106,11 +88,7 @@ class final_prodcut_controller extends ChangeNotifier {
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
       notifyListeners();
-
-      print("erorr on get cu");
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   finalProdcut_out_order(FinalProductModel user) {
@@ -120,11 +98,7 @@ class final_prodcut_controller extends ChangeNotifier {
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
       notifyListeners();
-
-      print("erorr on get cu");
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   recevied_from_finalPrdcut_stck(
@@ -136,10 +110,6 @@ class final_prodcut_controller extends ChangeNotifier {
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
       notifyListeners();
-
-      print("erorr on get cu");
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 }

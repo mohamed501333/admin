@@ -30,10 +30,7 @@ class Customer_controller extends ChangeNotifier {
 
         notifyListeners();
       });
-    } catch (e) {
-      print(e);
-      print("erorr on get finalprodcuts");
-    }
+    } catch (e) {}
   }
 
   List<CustomerModel> customers = [];
@@ -46,9 +43,7 @@ class Customer_controller extends ChangeNotifier {
           .ref("customers/${customer.id}")
           .set(customer.toJson());
       notifyListeners();
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   int? initialForRaido;

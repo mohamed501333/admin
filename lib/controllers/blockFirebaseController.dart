@@ -218,9 +218,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     try {
       FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
       notifyListeners();
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   var initialDateRange =
@@ -230,13 +228,10 @@ class BlockFirebasecontroller extends ChangeNotifier {
     List<BlockModel> filterdBlocks = [];
     for (var date
         in getDaysInBeteween(initialDateRange.start, initialDateRange.end)) {
-      print(1);
       for (var block in blocks) {
-        print(2);
         DateTime blockHaveDate =
             block.actions.get_BlockDateOf(BlockAction.create_block);
         if (blockHaveDate.day == date.day) {
-          print(3);
           filterdBlocks.add(block);
         }
       }

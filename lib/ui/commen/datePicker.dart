@@ -12,7 +12,6 @@ class _TestPackState extends State<TestPack> {
 
   @override
   Widget build(BuildContext context) {
-    print(initialDateRange);
     return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,

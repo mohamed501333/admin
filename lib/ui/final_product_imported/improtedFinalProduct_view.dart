@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, use_super_parameters
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -118,7 +118,6 @@ class TheTable extends StatelessWidget {
                                 //تم التخزين
                                 GestureDetector(
                                   onTap: () {
-                                    //TODO:
                                     user.actions.if_action_exist(
                                                 finalProdcutAction
                                                     .final_prodcut_DidQalityCheck
@@ -173,7 +172,6 @@ class TheTable extends StatelessWidget {
                                 //تم الجوده
                                 GestureDetector(
                                   onTap: () {
-                                    //TODO:
                                     user.actions.if_action_exist(finalProdcutAction
                                                     .incert_finalProduct_from_cutingUnit
                                                     .getactionTitle) ==
@@ -335,21 +333,21 @@ showmyAlertDialog(BuildContext context, FinalProductStockViewModel vm,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('  ?'),
-          content: SizedBox(
+          content: const SizedBox(
             height: 200,
             child: Column(children: [
-              const Text('هل انت متاكد'),
+              Text('هل انت متاكد'),
             ]),
           ),
           actions: [
             ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.green),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
                   Navigator.pop(context);
                 },
                 child: const Text('No')),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.red),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () {
                   switch (casefun) {
                     case "c":

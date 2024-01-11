@@ -31,7 +31,7 @@ Future<void> createAndopenEXL(
   final Worksheet worksheet = workbook.worksheets[0];
   mkey.currentState!.exportToExcelWorksheet(worksheet);
   final List<int> bytes = workbook.saveAsStream();
-  File(appDocDirectory!.path + '/' + 'البلوكات.xlsx')
+  File('${appDocDirectory!.path}/البلوكات.xlsx')
       .writeAsBytes(bytes, flush: true)
       .then((value) => FileHandleApi.openFile(value));
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names
+// ignore_for_file: file_names, non_constant_identifier_names, empty_catches
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +17,8 @@ class NonFinalController extends ChangeNotifier {
             .map((doc) => NotFinalmodel.fromMap(doc.data()))
             .toList());
         notifyListeners();
-
-        print("snapshot");
       });
-    } catch (e) {
-      print(e);
-      print("jkjk");
-    }
+    } catch (e) {}
   }
 
   List<NotFinalmodel> not_finals = [];
@@ -33,10 +28,7 @@ class NonFinalController extends ChangeNotifier {
       await FirebaseFirestore.instance
           .collection('nonFinal')
           .add(notfinal.toMap());
-    } catch (e) {
-      print(e);
-      print("add");
-    }
+    } catch (e) {}
   }
 
   delete_not_FInals(id) {
@@ -48,8 +40,6 @@ class NonFinalController extends ChangeNotifier {
           .then((value) => value.docs.forEach((element) {
                 element.reference.delete();
               }));
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 }
