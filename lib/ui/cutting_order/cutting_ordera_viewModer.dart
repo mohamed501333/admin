@@ -62,6 +62,8 @@ class CuttingOrderViewModel extends BaseViewModel {
             e.lenth == item.lenth &&
             e.width == item.widti &&
             e.type == item.type &&
+            e.density == item.density &&
+            e.color == item.color &&
             e.hight == item.hight)
         .map((e) => e.amount);
     var b;
