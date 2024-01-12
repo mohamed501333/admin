@@ -272,3 +272,195 @@ class Buttoms extends StatelessWidget {
     );
   }
 }
+
+class AddUnregular extends StatelessWidget {
+  AddUnregular({super.key});
+  FinalProductStockViewModel vm = FinalProductStockViewModel();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                    scrollable: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    content: SizedBox(
+                      height: 450,
+                      child: SingleChildScrollView(
+                        child: Form(
+                          key: vm.formKey,
+                          child: Column(
+                            children: [
+                              Container(
+                                color: Colors.blue[900],
+                                height: 30,
+                                child: const Center(
+                                  child: Text(
+                                    'مقاسات شاذه خارخ الاوردر',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      CustomTextFormField(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        hint: "النوع",
+                                        keybordtupe: TextInputType.name,
+                                        controller: vm.typecontroller,
+                                        validator: Validation.validateothers,
+                                      ),
+                                      CustomTextFormField(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        hint: "الكثافه",
+                                        controller: vm.densitycontroller,
+                                        validator: Validation.validateothers,
+                                      ),
+                                      CustomTextFormField(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        keybordtupe: TextInputType.number,
+                                        hint: "العميل",
+                                        controller: vm.companycontroller,
+                                        validator:
+                                            Validation.if_cusomer_serial_exist(
+                                                context),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      CustomTextFormField(
+                                        validator: Validation.validateothers,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        keybordtupe: TextInputType.number,
+                                        hint: "الكميه",
+                                        controller: vm.amountcontroller,
+                                      ),
+                                      CustomTextFormField(
+                                        validator: Validation.validateothers,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        keybordtupe: TextInputType.number,
+                                        hint: "مقص",
+                                        controller: vm.scissorcontroller,
+                                      ),
+                                      CustomTextFormField(
+                                        validator: Validation.validateothers,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        keybordtupe: TextInputType.name,
+                                        hint: "اللون",
+                                        controller: vm.colercontroller,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      CustomTextFormField(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        hint: "الارتفاع",
+                                        controller: vm.hightncontroller,
+                                        validator: Validation.validateothers,
+                                      ),
+                                      CustomTextFormField(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        hint: "العرض",
+                                        controller: vm.widthcontroller,
+                                        validator: Validation.validateothers,
+                                      ),
+                                      CustomTextFormField(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        hint: "الطول ",
+                                        controller: vm.lenthcontroller,
+                                        validator: Validation.validateothers,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 15),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.red)),
+                                        onPressed: () {
+                                          vm.validate();
+                                          vm.add_unregular(context);
+                                        },
+                                        child: const Text('أضافه')),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.blue)),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('الغاء')),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ));
+        },
+        icon: const Icon(Icons.add));
+  }
+}

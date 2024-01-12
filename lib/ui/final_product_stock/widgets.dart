@@ -85,7 +85,7 @@ class AddToStock extends StatelessWidget {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 .18,
-                                        keybordtupe: TextInputType.text,
+                                        keybordtupe: TextInputType.number,
                                         hint: "العميل",
                                         controller: vm.companycontroller,
                                         validator:

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -57,6 +57,16 @@ class Validation {
     return (String? value) {
       if (value!.isEmpty) {
         return "فارغ";
+      }
+
+      if (value.isEmpty) {
+        return 'لا تترك هذا الحقل فارغ';
+      } else {
+        try {
+          double.parse(value);
+        } catch (e) {
+          return "ادخل قيمه صحيحه";
+        }
       }
       List<CustomerModel> customers =
           context.read<Customer_controller>().customers;
@@ -129,17 +139,4 @@ class Validation {
     }
     return null;
   }
-
-  // (value) {
-  //                     if (value == null || value.isEmpty) {
-  //                       return 'لا تترك هذا الحقل فارغ';
-  //                     } else {
-  //                       try {
-  //                         double.parse(value);
-  //                       } catch (e) {
-  //                         return "ادخل قيمه صحيحه";
-  //                       }
-  //                     }
-  //                     return null;
-  //                   }
 }

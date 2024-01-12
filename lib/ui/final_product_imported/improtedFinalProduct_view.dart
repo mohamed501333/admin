@@ -20,7 +20,9 @@ class FinalProductView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [AddUnregular()],
+        ),
         body: Form(
           key: vm.formKey,
           child: Column(
