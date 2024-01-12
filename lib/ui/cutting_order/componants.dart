@@ -341,8 +341,10 @@ class TheTable001 extends StatelessWidget {
                                               ? Text(DateFormat(
                                                       'dd-MM-yy/hh:mm a')
                                                   .format(order.actions
-                                                      .get_Order_DateOf(OrderAction
-                                                          .order_aproved_from_control))
+                                                      .get_Date_of_action(
+                                                          OrderAction
+                                                              .order_aproved_from_control
+                                                              .getTitle))
                                                   .toString()
                                                   .toString()
                                                   .toString())
@@ -394,8 +396,10 @@ class TheTable001 extends StatelessWidget {
                                               ? Text(DateFormat(
                                                       'dd-MM-yy/hh:mm a')
                                                   .format(order.actions
-                                                      .get_Order_DateOf(OrderAction
-                                                          .order_aproved_from_calculation))
+                                                      .get_Date_of_action(
+                                                          OrderAction
+                                                              .order_aproved_from_calculation
+                                                              .getTitle))
                                                   .toString()
                                                   .toString()
                                                   .toString())
@@ -430,15 +434,16 @@ class TheTable001 extends StatelessWidget {
                                                       OrderAction.create_order
                                                           .getTitle) ==
                                                   true
-                                              ? Text(DateFormat(
-                                                      'dd-MM-yy/hh:mm a')
-                                                  .format(order.actions
-                                                      .get_Order_DateOf(
-                                                          OrderAction
-                                                              .create_order))
-                                                  .toString()
-                                                  .toString()
-                                                  .toString())
+                                              ? Text(
+                                                  DateFormat('dd-MM-yy/hh:mm a')
+                                                      .format(order.actions
+                                                          .get_Date_of_action(
+                                                              OrderAction
+                                                                  .create_order
+                                                                  .getTitle))
+                                                      .toString()
+                                                      .toString()
+                                                      .toString())
                                               : const SizedBox(),
                                           order.actions.if_action_exist(
                                                       OrderAction.create_order

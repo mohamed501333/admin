@@ -183,7 +183,8 @@ class TheTable0001 extends StatelessWidget {
                         .toList()
                         .filter_date_consumed(context)
                         .sortedBy<DateTime>((element) => element.actions
-                            .get_BlockDateOf(BlockAction.consume_block))
+                            .get_Date_of_action(
+                                BlockAction.consume_block.getactionTitle))
                         .where((element) =>
                             element.actions.block_action_Stutus(
                                 BlockAction.consume_block) ==
@@ -243,8 +244,9 @@ class TheTable0001 extends StatelessWidget {
                                             .consume_block.getactionTitle)
                                         ? Text(DateFormat('dd-MM-yy/hh:mm a')
                                             .format(user.actions
-                                                .get_BlockDateOf(
-                                                    BlockAction.consume_block))
+                                                .get_Date_of_action(BlockAction
+                                                    .consume_block
+                                                    .getactionTitle))
                                             .toString()
                                             .toString()
                                             .toString())
@@ -272,8 +274,9 @@ class TheTable0001 extends StatelessWidget {
                                             .create_block.getactionTitle)
                                         ? Text(DateFormat('dd-MM-yy/hh:mm a')
                                             .format(user.actions
-                                                .get_BlockDateOf(
-                                                    BlockAction.create_block))
+                                                .get_Date_of_action(BlockAction
+                                                    .create_block
+                                                    .getactionTitle))
                                             .toString()
                                             .toString()
                                             .toString())

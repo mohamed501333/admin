@@ -217,8 +217,9 @@ class EmployeeDataSource22 extends DataGridSource {
                   columnName: 'date',
                   value: e.actions.if_action_exist(
                           BlockAction.consume_block.getactionTitle)
-                      ? DateFormat('yyyy/MM/dd').format(
-                          e.actions.get_BlockDateOf(BlockAction.consume_block))
+                      ? DateFormat('yyyy/MM/dd').format(e.actions
+                          .get_Date_of_action(
+                              BlockAction.consume_block.getactionTitle))
                       : ''),
             ]))
         .toList();

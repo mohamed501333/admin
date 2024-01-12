@@ -230,8 +230,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
     for (var date
         in getDaysInBeteween(initialDateRange.start, initialDateRange.end)) {
       for (var block in blocks) {
-        DateTime blockHaveDate =
-            block.actions.get_BlockDateOf(BlockAction.create_block);
+        DateTime blockHaveDate = block.actions
+            .get_Date_of_action(BlockAction.create_block.getactionTitle);
         if (blockHaveDate.day == date.day) {
           filterdBlocks.add(block);
         }

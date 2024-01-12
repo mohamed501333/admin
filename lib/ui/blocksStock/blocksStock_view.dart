@@ -364,8 +364,9 @@ class TheTable extends StatelessWidget {
                                             .consume_block.getactionTitle)
                                         ? Text(DateFormat('dd-MM-yy/hh:mm a')
                                             .format(user.actions
-                                                .get_BlockDateOf(
-                                                    BlockAction.consume_block))
+                                                .get_Date_of_action(BlockAction
+                                                    .consume_block
+                                                    .getactionTitle))
                                             .toString()
                                             .toString()
                                             .toString())
@@ -393,8 +394,9 @@ class TheTable extends StatelessWidget {
                                             .create_block.getactionTitle)
                                         ? Text(DateFormat('dd-MM-yy/hh:mm a')
                                             .format(user.actions
-                                                .get_BlockDateOf(
-                                                    BlockAction.create_block))
+                                                .get_Date_of_action(BlockAction
+                                                    .create_block
+                                                    .getactionTitle))
                                             .toString()
                                             .toString()
                                             .toString())
@@ -551,7 +553,8 @@ class ArchivedTheTable extends StatelessWidget {
                         },
                         children: blocks.archived_blocks.reversed
                             .sortedBy<num>((element) => element.actions
-                                .get_BlockDateOf(BlockAction.archive_block)
+                                .get_Date_of_action(
+                                    BlockAction.archive_block.getactionTitle)
                                 .day)
                             .reversed
                             .take(context.read<SettingController>().s)
@@ -614,15 +617,16 @@ class ArchivedTheTable extends StatelessWidget {
                                                 : Icons.close)),
                                         user.actions.if_action_exist(BlockAction
                                                 .consume_block.getactionTitle)
-                                            ? Text(
-                                                DateFormat('dd-MM-yy/hh:mm a')
-                                                    .format(user.actions
-                                                        .get_BlockDateOf(
-                                                            BlockAction
-                                                                .consume_block))
-                                                    .toString()
-                                                    .toString()
-                                                    .toString())
+                                            ? Text(DateFormat(
+                                                    'dd-MM-yy/hh:mm a')
+                                                .format(user.actions
+                                                    .get_Date_of_action(
+                                                        BlockAction
+                                                            .consume_block
+                                                            .getactionTitle))
+                                                .toString()
+                                                .toString()
+                                                .toString())
                                             : const SizedBox(),
                                         user.actions.if_action_exist(BlockAction
                                                     .consume_block
@@ -646,15 +650,15 @@ class ArchivedTheTable extends StatelessWidget {
                                                 : Icons.close)),
                                         user.actions.if_action_exist(BlockAction
                                                 .create_block.getactionTitle)
-                                            ? Text(
-                                                DateFormat('dd-MM-yy/hh:mm a')
-                                                    .format(user.actions
-                                                        .get_BlockDateOf(
-                                                            BlockAction
-                                                                .create_block))
-                                                    .toString()
-                                                    .toString()
-                                                    .toString())
+                                            ? Text(DateFormat(
+                                                    'dd-MM-yy/hh:mm a')
+                                                .format(user.actions
+                                                    .get_Date_of_action(
+                                                        BlockAction.create_block
+                                                            .getactionTitle))
+                                                .toString()
+                                                .toString()
+                                                .toString())
                                             : const SizedBox(),
                                         user.actions.if_action_exist(BlockAction
                                                     .create_block

@@ -8,6 +8,7 @@ import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -186,11 +187,21 @@ class ReportsFroH extends StatelessWidget {
             .expand((element) => element)
             .toList()
             .where((element) => element.Rscissor == scissor)
+            .where((element) =>
+                element.actions
+                    .get_Date_of_action(FractionActon.creat_fraction.getTitle)
+                    .formatt() ==
+                DateTime.now().formatt())
             .toList();
 
         var output = context
             .read<final_prodcut_controller>()
             .finalproducts
+            .where((element) =>
+                element.actions
+                    .get_Date_of_action(FractionActon.creat_fraction.getTitle)
+                    .formatt() ==
+                DateTime.now().formatt())
             .where((element) => element.scissor == scissor + 3);
         double totalOUtput = output.isNotEmpty
             ? output

@@ -21,6 +21,13 @@ extension Brovider on BuildContext {
   }
 }
 
+extension Dnl on DateTime {
+  String formatt() {
+    String formateeddate = DateFormat("yyyy/MM/dd").format(this);
+    return formateeddate;
+  }
+}
+
 extension MeineVer on double {
   String get toMoney => '$removeTrailingZeros₺';
   String get removeTrailingZeros {
@@ -169,8 +176,8 @@ extension Filter on List<FinalProductModel> {
   List<FinalProductModel> filter_date(BuildContext context, String chosenDate) {
     DateFormat format = DateFormat('yyyy/MM/dd');
     return where((element) =>
-        format.format(element.actions.get_finalProdcutDateOf(
-            finalProdcutAction.incert_finalProduct_from_cutingUnit)) ==
+        format.format(element.actions.get_Date_of_action(finalProdcutAction
+            .incert_finalProduct_from_cutingUnit.getactionTitle)) ==
         chosenDate).toList();
   }
 }
@@ -234,15 +241,6 @@ extension Filterfgddf on List<FractionModel> {
 
 extension C3 on List<ActionModel> {
   //get finalProdcut date for this action
-  DateTime get_finalProdcutDateOf(finalProdcutAction action) {
-    return where((element) => element.action == action.getactionTitle)
-        .first
-        .when;
-  }
-
-  DateTime get_Order_DateOf(OrderAction action) {
-    return where((element) => element.action == action.getTitle).first.when;
-  }
 
   //get final prodcut who of this action
   String get_finalProdcut_Who_Of(finalProdcutAction action) {
@@ -262,17 +260,10 @@ extension C3 on List<ActionModel> {
   }
   //get fraction date for this action
 
-  DateTime get_fractionDateOf(finalProdcutAction action) {
-    return where((element) => element.action == action.getactionTitle)
-        .first
-        .when;
-  }
-
-  //get block date for this action
-  DateTime get_BlockDateOf(BlockAction action) {
-    return where((element) => element.action == action.getactionTitle)
-        .first
-        .when;
+  DateTime get_Date_of_action(String action) {
+    return where((element) => element.action == action).isEmpty
+        ? DateTime.utc(0)
+        : where((element) => element.action == action).first.when;
   }
 
   //weather this action for block done or not
@@ -327,8 +318,8 @@ extension A1 on List<BlockModel> {
     return where((element) => element.actions
             .if_action_exist(BlockAction.consume_block.getactionTitle))
         .where((element) =>
-            format.format(
-                element.actions.get_BlockDateOf(BlockAction.consume_block)) ==
+            format.format(element.actions.get_Date_of_action(
+                BlockAction.consume_block.getactionTitle)) ==
             context.read<SettingController>().currentDate())
         .toList();
   }

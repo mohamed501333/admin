@@ -80,8 +80,9 @@ class TheTable extends StatelessWidget {
                                 .getactionTitle))
                         .where((element) =>
                             DateFormat('yyyy/MM/dd').format(element.actions
-                                .get_finalProdcutDateOf(finalProdcutAction
-                                    .incert_finalProduct_from_cutingUnit)) ==
+                                .get_Date_of_action(finalProdcutAction
+                                    .incert_finalProduct_from_cutingUnit
+                                    .getactionTitle)) ==
                             context.read<SettingController>().currentDate())
                         .sortedBy<num>(
                           (element) => element.id,
@@ -148,9 +149,10 @@ class TheTable extends StatelessWidget {
                                               ? Text(DateFormat(
                                                       'dd-MM-yy/hh:mm a')
                                                   .format(user.actions
-                                                      .get_finalProdcutDateOf(
+                                                      .get_Date_of_action(
                                                           finalProdcutAction
-                                                              .incert_finalProduct_from_cutingUnit))
+                                                              .incert_finalProduct_from_cutingUnit
+                                                              .getactionTitle))
                                                   .toString()
                                                   .toString()
                                                   .toString())
@@ -204,9 +206,10 @@ class TheTable extends StatelessWidget {
                                               ? Text(DateFormat(
                                                       'dd-MM-yy/hh:mm a')
                                                   .format(user.actions
-                                                      .get_finalProdcutDateOf(
+                                                      .get_Date_of_action(
                                                           finalProdcutAction
-                                                              .final_prodcut_DidQalityCheck))
+                                                              .final_prodcut_DidQalityCheck
+                                                              .getactionTitle))
                                                   .toString()
                                                   .toString()
                                                   .toString())
@@ -249,9 +252,10 @@ class TheTable extends StatelessWidget {
                                               ? Text(DateFormat(
                                                       'dd-MM-yy/hh:mm a')
                                                   .format(user.actions
-                                                      .get_finalProdcutDateOf(
+                                                      .get_Date_of_action(
                                                           finalProdcutAction
-                                                              .incert_finalProduct_from_cutingUnit))
+                                                              .incert_finalProduct_from_cutingUnit
+                                                              .getactionTitle))
                                                   .toString()
                                                   .toString()
                                                   .toString())
