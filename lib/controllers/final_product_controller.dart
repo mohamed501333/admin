@@ -112,4 +112,8 @@ class final_prodcut_controller extends ChangeNotifier {
       notifyListeners();
     } catch (e) {}
   }
+
+  Refresh_Ui() {
+    notifyListeners();
+  }
 }

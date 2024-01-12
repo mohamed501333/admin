@@ -260,14 +260,11 @@ class TheTable001 extends StatelessWidget {
                       3: FlexColumnWidth(3),
                       4: FlexColumnWidth(3),
                       5: FlexColumnWidth(2),
-                      6: FlexColumnWidth(2),
-                      7: FlexColumnWidth(1),
-                      8: FlexColumnWidth(1),
-                      9: FlexColumnWidth(1.3),
-                      10: FlexColumnWidth(2.2),
-                      11: FlexColumnWidth(1),
-                      12: FlexColumnWidth(1),
-                      13: FlexColumnWidth(1.3),
+                      6: FlexColumnWidth(1),
+                      7: FlexColumnWidth(1.5),
+                      8: FlexColumnWidth(4),
+                      9: FlexColumnWidth(1),
+                      10: FlexColumnWidth(1.2),
                     },
                     children: orders.orders
                         .sortedBy<num>((element) => element.serial)
@@ -461,8 +458,8 @@ class TheTable001 extends StatelessWidget {
                                   children: order.items
                                       .map(
                                         (item) => Container(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 3),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
                                             child: Text(
                                                 ' ${[
                                                   item.Qantity *
@@ -484,13 +481,26 @@ class TheTable001 extends StatelessWidget {
                                       )
                                       .toList(),
                                 ),
+
+                                //العميل
+                                Center(
+                                  child: Container(
+                                      padding: const EdgeInsets.only(bottom: 3),
+                                      child: Text(
+                                        order.customer.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                ),
                                 //الانجاز
                                 Column(
                                   children: order.items
                                       .map(
                                         (item) => Container(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 3),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
                                             child: Text(
                                               "${vm.petcentage_of_cutingOrder(context, order, item).removeTrailingZeros} %",
                                               style: TextStyle(
@@ -507,86 +517,63 @@ class TheTable001 extends StatelessWidget {
                                       )
                                       .toList(),
                                 ),
-                                //العميل
-                                Center(
-                                  child: Container(
-                                      padding: const EdgeInsets.only(bottom: 3),
-                                      child: Text(
-                                        order.customer.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ),
                                 //النوع
-                                Column(
-                                  children: order.items
-                                      .map(
-                                        (item) => Container(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 0),
-                                            child: Text(
-                                              item.type.toString(),
-                                              style: TextStyle(
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    order.items.indexOf(item) %
-                                                                2 ==
-                                                            0
-                                                        ? Colors.cyan
-                                                        : Colors.black,
-                                              ),
-                                            )),
-                                      )
-                                      .toList(),
-                                ),
 
                                 //الكثافه
-                                Column(
-                                  children: order.items
-                                      .map(
-                                        (item) => Container(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 3),
-                                            child: Text(
-                                              item.density.toString(),
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    order.items.indexOf(item) %
-                                                                2 ==
-                                                            0
-                                                        ? Colors.cyan
-                                                        : Colors.black,
-                                              ),
-                                            )),
-                                      )
-                                      .toList(),
-                                ),
 
                                 //المقاس
                                 Column(
                                   children: order.items
                                       .map(
-                                        (item) => Container(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 3),
-                                            child: Text(
-                                              "${item.hight.removeTrailingZeros}*${item.widti.removeTrailingZeros}*${item.lenth.removeTrailingZeros}",
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    order.items.indexOf(item) %
-                                                                2 ==
-                                                            0
-                                                        ? Colors.cyan
-                                                        : Colors.black,
+                                        (item) => Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                item.type.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: order.items.indexOf(
+                                                                  item) %
+                                                              2 ==
+                                                          0
+                                                      ? Colors.cyan
+                                                      : Colors.black,
+                                                ),
                                               ),
-                                            )),
+                                              Text(
+                                                " <<${item.density.removeTrailingZeros}ك<< ",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: order.items.indexOf(
+                                                                  item) %
+                                                              2 ==
+                                                          0
+                                                      ? Colors.cyan
+                                                      : Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${item.hight.removeTrailingZeros}*${item.widti.removeTrailingZeros}*${item.lenth.removeTrailingZeros}",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: order.items.indexOf(
+                                                                  item) %
+                                                              2 ==
+                                                          0
+                                                      ? Colors.cyan
+                                                      : Colors.black,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       )
                                       .toList(),
                                 ),
@@ -596,8 +583,8 @@ class TheTable001 extends StatelessWidget {
                                   children: order.items
                                       .map(
                                         (item) => Container(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 3),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
                                             child: Text(
                                               item.Qantity.toString(),
                                               style: TextStyle(
@@ -659,14 +646,11 @@ class HeaderOftable001 extends StatelessWidget {
         3: FlexColumnWidth(3),
         4: FlexColumnWidth(3),
         5: FlexColumnWidth(2),
-        6: FlexColumnWidth(2),
-        7: FlexColumnWidth(1),
-        8: FlexColumnWidth(1),
-        9: FlexColumnWidth(1.3),
-        10: FlexColumnWidth(2.2),
-        11: FlexColumnWidth(1),
-        12: FlexColumnWidth(1),
-        13: FlexColumnWidth(1.3),
+        6: FlexColumnWidth(1),
+        7: FlexColumnWidth(1.5),
+        8: FlexColumnWidth(4),
+        9: FlexColumnWidth(1),
+        10: FlexColumnWidth(1.2),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -676,7 +660,7 @@ class HeaderOftable001 extends StatelessWidget {
             ),
             children: [
               Container(
-                  padding: const EdgeInsets.all(5), child: const Text("حذف")),
+                  padding: const EdgeInsets.all(5), child: const Text("طباعه")),
               Container(
                   padding: const EdgeInsets.all(5), child: const Text("")),
               Center(
@@ -699,29 +683,19 @@ class HeaderOftable001 extends StatelessWidget {
                     padding: const EdgeInsets.all(5),
                     child: const Text("اجمالى م3")),
               ),
+              Container(
+                  padding: const EdgeInsets.all(5), child: const Text("عميل")),
               Center(
                 child: Container(
                     padding: const EdgeInsets.all(5),
                     child: const Text(" %الانجاز")),
               ),
               Container(
-                  padding: const EdgeInsets.all(5), child: const Text("عميل")),
-              Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('نوع'))),
-              Container(
                   padding: const EdgeInsets.all(4),
                   child: const Center(
-                    child: Text('كثافه',
+                    child: Text('مقاس>>كثافه>>نوع',
                         style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold)),
-                  )),
-              Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Center(
-                    child: Text('مقاس',
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold)),
+                            fontSize: 14, fontWeight: FontWeight.bold)),
                   )),
               Container(
                   padding: const EdgeInsets.all(4),

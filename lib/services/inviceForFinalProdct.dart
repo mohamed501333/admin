@@ -35,15 +35,20 @@ class finalProductInvoice {
                   Row(children: [
                     Image(
                       MemoryImage(iconImage),
-                      height: 80,
-                      width: 250,
+                      height: 60,
+                      width: 210,
                     ),
                   ]),
                   Column(children: [
                     Text("stock requisition order",
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold)),
-                    Text("${invoices.number}")
+                    Text("serial: ${invoices.number}",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text("customer : ${invoices.items.first.customer}",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold))
                   ]),
                   SizedBox(height: .3 * PdfPageFormat.mm),
                   Divider(),
@@ -65,7 +70,7 @@ headerOfTitleOfItems() {
   return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        height: 50,
+        height: 40,
         margin: const EdgeInsets.only(top: 10),
         decoration: const BoxDecoration(
           color: PdfColors.grey400,
@@ -77,7 +82,7 @@ headerOfTitleOfItems() {
           )),
           SizedBox(
               child: Center(
-            child: Text("wight", style: style),
+            child: Text("wight ", style: style),
           )),
           SizedBox(
               child: Center(
@@ -85,11 +90,11 @@ headerOfTitleOfItems() {
           )),
           SizedBox(
               child: Center(
-            child: Text("      color ", style: style),
+            child: Text("  color ", style: style),
           )),
           SizedBox(
               child: Center(
-            child: Text("        size        ", style: style),
+            child: Text("        size      ", style: style),
           )),
         ]),
       ));
@@ -102,7 +107,7 @@ Items(List<InvoiceItem> items) {
       child: Column(
           children: items
               .map((e) => Container(
-                    height: 50,
+                    height: 30,
                     margin: const EdgeInsets.only(top: 10),
                     decoration: const BoxDecoration(
                       color: PdfColors.grey100,

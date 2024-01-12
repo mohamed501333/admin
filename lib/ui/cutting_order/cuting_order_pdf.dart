@@ -83,24 +83,30 @@ headerOfTitleOfItems2() {
         decoration: const BoxDecoration(
           color: PdfColors.grey400,
         ),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          SizedBox(
-              child: Center(
-            child: Text("الكميه", style: style),
-          )),
-          SizedBox(
-              child: Center(
-            child: Text(" كثافه ", style: style),
-          )),
-          SizedBox(
-              child: Center(
-            child: Text("      لون ", style: style),
-          )),
-          SizedBox(
-              child: Center(
-            child: Text("        مقاس        ", style: style),
-          )),
-        ]),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                  child: Center(
+                child: Text("الكميه", style: style),
+              )),
+              SizedBox(
+                  child: Center(
+                child: Text("كثافه", style: style),
+              )),
+              SizedBox(
+                  child: Center(
+                child: Text(" النوع ", style: style),
+              )),
+              SizedBox(
+                  child: Center(
+                child: Text("      لون ", style: style),
+              )),
+              SizedBox(
+                  child: Center(
+                child: Text("        مقاس        ", style: style),
+              )),
+            ].reversed.toList()),
       ));
 }
 
@@ -129,6 +135,10 @@ Items2(List<OperationOrederItems> items) {
                           )),
                           SizedBox(
                               child: Center(
+                            child: Text(e.type.toString(), style: style),
+                          )),
+                          SizedBox(
+                              child: Center(
                             child: Text(e.color.toString(), style: style),
                           )),
                           SizedBox(
@@ -141,7 +151,7 @@ Items2(List<OperationOrederItems> items) {
                                 "${e.hight.removeTrailingZeros}",
                                 style: style),
                           )),
-                        ]),
+                        ].reversed.toList()),
                   ))
               .toList()));
 }

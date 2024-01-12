@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
+import 'package:jason_company/ui/customers/customers_viewModel.dart';
 import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwModel.dart';
 import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
 import 'package:jason_company/ui/final_product_stock/Stock_of_finalProduct_ViewModel.dart';
@@ -26,6 +28,41 @@ class Validation {
           (e) => e.number == blockNum.to_int() && e.serial == blockSerial);
       if (condition.isNotEmpty) {
         return "موجود";
+      }
+
+      return null;
+    };
+  }
+
+  static if_cusomer_serial_already_exist(
+      BuildContext context, Customer_viewmodel vm) {
+    return (String? value) {
+      if (value!.isEmpty) {
+        return "فارغ";
+      }
+      List<CustomerModel> customers =
+          context.read<Customer_controller>().customers;
+      String customerSerial = vm.customerSerial.text;
+      var condition =
+          customers.where((e) => e.serial == customerSerial.to_int());
+      if (condition.isNotEmpty) {
+        return "موجود";
+      }
+
+      return null;
+    };
+  }
+
+  static if_cusomer_serial_exist(BuildContext context) {
+    return (String? value) {
+      if (value!.isEmpty) {
+        return "فارغ";
+      }
+      List<CustomerModel> customers =
+          context.read<Customer_controller>().customers;
+      var condition = customers.where((e) => e.serial == value.to_int());
+      if (condition.isEmpty) {
+        return "غير موجود";
       }
 
       return null;

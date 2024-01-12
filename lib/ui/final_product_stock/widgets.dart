@@ -88,7 +88,9 @@ class AddToStock extends StatelessWidget {
                                         keybordtupe: TextInputType.text,
                                         hint: "العميل",
                                         controller: vm.companycontroller,
-                                        validator: Validation.validateothers,
+                                        validator:
+                                            Validation.if_cusomer_serial_exist(
+                                                context),
                                       ),
                                     ],
                                   ),

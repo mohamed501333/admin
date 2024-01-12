@@ -24,6 +24,7 @@ class Mainview extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<final_prodcut_controller>().get_finalProdcut_data(context);
     context.read<BlockFirebasecontroller>().get_blocks_data();
+    context.read<BlockFirebasecontroller>().c();
     context.read<FractionFirebaseController>().get_Fractions_data();
     context.read<NonFinalController>().getdataOfnotFinals();
     context.read<Invoice_controller>().get_invice_data();

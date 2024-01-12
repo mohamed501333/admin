@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, must_be_immutable, prefer_const_constructors
+// ignore_for_file: file_names, must_be_immutable, prefer_const_constructors, use_build_context_synchronously
 
 import 'dart:io';
 
@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:jason_company/main.dart';
 import 'package:jason_company/services/file_handle_api.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/reports_viewmoder.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -27,6 +29,7 @@ class FinalProductReportsview extends StatelessWidget {
     return bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
   }
 
+  String chosenDate = format.format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,11 +39,34 @@ class FinalProductReportsview extends StatelessWidget {
               Text('انتاج تام الصنع'),
               IconButton(
                   onPressed: () async {
-                    await createAndopenPdf(_readFontData, mkey);
+                    await createAndopenPdf(_readFontData, mkey, chosenDate);
                   },
                   icon: Icon(Icons.picture_as_pdf_outlined))
             ],
           ),
+          actions: [
+            TextButton(onPressed: () async {
+              DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2101));
+
+              if (pickedDate != null) {
+                String formattedDate = format.format(pickedDate);
+                chosenDate = formattedDate;
+                context.read<final_prodcut_controller>().Refresh_Ui();
+              } else {}
+            }, child: Consumer<final_prodcut_controller>(
+              builder: (context, myType, child) {
+                return Text(
+                  chosenDate,
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                );
+              },
+            ))
+          ],
         ),
         body: Consumer<final_prodcut_controller>(
           builder: (context, finalproducts, child) {
@@ -49,95 +75,99 @@ class FinalProductReportsview extends StatelessWidget {
             return Column(
               children: [
                 const Results(),
-                SfDataGridTheme(
-                  data: SfDataGridThemeData(
-                      headerColor: const Color.fromARGB(255, 189, 233, 228)),
-                  child: Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: SfDataGrid(
-                      allowSorting: true,
-                      allowMultiColumnSorting: true,
-                      allowTriStateSorting: true,
-                      key: mkey,
-                      source: EmployeeDataSource(
-                        context: context,
-                        employeeData: finalproducts.finalproducts
-                            .where((element) =>
-                                element.actions.if_action_exist(
-                                    finalProdcutAction
-                                        .recive_Done_Form_FinalProdcutStock
-                                        .getactionTitle) ==
-                                true)
-                            .toList()
-                            .filteronfinalproduct(),
-                        finalproducts: finalproducts.finalproducts
-                            .where((element) =>
-                                element.actions.if_action_exist(
-                                    finalProdcutAction
-                                        .recive_Done_Form_FinalProdcutStock
-                                        .getactionTitle) ==
-                                true)
-                            .toList(),
+                SizedBox(
+                  height: 500,
+                  child: SfDataGridTheme(
+                    data: SfDataGridThemeData(
+                        headerColor: const Color.fromARGB(255, 189, 233, 228)),
+                    child: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: SfDataGrid(
+                        allowSorting: true,
+                        allowMultiColumnSorting: true,
+                        allowTriStateSorting: true,
+                        key: mkey,
+                        source: EmployeeDataSource(
+                            context: context,
+                            employeeData: finalproducts.finalproducts
+                                .where((element) =>
+                                    element.actions.if_action_exist(
+                                        finalProdcutAction
+                                            .incert_finalProduct_from_cutingUnit
+                                            .getactionTitle) ==
+                                    true)
+                                .toList()
+                                .filter_date(context, chosenDate)
+                                .filteronfinalproduct(),
+                            finalproducts: finalproducts.finalproducts
+                                .where((element) =>
+                                    element.actions.if_action_exist(
+                                        finalProdcutAction
+                                            .incert_finalProduct_from_cutingUnit
+                                            .getactionTitle) ==
+                                    true)
+                                .toList()
+                                .filter_date(context, chosenDate)),
+                        columnWidthMode: ColumnWidthMode.fill,
+                        columns: <GridColumn>[
+                          GridColumn(
+                              columnName: 'نوع',
+                              label: Container(
+                                  padding: const EdgeInsets.all(1.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'نوع',
+                                    style: textstyle,
+                                  ))),
+                          GridColumn(
+                              columnName: 'كثافه',
+                              label: Container(
+                                  padding: const EdgeInsets.all(1.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'كثافه',
+                                    style: textstyle,
+                                  ))),
+                          GridColumn(
+                              columnName: 'لون',
+                              label: Container(
+                                  padding: const EdgeInsets.all(1.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'لون',
+                                    style: textstyle,
+                                    overflow: TextOverflow.ellipsis,
+                                  ))),
+                          GridColumn(
+                              columnName: 'عميل',
+                              label: Container(
+                                  padding: const EdgeInsets.all(1.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'شركه',
+                                    style: textstyle,
+                                  ))),
+                          GridColumn(
+                              columnName: 'كميه',
+                              label: Container(
+                                  padding: const EdgeInsets.all(1.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'عدد',
+                                    style: textstyle,
+                                  ))),
+                          GridColumn(
+                              minimumWidth: 110,
+                              columnName: 'مقاس',
+                              label: Container(
+                                  padding: const EdgeInsets.all(1.0),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'المقاس',
+                                    style: textstyle,
+                                  ))),
+                        ],
                       ),
-                      columnWidthMode: ColumnWidthMode.fill,
-                      columns: <GridColumn>[
-                        GridColumn(
-                            columnName: 'نوع',
-                            label: Container(
-                                padding: const EdgeInsets.all(1.0),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'نوع',
-                                  style: textstyle,
-                                ))),
-                        GridColumn(
-                            columnName: 'كثافه',
-                            label: Container(
-                                padding: const EdgeInsets.all(1.0),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'كثافه',
-                                  style: textstyle,
-                                ))),
-                        GridColumn(
-                            columnName: 'لون',
-                            label: Container(
-                                padding: const EdgeInsets.all(1.0),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'لون',
-                                  style: textstyle,
-                                  overflow: TextOverflow.ellipsis,
-                                ))),
-                        GridColumn(
-                            columnName: 'عميل',
-                            label: Container(
-                                padding: const EdgeInsets.all(1.0),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'شركه',
-                                  style: textstyle,
-                                ))),
-                        GridColumn(
-                            columnName: 'كميه',
-                            label: Container(
-                                padding: const EdgeInsets.all(1.0),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'عدد',
-                                  style: textstyle,
-                                ))),
-                        GridColumn(
-                            minimumWidth: 110,
-                            columnName: 'مقاس',
-                            label: Container(
-                                padding: const EdgeInsets.all(1.0),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'المقاس',
-                                  style: textstyle,
-                                ))),
-                      ],
                     ),
                   ),
                 ),
@@ -148,8 +178,11 @@ class FinalProductReportsview extends StatelessWidget {
   }
 }
 
-Future<void> createAndopenPdf(readFontData, GlobalKey<SfDataGridState> mkey,
-    {String x = "يومية الانتاج التام "}) async {
+Future<void> createAndopenPdf(
+    readFontData, GlobalKey<SfDataGridState> mkey, String date) async {
+  Directory? appDocDirectory = await getExternalStorageDirectory();
+
+  String x = "${appDocDirectory!.path}/ الانتاج التام ";
   permission();
   var arabicFont = PdfTrueTypeFont(await readFontData(), 14);
   PdfDocument document = mkey.currentState!.exportToPdfDocument(
@@ -159,7 +192,7 @@ Future<void> createAndopenPdf(readFontData, GlobalKey<SfDataGridState> mkey,
 
     final PdfPageTemplateElement header =
         PdfPageTemplateElement(Rect.fromLTWH(0, 0, width, 65));
-    header.graphics.drawString(x, arabicFont,
+    header.graphics.drawString("الانتاج التام $date", arabicFont,
         bounds: const Rect.fromLTWH(0, 25, 200, 60),
         format: PdfStringFormat(textDirection: PdfTextDirection.rightToLeft));
     headerFooterExport.pdfDocumentTemplate.top = header;
@@ -176,7 +209,7 @@ Future<void> createAndopenPdf(readFontData, GlobalKey<SfDataGridState> mkey,
     }
   });
   final List<int> bytes = document.saveSync();
-  File('/storage/emulated/0/$x.pdf')
+  File('$x.pdf')
       .writeAsBytes(bytes)
       .then((value) => FileHandleApi.openFile(value));
 }

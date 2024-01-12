@@ -13,6 +13,12 @@ extension Brovider on BuildContext {
     checkAuth(context);
     Navigator.of(this).push(MaterialPageRoute(builder: (context) => route));
   }
+
+  gonextAnsRemove(BuildContext context, Widget route) {
+    checkAuth(context);
+    Navigator.of(this).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => route), (d) => false);
+  }
 }
 
 extension MeineVer on double {
@@ -158,6 +164,22 @@ extension Filter on List<FinalProductModel> {
       }
     }
     return nonRepetitive;
+  }
+
+  List<FinalProductModel> filter_date(BuildContext context, String chosenDate) {
+    DateFormat format = DateFormat('yyyy/MM/dd');
+    return where((element) =>
+        format.format(element.actions.get_finalProdcutDateOf(
+            finalProdcutAction.incert_finalProduct_from_cutingUnit)) ==
+        chosenDate).toList();
+  }
+}
+
+extension DD on List<ActionModel> {
+  List<ActionModel> filter_date(BuildContext context, String chosenDate) {
+    DateFormat format = DateFormat('yyyy/MM/dd');
+    return where((element) => format.format(element.when) == chosenDate)
+        .toList();
   }
 }
 

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
@@ -19,6 +20,8 @@ import 'package:jason_company/controllers/scissors_controller.dart';
 import 'package:jason_company/dataScorse/objectBox_helper.dart';
 import 'package:jason_company/ui/main/main_view.dart';
 
+DateFormat format = DateFormat('yyyy/MM/dd');
+DateFormat formatwitTime = DateFormat('yyyy-MM-dd/hh:mm a');
 late Database database;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

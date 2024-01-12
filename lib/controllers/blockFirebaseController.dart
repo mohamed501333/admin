@@ -17,20 +17,21 @@ class BlockFirebasecontroller extends ChangeNotifier {
           .orderByKey()
           .onValue
           .listen((event) {
-        x.clear();
+        all.clear();
         archived_blocks.clear();
         blocks.clear();
         if (event.snapshot.value != null) {
           Map<Object?, Object?> map =
               event.snapshot.value as Map<Object?, Object?>;
           for (var item in map.values.toList()) {
-            x.add(BlockModel.fromJson(item.toString()));
+            all.add(BlockModel.fromJson(item.toString()));
           }
-          blocks.addAll(x.where((element) =>
+
+          blocks.addAll(all.where((element) =>
               element.actions
                   .if_action_exist(BlockAction.archive_block.getactionTitle) ==
               false));
-          archived_blocks.addAll(x.where((element) =>
+          archived_blocks.addAll(all.where((element) =>
               element.actions
                   .if_action_exist(BlockAction.archive_block.getactionTitle) ==
               true));
@@ -41,36 +42,36 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  List<BlockModel> x = [];
+  List<BlockModel> all = [];
   List<BlockModel> blocks = [];
   List<BlockModel> archived_blocks = [];
   List<BlockModel> search = [];
 
-  // c() {
-  //   for (var el in blocks.where((element) => element.serial == "D26s101223")) {
-  //     BlockModel e = BlockModel(
-  //         id: el.id,
-  //         color: "اصفر",
-  //         density: el.density,
-  //         type: el.type,
-  //         serial: el.serial,
-  //         number: el.number,
-  //         Rcissor: el.Rcissor,
-  //         Hscissor: el.Hscissor,
-  //         width: el.width,
-  //         lenth: el.lenth,
-  //         hight: el.hight,
-  //         wight: el.wight,
-  //         cumingFrom: el.cumingFrom,
-  //         OutTo: el.OutTo,
-  //         notes: el.notes,
-  //         fractions: el.fractions,
-  //         actions: el.actions,
-  //         notfinals: el.notfinals);
+  c() {
+    // for (var el in blocks.where((element) => element.serial == "D30h281223")) {
+    //   BlockModel e = BlockModel(
+    //       id: el.id,
+    //       color: el.color,
+    //       density: el.density,
+    //       type: el.type,
+    //       serial: el.serial,
+    //       number: el.number,
+    //       Rcissor: el.Rcissor,
+    //       Hscissor: el.Hscissor,
+    //       width: el.width,
+    //       lenth: el.lenth,
+    //       hight: el.hight,
+    //       wight: el.wight,
+    //       cumingFrom: el.cumingFrom,
+    //       OutTo: el.OutTo,
+    //       notes: el.notes,
+    //       fractions: el.fractions,
+    //       actions: el.actions,
+    //       notfinals: el.notfinals);
 
-  //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
-  //   }
-  // }
+    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
+    // }
+  }
 
   void runFilter(String enteredKeyword) {
     if (enteredKeyword.isEmpty) {

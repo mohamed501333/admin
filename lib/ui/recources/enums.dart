@@ -185,19 +185,21 @@ extension X5 on FractionActon {
 }
 
 enum InvoiceAction {
-  creat,
-  archive,
+  creat_invoice,
+  archive_invoice,
 }
 
 extension Xdf5 on InvoiceAction {
   ActionModel get add {
     switch (this) {
-      case InvoiceAction.creat:
+      case InvoiceAction.creat_invoice:
         return ActionModel(
-            action: "creat", who: SringsManager.myemail, when: DateTime.now());
-      case InvoiceAction.archive:
+            action: "creat_invoice",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case InvoiceAction.archive_invoice:
         return ActionModel(
-            action: "archive",
+            action: "archive_invoice",
             who: SringsManager.myemail,
             when: DateTime.now());
     }
@@ -205,10 +207,10 @@ extension Xdf5 on InvoiceAction {
 
   String get getTitle {
     switch (this) {
-      case InvoiceAction.creat:
-        return "creat";
-      case InvoiceAction.archive:
-        return "archive";
+      case InvoiceAction.creat_invoice:
+        return "creat_invoice";
+      case InvoiceAction.archive_invoice:
+        return "archive_invoice";
     }
   }
 }

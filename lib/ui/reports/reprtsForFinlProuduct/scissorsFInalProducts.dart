@@ -33,8 +33,7 @@ class ScissorsFInalProducts extends StatelessWidget {
               const Text('انتاج تام الصنع لكل مقص'),
               IconButton(
                   onPressed: () async {
-                    await createAndopenPdf(_readFontData, mkey,
-                        x: "يوميه الانتاج التام لكل مقص");
+                    await createAndopenPdf(_readFontData, mkey, "لكل مقص");
                   },
                   icon: const Icon(Icons.picture_as_pdf_outlined))
             ],

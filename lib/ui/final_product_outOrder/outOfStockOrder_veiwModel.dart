@@ -55,7 +55,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
                   .to_double(),
               color: e.color,
               density: e.density,
-              customer: e.customer))
+              customer: customerName.text))
           .toList();
       var invoice = Invoice(
           notes: "",
@@ -65,7 +65,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
           driverName: driverName.text,
           carNumber: carnumber.text.to_int(),
           makeLoad: whoLoad.text,
-          actions: [InvoiceAction.creat.add],
+          actions: [InvoiceAction.creat_invoice.add],
           items: items);
       context.read<Invoice_controller>().addInvoice(invoice);
       context.read<final_prodcut_controller>().addinvoice(finals);

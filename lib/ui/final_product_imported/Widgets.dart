@@ -7,6 +7,7 @@ import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmodel.dart';
+import 'package:jason_company/ui/recources/color_manager.dart';
 import 'package:provider/provider.dart';
 
 class HeaderOftable extends StatelessWidget {
@@ -100,7 +101,6 @@ class Fields extends StatelessWidget {
             children: const [
               DropDdowenFor_scissors(),
               DropDdowenForOrders_sizes(),
-              DropDdowenForOrders(),
             ],
           ),
 
@@ -120,6 +120,7 @@ class Fields extends StatelessWidget {
                 controller: vm.amountcontroller,
                 validator: Validation.validateothers,
               ),
+              const DropDdowenForOrders(),
             ],
           ),
         ],
@@ -182,8 +183,18 @@ class DropDdowenForOrders_sizes extends StatelessWidget {
                 items: Mytype.getOrdersForRadio_order_sizes()
                     .map((e) => DropdownMenuItem(
                           value: e,
-                          child: Text(
-                              "${e.color}>>${e.density}ك>>${e.lenth.removeTrailingZeros}*${e.widti.removeTrailingZeros}*${e.hight.removeTrailingZeros}>>>${e.type}"),
+                          child: Row(
+                            children: [
+                              Text(
+                                "${e.lenth.removeTrailingZeros}*${e.widti.removeTrailingZeros}*${e.hight.removeTrailingZeros}>>>",
+                              ),
+                              Text(
+                                "${e.color}>>ك${e.density.removeTrailingZeros}>>${e.type}",
+                                style:
+                                    const TextStyle(color: ColorManager.cobalt),
+                              ),
+                            ],
+                          ),
                         ))
                     .toList(),
                 onChanged: (v) {

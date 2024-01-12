@@ -15,6 +15,7 @@ import 'package:jason_company/ui/recources/color_manager.dart';
 import 'package:jason_company/ui/recources/icons_manager.dart';
 import 'package:jason_company/ui/recources/strings_manager.dart';
 import 'package:jason_company/ui/final_product_stock/Stock_of_finalProduct_View.dart';
+import 'package:jason_company/ui/users_actions/users_actios.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -195,6 +196,20 @@ class HomeView extends StatelessWidget {
                 " الارشيف",
                 IconsManager.itemIcon1,
                 ontap: () {},
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Item(
+                MediaQuery.of(context).size.width * .45,
+                ColorManager.arsenic,
+                " users actions",
+                IconsManager.itemIcon1,
+                ontap: () {
+                  context.gonext(context, UsersActions());
+                },
               ),
             ],
           ),

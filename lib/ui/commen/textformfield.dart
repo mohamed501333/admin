@@ -8,20 +8,23 @@ class CustomTextFormField extends StatelessWidget {
       this.validator,
       super.key,
       this.onChanged,
+      this.readOnly = false,
       this.autovalidate = false,
+      this.label = "",
       this.keybordtupe = TextInputType.number,
       required this.width,
       required this.controller,
       this.ontap});
   final TextInputType keybordtupe;
   final String hint;
+  final String label;
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final String? Function(String?)? onChanged;
   final String? Function()? ontap;
   final double width;
-  bool autovalidate;
-
+  final bool autovalidate;
+  final bool readOnly;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
         SizedBox(
           width: width,
           child: TextFormField(
+              readOnly: readOnly,
               onTap: ontap,
               onChanged: onChanged,
               inputFormatters: [FilteringTextInputFormatter.deny(' ')],
@@ -41,7 +45,7 @@ class CustomTextFormField extends StatelessWidget {
                       borderSide: BorderSide(width: 2, color: Colors.teal)),
                   border: const OutlineInputBorder(),
                   hintText: hint,
-                  labelText: hint,
+                  labelText: label.isEmpty ? hint : label,
                   labelStyle: const TextStyle(
                       fontSize: 20,
                       color: Colors.black,

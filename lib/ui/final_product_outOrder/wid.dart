@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable, duplicate_ignore
 
+import 'package:advanced_search/advanced_search.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
+import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
@@ -240,34 +242,104 @@ class InvoiceM extends StatelessWidget {
           ),
           body: Form(
             key: vm.formKey,
-            child: Column(
+            child: ListView(
               children: [
                 const SizedBox(
                   height: 10,
                 ),
-                CustomTextFormField(
-                    validator: Validation.validateothers,
-                    hint: 'رقم العربه',
-                    width: 300,
-                    controller: vm.carnumber),
+                AdvancedSearch(
+                  searchItems: context
+                      .read<Customer_controller>()
+                      .customers
+                      .map((e) => e.name)
+                      .toList(),
+                  maxElementsToDisplay: 4,
+                  singleItemHeight: 50,
+                  borderColor: Colors.grey,
+                  minLettersForSearch: 1,
+                  selectedTextColor: const Color(0xFF3363D9),
+                  fontSize: 14,
+                  borderRadius: 12.0,
+                  hintText: ' ابحث عن عميل',
+                  cursorColor: Colors.blueGrey,
+                  autoCorrect: false,
+                  focusedBorderColor: Colors.blue,
+                  searchResultsBgColor: const Color(0xFAFAFA),
+                  disabledBorderColor: Colors.cyan,
+                  enabledBorderColor: Colors.black,
+                  enabled: true,
+                  caseSensitive: false,
+                  inputTextFieldBgColor: Colors.white10,
+                  clearSearchEnabled: true,
+                  itemsShownAtStart: 2,
+                  searchMode: SearchMode.CONTAINS,
+                  showListOfResults: true,
+                  unSelectedTextColor: Colors.black54,
+                  verticalPadding: 10,
+                  horizontalPadding: 10,
+                  hideHintOnTextInputFocus: true,
+                  hintTextColor: Colors.grey,
+                  onItemTap: (index, value) {
+                    vm.customerName.text = value;
+                  },
+                  onSearchClear: () {
+                    print("Cleared Search");
+                  },
+                  onSubmitted: (searchText, listOfResults) {
+                    print("Submitted: $searchText");
+                  },
+                  onEditingProgress: (searchText, listOfResults) {
+                    print("TextEdited: $searchText");
+                    print("LENGTH: ${listOfResults.length}");
+                  },
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-                CustomTextFormField(
-                    validator: Validation.validateothers,
-                    keybordtupe: TextInputType.name,
-                    hint: 'اسم السائق ',
-                    width: 300,
-                    controller: vm.driverName),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: 100,
+                  child: Row(
+                    children: [
+                      CustomTextFormField(
+                          label: "العميل",
+                          readOnly: true,
+                          validator: Validation.validateothers,
+                          hint: 'فارغ  ',
+                          width: 120,
+                          controller: vm.customerName),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      CustomTextFormField(
+                          validator: Validation.validateothers,
+                          hint: 'رقم العربه',
+                          width: 120,
+                          controller: vm.carnumber),
+                    ],
+                  ),
                 ),
-                CustomTextFormField(
-                    validator: Validation.validateothers,
-                    keybordtupe: TextInputType.name,
-                    hint: 'القائم بالتحميل',
-                    width: 300,
-                    controller: vm.whoLoad),
+                SizedBox(
+                  height: 100,
+                  child: Row(
+                    children: [
+                      CustomTextFormField(
+                          validator: Validation.validateothers,
+                          keybordtupe: TextInputType.name,
+                          hint: 'اسم السائق ',
+                          width: 120,
+                          controller: vm.driverName),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      CustomTextFormField(
+                          validator: Validation.validateothers,
+                          keybordtupe: TextInputType.name,
+                          hint: 'القائم بالتحميل',
+                          width: 120,
+                          controller: vm.whoLoad),
+                    ],
+                  ),
+                ),
                 const SizedBox(
                   height: 10,
                 ),

@@ -162,25 +162,14 @@ class Block_detaild_view extends StatelessWidget {
                 child: SfDataGrid(
                   tableSummaryRows: [
                     GridTableSummaryRow(
-                        showSummaryInRow: false,
+                        showSummaryInRow: true,
                         title: 'Total  Count: {Count}',
                         titleColumnSpan: 3,
                         columns: [
                           const GridSummaryColumn(
                               name: 'Count',
-                              columnName: 'size',
+                              columnName: 'num',
                               summaryType: GridSummaryType.count),
-                        ],
-                        position: GridTableSummaryRowPosition.top),
-                    GridTableSummaryRow(
-                        showSummaryInRow: false,
-                        title: 'Total  wight: {f}',
-                        titleColumnSpan: 3,
-                        columns: [
-                          const GridSummaryColumn(
-                              name: 'f',
-                              columnName: 'wight',
-                              summaryType: GridSummaryType.sum),
                         ],
                         position: GridTableSummaryRowPosition.top),
                   ],

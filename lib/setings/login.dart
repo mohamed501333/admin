@@ -89,7 +89,7 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
                                 password: passwordController.text.toString())
                             .then((value) {
                           setState(() {});
-                          context.gonext(context, Mainview());
+                          context.gonextAnsRemove(context, Mainview());
                         });
                       },
                     )),
@@ -104,7 +104,7 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
                       onPressed: () {
                         FirebaseAuth.instance.signOut().then((value) {
                           setState(() {});
-                          context.gonext(context, const MyApp());
+                          context.gonextAnsRemove(context, const MyApp());
                         });
                       },
                     )),
