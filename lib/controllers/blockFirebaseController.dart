@@ -48,7 +48,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
   List<BlockModel> search = [];
 
   c() {
-    // for (var el in blocks.where((element) => element.serial == "D30h281223")) {
+    // for (var el in blocks.where(
+    //     (element) => element.serial == "040124" && element.number > 289)) {
     //   BlockModel e = BlockModel(
     //       id: el.id,
     //       color: el.color,
@@ -75,7 +76,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
   void runFilter(String enteredKeyword) {
     if (enteredKeyword.isEmpty) {
-      // if the search field is empty or only contains white-space, we'll display blocks
       search = blocks;
     } else {
       search = blocks
