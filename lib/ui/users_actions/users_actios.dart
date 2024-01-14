@@ -6,6 +6,7 @@ import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
+import 'package:jason_company/controllers/non_final_controller.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:provider/provider.dart';
@@ -83,7 +84,14 @@ class _UsersActionsState extends State<UsersActions> {
         .toList()
         .expand((element) => element)
         .toList();
-    List<ActionModel> all = a + b + c + d + f + e + g + h;
+    List<ActionModel> j = context
+        .read<NonFinalController>()
+        .not_finals
+        .map((e) => e.actions)
+        .toList()
+        .expand((element) => element)
+        .toList();
+    List<ActionModel> all = a + b + c + d + f + e + g + h + j;
 
     return Scaffold(
       appBar: AppBar(
