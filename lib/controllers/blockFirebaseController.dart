@@ -48,14 +48,13 @@ class BlockFirebasecontroller extends ChangeNotifier {
   List<BlockModel> search = [];
 
   c() {
-    // for (var el in blocks.where(
-    //     (element) => element.serial == "040124" && element.number > 289)) {
+    // for (var el in blocks.where((element) => element.serial == "D36s072123")) {
     //   BlockModel e = BlockModel(
     //       id: el.id,
     //       color: el.color,
-    //       density: el.density,
+    //       density: 35,
     //       type: el.type,
-    //       serial: el.serial,
+    //       serial:el.serial,
     //       number: el.number,
     //       Rcissor: el.Rcissor,
     //       Hscissor: el.Hscissor,
