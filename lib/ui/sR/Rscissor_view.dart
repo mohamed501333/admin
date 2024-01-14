@@ -199,7 +199,8 @@ class ReportsFroH extends StatelessWidget {
             .finalproducts
             .where((element) =>
                 element.actions
-                    .get_Date_of_action(FractionActon.creat_fraction.getTitle)
+                    .get_Date_of_action(finalProdcutAction
+                        .incert_finalProduct_from_cutingUnit.getactionTitle)
                     .formatt() ==
                 DateTime.now().formatt())
             .where((element) => element.scissor == scissor + 3);
