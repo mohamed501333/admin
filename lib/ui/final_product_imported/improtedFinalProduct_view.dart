@@ -2,7 +2,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:jason_company/controllers/setting_controller.dart';
+import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
@@ -12,16 +12,45 @@ import 'package:jason_company/ui/final_product_imported/Widgets.dart';
 import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmodel.dart';
 
 // ignore: must_be_immutable
-class FinalProductView extends StatelessWidget {
+class FinalProductView extends StatefulWidget {
   FinalProductView({super.key});
 
+  @override
+  State<FinalProductView> createState() => _FinalProductViewState();
+}
+
+class _FinalProductViewState extends State<FinalProductView> {
   FinalProductStockViewModel vm = FinalProductStockViewModel();
+  String chosenDate = format.format(DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          actions: [AddUnregular()],
+          actions: [
+            TextButton(
+                onPressed: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101));
+
+                  if (pickedDate != null) {
+                    setState(() {
+                      String formattedDate = format.format(pickedDate);
+                      chosenDate = formattedDate;
+                    });
+                  } else {}
+                },
+                child: Text(
+                  chosenDate,
+                  style: const TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                )),
+            AddUnregular()
+          ],
         ),
         body: Form(
           key: vm.formKey,
@@ -30,7 +59,7 @@ class FinalProductView extends StatelessWidget {
               Fields(vm: vm),
               // Chips2(vm: vm),
               Buttoms(vm: vm),
-              TheTable(vm: vm),
+              TheTable(vm: vm, chosenDate: chosenDate),
             ],
           ),
         ),
@@ -40,11 +69,14 @@ class FinalProductView extends StatelessWidget {
 }
 
 class TheTable extends StatelessWidget {
-  const TheTable({
+  TheTable({
     Key? key,
     required this.vm,
+    required this.chosenDate,
   }) : super(key: key);
   final FinalProductStockViewModel vm;
+  final String chosenDate;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
@@ -75,7 +107,7 @@ class TheTable extends StatelessWidget {
                       10: FlexColumnWidth(.8),
                       11: FlexColumnWidth(.7),
                     },
-                    children: finalproducts.finalproducts
+                    children: finalproducts.SumTheTOw()
                         .where((element) => element.actions.if_action_exist(
                             finalProdcutAction
                                 .incert_finalProduct_from_cutingUnit
@@ -85,7 +117,7 @@ class TheTable extends StatelessWidget {
                                 .get_Date_of_action(finalProdcutAction
                                     .incert_finalProduct_from_cutingUnit
                                     .getactionTitle)) ==
-                            context.read<SettingController>().currentDate())
+                            chosenDate)
                         .sortedBy<num>(
                           (element) => element.id,
                         )

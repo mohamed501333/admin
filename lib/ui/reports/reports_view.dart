@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/ui/reports/block%20reports%20details.com/block_details_view.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/Bolck_reports_view.dart';
-import 'package:jason_company/ui/reports/reportsforH/h_reports_view.dart';
+import 'package:jason_company/ui/reports/reprtsForFinlProuduct/details_of_finalProdcut.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/finalProductReports_view.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/scissorsFInalProducts.dart';
 
@@ -17,12 +17,15 @@ class ReportsView extends StatelessWidget {
     Reportmodel(title: " يومية انتاج تام  ", route: FinalProductReportsview()),
     Reportmodel(
         title: " يومية انتاج تام لكل مقص   ", route: ScissorsFInalProducts()),
-    Reportmodel(title: " يومية انتاج المقصات الراسى  ", route: HReprotsView()),
+    // Reportmodel(title: " يومية انتاج المقصات الراسى  ", route: HReprotsView()),
     Reportmodel(
         title: "اجماليات البلوكات      ", route: const BlockReportsView()),
     Reportmodel(title: "يومية صرف بلوكات     ", route: DailyBlockReportsView()),
     Reportmodel(
         title: "  تفاصيل مخزن البلوكات     ", route: Block_detaild_view()),
+    Reportmodel(
+        title: "      تفاصيل مخزن المنتج التام     ",
+        route: details_of_finalProdcut()),
   ];
   @override
   Widget build(BuildContext context) {

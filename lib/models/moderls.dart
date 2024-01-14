@@ -1238,6 +1238,7 @@ class OrderModel {
   String customer;
   List<ActionModel> actions;
   List<OperationOrederItems> items;
+  String notes;
   OrderModel({
     required this.id,
     required this.serial,
@@ -1245,6 +1246,7 @@ class OrderModel {
     required this.dateTOOrder,
     required this.customer,
     required this.actions,
+    required this.notes,
     required this.items,
   });
 
@@ -1255,6 +1257,7 @@ class OrderModel {
     DateTime? dateTOOrder,
     String? customer,
     List<ActionModel>? actions,
+    String? notes,
     List<OperationOrederItems>? items,
   }) {
     return OrderModel(
@@ -1265,6 +1268,7 @@ class OrderModel {
       customer: customer ?? this.customer,
       actions: actions ?? this.actions,
       items: items ?? this.items,
+      notes: notes ?? this.notes,
     );
   }
 
@@ -1275,6 +1279,7 @@ class OrderModel {
       'datecreated': datecreated.millisecondsSinceEpoch,
       'dateTOOrder': dateTOOrder.millisecondsSinceEpoch,
       'customer': customer,
+      'notes': notes,
       'actions': actions.map((x) => x.toMap()).toList(),
       'items': items.map((x) => x.toMap()).toList(),
     };
@@ -1299,6 +1304,7 @@ class OrderModel {
           (x) => OperationOrederItems.fromMap(x as Map<String, dynamic>),
         ),
       ),
+      notes: map['notes'] as String,
     );
   }
 
@@ -1309,7 +1315,7 @@ class OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, serial: $serial, datecreated: $datecreated, dateTOOrder: $dateTOOrder, customer: $customer, actions: $actions, items: $items)';
+    return 'OrderModel(id: $id, serial: $serial, datecreated: $datecreated, dateTOOrder: $dateTOOrder, customer: $customer, actions: $actions, items: $items, notes: $notes)';
   }
 
   @override
@@ -1322,7 +1328,8 @@ class OrderModel {
         other.dateTOOrder == dateTOOrder &&
         other.customer == customer &&
         listEquals(other.actions, actions) &&
-        listEquals(other.items, items);
+        listEquals(other.items, items) &&
+        other.notes == notes;
   }
 
   @override
@@ -1333,7 +1340,8 @@ class OrderModel {
         dateTOOrder.hashCode ^
         customer.hashCode ^
         actions.hashCode ^
-        items.hashCode;
+        items.hashCode ^
+        notes.hashCode;
   }
 }
 

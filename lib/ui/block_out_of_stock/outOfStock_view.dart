@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -15,15 +16,46 @@ import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
 
-class OutOfStockView extends StatelessWidget {
+class OutOfStockView extends StatefulWidget {
   OutOfStockView({super.key});
+
+  @override
+  State<OutOfStockView> createState() => _OutOfStockViewState();
+}
+
+class _OutOfStockViewState extends State<OutOfStockView> {
   OutOfStockViewModel vm = OutOfStockViewModel();
+
   BlocksStockViewModel vm2 = BlocksStockViewModel();
+  String chosenDate = format.format(DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
+        actions: [
+          TextButton(
+              onPressed: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101));
+
+                if (pickedDate != null) {
+                  setState(() {
+                    String formattedDate = format.format(pickedDate);
+                    chosenDate = formattedDate;
+                  });
+                } else {}
+              },
+              child: Text(
+                chosenDate,
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+              )),
+        ],
         title: const Text("صرف بلوكات"),
       ),
       body: Consumer<BlockFirebasecontroller>(
@@ -55,7 +87,7 @@ class OutOfStockView extends StatelessWidget {
                   ),
                 ),
               ),
-              TheTable0001(vm: vm2, vm2: vm)
+              TheTable0001(vm: vm2, vm2: vm, chosenDate: chosenDate)
             ],
           );
         },
@@ -139,8 +171,11 @@ class TheTable0001 extends StatelessWidget {
   const TheTable0001({
     super.key,
     required this.vm,
+    required this.chosenDate,
     required this.vm2,
   });
+  final String chosenDate;
+
   final BlocksStockViewModel vm;
   final OutOfStockViewModel vm2;
   @override
@@ -181,7 +216,10 @@ class TheTable0001 extends StatelessWidget {
                     },
                     children: blocks.blocks.reversed
                         .toList()
-                        .filter_date_consumed(context)
+                        .where((element) =>
+                            format.format(element.actions.get_Date_of_action(
+                                BlockAction.consume_block.getactionTitle)) ==
+                            chosenDate)
                         .sortedBy<DateTime>((element) => element.actions
                             .get_Date_of_action(
                                 BlockAction.consume_block.getactionTitle))

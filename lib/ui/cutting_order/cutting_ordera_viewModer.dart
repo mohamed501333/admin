@@ -19,6 +19,7 @@ class CuttingOrderViewModel extends BaseViewModel {
   addOrder(BuildContext context) {
     if (temp.isNotEmpty) {
       OrderModel order = OrderModel(
+          notes: notes.text,
           dateTOOrder:
               DateTime.fromMillisecondsSinceEpoch(datecontroller.text.to_int()),
           datecreated: DateTime.now(),

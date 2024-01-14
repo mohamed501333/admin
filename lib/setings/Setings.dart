@@ -6,12 +6,8 @@ import 'package:jason_company/controllers/fractinsFirebaseController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/app/functions.dart';
-import 'package:jason_company/services/file_handle_api.dart';
-import 'package:jason_company/services/pdf_invoice_api.dart';
-import 'package:jason_company/services/pdfprevei.dart';
+
 import 'package:jason_company/setings/login.dart';
-import 'package:jason_company/ui/commen/date.dart';
 import 'package:jason_company/ui/reports/reportsforH/h_reports_viewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -59,77 +55,77 @@ class Setings extends StatelessWidget {
     return Scaffold(
         body: Column(
       children: [
-        const Center(child: CustonSwitch()),
+        // const Center(child: CustonSwitch()),
         const Center(child: CustonSwitch2()),
-        Container(
-          padding: const EdgeInsets.all(5),
-          margin: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black, width: 1),
-              color: const Color.fromARGB(255, 212, 205, 205),
-              borderRadius: const BorderRadius.all(Radius.circular(8))),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Date(),
-              Text(
-                'توقيت البرنامج',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ),
-        ElevatedButton(
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 8.0),
-            child: Text(
-              ' PDF عرض اليوميه ك ',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          onPressed: () async {
-            permission().then((value) async {
-              PdfInvoiceApi.generate(context,
-                      hscissors: data, resltsdata: resultsdata)
-                  .then((value) => context.gonext(
-                      context,
-                      PDfpreview(
-                        v: value.save(),
-                      )));
-            });
-          },
-        ),
-        ElevatedButton(
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 8.0),
-            child: Text(
-              ' PDF انشاء اليوميه ك ',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          onPressed: () async {
-            permission().then((value) async {
-              PdfInvoiceApi.generate(context,
-                      hscissors: PdfHscissorsdata(
-                          h1: Hdata(1), h2: Hdata(1), h3: Hdata(1)),
-                      resltsdata: resultsdata)
-                  .then((value) => FileHandleApi.saveDocument(pdf: value))
-                  .then((value) => FileHandleApi.openFile(value));
-            });
-          },
-        ),
+        // Container(
+        //   padding: const EdgeInsets.all(5),
+        //   margin: const EdgeInsets.all(5),
+        //   decoration: BoxDecoration(
+        //       border: Border.all(color: Colors.black, width: 1),
+        //       color: const Color.fromARGB(255, 212, 205, 205),
+        //       borderRadius: const BorderRadius.all(Radius.circular(8))),
+        //   child: const Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Date(),
+        //       Text(
+        //         'توقيت البرنامج',
+        //         style: TextStyle(
+        //           color: Colors.black,
+        //           fontSize: 16.0,
+        //           fontWeight: FontWeight.w600,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // ElevatedButton(
+        //   child: const Padding(
+        //     padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 8.0),
+        //     child: Text(
+        //       ' PDF عرض اليوميه ك ',
+        //       style: TextStyle(
+        //         color: Colors.black,
+        //         fontSize: 16.0,
+        //         fontWeight: FontWeight.w600,
+        //       ),
+        //     ),
+        //   ),
+        //   onPressed: () async {
+        //     permission().then((value) async {
+        //       PdfInvoiceApi.generate(context,
+        //               hscissors: data, resltsdata: resultsdata)
+        //           .then((value) => context.gonext(
+        //               context,
+        //               PDfpreview(
+        //                 v: value.save(),
+        //               )));
+        //     });
+        //   },
+        // ),
+        // ElevatedButton(
+        //   child: const Padding(
+        //     padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 8.0),
+        //     child: Text(
+        //       ' PDF انشاء اليوميه ك ',
+        //       style: TextStyle(
+        //         color: Colors.black,
+        //         fontSize: 16.0,
+        //         fontWeight: FontWeight.w600,
+        //       ),
+        //     ),
+        //   ),
+        //   onPressed: () async {
+        //     permission().then((value) async {
+        //       PdfInvoiceApi.generate(context,
+        //               hscissors: PdfHscissorsdata(
+        //                   h1: Hdata(1), h2: Hdata(1), h3: Hdata(1)),
+        //               resltsdata: resultsdata)
+        //           .then((value) => FileHandleApi.saveDocument(pdf: value))
+        //           .then((value) => FileHandleApi.openFile(value));
+        //     });
+        //   },
+        // ),
         ElevatedButton(
             onPressed: () {
               context.gonext(context, const MyloginPage());

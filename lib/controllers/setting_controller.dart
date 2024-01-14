@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names
+// ignore_for_file: file_names, non_constant_identifier_names, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -60,5 +60,11 @@ class SettingController extends ChangeNotifier {
     s--;
     notifyListeners();
     context.read<BlockFirebasecontroller>().Refresh_the_UI();
+  }
+
+  bool switchValue_for_final = true;
+
+  Refresh_Ui() {
+    notifyListeners();
   }
 }

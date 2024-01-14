@@ -1,13 +1,16 @@
 // ignore_for_file: file_names, must_be_immutable, camel_case_types
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
+import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmodel.dart';
 import 'package:jason_company/ui/recources/color_manager.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class HeaderOftable extends StatelessWidget {
@@ -108,6 +111,62 @@ class Fields extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              Consumer<SettingController>(
+                builder: (context, myType, child) {
+                  return TextButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('  ?'),
+                                content: SizedBox(
+                                  height: 200,
+                                  child: Column(children: [
+                                    CupertinoSwitch(
+                                      value: myType.switchValue_for_final,
+                                      onChanged: (value) {
+                                        myType.switchValue_for_final = value;
+                                        Navigator.pop(context);
+
+                                        myType.Refresh_Ui();
+                                      },
+                                    ),
+                                    const Text('  ملحوظه'),
+                                    const Text(
+                                        '   يتم الغاء تفغيل هذا الذر اذا كان    '),
+                                    const Text(
+                                        '     المنتج    مراتب البلطات      '),
+                                    const Text(
+                                        '           فهى تدخل فى مرحله اخرى '),
+                                    const Text('   اى انها غير تام  '),
+                                  ]),
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.green),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('No')),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.red),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        'yes',
+                                      )),
+                                ],
+                              );
+                            });
+                      },
+                      child: Text(
+                          myType.switchValue_for_final ? "تام" : "غير تام"));
+                },
+              ),
               CustomTextFormField(
                 keybordtupe: TextInputType.name,
                 width: MediaQuery.of(context).size.width * .23,
@@ -144,6 +203,10 @@ class DropDdowenForOrders extends StatelessWidget {
             DropdownButton(
                 value: Mytype.initionalForRadio_order_Serials,
                 items: Mytype.getOrdersForRadio_order_Serials()
+                    .where((element) =>
+                        element.actions.if_action_exist(
+                            OrderAction.order_colosed.getTitle) ==
+                        false)
                     .map((e) => DropdownMenuItem(
                           value: e,
                           child: Text(e.serial.toString()),

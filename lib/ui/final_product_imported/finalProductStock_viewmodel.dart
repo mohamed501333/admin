@@ -5,6 +5,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class FinalProductStockViewModel extends BaseViewModel {
           .incert_finalProduct_from_cutingUnit(FinalProductModel(
             worker: "",
             stageOfR: 0,
-            isfinal: true,
+            isfinal: context.read<SettingController>().switchValue_for_final,
             notes: notes.text,
             cuting_order_number: order.serial,
             actions: [],

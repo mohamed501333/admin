@@ -111,7 +111,7 @@ class HomeView extends StatelessWidget {
               Item(
                 MediaQuery.of(context).size.width * .45,
                 Color(0xff8676FE),
-                "الفواتير",
+                "اذون صرف منتج تام",
                 IconsManager.itemIcon1,
                 ontap: () {
                   context.gonext(context, InvicesView());

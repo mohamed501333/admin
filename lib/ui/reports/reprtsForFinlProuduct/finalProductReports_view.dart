@@ -74,7 +74,7 @@ class FinalProductReportsview extends StatelessWidget {
                 TextStyle(fontWeight: FontWeight.bold, fontSize: 13);
             return Column(
               children: [
-                const Results(),
+                Results(chosenDate: chosenDate),
                 SizedBox(
                   height: 500,
                   child: SfDataGridTheme(
@@ -271,13 +271,14 @@ class EmployeeDataSource extends DataGridSource {
 
 // جدول الاجمالى
 class Results extends StatelessWidget {
-  const Results({super.key});
+  Results({super.key, required this.chosenDate});
+  final String chosenDate;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 150,
       child: Column(
-        children: [const HeaderOftable22(), TheTable23()],
+        children: [const HeaderOftable22(), TheTable23(chosenDate: chosenDate)],
       ),
     );
   }
@@ -327,9 +328,12 @@ class HeaderOftable22 extends StatelessWidget {
 class TheTable23 extends StatelessWidget {
   TheTable23({
     super.key,
+    required this.chosenDate,
   });
   ReportsViewModel vm = ReportsViewModel();
   int x = 0;
+  final String chosenDate;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
@@ -345,6 +349,11 @@ class TheTable23 extends StatelessWidget {
                 2: FlexColumnWidth(.3),
               },
               children: finalproducts.finalproducts
+                  .where((element) =>
+                      format.format(element.actions.get_Date_of_action(
+                          finalProdcutAction.incert_finalProduct_from_cutingUnit
+                              .getactionTitle)) ==
+                      chosenDate)
                   .where((element) =>
                       element.actions.if_action_exist(finalProdcutAction
                           .final_prodcut_DidQalityCheck.getactionTitle) ==

@@ -7,11 +7,11 @@ class SringsManager {
   static const String itemTitle4 = "المخازن";
   static const String itemTitle5 = "مخزن دون التام";
   static const String itemTitle6 = "المخازن";
-  static const String itemTitle7 = "  اذن تحميل منتج تام";
+  static const String itemTitle7 = "   صرف منتج تام";
   static const String itemTitle9 = "صرف بلوكات";
   static const String itemTitle10 = "اوامر التشغيل";
   static const String itemTitle11 = "رصيد منتج تام";
-  static const String itemTitle12 = "رصيد البلوكات";
+  static const String itemTitle12 = "اظافه الى البلوكات";
   static const String itemTitle13 = " الاله الحسابه";
   static String myemail =
       FirebaseAuth.instance.currentUser!.email ?? "unknowen";

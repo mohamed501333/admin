@@ -17,9 +17,9 @@ class Radiobuttom extends StatelessWidget {
       elevation: 0,
       absoluteZeroSpacing: true,
       unSelectedColor: Theme.of(context).canvasColor,
-      buttonLables: const ['H1', 'H2', 'H3', 'R1', 'R2', 'R3', 'A'],
+      buttonLables: const ['H1', 'H2', 'H3', 'R1', 'R2', 'R3'],
       // ignore: prefer_const_literals_to_create_immutables
-      buttonValues: [0, 1, 2, 3, 4, 5, 6],
+      buttonValues: [0, 1, 2, 3, 4, 5],
       radioButtonValue: (value) =>
           Provider.of<ScissorsController>(context, listen: false)
               .changeIndexOfRadioButoon(value),

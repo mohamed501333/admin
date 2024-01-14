@@ -4,10 +4,12 @@ import 'dart:io';
 
 import 'package:date_ranger/date_ranger.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
+import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:jason_company/main.dart';
 import 'package:jason_company/services/file_handle_api.dart';
 
 import 'package:path_provider/path_provider.dart';
@@ -36,8 +38,8 @@ Future<void> createAndopenEXL(
       .then((value) => FileHandleApi.openFile(value));
 }
 
-class Block_detaild_view extends StatelessWidget {
-  Block_detaild_view();
+class details_of_finalProdcut extends StatelessWidget {
+  details_of_finalProdcut();
 
   var columns = <GridColumn>[
     GridColumn(
@@ -81,42 +83,42 @@ class Block_detaild_view extends StatelessWidget {
             ))),
     GridColumn(
         allowFiltering: true,
-        columnName: 'serial',
+        columnName: 'amount',
         label: Container(
             padding: const EdgeInsets.all(4.0),
             alignment: Alignment.center,
             child: Text(
-              'كود',
+              'الكميه',
               style: textstyle11,
             ))),
     GridColumn(
         allowFiltering: true,
-        columnName: 'wight',
+        columnName: 'customer',
         label: Container(
             padding: const EdgeInsets.all(4.0),
             alignment: Alignment.center,
             child: Text(
-              'وزن',
+              'عميل',
               style: textstyle11,
             ))),
     GridColumn(
         allowFiltering: true,
-        columnName: 'num',
+        columnName: 'ading',
         label: Container(
             padding: const EdgeInsets.all(4.0),
             alignment: Alignment.center,
             child: Text(
-              'رقم',
+              'الاضافه',
               style: textstyle11,
             ))),
     GridColumn(
         allowFiltering: true,
-        columnName: 'date',
+        columnName: 'outorder',
         label: Container(
             padding: const EdgeInsets.all(4.0),
             alignment: Alignment.center,
             child: Text(
-              'تاريخ الصرف',
+              'الصرف',
               style: textstyle11,
             ))),
   ];
@@ -125,13 +127,14 @@ class Block_detaild_view extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalKey<SfDataGridState> kkkkk = GlobalKey<SfDataGridState>();
 
-    return Consumer<BlockFirebasecontroller>(builder: (context, blocks, child) {
+    return Consumer<final_prodcut_controller>(
+        builder: (context, mytype, child) {
       return Scaffold(
           appBar: AppBar(
             actions: [
               IconButton(
                   onPressed: () {
-                    context.gonext(context, Datepker());
+                    context.gonext(context, const Datepker());
                   },
                   icon: const Icon(Icons.date_range)),
               IconButton(
@@ -153,13 +156,13 @@ class Block_detaild_view extends StatelessWidget {
                   tableSummaryRows: [
                     GridTableSummaryRow(
                         showSummaryInRow: true,
-                        title: 'Total  Count: {Count}',
+                        title: 'Total  Quantity: {Count}',
                         titleColumnSpan: 3,
                         columns: [
                           const GridSummaryColumn(
                               name: 'Count',
-                              columnName: 'num',
-                              summaryType: GridSummaryType.count),
+                              columnName: 'amount',
+                              summaryType: GridSummaryType.sum),
                         ],
                         position: GridTableSummaryRowPosition.top),
                   ],
@@ -171,7 +174,8 @@ class Block_detaild_view extends StatelessWidget {
                   allowMultiColumnSorting: true,
                   allowTriStateSorting: true,
                   allowFiltering: true,
-                  source: EmployeeDataSource22(coumingData: blocks.blocks),
+                  source: EmployeeDataSource2233(context,
+                      coumingData: mytype.finalproducts.toList()),
                   columnWidthMode: ColumnWidthMode.fill,
                   columns: columns,
                 ),
@@ -182,34 +186,49 @@ class Block_detaild_view extends StatelessWidget {
   }
 }
 
-class EmployeeDataSource22 extends DataGridSource {
+class EmployeeDataSource2233 extends DataGridSource {
 //DataGridRowهنا تحويل البيانات الى قائمه من
-  EmployeeDataSource22({
-    required List<BlockModel> coumingData,
+  EmployeeDataSource2233(
+    this.context, {
+    required List<FinalProductModel> coumingData,
   }) {
     data = coumingData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.hight}*${e.width}*${e.lenth}"),
+                  value:
+                      "${e.hight.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.lenth.removeTrailingZeros}"),
               DataGridCell<String>(columnName: 'color', value: e.color),
               DataGridCell<double>(columnName: 'denety', value: e.density),
               DataGridCell<String>(columnName: 'type', value: e.type),
-              DataGridCell<String>(columnName: 'serial', value: e.serial),
-              DataGridCell<double>(columnName: 'wight', value: e.wight),
-              DataGridCell<int>(columnName: 'num', value: e.number),
+              DataGridCell<int>(columnName: 'amount', value: e.amount),
               DataGridCell<String>(
-                  columnName: 'date',
+                  columnName: 'customer',
+                  value: context
+                      .read<Customer_controller>()
+                      .customers
+                      .where((element) => element.serial == e.customer.to_int())
+                      .first
+                      .name),
+              DataGridCell<String>(
+                  columnName: 'ading',
+                  value: e.actions.if_action_exist(finalProdcutAction
+                          .recive_Done_Form_FinalProdcutStock.getactionTitle)
+                      ? format.format(e.actions.get_Date_of_action(
+                          finalProdcutAction.recive_Done_Form_FinalProdcutStock
+                              .getactionTitle))
+                      : ""),
+              DataGridCell<String>(
+                  columnName: 'outorder',
                   value: e.actions.if_action_exist(
-                          BlockAction.consume_block.getactionTitle)
-                      ? DateFormat('yyyy/MM/dd').format(e.actions
-                          .get_Date_of_action(
-                              BlockAction.consume_block.getactionTitle))
-                      : ''),
+                          finalProdcutAction.out_order.getactionTitle)
+                      ? format.format(e.actions.get_Date_of_action(
+                          finalProdcutAction.out_order.getactionTitle))
+                      : ""),
             ]))
         .toList();
   }
-
+  final BuildContext context;
   List<DataGridRow> data = [];
 
   @override

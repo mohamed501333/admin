@@ -1,6 +1,5 @@
 // ignore_for_file: file_names
 
-import 'package:flutter/material.dart';
 import 'package:jason_company/ui/sH/h1_veiw.dart';
 import 'package:jason_company/ui/sR/Rscissor_view.dart';
 
@@ -18,6 +17,5 @@ class ScissorsViewModel {
     Rscissor(scissor: 1),
     Rscissor(scissor: 2),
     Rscissor(scissor: 3),
-    Container(),
   ];
 }

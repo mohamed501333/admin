@@ -38,6 +38,12 @@ class Fields001 extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  CustomTextFormField(
+                    keybordtupe: TextInputType.name,
+                    width: MediaQuery.of(context).size.width * .19,
+                    hint: "ملحوظه",
+                    controller: vm.notes,
+                  ),
                   DropDdowenForDensity(),
                   DropDdowenForcolor(),
                   DropDdowenFortype(),
@@ -50,25 +56,25 @@ class Fields001 extends StatelessWidget {
                 children: [
                   CustomTextFormField(
                     width: MediaQuery.of(context).size.width * .19,
-                    hint: "الارتفاع",
+                    hint: "ارتفاع",
                     controller: vm.hightncontroller,
                     validator: Validation.validateothers,
                   ),
                   CustomTextFormField(
                     width: MediaQuery.of(context).size.width * .19,
-                    hint: "العرض",
+                    hint: "عرض",
                     controller: vm.widthcontroller,
                     validator: Validation.validateothers,
                   ),
                   CustomTextFormField(
                     width: MediaQuery.of(context).size.width * .19,
-                    hint: "الطول ",
+                    hint: "طول",
                     controller: vm.lenthcontroller,
                     validator: Validation.validateothers,
                   ),
                   CustomTextFormField(
                     width: MediaQuery.of(context).size.width * .19,
-                    hint: "الكميه ",
+                    hint: "كميه",
                     controller: vm.amountcontroller,
                     validator: Validation.validateothers,
                   ),
@@ -139,6 +145,7 @@ class Buttoms001 extends StatelessWidget {
       onPressed: () {
         if (context.read<Customer_controller>().initialForRaido != null) {
           vm.addOrder(context);
+          vm.notes.clear();
         }
       },
       child: const SizedBox(
@@ -248,7 +255,7 @@ class TheTable001 extends StatelessWidget {
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              width: 1100,
+              width: 1200,
               child: ListView(
                 children: [
                   const HeaderOftable001(),
@@ -259,14 +266,19 @@ class TheTable001 extends StatelessWidget {
                       2: FlexColumnWidth(3),
                       3: FlexColumnWidth(3),
                       4: FlexColumnWidth(3),
-                      5: FlexColumnWidth(2),
-                      6: FlexColumnWidth(1),
-                      7: FlexColumnWidth(1.5),
-                      8: FlexColumnWidth(4),
-                      9: FlexColumnWidth(1),
-                      10: FlexColumnWidth(1.2),
+                      5: FlexColumnWidth(3),
+                      6: FlexColumnWidth(2),
+                      7: FlexColumnWidth(1),
+                      8: FlexColumnWidth(1.5),
+                      9: FlexColumnWidth(4),
+                      10: FlexColumnWidth(1),
+                      11: FlexColumnWidth(1.2),
                     },
                     children: orders.orders
+                        .where((element) =>
+                            element.actions.if_action_exist(
+                                OrderAction.order_colosed.getTitle) ==
+                            false)
                         .sortedBy<num>((element) => element.serial)
                         .map((order) {
                           return TableRow(
@@ -277,7 +289,7 @@ class TheTable001 extends StatelessWidget {
                                     : Colors.amber[50],
                               ),
                               children: [
-                                //ايقونة المسج
+                                //ايقونة الطباعه
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
@@ -301,12 +313,17 @@ class TheTable001 extends StatelessWidget {
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
                                         onTap: () {
-                                          //TODO:
+                                          showmyAlertDialog(context,
+                                              OrderAction.order_colosed, order);
                                         },
                                         child: const Icon(
                                           Icons.delete,
                                           color: Colors.red,
                                         ))),
+
+                                Center(
+                                  child: Text(order.notes),
+                                ),
 
                                 //الكنترول
                                 GestureDetector(
@@ -650,12 +667,13 @@ class HeaderOftable001 extends StatelessWidget {
         2: FlexColumnWidth(3),
         3: FlexColumnWidth(3),
         4: FlexColumnWidth(3),
-        5: FlexColumnWidth(2),
-        6: FlexColumnWidth(1),
-        7: FlexColumnWidth(1.5),
-        8: FlexColumnWidth(4),
-        9: FlexColumnWidth(1),
-        10: FlexColumnWidth(1.2),
+        5: FlexColumnWidth(3),
+        6: FlexColumnWidth(2),
+        7: FlexColumnWidth(1),
+        8: FlexColumnWidth(1.5),
+        9: FlexColumnWidth(4),
+        10: FlexColumnWidth(1),
+        11: FlexColumnWidth(1.2),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -666,8 +684,15 @@ class HeaderOftable001 extends StatelessWidget {
             children: [
               Container(
                   padding: const EdgeInsets.all(5), child: const Text("طباعه")),
-              Container(
-                  padding: const EdgeInsets.all(5), child: const Text("")),
+              Center(
+                child: Container(
+                    padding: const EdgeInsets.all(5), child: const Text("غلق")),
+              ),
+              Center(
+                child: Container(
+                    padding: const EdgeInsets.all(5),
+                    child: const Text("ملاحظات")),
+              ),
               Center(
                 child: Container(
                     padding: const EdgeInsets.all(5),
@@ -723,6 +748,7 @@ showmyAlertDialog(BuildContext context, OrderAction action, OrderModel item) {
             height: 200,
             child: Column(children: [
               Text('هل انت متاكد'),
+              Text(' سوف يتم اغلاق امر الشغل '),
             ]),
           ),
           actions: [

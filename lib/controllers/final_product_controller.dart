@@ -18,6 +18,7 @@ class final_prodcut_controller extends ChangeNotifier {
           .listen((event) {
         finalproducts.clear();
         initalData.clear();
+        isfinal_false.clear();
         if (event.snapshot.value != null) {
           Map<Object?, Object?> map =
               event.snapshot.value as Map<Object?, Object?>;
@@ -25,9 +26,16 @@ class final_prodcut_controller extends ChangeNotifier {
             initalData.add(FinalProductModel.fromJson(item.toString()));
           }
           finalproducts.addAll(initalData.where((element) =>
-              element.actions.if_action_exist(
-                  finalProdcutAction.archive_final_prodcut.getactionTitle) ==
-              false));
+              element.actions.if_action_exist(finalProdcutAction
+                      .archive_final_prodcut.getactionTitle) ==
+                  false &&
+              element.isfinal == true));
+          //
+          isfinal_false.addAll(initalData.where((element) =>
+              element.actions.if_action_exist(finalProdcutAction
+                      .archive_final_prodcut.getactionTitle) ==
+                  false &&
+              element.isfinal == false));
         }
 
         notifyListeners();
@@ -38,6 +46,8 @@ class final_prodcut_controller extends ChangeNotifier {
 
   List<FinalProductModel> finalproducts = [];
   List<FinalProductModel> initalData = [];
+  List<FinalProductModel> isfinal_false = [];
+  List<FinalProductModel> SumTheTOw() => isfinal_false + finalproducts;
 
   deletefinalProudut(FinalProductModel user) {
     user.actions.add(finalProdcutAction.archive_final_prodcut.add);

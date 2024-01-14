@@ -34,6 +34,23 @@ class OrderController extends ChangeNotifier {
     } catch (e) {}
   }
 
+  // gggg() {
+  //   for (var el in orders) {
+  //     OrderModel e = OrderModel(
+  //       id: el.id,
+  //       notes: "",
+  //       serial: el.serial,
+  //       datecreated: el.datecreated,
+  //       dateTOOrder: el.dateTOOrder,
+  //       customer: el.customer,
+  //       actions: el.actions,
+  //       items: el.items,
+  //     );
+
+  //     FirebaseDatabase.instance.ref("orders/${el.id}").set(e.toJson());
+  //   }
+  // }
+
   List<OrderModel> orders = [];
   List<OrderModel> initalData = [];
 
