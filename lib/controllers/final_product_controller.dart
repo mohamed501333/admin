@@ -44,6 +44,33 @@ class final_prodcut_controller extends ChangeNotifier {
     } catch (e) {}
   }
 
+  c() {
+    for (var el in finalproducts) {
+      FinalProductModel e = FinalProductModel(
+        id: el.id,
+        color: el.color,
+        type: el.type,
+        width: el.width,
+        lenth: el.lenth,
+        hight: el.hight,
+        amount: el.amount,
+        customer: el.customer,
+        cuting_order_number: el.cuting_order_number,
+        density: el.density,
+        isfinal: el.isfinal,
+        scissor: el.scissor,
+        stageOfR: el.stageOfR,
+        worker: el.worker,
+        notes: el.notes,
+        actions: el.actions,
+      );
+      e.actions.removeWhere(
+          (element) => element.action == "recive_Done_Form_FinalProdcutStock");
+
+      FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
+    }
+  }
+
   List<FinalProductModel> finalproducts = [];
   List<FinalProductModel> initalData = [];
   List<FinalProductModel> isfinal_false = [];
