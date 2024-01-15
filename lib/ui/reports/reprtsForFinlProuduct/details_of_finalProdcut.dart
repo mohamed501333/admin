@@ -121,6 +121,16 @@ class details_of_finalProdcut extends StatelessWidget {
               'الصرف',
               style: textstyle11,
             ))),
+    GridColumn(
+        allowFiltering: true,
+        columnName: 'scissor',
+        label: Container(
+            padding: const EdgeInsets.all(4.0),
+            alignment: Alignment.center,
+            child: Text(
+              'lr',
+              style: textstyle11,
+            ))),
   ];
 
   @override
@@ -224,6 +234,14 @@ class EmployeeDataSource2233 extends DataGridSource {
                           finalProdcutAction.out_order.getactionTitle)
                       ? format.format(e.actions.get_Date_of_action(
                           finalProdcutAction.out_order.getactionTitle))
+                      : ""),
+              DataGridCell<String>(
+                  columnName: 'scissor',
+                  value: e.actions.if_action_exist(finalProdcutAction
+                          .incert_finalProduct_from_cutingUnit.getactionTitle)
+                      ? format.format(e.actions.get_Date_of_action(
+                          finalProdcutAction.incert_finalProduct_from_cutingUnit
+                              .getactionTitle))
                       : ""),
             ]))
         .toList();
