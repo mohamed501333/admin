@@ -242,7 +242,7 @@ class InvoiceM extends StatelessWidget {
           ),
           body: Form(
             key: vm.formKey,
-            child: ListView(
+            child: Column(
               children: [
                 const SizedBox(
                   height: 10,
