@@ -185,7 +185,7 @@ class TheTable extends StatelessWidget {
                                                   .format(user.actions
                                                       .get_Date_of_action(
                                                           finalProdcutAction
-                                                              .incert_finalProduct_from_cutingUnit
+                                                              .recive_Done_Form_FinalProdcutStock
                                                               .getactionTitle))
                                                   .toString()
                                                   .toString()
