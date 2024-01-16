@@ -71,6 +71,7 @@ class final_prodcut_controller extends ChangeNotifier {
   // }
 
   List<FinalProductModel> finalproducts = [];
+  List<FinalProductModel> search = [];
   List<FinalProductModel> initalData = [];
   List<FinalProductModel> isfinal_false = [];
   List<FinalProductModel> SumTheTOw() => isfinal_false + finalproducts;
