@@ -44,6 +44,10 @@ class outOfStockOrderveiwModel extends BaseViewModel {
     List<Invoice> invoices = context.read<Invoice_controller>().invoices;
     if (formKey.currentState!.validate() && finals.isNotEmpty) {
       List<InvoiceItem> items = finals
+          .where((element) =>
+              element.actions.if_action_exist(
+                  finalProdcutAction.createInvoice.getactionTitle) ==
+              false)
           .map((e) => InvoiceItem(
               amount: e.amount,
               lenth: e.lenth,
