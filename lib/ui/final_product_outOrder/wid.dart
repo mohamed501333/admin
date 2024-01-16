@@ -10,16 +10,15 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmodel.dart';
 import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwModel.dart';
-import 'package:jason_company/ui/final_product_stock/Stock_of_finalProduct_ViewModel.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class OutOrder extends StatelessWidget {
-  OutOrder({super.key, required this.itemData, required this.headerData});
+  OutOrder({super.key, required this.item, required this.total});
   outOfStockOrderveiwModel vm = outOfStockOrderveiwModel();
-  final ItemModel itemData;
-  final GroupModel headerData;
+  final FinalProductModel item;
+  final int total;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -69,8 +68,7 @@ class OutOrder extends StatelessWidget {
                                     children: [
                                       CustomTextFormField(
                                         autovalidate: true,
-                                        validator:
-                                            Validation.amou(itemData, vm),
+                                        validator: Validation.validateothe,
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 .18,
@@ -96,7 +94,7 @@ class OutOrder extends StatelessWidget {
                                                 MaterialStateProperty.all(
                                                     Colors.red)),
                                         onPressed: () {
-                                          vm.add(context, itemData, headerData);
+                                          vm.add(context, item, total);
                                           Navigator.pop(context);
                                         },
                                         child: const Text('أضافه')),
