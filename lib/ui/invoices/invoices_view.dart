@@ -14,7 +14,7 @@ class InvicesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("فواتير اليوم"),
+        title: const Text("اذونات اليوم"),
       ),
       body: Consumer<Invoice_controller>(
         builder: (context, myType, child) {

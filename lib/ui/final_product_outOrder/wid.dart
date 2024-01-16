@@ -236,7 +236,7 @@ class InvoiceM extends StatelessWidget {
             child: const Icon(Icons.check, color: Colors.white, size: 28),
           ),
           appBar: AppBar(
-            title: const Text("تسجيل فاتوره "),
+            title: const Text("تسجيل اذن "),
           ),
           body: Form(
             key: vm.formKey,
