@@ -136,7 +136,7 @@ class Fields extends StatelessWidget {
                                     const Text(
                                         '   يتم الغاء تفغيل هذا الذر اذا كان    '),
                                     const Text(
-                                        '     المنتج    مراتب البلطات      '),
+                                        '     المنتج    مراتب البلصات      '),
                                     const Text(
                                         '           فهى تدخل فى مرحله اخرى '),
                                     const Text('   اى انها غير تام  '),
