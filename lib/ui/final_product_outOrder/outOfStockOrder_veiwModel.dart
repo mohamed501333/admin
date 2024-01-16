@@ -29,7 +29,6 @@ class outOfStockOrderveiwModel extends BaseViewModel {
     return finalproducts
         .where((element) =>
             element.density == e.density &&
-            element.customer == e.customer &&
             element.type == e.type &&
             element.width == e.width &&
             element.hight == e.hight &&

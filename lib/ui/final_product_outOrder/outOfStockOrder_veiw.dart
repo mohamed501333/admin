@@ -88,12 +88,19 @@ class outOfStockOrder extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                     color: ColorManager.red),
                               ),
-                              leading: Text("${i.density}" "ك"),
                               title: Row(
                                 children: [
+                                  Text("${i.density}" "ك"),
+                                  const SizedBox(
+                                    width: 9,
+                                  ),
+                                  Text("${i.color}"),
+                                  const SizedBox(
+                                    width: 9,
+                                  ),
                                   Text(i.type.toString()),
                                   const SizedBox(
-                                    width: 40,
+                                    width: 9,
                                   ),
                                   Text("${i.lenth.removeTrailingZeros}"
                                       "*"
@@ -101,7 +108,7 @@ class outOfStockOrder extends StatelessWidget {
                                       "*"
                                       " ${i.hight.removeTrailingZeros}"),
                                   const SizedBox(
-                                    width: 20,
+                                    width: 9,
                                   ),
                                   OutOrder(
                                       item: i, total: vm.get_total(scorce, i))
