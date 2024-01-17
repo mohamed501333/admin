@@ -12,6 +12,7 @@ import 'package:jason_company/ui/cutting_order/componants.dart';
 import 'package:jason_company/ui/cutting_order/cuting_order_pdf.dart';
 import 'package:jason_company/ui/cutting_order/cutting_ordera_viewModer.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class CuttingOrderView extends StatelessWidget {
@@ -147,7 +148,7 @@ class HistoryForOrders extends StatelessWidget {
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              width: 1100,
+              width: 1300,
               child: ListView(
                 children: [
                   const HeaderOftable00122(),
@@ -158,12 +159,14 @@ class HistoryForOrders extends StatelessWidget {
                       2: FlexColumnWidth(3),
                       3: FlexColumnWidth(3),
                       4: FlexColumnWidth(3),
-                      5: FlexColumnWidth(2),
-                      6: FlexColumnWidth(1),
-                      7: FlexColumnWidth(1.5),
-                      8: FlexColumnWidth(4),
-                      9: FlexColumnWidth(1),
-                      10: FlexColumnWidth(1.2),
+                      5: FlexColumnWidth(3),
+                      6: FlexColumnWidth(2),
+                      7: FlexColumnWidth(1),
+                      8: FlexColumnWidth(1.5),
+                      9: FlexColumnWidth(1.5),
+                      10: FlexColumnWidth(4),
+                      11: FlexColumnWidth(1),
+                      12: FlexColumnWidth(1.2),
                     },
                     children: orders.orders
                         .where((element) =>
@@ -266,6 +269,13 @@ class HistoryForOrders extends StatelessWidget {
                                           ],
                                         ))),
 
+                                //ملاحظات
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                      padding: const EdgeInsets.all(2),
+                                      child: Text(order.notes)),
+                                ),
                                 //الكنترول
                                 GestureDetector(
                                   onTap: () {
@@ -461,6 +471,66 @@ class HistoryForOrders extends StatelessWidget {
                                 Column(
                                   children: order.items
                                       .map(
+                                        (item) => Stack(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 4),
+                                              child: LinearPercentIndicator(
+                                                width: 68.0,
+                                                lineHeight: 15.0,
+                                                percent:
+                                                    vm.petcentage_of_cutingOrder(
+                                                                    context,
+                                                                    order,
+                                                                    item) /
+                                                                100 >
+                                                            1
+                                                        ? 1
+                                                        : vm.petcentage_of_cutingOrder(
+                                                                context,
+                                                                order,
+                                                                item) /
+                                                            100,
+                                                progressColor:
+                                                    vm.petcentage_of_cutingOrder(
+                                                                context,
+                                                                order,
+                                                                item) <
+                                                            50
+                                                        ? Colors.red
+                                                        : Colors.green,
+                                              ),
+                                            ),
+                                            Center(
+                                              child: Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 4),
+                                                  child: Text(
+                                                    "${vm.petcentage_of_cutingOrder(context, order, item).removeTrailingZeros} %",
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color:
+                                                          // order.items.indexOf(item) %
+                                                          //             2 ==
+                                                          //         0
+                                                          //     ? Colors.cyan
+                                                          //     :
+                                                          Colors.black,
+                                                    ),
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                                Column(
+                                  children: order.items
+                                      .map(
                                         (item) => Container(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 4),
@@ -608,12 +678,14 @@ class HeaderOftable00122 extends StatelessWidget {
         2: FlexColumnWidth(3),
         3: FlexColumnWidth(3),
         4: FlexColumnWidth(3),
-        5: FlexColumnWidth(2),
-        6: FlexColumnWidth(1),
-        7: FlexColumnWidth(1.5),
-        8: FlexColumnWidth(4),
-        9: FlexColumnWidth(1),
-        10: FlexColumnWidth(1.2),
+        5: FlexColumnWidth(3),
+        6: FlexColumnWidth(2),
+        7: FlexColumnWidth(1),
+        8: FlexColumnWidth(1.5),
+        9: FlexColumnWidth(1.5),
+        10: FlexColumnWidth(4),
+        11: FlexColumnWidth(1),
+        12: FlexColumnWidth(1.2),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -651,6 +723,11 @@ class HeaderOftable00122 extends StatelessWidget {
               ),
               Container(
                   padding: const EdgeInsets.all(5), child: const Text("عميل")),
+              Center(
+                child: Container(
+                    padding: const EdgeInsets.all(5),
+                    child: const Text("اجمالى عدد")),
+              ),
               Center(
                 child: Container(
                     padding: const EdgeInsets.all(5),

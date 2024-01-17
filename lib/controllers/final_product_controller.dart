@@ -44,31 +44,20 @@ class final_prodcut_controller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  // c() {
-  //   print("5555555");
-  //   for (var el in finalproducts) {
-  //     FinalProductModel e = FinalProductModel(
-  //       amount: el.amount,
-  //       customer: el.customer,
-  //       cuting_order_number: el.cuting_order_number,
-  //       isfinal: el.isfinal,
-  //       scissor: el.scissor,
-  //       stageOfR: el.stageOfR,
-  //       worker: el.worker,
-  //       id: el.id,
-  //       color: el.color,
-  //       density: el.density,
-  //       type: el.type,
-  //       width: el.width,
-  //       lenth: el.lenth,
-  //       hight: el.hight,
-  //       notes: el.notes,
-  //       actions: el.actions,
-  //     );
+  c() {
+    // print("5555555");
+    // for (var el in finalproducts) {
+    //   while (el.actions
+    //           .where((element) => element.action == "createInvoice")
+    //           .toList()
+    //           .length >=
+    //       2) {
+    //     el.actions.removeWhere((element) => element.action == "createInvoice");
+    //   }
 
-  //     FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(e.toJson());
-  //   }
-  // }
+    //   FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(el.toJson());
+    // }
+  }
 
   List<FinalProductModel> finalproducts = [];
   List<FinalProductModel> search = [];
