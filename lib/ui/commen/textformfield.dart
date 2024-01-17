@@ -35,7 +35,7 @@ class CustomTextFormField extends StatelessWidget {
               readOnly: readOnly,
               onTap: ontap,
               onChanged: onChanged,
-              inputFormatters: [FilteringTextInputFormatter.deny(' ')],
+              inputFormatters: [],
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: validator,
               controller: controller,
