@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, duplicate_ignore
 
 import 'package:advanced_search/advanced_search.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
@@ -150,6 +151,8 @@ class HistoryOfLoaded extends StatelessWidget {
                     children: finalproducts.finalproducts
                         .where((e) => e.amount < 0)
                         .toList()
+                        .sortedBy<num>((element) => element.id)
+                        .reversed
                         .map((user) {
                       return TableRow(
                           decoration: BoxDecoration(color: Colors.teal[50]),
@@ -221,6 +224,8 @@ class InvoiceM extends StatelessWidget {
                 e.actions.if_action_exist(
                         finalProdcutAction.createInvoice.getactionTitle) ==
                     false)
+            .toList()
+            .sortedBy<num>((element) => element.id)
             .toList();
         return Scaffold(
           floatingActionButton: FloatingActionButton(

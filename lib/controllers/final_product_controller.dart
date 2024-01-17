@@ -91,8 +91,8 @@ class final_prodcut_controller extends ChangeNotifier {
       x.actions.add(finalProdcutAction.createInvoice.add);
       try {
         FirebaseDatabase.instance.ref("finalproducts/${x.id}").set(x.toJson());
-        notifyListeners();
       } catch (e) {}
+      notifyListeners();
     }
   }
 

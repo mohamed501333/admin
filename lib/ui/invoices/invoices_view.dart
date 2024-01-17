@@ -45,7 +45,8 @@ class InvicesView extends StatelessWidget {
                           ),
                           title: Column(
                             children: [
-                              Text('customer : ${e.items.first.customer}'),
+                              Text(
+                                  'customer : ${e.items.isEmpty ? 0 : e.items.first.customer}'),
                               Text('serial : ${e.number}'),
                             ],
                           ),

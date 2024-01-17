@@ -75,47 +75,49 @@ class outOfStockOrder extends StatelessWidget {
                 ),
                 Column(
                   children: finals
-                      .map((i) => Container(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            decoration: BoxDecoration(
-                                color: Colors.blue[50],
-                                border: Border.all(width: .5)),
-                            child: ListTile(
-                              trailing: Text(
-                                "${vm.get_total(scorce, i)}",
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorManager.red),
+                      .map((i) => vm.get_total(scorce, i) == 0
+                          ? SizedBox()
+                          : Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              decoration: BoxDecoration(
+                                  color: Colors.blue[50],
+                                  border: Border.all(width: .5)),
+                              child: ListTile(
+                                trailing: Text(
+                                  "${vm.get_total(scorce, i)}",
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: ColorManager.red),
+                                ),
+                                title: Row(
+                                  children: [
+                                    Text("${i.density}" "ك"),
+                                    const SizedBox(
+                                      width: 9,
+                                    ),
+                                    Text("${i.color}"),
+                                    const SizedBox(
+                                      width: 9,
+                                    ),
+                                    Text(i.type.toString()),
+                                    const SizedBox(
+                                      width: 9,
+                                    ),
+                                    Text("${i.lenth.removeTrailingZeros}"
+                                        "*"
+                                        "${i.width.removeTrailingZeros}"
+                                        "*"
+                                        " ${i.hight.removeTrailingZeros}"),
+                                    const SizedBox(
+                                      width: 9,
+                                    ),
+                                    OutOrder(
+                                        item: i, total: vm.get_total(scorce, i))
+                                  ],
+                                ),
                               ),
-                              title: Row(
-                                children: [
-                                  Text("${i.density}" "ك"),
-                                  const SizedBox(
-                                    width: 9,
-                                  ),
-                                  Text("${i.color}"),
-                                  const SizedBox(
-                                    width: 9,
-                                  ),
-                                  Text(i.type.toString()),
-                                  const SizedBox(
-                                    width: 9,
-                                  ),
-                                  Text("${i.lenth.removeTrailingZeros}"
-                                      "*"
-                                      "${i.width.removeTrailingZeros}"
-                                      "*"
-                                      " ${i.hight.removeTrailingZeros}"),
-                                  const SizedBox(
-                                    width: 9,
-                                  ),
-                                  OutOrder(
-                                      item: i, total: vm.get_total(scorce, i))
-                                ],
-                              ),
-                            ),
-                          ))
+                            ))
                       .toList(),
                 ),
               ],

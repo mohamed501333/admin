@@ -68,6 +68,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
 
   addInvoice(BuildContext context, List<FinalProductModel> finals) {
     List<Invoice> invoices = context.read<Invoice_controller>().invoices;
+
     if (formKey.currentState!.validate() && finals.isNotEmpty) {
       List<InvoiceItem> items = finals
           .where((element) =>
@@ -98,7 +99,12 @@ class outOfStockOrderveiwModel extends BaseViewModel {
           actions: [InvoiceAction.creat_invoice.add],
           items: items);
       context.read<Invoice_controller>().addInvoice(invoice);
-      context.read<final_prodcut_controller>().addinvoice(finals);
+      context.read<final_prodcut_controller>().addinvoice(finals
+          .where((element) =>
+              element.actions.if_action_exist(
+                  finalProdcutAction.createInvoice.getactionTitle) ==
+              false)
+          .toList());
       clearfields();
     }
   }

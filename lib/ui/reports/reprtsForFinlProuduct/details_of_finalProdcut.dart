@@ -128,7 +128,7 @@ class details_of_finalProdcut extends StatelessWidget {
             padding: const EdgeInsets.all(4.0),
             alignment: Alignment.center,
             child: Text(
-              'lr',
+              'استلام المقصات',
               style: textstyle11,
             ))),
   ];
@@ -227,14 +227,14 @@ class EmployeeDataSource2233 extends DataGridSource {
                       ? format.format(e.actions.get_Date_of_action(
                           finalProdcutAction.recive_Done_Form_FinalProdcutStock
                               .getactionTitle))
-                      : ""),
+                      : "--"),
               DataGridCell<String>(
                   columnName: 'outorder',
                   value: e.actions.if_action_exist(
                           finalProdcutAction.out_order.getactionTitle)
                       ? format.format(e.actions.get_Date_of_action(
                           finalProdcutAction.out_order.getactionTitle))
-                      : ""),
+                      : "--"),
               DataGridCell<String>(
                   columnName: 'scissor',
                   value: e.actions.if_action_exist(finalProdcutAction
@@ -242,7 +242,7 @@ class EmployeeDataSource2233 extends DataGridSource {
                       ? format.format(e.actions.get_Date_of_action(
                           finalProdcutAction.incert_finalProduct_from_cutingUnit
                               .getactionTitle))
-                      : ""),
+                      : "--"),
             ]))
         .toList();
   }
