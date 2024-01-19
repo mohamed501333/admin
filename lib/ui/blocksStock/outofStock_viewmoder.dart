@@ -45,6 +45,7 @@ class BlocksStockViewModel extends BaseViewModel {
   incertblock(BuildContext context) {
     var co = context.read<SettingController>().valueOfRadio1;
     context.read<BlockFirebasecontroller>().addblock(BlockModel(
+        discreption: "",
         actions: co == true
             ? [
                 BlockAction.create_block.add,
@@ -76,6 +77,7 @@ class BlocksStockViewModel extends BaseViewModel {
     int num = context.read<SettingController>().number;
     context.read<BlockFirebasecontroller>().addblock(
           BlockModel(
+            discreption: "",
             OutTo: outTo.text.isEmpty ? "" : outTo.text,
             cumingFrom: cummingFrom.text.isEmpty ? "المصنع" : cummingFrom.text,
             fractions: [],

@@ -17,7 +17,7 @@ import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
 
 class OutOfStockView extends StatefulWidget {
-  OutOfStockView({super.key});
+  const OutOfStockView({super.key});
 
   @override
   State<OutOfStockView> createState() => _OutOfStockViewState();

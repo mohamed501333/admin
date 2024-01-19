@@ -8,6 +8,12 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
+extension Permition on Widget {
+  Widget permition(BuildContext context, UserPermition permition) {
+    return permitionss(context, permition) ? this : const SizedBox();
+  }
+}
+
 extension Brovider on BuildContext {
   gonext(BuildContext context, Widget route) {
     checkAuth(context);

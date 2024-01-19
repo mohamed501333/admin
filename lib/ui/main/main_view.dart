@@ -7,6 +7,7 @@ import 'package:jason_company/controllers/fractinsFirebaseController.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
 import 'package:jason_company/controllers/scissors_controller.dart';
+import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/ui/main/componants/nav_bar.dart';
 import 'package:jason_company/controllers/main_controller.dart';
 import 'package:jason_company/ui/main/main_viewModel.dart';
@@ -31,27 +32,41 @@ class Mainview extends StatelessWidget {
     context.read<Invoice_controller>().get_invice_data();
     context.read<Customer_controller>().get_Customers_data();
     context.read<OrderController>().get_Order_data();
-
-    return Scaffold(
-      backgroundColor: ColorManager.gallery,
-      appBar: AppBar(
-        title: Consumer<MainController>(
-          builder: (context, myType, child) {
-            return Center(
-                child: Text(
-              vm.indexOfAppBar(myType.currentIndex,
-                  context.watch<ScissorsController>().indexOfRadioButon),
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ));
-          },
-        ),
-      ),
-      body: Consumer<MainController>(
-        builder: (context, controller, child) {
-          return vm.screens[controller.currentIndex];
-        },
-      ),
-      bottomNavigationBar: NavBar(),
+    context.read<Users_controller>().get_users_data();
+    // User currentUser = FirebaseAuth.instance.currentUser!;
+    // context.read<Users_controller>().Add_User_permition(
+    //     Users(
+    //         id: DateTime.now().millisecondsSinceEpoch,
+    //         uidemail: currentUser.email ?? "",
+    //         uid: currentUser.uid,
+    //         name: "",
+    //         permitions: []),
+    //     UserPermition.show_block_incetion);
+    return Consumer<Users_controller>(
+      builder: (context, myType, child) {
+        return Scaffold(
+          backgroundColor: ColorManager.gallery,
+          appBar: AppBar(
+            title: Consumer<MainController>(
+              builder: (context, myType, child) {
+                return Center(
+                    child: Text(
+                  vm.indexOfAppBar(myType.currentIndex,
+                      context.watch<ScissorsController>().indexOfRadioButon),
+                  style: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.bold),
+                ));
+              },
+            ),
+          ),
+          body: Consumer<MainController>(
+            builder: (context, controller, child) {
+              return vm.screens[controller.currentIndex];
+            },
+          ),
+          bottomNavigationBar: NavBar(),
+        );
+      },
     );
   }
 }
