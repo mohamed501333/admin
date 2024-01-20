@@ -151,10 +151,9 @@ class ChipsForBlocks extends StatelessWidget {
                                     CustomTextFormField(
                                       width: MediaQuery.of(context).size.width *
                                           .23,
-                                      hint: "العنوان",
+                                      hint: "وارد من",
                                       keybordtupe: TextInputType.name,
-                                      controller: vm.tiitlecontroller,
-                                      validator: Validation.validateothers,
+                                      controller: vm.cummingFrom,
                                     ),
                                     CustomTextFormField(
                                       width: MediaQuery.of(context).size.width *
@@ -166,6 +165,9 @@ class ChipsForBlocks extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
@@ -173,9 +175,18 @@ class ChipsForBlocks extends StatelessWidget {
                                     CustomTextFormField(
                                       width: MediaQuery.of(context).size.width *
                                           .23,
-                                      hint: "وارد من",
+                                      hint: "العنوان",
                                       keybordtupe: TextInputType.name,
-                                      controller: vm.cummingFrom,
+                                      controller: vm.tiitlecontroller,
+                                      validator: Validation.validateothers,
+                                    ),
+                                    CustomTextFormField(
+                                      width: MediaQuery.of(context).size.width *
+                                          .23,
+                                      hint: "البيان",
+                                      keybordtupe: TextInputType.name,
+                                      controller: vm.blockdesription,
+                                      validator: Validation.validateothers,
                                     ),
                                   ],
                                 ),

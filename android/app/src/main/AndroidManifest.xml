@@ -4,7 +4,7 @@
    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
    <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="admin"
+        android:label="janssen foam"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

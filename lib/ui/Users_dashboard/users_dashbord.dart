@@ -133,7 +133,8 @@ class DropDdowenForUsersactions extends StatelessWidget {
                     .toList()
                     .map((e) => DropdownMenuItem(
                           value: e,
-                          child: Text(e.toString()),
+                          child: Text(e.getTitle.toString(),
+                              style: const TextStyle(fontSize: 12)),
                         ))
                     .toList(),
                 onChanged: (v) {

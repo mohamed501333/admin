@@ -48,12 +48,12 @@ class BlockFirebasecontroller extends ChangeNotifier {
   List<BlockModel> search = [];
 
   c() {
-    for (var el in blocks) {
+    for (var el in blocks.where((element) => element.discreption == "")) {
       BlockModel e = BlockModel(
-          discreption: "",
+          discreption: "---",
           id: el.id,
           color: el.color,
-          density: 35,
+          density: 28,
           type: el.type,
           serial: el.serial,
           number: el.number,

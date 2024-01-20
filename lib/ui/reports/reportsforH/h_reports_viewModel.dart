@@ -1,8 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, file_names
 
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/base/base_view_mode.dart';
 
-class HReportsViewModel {
+class HReportsViewModel extends BaseViewModel {
   int total_amount_for_single_siz__(
       BlockModel e, List<BlockModel> blocks, int scissor) {
     return blocks

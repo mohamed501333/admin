@@ -11,10 +11,6 @@ import 'package:provider/provider.dart';
 
 class BlocksStockViewModel extends BaseViewModel {
   fillFields(ChipBlockModel chi) {
-    // blocknumbercontroller.text =
-    //     chi.number.removeTrailingZeros.toString() == "0"
-    //         ? ""
-    //         : chi.number.removeTrailingZeros.toString();
     codecontroller.text = chi.serial;
     colercontroller.text = chi.color.toString();
     densitycontroller.text = chi.density.removeTrailingZeros.toString();
@@ -43,7 +39,7 @@ class BlocksStockViewModel extends BaseViewModel {
   }
 
   incertblock(BuildContext context) {
-    var co = context.read<SettingController>().valueOfRadio1;
+    bool co = context.read<SettingController>().valueOfRadio1;
     context.read<BlockFirebasecontroller>().addblock(BlockModel(
         discreption: "",
         actions: co == true

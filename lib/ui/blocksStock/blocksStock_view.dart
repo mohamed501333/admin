@@ -178,13 +178,19 @@ class Fields extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .18,
+                    keybordtupe: TextInputType.name,
+                    width: MediaQuery.of(context).size.width * .16,
+                    hint: " البيان",
+                    controller: vm.blockdesription,
+                  ),
+                  CustomTextFormField(
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "الكثافه",
                     controller: vm.densitycontroller,
                     validator: Validation.validateothers,
                   ),
                   CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .18,
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "اللون",
                     keybordtupe: TextInputType.text,
                     controller: vm.colercontroller,
@@ -192,20 +198,20 @@ class Fields extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     keybordtupe: TextInputType.name,
-                    width: MediaQuery.of(context).size.width * .18,
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "الكود ",
                     controller: vm.codecontroller,
                     validator: Validation.validateothers,
                   ),
                   CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .18,
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "النوع",
                     keybordtupe: TextInputType.name,
                     controller: vm.typecontroller,
                     validator: Validation.validateothers,
                   ),
                   CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .18,
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "الوزن ",
                     controller: vm.wightcontroller,
                     validator: Validation.validateothers,
@@ -220,30 +226,36 @@ class Fields extends StatelessWidget {
                 children: [
                   CustomTextFormField(
                     keybordtupe: TextInputType.name,
-                    width: MediaQuery.of(context).size.width * .18,
+                    width: MediaQuery.of(context).size.width * .16,
+                    hint: " ملاحظات",
+                    controller: vm.notes,
+                  ),
+                  CustomTextFormField(
+                    keybordtupe: TextInputType.name,
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "وارد من",
                     controller: vm.cummingFrom,
                   ),
                   CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .18,
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "الارتفاع",
                     controller: vm.hightncontroller,
                     validator: Validation.validateothers,
                   ),
                   CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .18,
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "العرض",
                     controller: vm.widthcontroller,
                     validator: Validation.validateothers,
                   ),
                   CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .18,
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "الطول ",
                     controller: vm.lenthcontroller,
                     validator: Validation.validateothers,
                   ),
                   CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .18,
+                    width: MediaQuery.of(context).size.width * .16,
                     hint: "رقم البلوك",
                     controller: vm.blocknumbercontroller,
                     validator: Validation.validate_if_block_exist(context, vm),

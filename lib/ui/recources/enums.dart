@@ -379,12 +379,13 @@ enum UserPermition {
   show_Reports_details_of_finalProdcut_stock,
   incert_in_finalProdcut_imorted,
   incert_in_block_stock,
-  incert_in_consume_block,
+  fields_buttoms_consumeBlock,
   incert_in_final_prodcutStock,
   incert_in_cutting_order,
   incert_in_customers,
   delete_in_importedformCuttinUnit,
   delete_in_cutting_order,
+  delete_in_consume_block,
 }
 
 extension QQ on UserPermition {
@@ -435,8 +436,8 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "incert_in_finalProdcut_imorted");
       case UserPermition.incert_in_block_stock:
         return UserpermitionTittle(tittle: "incert_in_block_stock");
-      case UserPermition.incert_in_consume_block:
-        return UserpermitionTittle(tittle: "incert_in_consume_block");
+      case UserPermition.fields_buttoms_consumeBlock:
+        return UserpermitionTittle(tittle: "fields_buttoms_consumeBlock");
       case UserPermition.incert_in_final_prodcutStock:
         return UserpermitionTittle(tittle: "incert_in_final_prodcutStock");
       case UserPermition.incert_in_cutting_order:
@@ -447,6 +448,8 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "delete_in_importedformCuttinUnit");
       case UserPermition.delete_in_cutting_order:
         return UserpermitionTittle(tittle: "delete_in_cutting_order");
+      case UserPermition.delete_in_consume_block:
+        return UserpermitionTittle(tittle: "delete_in_consume_block");
     }
   }
 
@@ -494,8 +497,8 @@ extension QQ on UserPermition {
         return "incert_in_finalProdcut_imorted";
       case UserPermition.incert_in_block_stock:
         return "incert_in_block_stock";
-      case UserPermition.incert_in_consume_block:
-        return "incert_in_consume_block";
+      case UserPermition.fields_buttoms_consumeBlock:
+        return "fields_buttoms_consumeBlock";
       case UserPermition.incert_in_final_prodcutStock:
         return "incert_in_final_prodcutStock";
       case UserPermition.incert_in_cutting_order:
@@ -506,6 +509,8 @@ extension QQ on UserPermition {
         return "delete_in_importedformCuttinUnit";
       case UserPermition.delete_in_cutting_order:
         return "delete_in_cutting_order";
+      case UserPermition.delete_in_consume_block:
+        return "delete_in_consume_block";
     }
   }
 }

@@ -67,7 +67,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, const OutOfStockView());
                     },
-                  ),
+                  ).permition(context, UserPermition.show_blockconsume),
                   Item(
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xffFF7544),
