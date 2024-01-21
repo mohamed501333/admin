@@ -44,7 +44,16 @@ class final_prodcut_controller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  c() {
+  // c() {
+  //   print("5555555");
+  //   for (var el in finalproducts) {
+  //     el.actions.add(finalProdcutAction.recive_Done_Form_FinalProdcutStock.add);
+
+  //     FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(el.toJson());
+  //   }
+  // }
+
+  cd() {
     // print("5555555");
     // for (var el in finalproducts) {
     //   while (el.actions

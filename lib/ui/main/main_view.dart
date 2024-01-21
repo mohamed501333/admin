@@ -23,7 +23,6 @@ class Mainview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<final_prodcut_controller>().get_finalProdcut_data(context);
-    context.read<final_prodcut_controller>().c();
     context.read<BlockFirebasecontroller>().get_blocks_data();
     context.read<BlockFirebasecontroller>().c();
     context.read<FractionFirebaseController>().get_Fractions_data();

@@ -153,11 +153,11 @@ class TheTable extends StatelessWidget {
                                 //تم التخزين
                                 GestureDetector(
                                   onTap: () {
-                                    user.actions.if_action_exist(
-                                                finalProdcutAction
+                                    user.actions.if_action_exist(finalProdcutAction
                                                     .final_prodcut_DidQalityCheck
                                                     .getactionTitle) ==
-                                            true
+                                                true &&
+                                            user.isfinal == true
                                         ? showmyAlertDialog(
                                             context, vm, user, "stock")
                                         : DoNothingAction();
