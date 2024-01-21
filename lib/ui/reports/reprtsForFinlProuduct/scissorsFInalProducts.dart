@@ -151,7 +151,7 @@ class ScissorsFInalProducts extends StatelessWidget {
               ),
             );
           },
-        ));
+        )).permition(context, UserPermition.show_Reports_final_prodcutscisors);
   }
 }
 

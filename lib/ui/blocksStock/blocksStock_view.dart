@@ -41,9 +41,12 @@ class BlocksStock extends StatelessWidget {
           key: vm.formKey,
           child: Column(
             children: [
-              Fields(vm: vm),
-              Chips(vm: vm),
-              Buttoms(vm: vm),
+              Fields(vm: vm)
+                  .permition(context, UserPermition.incert_in_block_stock),
+              Chips(vm: vm)
+                  .permition(context, UserPermition.incert_in_block_stock),
+              Buttoms(vm: vm)
+                  .permition(context, UserPermition.incert_in_block_stock),
               TheTable(vm: vm),
             ],
           ),

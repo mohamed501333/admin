@@ -3,6 +3,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
@@ -40,7 +41,8 @@ class FinalProductStockView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             actions: [
-              AddToStock(),
+              AddToStock().permition(
+                  context, UserPermition.incert_in_final_prodcutStock),
               IconButton(
                   onPressed: () =>
                       context.gonext(context, HistoryOfAdingToStock()),
@@ -62,7 +64,12 @@ class FinalProductStockView extends StatelessWidget {
                         children: e.items
                             .map((i) => GestureDetector(
                                   onTap: () {
-                                    dialog(context, vm, i, e);
+                                    permitionss(
+                                            context,
+                                            UserPermition
+                                                .incert_in_final_prodcutStock)
+                                        ? dialog(context, vm, i, e)
+                                        : DoNothingAction();
                                   },
                                   child: Container(
                                     margin: const EdgeInsets.all(.5),

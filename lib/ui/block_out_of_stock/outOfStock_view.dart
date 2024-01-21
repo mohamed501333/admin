@@ -36,25 +36,27 @@ class _OutOfStockViewState extends State<OutOfStockView> {
       appBar: AppBar(
         actions: [
           TextButton(
-              onPressed: () async {
-                DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2101));
+                  onPressed: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101));
 
-                if (pickedDate != null) {
-                  setState(() {
-                    String formattedDate = format.format(pickedDate);
-                    chosenDate = formattedDate;
-                  });
-                } else {}
-              },
-              child: Text(
-                chosenDate,
-                style: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
-              )),
+                    if (pickedDate != null) {
+                      setState(() {
+                        String formattedDate = format.format(pickedDate);
+                        chosenDate = formattedDate;
+                      });
+                    } else {}
+                  },
+                  child: Text(
+                    chosenDate,
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ))
+              .permition(
+                  context, UserPermition.show_date_in_block_out_of_stock),
         ],
         title: const Text("صرف بلوكات"),
       ),

@@ -17,7 +17,6 @@ class ReportsView extends StatelessWidget {
     Reportmodel(title: " يومية انتاج تام  ", route: FinalProductReportsview()),
     Reportmodel(
         title: " يومية انتاج تام لكل مقص   ", route: ScissorsFInalProducts()),
-    // Reportmodel(title: " يومية انتاج المقصات الراسى  ", route: HReprotsView()),
     Reportmodel(
         title: "اجماليات البلوكات      ", route: const BlockReportsView()),
     Reportmodel(title: "يومية صرف بلوكات     ", route: DailyBlockReportsView()),

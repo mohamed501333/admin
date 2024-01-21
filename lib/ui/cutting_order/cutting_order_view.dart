@@ -34,21 +34,25 @@ class CuttingOrderView extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Fields001(vm: vm),
-          RowScroll(vm: vm),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Column(
             children: [
-              Buttoms001(
-                vm: vm,
+              const SizedBox(
+                height: 20,
               ),
-              Buttoms003(vm: vm),
-              Buttoms002(vm: vm),
+              Fields001(vm: vm),
+              RowScroll(vm: vm),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Buttoms001(
+                    vm: vm,
+                  ),
+                  Buttoms003(vm: vm),
+                  Buttoms002(vm: vm),
+                ],
+              ),
             ],
-          ),
+          ).permition(context, UserPermition.incert_in_cutting_order),
           TheTable001(
             vm: vm,
           )

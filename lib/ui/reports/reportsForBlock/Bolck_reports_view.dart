@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/block%20reports%20details.com/block_details_view.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/W.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -58,7 +60,7 @@ class BlockReportsView extends StatelessWidget {
           const BlockStockInventory()
         ],
       ),
-    );
+    ).permition(context, UserPermition.show_Reports_totals_of_blocks);
   }
 }
 
@@ -126,6 +128,6 @@ class DailyBlockReportsView extends StatelessWidget {
           )
         ],
       ),
-    );
+    ).permition(context, UserPermition.show_Reports_consume_boock);
   }
 }

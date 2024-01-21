@@ -8,6 +8,7 @@ import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/customers/customers_viewModel.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class Customers_view extends StatelessWidget {
@@ -77,7 +78,7 @@ class Customers_view extends StatelessWidget {
                           },
                           child: const Text("اضافه"))
                     ],
-                  ),
+                  ).permition(context, UserPermition.incert_in_customers),
                   Table(
                       columnWidths: const {
                         0: FlexColumnWidth(3),

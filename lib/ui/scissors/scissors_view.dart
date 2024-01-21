@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/scissors_controller.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/scissors/component/radiobuttom.dart';
 import 'package:jason_company/ui/scissors/scissors_viewModer.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +23,6 @@ class ScissorsView extends StatelessWidget {
           ),
         ),
       ],
-    );
+    ).permition(context, UserPermition.show_scissors);
   }
 }

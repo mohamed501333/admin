@@ -35,6 +35,6 @@ class MainViewModel {
       "مقص دائرى 3",
       "مقص ترددى"
     ],
-    "Admin"
+    "janssen foam"
   ];
 }

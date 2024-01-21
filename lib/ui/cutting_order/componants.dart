@@ -252,7 +252,7 @@ class TheTable001 extends StatelessWidget {
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              width: 1200,
+              width: 1300,
               child: ListView(
                 children: [
                   const HeaderOftable001(),
@@ -265,10 +265,10 @@ class TheTable001 extends StatelessWidget {
                       4: FlexColumnWidth(3),
                       5: FlexColumnWidth(3),
                       6: FlexColumnWidth(1),
-                      7: FlexColumnWidth(2),
-                      8: FlexColumnWidth(1.5),
+                      7: FlexColumnWidth(1.5),
+                      8: FlexColumnWidth(1.3),
                       9: FlexColumnWidth(1.5),
-                      10: FlexColumnWidth(4),
+                      10: FlexColumnWidth(5),
                       11: FlexColumnWidth(1),
                       12: FlexColumnWidth(1.2),
                     },
@@ -297,6 +297,7 @@ class TheTable001 extends StatelessWidget {
                                         : Colors.amber[50],
                               ),
                               children: [
+                                //طباعة امر الشغل
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
@@ -315,7 +316,9 @@ class TheTable001 extends StatelessWidget {
                                           Icons.print,
                                           color:
                                               Color.fromARGB(255, 108, 207, 83),
-                                        ))),
+                                        ))).permition(context,
+                                    UserPermition.can_print_in_cutting_order),
+                                //اغلاق امر الشغل
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
@@ -326,17 +329,23 @@ class TheTable001 extends StatelessWidget {
                                         child: const Icon(
                                           Icons.delete,
                                           color: Colors.red,
-                                        ))),
+                                        ))).permition(context,
+                                    UserPermition.can_close_in_cutting_order),
                                 Center(
                                   child: Text(order.notes),
                                 ),
+                                //موافقة الكنترول
                                 GestureDetector(
                                   onTap: () {
                                     if (order.actions.if_action_exist(
-                                            OrderAction
-                                                .order_aproved_from_control
-                                                .getTitle) ==
-                                        false) {
+                                                OrderAction
+                                                    .order_aproved_from_control
+                                                    .getTitle) ==
+                                            false &&
+                                        permitionss(
+                                            context,
+                                            UserPermition
+                                                .can_aprove_from_controll)) {
                                       showmyAlertDialog(
                                           context,
                                           OrderAction
@@ -381,13 +390,17 @@ class TheTable001 extends StatelessWidget {
                                         ],
                                       )),
                                 ),
+                                //موافقة الحسابات
                                 GestureDetector(
                                   onTap: () {
-                                    if (order.actions.if_action_exist(
-                                            OrderAction
+                                    if (order.actions.if_action_exist(OrderAction
                                                 .order_aproved_from_calculation
                                                 .getTitle) ==
-                                        false) {
+                                            false &&
+                                        permitionss(
+                                            context,
+                                            UserPermition
+                                                .can_aprove_from_calculation)) {
                                       showmyAlertDialog(
                                           context,
                                           OrderAction
@@ -432,6 +445,7 @@ class TheTable001 extends StatelessWidget {
                                         ],
                                       )),
                                 ),
+                                //الانشاء
                                 GestureDetector(
                                   onTap: () {},
                                   child: Container(
@@ -470,6 +484,7 @@ class TheTable001 extends StatelessWidget {
                                         ],
                                       )),
                                 ),
+                                //العميل
                                 Center(
                                   child: Container(
                                       padding: const EdgeInsets.only(bottom: 3),
@@ -481,6 +496,7 @@ class TheTable001 extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       )),
                                 ),
+                                //الكميه
                                 Column(
                                   children: order.items
                                       .map(
@@ -510,7 +526,6 @@ class TheTable001 extends StatelessWidget {
                                       )
                                       .toList(),
                                 ),
-
                                 //اجمالى عدد
                                 Column(
                                   children: order.items
@@ -598,6 +613,7 @@ class TheTable001 extends StatelessWidget {
                                       )
                                       .toList(),
                                 ),
+
                                 Column(
                                   children: order.items
                                       .map(
@@ -611,6 +627,14 @@ class TheTable001 extends StatelessWidget {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,
                                               children: [
+                                                Text(
+                                                  " ${item.color}<<",
+                                                  style: const TextStyle(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
                                                 Text(
                                                   item.type.toString(),
                                                   style: const TextStyle(
@@ -672,6 +696,7 @@ class TheTable001 extends StatelessWidget {
                                       )
                                       .toList(),
                                 ),
+
                                 Center(
                                   child: Container(
                                       padding: const EdgeInsets.symmetric(
@@ -717,10 +742,10 @@ class HeaderOftable001 extends StatelessWidget {
         4: FlexColumnWidth(3),
         5: FlexColumnWidth(3),
         6: FlexColumnWidth(1),
-        7: FlexColumnWidth(2),
-        8: FlexColumnWidth(1.5),
+        7: FlexColumnWidth(1.5),
+        8: FlexColumnWidth(1.3),
         9: FlexColumnWidth(1.5),
-        10: FlexColumnWidth(4),
+        10: FlexColumnWidth(5),
         11: FlexColumnWidth(1),
         12: FlexColumnWidth(1.2),
       },
@@ -767,7 +792,10 @@ class HeaderOftable001 extends StatelessWidget {
               Center(
                 child: Container(
                     padding: const EdgeInsets.all(5),
-                    child: const Text("اجمالى عدد")),
+                    child: const Text(
+                      "اجمالى عدد",
+                      style: TextStyle(fontSize: 11),
+                    )),
               ),
               Center(
                 child: Container(
@@ -802,7 +830,6 @@ showmyAlertDialog(BuildContext context, OrderAction action, OrderModel item) {
             height: 200,
             child: Column(children: [
               Text('هل انت متاكد'),
-              Text(' سوف يتم اغلاق امر الشغل '),
             ]),
           ),
           actions: [

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
@@ -53,7 +54,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, FinalProductStockView());
                     },
-                  ),
+                  ).permition(context, UserPermition.show_finalProdcut_stock),
                 ],
               ),
               Row(
@@ -74,9 +75,10 @@ class HomeView extends StatelessWidget {
                     SringsManager.itemTitle2,
                     IconsManager.itemIcon1,
                     ontap: () {
-                      context.gonext(context, FinalProductView());
+                      context.gonext(context, const FinalProductView());
                     },
-                  ),
+                  ).permition(context,
+                      UserPermition.show_finalprodcut_importedFormcuttingUint),
                 ],
               ),
               Row(
@@ -90,7 +92,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, const NotFinal());
                     },
-                  ),
+                  ).permition(context, UserPermition.show_not_final_stock),
                   Item(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.darkgreen,
@@ -99,7 +101,8 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, outOfStockOrder());
                     },
-                  ),
+                  ).permition(
+                      context, UserPermition.show_finalprodcut_invoicemaking),
                 ],
               ),
               Row(
@@ -113,7 +116,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, const CuttingOrderView());
                     },
-                  ),
+                  ).permition(context, UserPermition.show_cutting_orders),
                   Item(
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xff8676FE),
@@ -122,7 +125,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, const InvicesView());
                     },
-                  ),
+                  ).permition(context, UserPermition.show_finalprodcut_invoice),
                 ],
               ),
               Row(
@@ -145,7 +148,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {},
                   ),
                 ],
-              ),
+              ).permition(context, UserPermition.not_working),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -157,14 +160,14 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, Customers_view());
                     },
-                  ),
+                  ).permition(context, UserPermition.show_customers),
                   Item(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.cobalt,
                     "قوائم الجرد",
                     IconsManager.itemIcon1,
                     ontap: () {},
-                  ),
+                  ).permition(context, UserPermition.not_working),
                 ],
               ),
               Row(
@@ -176,14 +179,14 @@ class HomeView extends StatelessWidget {
                     "المراسله والطلبات",
                     IconsManager.itemIcon1,
                     ontap: () {},
-                  ),
+                  ).permition(context, UserPermition.not_working),
                   Item(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.arsenic,
                     " الكيماويات",
                     IconsManager.itemIcon1,
                     ontap: () {},
-                  ),
+                  ).permition(context, UserPermition.not_working),
                 ],
               ),
               Row(
@@ -195,14 +198,14 @@ class HomeView extends StatelessWidget {
                     " الاحصائيات",
                     IconsManager.itemIcon1,
                     ontap: () {},
-                  ),
+                  ).permition(context, UserPermition.not_working),
                   Item(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.arsenic,
                     " الارشيف",
                     IconsManager.itemIcon1,
                     ontap: () {},
-                  ),
+                  ).permition(context, UserPermition.not_working),
                 ],
               ),
               Row(
@@ -216,16 +219,18 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, const UsersActions());
                     },
-                  ),
-                  Item(
-                    MediaQuery.of(context).size.width * .45,
-                    ColorManager.arsenic,
-                    " dashboard ",
-                    IconsManager.itemIcon1,
-                    ontap: () {
-                      context.gonext(context, const UsersDashboard());
-                    },
-                  ),
+                  ).permition(context, UserPermition.show_users_actions),
+                  FirebaseAuth.instance.currentUser!.email == "m.khaled@0.com"
+                      ? Item(
+                          MediaQuery.of(context).size.width * .45,
+                          ColorManager.arsenic,
+                          " dashboard ",
+                          IconsManager.itemIcon1,
+                          ontap: () {
+                            context.gonext(context, const UsersDashboard());
+                          },
+                        )
+                      : SizedBox(),
                 ],
               ),
             ],

@@ -140,58 +140,60 @@ class details_of_finalProdcut extends StatelessWidget {
     return Consumer<final_prodcut_controller>(
         builder: (context, mytype, child) {
       return Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    context.gonext(context, const Datepker());
-                  },
-                  icon: const Icon(Icons.date_range)),
-              IconButton(
-                onPressed: () async {
-                  createAndopenEXL(kkkkk);
-                },
-                icon: const Icon(Icons.explicit_outlined),
+              appBar: AppBar(
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        context.gonext(context, const Datepker());
+                      },
+                      icon: const Icon(Icons.date_range)),
+                  IconButton(
+                    onPressed: () async {
+                      createAndopenEXL(kkkkk);
+                    },
+                    icon: const Icon(Icons.explicit_outlined),
+                  ),
+                ],
               ),
-            ],
-          ),
-          body: ScrollConfiguration(
-            behavior: const ScrollBehavior().copyWith(scrollbars: false),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: 1000,
-                child: SfDataGrid(
-                  tableSummaryRows: [
-                    GridTableSummaryRow(
-                        showSummaryInRow: true,
-                        title: 'Total  Quantity: {Count}',
-                        titleColumnSpan: 3,
-                        columns: [
-                          const GridSummaryColumn(
-                              name: 'Count',
-                              columnName: 'amount',
-                              summaryType: GridSummaryType.sum),
-                        ],
-                        position: GridTableSummaryRowPosition.top),
-                  ],
-                  gridLinesVisibility: GridLinesVisibility.both,
-                  headerGridLinesVisibility: GridLinesVisibility.both,
-                  isScrollbarAlwaysShown: true,
-                  key: kkkkk,
-                  allowSorting: true,
-                  allowMultiColumnSorting: true,
-                  allowTriStateSorting: true,
-                  allowFiltering: true,
-                  source: EmployeeDataSource2233(context,
-                      coumingData: mytype.finalproducts.toList()),
-                  columnWidthMode: ColumnWidthMode.fill,
-                  columns: columns,
+              body: ScrollConfiguration(
+                behavior: const ScrollBehavior().copyWith(scrollbars: false),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    width: 1000,
+                    child: SfDataGrid(
+                      tableSummaryRows: [
+                        GridTableSummaryRow(
+                            showSummaryInRow: true,
+                            title: 'Total  Quantity: {Count}',
+                            titleColumnSpan: 3,
+                            columns: [
+                              const GridSummaryColumn(
+                                  name: 'Count',
+                                  columnName: 'amount',
+                                  summaryType: GridSummaryType.sum),
+                            ],
+                            position: GridTableSummaryRowPosition.top),
+                      ],
+                      gridLinesVisibility: GridLinesVisibility.both,
+                      headerGridLinesVisibility: GridLinesVisibility.both,
+                      isScrollbarAlwaysShown: true,
+                      key: kkkkk,
+                      allowSorting: true,
+                      allowMultiColumnSorting: true,
+                      allowTriStateSorting: true,
+                      allowFiltering: true,
+                      source: EmployeeDataSource2233(context,
+                          coumingData: mytype.finalproducts.toList()),
+                      columnWidthMode: ColumnWidthMode.fill,
+                      columns: columns,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ));
+              ))
+          .permition(context,
+              UserPermition.show_Reports_details_of_finalProdcut_stock);
     });
   }
 }

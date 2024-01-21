@@ -1,7 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, use_super_parameters
+// ignore_for_file: public_member_api_docs, sort_constructors_first, file_names, use_super_parameters, must_be_immutable
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -11,9 +12,8 @@ import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/ui/final_product_imported/Widgets.dart';
 import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmodel.dart';
 
-// ignore: must_be_immutable
 class FinalProductView extends StatefulWidget {
-  FinalProductView({super.key});
+  const FinalProductView({super.key});
 
   @override
   State<FinalProductView> createState() => _FinalProductViewState();
@@ -30,35 +30,39 @@ class _FinalProductViewState extends State<FinalProductView> {
         appBar: AppBar(
           actions: [
             TextButton(
-                onPressed: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101));
+                    onPressed: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101));
 
-                  if (pickedDate != null) {
-                    setState(() {
-                      String formattedDate = format.format(pickedDate);
-                      chosenDate = formattedDate;
-                    });
-                  } else {}
-                },
-                child: Text(
-                  chosenDate,
-                  style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                )),
-            AddUnregular()
+                      if (pickedDate != null) {
+                        setState(() {
+                          String formattedDate = format.format(pickedDate);
+                          chosenDate = formattedDate;
+                        });
+                      } else {}
+                    },
+                    child: Text(
+                      chosenDate,
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ))
+                .permition(
+                    context, UserPermition.delete_in_imported_finalprodcut),
+            AddUnregular().permition(context,
+                UserPermition.incert_unregular_in_importedfinal_prodcut)
           ],
         ),
         body: Form(
           key: vm.formKey,
           child: Column(
             children: [
-              Fields(vm: vm),
-              // Chips2(vm: vm),
-              Buttoms(vm: vm),
+              Fields(vm: vm).permition(
+                  context, UserPermition.incert_in_finalProdcut_imorted),
+              Buttoms(vm: vm).permition(
+                  context, UserPermition.incert_in_finalProdcut_imorted),
               TheTable(vm: vm, chosenDate: chosenDate),
             ],
           ),
@@ -76,7 +80,7 @@ class TheTable extends StatelessWidget {
   }) : super(key: key);
   final FinalProductStockViewModel vm;
   final String chosenDate;
-
+  int x = 0;
   @override
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
@@ -125,14 +129,12 @@ class TheTable extends StatelessWidget {
                           x++;
                           return TableRow(
                               decoration: BoxDecoration(
-                                color:
-                                    finalproducts.finalproducts.indexOf(user) %
-                                                2 ==
-                                            0
-                                        ? Colors.teal[50]
-                                        : Colors.amber[50],
+                                color: x % 2 == 0
+                                    ? Colors.teal[50]
+                                    : Colors.amber[50],
                               ),
                               children: [
+                                //المسح
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
@@ -149,7 +151,10 @@ class TheTable extends StatelessWidget {
                                         child: const Icon(
                                           Icons.delete,
                                           color: Colors.red,
-                                        ))),
+                                        ))).permition(
+                                    context,
+                                    UserPermition
+                                        .delete_in_imported_finalprodcut),
                                 //تم التخزين
                                 GestureDetector(
                                   onTap: () {
@@ -157,7 +162,11 @@ class TheTable extends StatelessWidget {
                                                     .final_prodcut_DidQalityCheck
                                                     .getactionTitle) ==
                                                 true &&
-                                            user.isfinal == true
+                                            user.isfinal == true &&
+                                            permitionss(
+                                                context,
+                                                UserPermition
+                                                    .can_aprove_from_recive_from_final_prodcut)
                                         ? showmyAlertDialog(
                                             context, vm, user, "stock")
                                         : DoNothingAction();
@@ -212,6 +221,10 @@ class TheTable extends StatelessWidget {
                                                     .incert_finalProduct_from_cutingUnit
                                                     .getactionTitle) ==
                                                 true &&
+                                            permitionss(
+                                                context,
+                                                UserPermition
+                                                    .can_aprove_from_quality) &&
                                             user.actions.if_action_exist(
                                                     finalProdcutAction
                                                         .final_prodcut_DidQalityCheck

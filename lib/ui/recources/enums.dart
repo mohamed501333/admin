@@ -366,7 +366,6 @@ enum UserPermition {
   show_finalprodcut_importedFormcuttingUint,
   show_finalprodcut_invoice,
   show_finalprodcut_invoicemaking,
-  show_cuttin_orders,
   show_customers,
   show_massaging,
   show_users_actions,
@@ -377,6 +376,9 @@ enum UserPermition {
   show_Reports_consume_boock,
   show_Reports_details_of_block_stock,
   show_Reports_details_of_finalProdcut_stock,
+  show_date_in_block_out_of_stock,
+  show_date_in_block_stock,
+  show_not_final_stock,
   incert_in_finalProdcut_imorted,
   incert_in_block_stock,
   fields_buttoms_consumeBlock,
@@ -386,131 +388,185 @@ enum UserPermition {
   delete_in_importedformCuttinUnit,
   delete_in_cutting_order,
   delete_in_consume_block,
+  delete_in_imported_finalprodcut,
+  can_print_in_cutting_order,
+  can_close_in_cutting_order,
+  can_aprove_from_controll,
+  can_aprove_from_calculation,
+  can_aprove_from_quality,
+  can_aprove_from_recive_from_final_prodcut,
+  incert_unregular_in_importedfinal_prodcut,
+  not_working,
 }
 
 extension QQ on UserPermition {
   UserpermitionTittle get add {
     switch (this) {
-      case UserPermition.show_block_incetion:
-        return UserpermitionTittle(tittle: "show_block_incetion");
       case UserPermition.show_all:
         return UserpermitionTittle(tittle: "show_all");
+      case UserPermition.show_block_incetion:
+        return UserpermitionTittle(tittle: "اضافه الى البلوكات");
       case UserPermition.show_blockconsume:
-        return UserpermitionTittle(tittle: "show_blockconsume");
+        return UserpermitionTittle(tittle: "صرف بلوكات");
       case UserPermition.show_cutting_orders:
-        return UserpermitionTittle(tittle: "shoshow_cutting_ordersw_all");
+        return UserpermitionTittle(tittle: "اوامر التشغيل");
       case UserPermition.show_finalProdcut_stock:
-        return UserpermitionTittle(tittle: "show_finalProdcut_stock");
+        return UserpermitionTittle(tittle: "رصيد منتح تام");
       case UserPermition.show_finalprodcut_importedFormcuttingUint:
-        return UserpermitionTittle(
-            tittle: "show_finalprodcut_importedFormcuttingUint");
+        return UserpermitionTittle(tittle: "وارد تام المقصات");
       case UserPermition.show_finalprodcut_invoice:
-        return UserpermitionTittle(tittle: "show_finalprodcut_invoice");
+        return UserpermitionTittle(tittle: "اذون صرف منتج تام");
       case UserPermition.show_finalprodcut_invoicemaking:
-        return UserpermitionTittle(tittle: "show_finalprodcut_invoicemaking");
-      case UserPermition.show_cuttin_orders:
-        return UserpermitionTittle(tittle: "show_cuttin_orders");
+        return UserpermitionTittle(tittle: "صرف منتج تام");
       case UserPermition.show_customers:
-        return UserpermitionTittle(tittle: "show_customers");
+        return UserpermitionTittle(tittle: "العملاء");
       case UserPermition.show_massaging:
-        return UserpermitionTittle(tittle: "show_massaging");
+        return UserpermitionTittle(tittle: "المراسله والطلبات");
       case UserPermition.show_users_actions:
         return UserpermitionTittle(tittle: "show_users_actions");
       case UserPermition.show_scissors:
-        return UserpermitionTittle(tittle: "show_scissors");
+        return UserpermitionTittle(tittle: "المقصات");
       case UserPermition.show_Reports_finalprodcut:
-        return UserpermitionTittle(tittle: "show_Reports_finalprodcut");
+        return UserpermitionTittle(tittle: "تقارير منتج تام");
       case UserPermition.show_Reports_final_prodcutscisors:
-        return UserpermitionTittle(tittle: "show_Reports_final_prodcutscisors");
+        return UserpermitionTittle(tittle: "تقارير منتج تام لكل مقص");
       case UserPermition.show_Reports_totals_of_blocks:
-        return UserpermitionTittle(tittle: "show_Reports_totals_of_blocks");
+        return UserpermitionTittle(tittle: "تقارير اجماليات البلوكات");
       case UserPermition.show_Reports_consume_boock:
-        return UserpermitionTittle(tittle: "show_Reports_consume_boock");
+        return UserpermitionTittle(tittle: "تقارير صرف بلوكات");
       case UserPermition.show_Reports_details_of_block_stock:
-        return UserpermitionTittle(
-            tittle: "show_Reports_details_of_block_stock");
+        return UserpermitionTittle(tittle: "تفاصيل مخزن البلوكات");
       case UserPermition.show_Reports_details_of_finalProdcut_stock:
-        return UserpermitionTittle(
-            tittle: "show_Reports_details_of_finalProdcut_stock");
+        return UserpermitionTittle(tittle: "تفاصيل مخزن منتج تام");
       case UserPermition.incert_in_finalProdcut_imorted:
-        return UserpermitionTittle(tittle: "incert_in_finalProdcut_imorted");
+        return UserpermitionTittle(
+            tittle: "امكانيه الاضافه الى وارد تام المقصات");
       case UserPermition.incert_in_block_stock:
-        return UserpermitionTittle(tittle: "incert_in_block_stock");
+        return UserpermitionTittle(tittle: "امكانيه الاضافه الى مخزن البلوك");
       case UserPermition.fields_buttoms_consumeBlock:
-        return UserpermitionTittle(tittle: "fields_buttoms_consumeBlock");
+        return UserpermitionTittle(tittle: "الزر والحقول فى صرف بلوكات");
       case UserPermition.incert_in_final_prodcutStock:
-        return UserpermitionTittle(tittle: "incert_in_final_prodcutStock");
+        return UserpermitionTittle(
+            tittle: "امكانيه الاضافه الى مخزن المنتج التام");
       case UserPermition.incert_in_cutting_order:
-        return UserpermitionTittle(tittle: "incert_in_cutting_order");
+        return UserpermitionTittle(tittle: "الاضافه الى اوامر التشغيل");
       case UserPermition.incert_in_customers:
-        return UserpermitionTittle(tittle: "incert_in_customers");
+        return UserpermitionTittle(tittle: "الاضافه الى العملاء");
       case UserPermition.delete_in_importedformCuttinUnit:
-        return UserpermitionTittle(tittle: "delete_in_importedformCuttinUnit");
+        return UserpermitionTittle(tittle: "امكانية المسح فى وارد تام المقصات");
       case UserPermition.delete_in_cutting_order:
-        return UserpermitionTittle(tittle: "delete_in_cutting_order");
+        return UserpermitionTittle(tittle: "المسح او الاغلاق فى اوامر التشغيل");
       case UserPermition.delete_in_consume_block:
-        return UserpermitionTittle(tittle: "delete_in_consume_block");
+        return UserpermitionTittle(tittle: "المسح فى صرف بلوكات");
+      case UserPermition.show_date_in_block_out_of_stock:
+        return UserpermitionTittle(tittle: "التاريخ فى صرف البلوكات");
+      case UserPermition.delete_in_imported_finalprodcut:
+        return UserpermitionTittle(tittle: "التاريخ فى  وارد تام المقصات");
+      case UserPermition.show_date_in_block_stock:
+        return UserpermitionTittle(tittle: "التاريخ فى رصيد البلوكات");
+      case UserPermition.can_print_in_cutting_order:
+        return UserpermitionTittle(tittle: "امكانية الطباعه فى اوامر التشغيل");
+      case UserPermition.can_close_in_cutting_order:
+        return UserpermitionTittle(tittle: "امكانية الاغلاق فى اوامر التشغيل");
+      case UserPermition.can_aprove_from_controll:
+        return UserpermitionTittle(tittle: "امكانية الموافقه من جهة الكنترل");
+      case UserPermition.can_aprove_from_quality:
+        return UserpermitionTittle(tittle: "امكانية الموافقه من جهة الجوده");
+      case UserPermition.can_aprove_from_recive_from_final_prodcut:
+        return UserpermitionTittle(tittle: "امكانية الاستلام من جهة مخزن تام");
+      case UserPermition.can_aprove_from_calculation:
+        return UserpermitionTittle(tittle: "امكانية الموافقه من جهة الحسابات");
+      case UserPermition.incert_unregular_in_importedfinal_prodcut:
+        return UserpermitionTittle(
+            tittle: "اضافة مقاسات شاذه فى وارد تام المقصات");
+      case UserPermition.show_not_final_stock:
+        return UserpermitionTittle(tittle: "مخزن دون التام");
+      case UserPermition.not_working:
+        return UserpermitionTittle(tittle: "اخرى");
     }
   }
 
   String get getTitle {
     switch (this) {
-      case UserPermition.show_block_incetion:
-        return "show_block_incetion";
       case UserPermition.show_all:
         return "show_all";
+      case UserPermition.show_block_incetion:
+        return "اضافه الى البلوكات";
       case UserPermition.show_blockconsume:
-        return "show_blockconsume";
+        return "صرف بلوكات ";
       case UserPermition.show_cutting_orders:
-        return "show_cutting_orders";
+        return "اوامر التشغيل";
       case UserPermition.show_finalProdcut_stock:
-        return "show_finalProdcut_stock";
+        return "رصيد منتح تام";
       case UserPermition.show_finalprodcut_importedFormcuttingUint:
-        return "show_finalprodcut_importedFormcuttingUint";
+        return "وارد تام المقصات";
       case UserPermition.show_finalprodcut_invoice:
-        return "show_finalprodcut_invoice";
+        return "اذون صرف منتج تام";
       case UserPermition.show_finalprodcut_invoicemaking:
-        return "show_finalprodcut_invoicemaking";
-      case UserPermition.show_cuttin_orders:
-        return "show_cuttin_orders";
+        return "صرف منتج تام";
+
       case UserPermition.show_customers:
-        return "show_customers";
+        return "العملاء";
       case UserPermition.show_massaging:
-        return "show_massaging";
+        return "المراسله والطلبات";
       case UserPermition.show_users_actions:
         return "show_users_actions";
       case UserPermition.show_scissors:
-        return "show_scissors";
+        return "المقصات";
       case UserPermition.show_Reports_finalprodcut:
-        return "show_Reports_finalprodcut";
+        return "تقارير منتج تام";
       case UserPermition.show_Reports_final_prodcutscisors:
-        return "show_Reports_final_prodcutscisors";
+        return "تقارير منتج تام لكل مقص";
       case UserPermition.show_Reports_totals_of_blocks:
-        return "show_Reports_totals_of_blocks";
+        return "تقارير اجماليات البلوكات";
       case UserPermition.show_Reports_consume_boock:
-        return "show_Reports_consume_boock";
+        return "تقارير صرف بلوكات";
       case UserPermition.show_Reports_details_of_block_stock:
-        return "show_Reports_details_of_block_stock";
+        return "تفاصيل مخزن البلوكات";
       case UserPermition.show_Reports_details_of_finalProdcut_stock:
-        return "show_Reports_details_of_finalProdcut_stock";
+        return "تفاصيل مخزن منتج تام";
       case UserPermition.incert_in_finalProdcut_imorted:
-        return "incert_in_finalProdcut_imorted";
+        return "امكانيه الاضافه الى وارد تام المقصات";
       case UserPermition.incert_in_block_stock:
-        return "incert_in_block_stock";
+        return "امكانيه الاضافه الى مخزن البلوك";
       case UserPermition.fields_buttoms_consumeBlock:
-        return "fields_buttoms_consumeBlock";
+        return "الزر والحقول فى صرف بلوكات";
       case UserPermition.incert_in_final_prodcutStock:
-        return "incert_in_final_prodcutStock";
+        return "امكانيه الاضافه الى مخزن المنتج التام";
       case UserPermition.incert_in_cutting_order:
-        return "incert_in_cutting_order";
+        return "الاضافه الى اوامر التشغيل";
       case UserPermition.incert_in_customers:
-        return "incert_in_customers";
+        return "الاضافه الى العملاء";
       case UserPermition.delete_in_importedformCuttinUnit:
-        return "delete_in_importedformCuttinUnit";
+        return "امكانية المسح فى وارد تام المقصات";
       case UserPermition.delete_in_cutting_order:
-        return "delete_in_cutting_order";
+        return "المسح او الاغلاق فى اوامر التشغيل";
       case UserPermition.delete_in_consume_block:
-        return "delete_in_consume_block";
+        return "المسح فى صرف بلوكات";
+      case UserPermition.show_date_in_block_out_of_stock:
+        return "التاريخ فى صرف البلوكات";
+      case UserPermition.show_date_in_block_stock:
+        return "التاريخ فى رصيد البلوكات";
+      case UserPermition.can_print_in_cutting_order:
+        return "امكانية الطباعه فى اوامر التشغيل";
+      case UserPermition.can_close_in_cutting_order:
+        return "امكانية الاغلاق فى اوامر التشغيل";
+      case UserPermition.can_aprove_from_controll:
+        return "امكانية الموافقه من جهة الكنترل";
+      case UserPermition.can_aprove_from_quality:
+        return "امكانية الموافقه من جهة الجوده";
+      case UserPermition.can_aprove_from_recive_from_final_prodcut:
+        return "امكانية الاستلام من جهة مخزن التام";
+      case UserPermition.can_aprove_from_calculation:
+        return "امكانية الموافقه من جهة الحسابات";
+      case UserPermition.delete_in_imported_finalprodcut:
+        return "التاريخ فى  وارد تام المقصات";
+      case UserPermition.incert_unregular_in_importedfinal_prodcut:
+        return "اضافة مقاسات شاذه فى وارد تام المقصات";
+      case UserPermition.show_not_final_stock:
+        return "مخزن دون التام";
+      case UserPermition.not_working:
+        return "اخرى";
     }
   }
 }
