@@ -91,6 +91,16 @@ class Block_detaild_view extends StatelessWidget {
             ))),
     GridColumn(
         allowFiltering: true,
+        columnName: 'description',
+        label: Container(
+            padding: const EdgeInsets.all(4.0),
+            alignment: Alignment.center,
+            child: Text(
+              'وصف',
+              style: textstyle11,
+            ))),
+    GridColumn(
+        allowFiltering: true,
         columnName: 'wight',
         label: Container(
             padding: const EdgeInsets.all(4.0),
@@ -196,6 +206,8 @@ class EmployeeDataSource22 extends DataGridSource {
               DataGridCell<double>(columnName: 'denety', value: e.density),
               DataGridCell<String>(columnName: 'type', value: e.type),
               DataGridCell<String>(columnName: 'serial', value: e.serial),
+              DataGridCell<String>(
+                  columnName: 'description', value: e.discreption),
               DataGridCell<double>(columnName: 'wight', value: e.wight),
               DataGridCell<int>(columnName: 'num', value: e.number),
               DataGridCell<String>(
@@ -205,7 +217,7 @@ class EmployeeDataSource22 extends DataGridSource {
                       ? DateFormat('yyyy/MM/dd').format(e.actions
                           .get_Date_of_action(
                               BlockAction.consume_block.getactionTitle))
-                      : ''),
+                      : '0 غير مصروف '),
             ]))
         .toList();
   }

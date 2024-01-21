@@ -356,3 +356,161 @@ extension FF on OrderAction {
     }
   }
 }
+
+enum UserPermition {
+  show_all,
+  show_block_incetion,
+  show_blockconsume,
+  show_cutting_orders,
+  show_finalProdcut_stock,
+  show_finalprodcut_importedFormcuttingUint,
+  show_finalprodcut_invoice,
+  show_finalprodcut_invoicemaking,
+  show_cuttin_orders,
+  show_customers,
+  show_massaging,
+  show_users_actions,
+  show_scissors,
+  show_Reports_finalprodcut,
+  show_Reports_final_prodcutscisors,
+  show_Reports_totals_of_blocks,
+  show_Reports_consume_boock,
+  show_Reports_details_of_block_stock,
+  show_Reports_details_of_finalProdcut_stock,
+  incert_in_finalProdcut_imorted,
+  incert_in_block_stock,
+  fields_buttoms_consumeBlock,
+  incert_in_final_prodcutStock,
+  incert_in_cutting_order,
+  incert_in_customers,
+  delete_in_importedformCuttinUnit,
+  delete_in_cutting_order,
+  delete_in_consume_block,
+}
+
+extension QQ on UserPermition {
+  UserpermitionTittle get add {
+    switch (this) {
+      case UserPermition.show_block_incetion:
+        return UserpermitionTittle(tittle: "show_block_incetion");
+      case UserPermition.show_all:
+        return UserpermitionTittle(tittle: "show_all");
+      case UserPermition.show_blockconsume:
+        return UserpermitionTittle(tittle: "show_blockconsume");
+      case UserPermition.show_cutting_orders:
+        return UserpermitionTittle(tittle: "shoshow_cutting_ordersw_all");
+      case UserPermition.show_finalProdcut_stock:
+        return UserpermitionTittle(tittle: "show_finalProdcut_stock");
+      case UserPermition.show_finalprodcut_importedFormcuttingUint:
+        return UserpermitionTittle(
+            tittle: "show_finalprodcut_importedFormcuttingUint");
+      case UserPermition.show_finalprodcut_invoice:
+        return UserpermitionTittle(tittle: "show_finalprodcut_invoice");
+      case UserPermition.show_finalprodcut_invoicemaking:
+        return UserpermitionTittle(tittle: "show_finalprodcut_invoicemaking");
+      case UserPermition.show_cuttin_orders:
+        return UserpermitionTittle(tittle: "show_cuttin_orders");
+      case UserPermition.show_customers:
+        return UserpermitionTittle(tittle: "show_customers");
+      case UserPermition.show_massaging:
+        return UserpermitionTittle(tittle: "show_massaging");
+      case UserPermition.show_users_actions:
+        return UserpermitionTittle(tittle: "show_users_actions");
+      case UserPermition.show_scissors:
+        return UserpermitionTittle(tittle: "show_scissors");
+      case UserPermition.show_Reports_finalprodcut:
+        return UserpermitionTittle(tittle: "show_Reports_finalprodcut");
+      case UserPermition.show_Reports_final_prodcutscisors:
+        return UserpermitionTittle(tittle: "show_Reports_final_prodcutscisors");
+      case UserPermition.show_Reports_totals_of_blocks:
+        return UserpermitionTittle(tittle: "show_Reports_totals_of_blocks");
+      case UserPermition.show_Reports_consume_boock:
+        return UserpermitionTittle(tittle: "show_Reports_consume_boock");
+      case UserPermition.show_Reports_details_of_block_stock:
+        return UserpermitionTittle(
+            tittle: "show_Reports_details_of_block_stock");
+      case UserPermition.show_Reports_details_of_finalProdcut_stock:
+        return UserpermitionTittle(
+            tittle: "show_Reports_details_of_finalProdcut_stock");
+      case UserPermition.incert_in_finalProdcut_imorted:
+        return UserpermitionTittle(tittle: "incert_in_finalProdcut_imorted");
+      case UserPermition.incert_in_block_stock:
+        return UserpermitionTittle(tittle: "incert_in_block_stock");
+      case UserPermition.fields_buttoms_consumeBlock:
+        return UserpermitionTittle(tittle: "fields_buttoms_consumeBlock");
+      case UserPermition.incert_in_final_prodcutStock:
+        return UserpermitionTittle(tittle: "incert_in_final_prodcutStock");
+      case UserPermition.incert_in_cutting_order:
+        return UserpermitionTittle(tittle: "incert_in_cutting_order");
+      case UserPermition.incert_in_customers:
+        return UserpermitionTittle(tittle: "incert_in_customers");
+      case UserPermition.delete_in_importedformCuttinUnit:
+        return UserpermitionTittle(tittle: "delete_in_importedformCuttinUnit");
+      case UserPermition.delete_in_cutting_order:
+        return UserpermitionTittle(tittle: "delete_in_cutting_order");
+      case UserPermition.delete_in_consume_block:
+        return UserpermitionTittle(tittle: "delete_in_consume_block");
+    }
+  }
+
+  String get getTitle {
+    switch (this) {
+      case UserPermition.show_block_incetion:
+        return "show_block_incetion";
+      case UserPermition.show_all:
+        return "show_all";
+      case UserPermition.show_blockconsume:
+        return "show_blockconsume";
+      case UserPermition.show_cutting_orders:
+        return "show_cutting_orders";
+      case UserPermition.show_finalProdcut_stock:
+        return "show_finalProdcut_stock";
+      case UserPermition.show_finalprodcut_importedFormcuttingUint:
+        return "show_finalprodcut_importedFormcuttingUint";
+      case UserPermition.show_finalprodcut_invoice:
+        return "show_finalprodcut_invoice";
+      case UserPermition.show_finalprodcut_invoicemaking:
+        return "show_finalprodcut_invoicemaking";
+      case UserPermition.show_cuttin_orders:
+        return "show_cuttin_orders";
+      case UserPermition.show_customers:
+        return "show_customers";
+      case UserPermition.show_massaging:
+        return "show_massaging";
+      case UserPermition.show_users_actions:
+        return "show_users_actions";
+      case UserPermition.show_scissors:
+        return "show_scissors";
+      case UserPermition.show_Reports_finalprodcut:
+        return "show_Reports_finalprodcut";
+      case UserPermition.show_Reports_final_prodcutscisors:
+        return "show_Reports_final_prodcutscisors";
+      case UserPermition.show_Reports_totals_of_blocks:
+        return "show_Reports_totals_of_blocks";
+      case UserPermition.show_Reports_consume_boock:
+        return "show_Reports_consume_boock";
+      case UserPermition.show_Reports_details_of_block_stock:
+        return "show_Reports_details_of_block_stock";
+      case UserPermition.show_Reports_details_of_finalProdcut_stock:
+        return "show_Reports_details_of_finalProdcut_stock";
+      case UserPermition.incert_in_finalProdcut_imorted:
+        return "incert_in_finalProdcut_imorted";
+      case UserPermition.incert_in_block_stock:
+        return "incert_in_block_stock";
+      case UserPermition.fields_buttoms_consumeBlock:
+        return "fields_buttoms_consumeBlock";
+      case UserPermition.incert_in_final_prodcutStock:
+        return "incert_in_final_prodcutStock";
+      case UserPermition.incert_in_cutting_order:
+        return "incert_in_cutting_order";
+      case UserPermition.incert_in_customers:
+        return "incert_in_customers";
+      case UserPermition.delete_in_importedformCuttinUnit:
+        return "delete_in_importedformCuttinUnit";
+      case UserPermition.delete_in_cutting_order:
+        return "delete_in_cutting_order";
+      case UserPermition.delete_in_consume_block:
+        return "delete_in_consume_block";
+    }
+  }
+}

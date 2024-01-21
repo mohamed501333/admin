@@ -48,29 +48,30 @@ class BlockFirebasecontroller extends ChangeNotifier {
   List<BlockModel> search = [];
 
   c() {
-    // for (var el in blocks.where((element) => element.serial == "D36s072123")) {
-    //   BlockModel e = BlockModel(
-    //       id: el.id,
-    //       color: el.color,
-    //       density: 35,
-    //       type: el.type,
-    //       serial:el.serial,
-    //       number: el.number,
-    //       Rcissor: el.Rcissor,
-    //       Hscissor: el.Hscissor,
-    //       width: el.width,
-    //       lenth: el.lenth,
-    //       hight: el.hight,
-    //       wight: el.wight,
-    //       cumingFrom: el.cumingFrom,
-    //       OutTo: el.OutTo,
-    //       notes: el.notes,
-    //       fractions: el.fractions,
-    //       actions: el.actions,
-    //       notfinals: el.notfinals);
+    for (var el in blocks.where((element) => element.discreption == "")) {
+      BlockModel e = BlockModel(
+          discreption: "---",
+          id: el.id,
+          color: el.color,
+          density: 28,
+          type: el.type,
+          serial: el.serial,
+          number: el.number,
+          Rcissor: el.Rcissor,
+          Hscissor: el.Hscissor,
+          width: el.width,
+          lenth: el.lenth,
+          hight: el.hight,
+          wight: el.wight,
+          cumingFrom: el.cumingFrom,
+          OutTo: el.OutTo,
+          notes: el.notes,
+          fractions: el.fractions,
+          actions: el.actions,
+          notfinals: el.notfinals);
 
-    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
-    // }
+      FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
+    }
   }
 
   void runFilter(String enteredKeyword) {
@@ -124,6 +125,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
     int index = block.actions.indexWhere((element) =>
         element.action == BlockAction.consume_block.getactionTitle);
     block.actions.removeAt(index);
+    block.actions.add(BlockAction.unconsume_block.add);
+
     try {
       FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
       notifyListeners();

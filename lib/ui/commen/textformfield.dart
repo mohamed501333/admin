@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField(
+  const CustomTextFormField(
       {required this.hint,
       this.validator,
       super.key,
@@ -35,7 +35,7 @@ class CustomTextFormField extends StatelessWidget {
               readOnly: readOnly,
               onTap: ontap,
               onChanged: onChanged,
-              inputFormatters: [],
+              inputFormatters: const [],
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: validator,
               controller: controller,

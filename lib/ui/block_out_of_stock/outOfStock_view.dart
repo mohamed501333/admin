@@ -17,7 +17,7 @@ import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
 
 class OutOfStockView extends StatefulWidget {
-  OutOfStockView({super.key});
+  const OutOfStockView({super.key});
 
   @override
   State<OutOfStockView> createState() => _OutOfStockViewState();
@@ -86,7 +86,7 @@ class _OutOfStockViewState extends State<OutOfStockView> {
                     ],
                   ),
                 ),
-              ),
+              ).permition(context, UserPermition.fields_buttoms_consumeBlock),
               TheTable0001(vm: vm2, vm2: vm, chosenDate: chosenDate)
             ],
           );
@@ -250,7 +250,8 @@ class TheTable0001 extends StatelessWidget {
                                         child: const Icon(
                                           Icons.delete,
                                           color: Colors.red,
-                                        ))),
+                                        ))).permition(context,
+                                    UserPermition.delete_in_consume_block),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(

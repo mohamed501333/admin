@@ -26,10 +26,12 @@ abstract class BaseViewModel {
   TextEditingController cummingFrom = TextEditingController();
   TextEditingController outTo = TextEditingController();
   TextEditingController notes = TextEditingController();
+  TextEditingController blockdesription = TextEditingController();
   TextEditingController customerName = TextEditingController();
   TextEditingController customerSerial = TextEditingController();
   TextEditingController orderSerial = TextEditingController();
   TextEditingController datecontroller = TextEditingController();
+  TextEditingController N = TextEditingController();
 
   clearfields() {
     customerName.clear();

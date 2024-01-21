@@ -47,7 +47,7 @@ class finalProductInvoice {
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold)),
                     Text("customer : ${invoices.items.first.customer}",
-                        style: TextStyle(fontSize: 14))
+                        style: const TextStyle(fontSize: 14))
                   ]),
                   SizedBox(height: .3 * PdfPageFormat.mm),
                   Divider(),

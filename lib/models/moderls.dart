@@ -21,6 +21,8 @@ class BlockModel {
   String cumingFrom;
   String OutTo;
   String notes;
+  String discreption;
+
   List<FractionModel> fractions;
   List<ActionModel> actions;
   List<NotFinalmodel> notfinals;
@@ -41,6 +43,7 @@ class BlockModel {
     required this.cumingFrom,
     required this.OutTo,
     required this.notes,
+    required this.discreption,
     required this.fractions,
     required this.actions,
     required this.notfinals,
@@ -65,6 +68,7 @@ class BlockModel {
       'cumingFrom': cumingFrom,
       'OutTo': OutTo,
       'notes': notes,
+      'discreption': discreption,
       'fractions': fractions.map((x) => x.toMap()).toList(),
       'actions': actions.map((x) => x.toMap()).toList(),
       'notfinals': notfinals.map((x) => x.toMap()).toList(),
@@ -88,6 +92,7 @@ class BlockModel {
       cumingFrom: map['cumingFrom'] as String,
       OutTo: map['OutTo'] as String,
       notes: map['notes'] as String,
+      discreption: map['discreption'] as String,
       fractions: List<FractionModel>.from(
         (map['fractions'] as List<dynamic>).map<FractionModel>(
           (x) => FractionModel.fromMap(x as Map<String, dynamic>),
@@ -127,6 +132,7 @@ class BlockModel {
     String? cumingFrom,
     String? OutTo,
     String? notes,
+    String? discreption,
     List<FractionModel>? fractions,
     List<ActionModel>? actions,
     List<NotFinalmodel>? notfinals,
@@ -147,6 +153,7 @@ class BlockModel {
       cumingFrom: cumingFrom ?? this.cumingFrom,
       OutTo: OutTo ?? this.OutTo,
       notes: notes ?? this.notes,
+      discreption: discreption ?? this.discreption,
       fractions: fractions ?? this.fractions,
       actions: actions ?? this.actions,
       notfinals: notfinals ?? this.notfinals,
@@ -155,7 +162,7 @@ class BlockModel {
 
   @override
   String toString() {
-    return 'BlockModel(id: $id, color: $color, density: $density, type: $type, serial: $serial, number: $number, Rcissor: $Rcissor, Hscissor: $Hscissor, width: $width, lenth: $lenth, hight: $hight, wight: $wight, cumingFrom: $cumingFrom, OutTo: $OutTo, notes: $notes, fractions: $fractions, actions: $actions, notfinals: $notfinals)';
+    return 'BlockModel(id: $id, color: $color, density: $density, type: $type, serial: $serial, number: $number, Rcissor: $Rcissor, Hscissor: $Hscissor, width: $width, lenth: $lenth, hight: $hight, wight: $wight, cumingFrom: $cumingFrom, OutTo: $OutTo, notes: $notes, discreption: $discreption, fractions: $fractions, actions: $actions, notfinals: $notfinals)';
   }
 
   @override
@@ -177,6 +184,7 @@ class BlockModel {
         other.cumingFrom == cumingFrom &&
         other.OutTo == OutTo &&
         other.notes == notes &&
+        other.discreption == discreption &&
         listEquals(other.fractions, fractions) &&
         listEquals(other.actions, actions) &&
         listEquals(other.notfinals, notfinals);
@@ -199,6 +207,7 @@ class BlockModel {
         cumingFrom.hashCode ^
         OutTo.hashCode ^
         notes.hashCode ^
+        discreption.hashCode ^
         fractions.hashCode ^
         actions.hashCode ^
         notfinals.hashCode;
@@ -1448,4 +1457,134 @@ class OperationOrederItems {
         hight.hashCode ^
         Qantity.hashCode;
   }
+}
+
+class Users {
+  int id;
+  String uidemail;
+  String uid;
+  String name;
+  List<UserpermitionTittle> permitions;
+  Users({
+    required this.id,
+    required this.uidemail,
+    required this.uid,
+    required this.name,
+    required this.permitions,
+  });
+
+  Users copyWith({
+    int? id,
+    String? uidemail,
+    String? uid,
+    String? name,
+    List<UserpermitionTittle>? permitions,
+  }) {
+    return Users(
+      id: id ?? this.id,
+      uidemail: uidemail ?? this.uidemail,
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
+      permitions: permitions ?? this.permitions,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'uidemail': uidemail,
+      'uid': uid,
+      'name': name,
+      'permitions': permitions.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory Users.fromMap(Map<String, dynamic> map) {
+    return Users(
+      id: map['id'] as int,
+      uidemail: map['uidemail'] as String,
+      uid: map['uid'] as String,
+      name: map['name'] as String,
+      permitions: List<UserpermitionTittle>.from(
+        (map['permitions'] as List<dynamic>).map<UserpermitionTittle>(
+          (x) => UserpermitionTittle.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Users.fromJson(String source) =>
+      Users.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Users(id: $id, uidemail: $uidemail, uid: $uid, name: $name, permitions: $permitions)';
+  }
+
+  @override
+  bool operator ==(covariant Users other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.uidemail == uidemail &&
+        other.uid == uid &&
+        other.name == name &&
+        listEquals(other.permitions, permitions);
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        uidemail.hashCode ^
+        uid.hashCode ^
+        name.hashCode ^
+        permitions.hashCode;
+  }
+}
+
+class UserpermitionTittle {
+  String tittle;
+  UserpermitionTittle({
+    required this.tittle,
+  });
+
+  UserpermitionTittle copyWith({
+    String? tittle,
+  }) {
+    return UserpermitionTittle(
+      tittle: tittle ?? this.tittle,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'tittle': tittle,
+    };
+  }
+
+  factory UserpermitionTittle.fromMap(Map<String, dynamic> map) {
+    return UserpermitionTittle(
+      tittle: map['tittle'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UserpermitionTittle.fromJson(String source) =>
+      UserpermitionTittle.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() => 'UserpermitionTittle(tittle: $tittle)';
+
+  @override
+  bool operator ==(covariant UserpermitionTittle other) {
+    if (identical(this, other)) return true;
+
+    return other.tittle == tittle;
+  }
+
+  @override
+  int get hashCode => tittle.hashCode;
 }

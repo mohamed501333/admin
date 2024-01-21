@@ -4,8 +4,12 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/users_controllers.dart';
+import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/setings/login.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 // ignore: non_constant_identifier_names
 
@@ -72,4 +76,21 @@ List<DateTime> getDaysInBeteween(DateTime startDate, DateTime endDate) {
         startDate.day + i));
   }
   return days;
+}
+
+bool permitionss(BuildContext context, UserPermition permition) {
+  List<Users> users = context
+      .read<Users_controller>()
+      .users
+      .where((element) =>
+          element.uidemail == FirebaseAuth.instance.currentUser!.email)
+      .toList();
+  if (users.isNotEmpty) {
+    return users.first.permitions
+            .map((e) => e.tittle)
+            .contains(permition.getTitle) ||
+        users.first.permitions.map((e) => e.tittle).contains("show_all");
+  } else {
+    return false;
+  }
 }

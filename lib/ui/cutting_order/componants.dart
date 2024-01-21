@@ -807,7 +807,7 @@ showmyAlertDialog(BuildContext context, OrderAction action, OrderModel item) {
           ),
           actions: [
             ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.green),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
                   Navigator.pop(context);
                 },

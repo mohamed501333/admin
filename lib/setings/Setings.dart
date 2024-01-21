@@ -8,6 +8,8 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/app/extentions.dart';
 
 import 'package:jason_company/setings/login.dart';
+import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
+import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/reports/reportsforH/h_reports_viewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +58,8 @@ class Setings extends StatelessWidget {
         body: Column(
       children: [
         // const Center(child: CustonSwitch()),
-        const Center(child: CustonSwitch2()),
+        Center(child: CustonSwitch2()),
+
         // Container(
         //   padding: const EdgeInsets.all(5),
         //   margin: const EdgeInsets.all(5),
@@ -166,12 +169,12 @@ class CustonSwitch extends StatelessWidget {
 }
 
 class CustonSwitch2 extends StatelessWidget {
-  const CustonSwitch2({
+  CustonSwitch2({
     super.key,
     this.fontsize = 14,
   });
   final double fontsize;
-
+  BlocksStockViewModel vm = BlocksStockViewModel();
   @override
   Widget build(BuildContext context) {
     return Consumer<SettingController>(
@@ -189,6 +192,7 @@ class CustonSwitch2 extends StatelessWidget {
                   value: myType.valueOfRadio2,
                   onChanged: (v) {
                     myType.changevalueOfRadio22(v);
+                    showmyAlertDialog1(context, myType, vm);
                   }),
             ],
           ),
@@ -196,6 +200,41 @@ class CustonSwitch2 extends StatelessWidget {
       },
     );
   }
+}
+
+showmyAlertDialog1(
+    BuildContext context, SettingController myType, BlocksStockViewModel vm) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('  ?'),
+          content: SizedBox(
+            height: 200,
+            child: Column(children: [
+              const Text("ادخل رقم البدايه"),
+              CustomTextFormField(hint: "", width: 100, controller: vm.N)
+            ]),
+          ),
+          actions: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('الغاء')),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                onPressed: () {
+                  myType.number = vm.N.text.to_int();
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'تم',
+                )),
+          ],
+        );
+      });
 }
 
 class ResultsData {
