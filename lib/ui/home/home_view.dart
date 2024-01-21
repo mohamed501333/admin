@@ -227,10 +227,10 @@ class HomeView extends StatelessWidget {
                           " dashboard ",
                           IconsManager.itemIcon1,
                           ontap: () {
-                            context.gonext(context, const UsersDashboard());
+                            context.gonext(context, UsersDashboard());
                           },
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                 ],
               ),
             ],

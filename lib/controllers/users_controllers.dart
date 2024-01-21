@@ -1,6 +1,5 @@
 // ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters, camel_case_types, empty_catches
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/models/moderls.dart';
@@ -34,13 +33,24 @@ class Users_controller extends ChangeNotifier {
   List<Users> users = [];
   List<Users> initalData = [];
 
-  Add_User_permition(UserPermition permition) {
-    FirebaseAuth.instance.currentUser!.email;
-    Users user = users
-        .where((element) => element.uidemail == initialforradioqq)
-        .toList()
-        .first;
-    user.permitions.add(permition.add);
+  Add_User_permition(UserPermition permition, String email) {
+    if (users.where((element) => element.uidemail == email).isNotEmpty) {
+      Users user = users.where((element) => element.uidemail == email).first;
+
+      user.permitions.add(permition.add);
+      try {
+        FirebaseDatabase.instance.ref("myusers/${user.id}").set(user.toJson());
+      } catch (e) {}
+    }
+  }
+
+  Add_new_user(String email) {
+    Users user = Users(
+        id: DateTime.now().millisecondsSinceEpoch,
+        uidemail: email,
+        uid: "",
+        name: "",
+        permitions: []);
     try {
       FirebaseDatabase.instance.ref("myusers/${user.id}").set(user.toJson());
     } catch (e) {}

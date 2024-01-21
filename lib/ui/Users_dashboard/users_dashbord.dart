@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, unnecessary_null_comparison
+// ignore_for_file: non_constant_identifier_names, unnecessary_null_comparison, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
@@ -7,23 +7,54 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class UsersDashboard extends StatelessWidget {
-  const UsersDashboard({super.key});
-
+  UsersDashboard({super.key});
+  TextEditingController useremail = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Consumer<Users_controller>(
       builder: (context, myType, child) {
-        // User currentUser = FirebaseAuth.instance.currentUser!;
-        // myType.Add_User_permition(
-        //     Users(
-        //         id: DateTime.now().millisecondsSinceEpoch,
-        //         uidemail: currentUser.email ?? "",
-        //         uid: currentUser.uid,
-        //         name: "",
-        //         permitions: []),
-        //     UserPermition.show_block_incetion);
         return Scaffold(
           appBar: AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: SizedBox(
+                              height: 200,
+                              child: Column(children: [
+                                TextField(
+                                  controller: useremail,
+                                )
+                              ]),
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('No')),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.red),
+                                  onPressed: () {
+                                    myType.Add_new_user(useremail.text);
+
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text(
+                                    'yes',
+                                  )),
+                            ],
+                          );
+                        });
+                  },
+                  icon: const Icon(Icons.add))
+            ],
             title: const DropDdowenForUsers(),
           ),
           body: Column(
@@ -32,8 +63,10 @@ class UsersDashboard extends StatelessWidget {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        if (myType.initialforracc != null) {
-                          myType.Add_User_permition(myType.initialforracc!);
+                        if (myType.initialforracc != null &&
+                            myType.initialforradioqq != null) {
+                          myType.Add_User_permition(myType.initialforracc!,
+                              myType.initialforradioqq!);
                         }
                       },
                       child: const Text("اضافه")),

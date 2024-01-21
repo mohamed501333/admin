@@ -385,7 +385,6 @@ enum UserPermition {
   incert_in_final_prodcutStock,
   incert_in_cutting_order,
   incert_in_customers,
-  delete_in_importedformCuttinUnit,
   delete_in_cutting_order,
   delete_in_consume_block,
   delete_in_imported_finalprodcut,
@@ -397,6 +396,13 @@ enum UserPermition {
   can_aprove_from_recive_from_final_prodcut,
   incert_unregular_in_importedfinal_prodcut,
   not_working,
+  can_get_data_of_blocks,
+  can_get_data_of_final_prodcut,
+  can_get_data_of_invoice,
+  can_get_data_of_customers,
+  can_get_data_of_orders,
+  can_get_data_of_fractions,
+  can_get_data_of_notfinals,
 }
 
 extension QQ on UserPermition {
@@ -452,8 +458,7 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "الاضافه الى اوامر التشغيل");
       case UserPermition.incert_in_customers:
         return UserpermitionTittle(tittle: "الاضافه الى العملاء");
-      case UserPermition.delete_in_importedformCuttinUnit:
-        return UserpermitionTittle(tittle: "امكانية المسح فى وارد تام المقصات");
+
       case UserPermition.delete_in_cutting_order:
         return UserpermitionTittle(tittle: "المسح او الاغلاق فى اوامر التشغيل");
       case UserPermition.delete_in_consume_block:
@@ -461,7 +466,7 @@ extension QQ on UserPermition {
       case UserPermition.show_date_in_block_out_of_stock:
         return UserpermitionTittle(tittle: "التاريخ فى صرف البلوكات");
       case UserPermition.delete_in_imported_finalprodcut:
-        return UserpermitionTittle(tittle: "التاريخ فى  وارد تام المقصات");
+        return UserpermitionTittle(tittle: "امكانية المسح فى وارد تام المقصات");
       case UserPermition.show_date_in_block_stock:
         return UserpermitionTittle(tittle: "التاريخ فى رصيد البلوكات");
       case UserPermition.can_print_in_cutting_order:
@@ -483,6 +488,20 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "مخزن دون التام");
       case UserPermition.not_working:
         return UserpermitionTittle(tittle: "اخرى");
+      case UserPermition.can_get_data_of_blocks:
+        return UserpermitionTittle(tittle: "can_get_data_of_blocks");
+      case UserPermition.can_get_data_of_final_prodcut:
+        return UserpermitionTittle(tittle: "can_get_data_of_final_prodcut");
+      case UserPermition.can_get_data_of_invoice:
+        return UserpermitionTittle(tittle: "can_get_data_of_invoice");
+      case UserPermition.can_get_data_of_customers:
+        return UserpermitionTittle(tittle: "can_get_data_of_customers");
+      case UserPermition.can_get_data_of_orders:
+        return UserpermitionTittle(tittle: "can_get_data_of_orders");
+      case UserPermition.can_get_data_of_fractions:
+        return UserpermitionTittle(tittle: "can_get_data_of_fractions");
+      case UserPermition.can_get_data_of_notfinals:
+        return UserpermitionTittle(tittle: "can_get_data_of_notfinals");
     }
   }
 
@@ -504,7 +523,6 @@ extension QQ on UserPermition {
         return "اذون صرف منتج تام";
       case UserPermition.show_finalprodcut_invoicemaking:
         return "صرف منتج تام";
-
       case UserPermition.show_customers:
         return "العملاء";
       case UserPermition.show_massaging:
@@ -537,8 +555,7 @@ extension QQ on UserPermition {
         return "الاضافه الى اوامر التشغيل";
       case UserPermition.incert_in_customers:
         return "الاضافه الى العملاء";
-      case UserPermition.delete_in_importedformCuttinUnit:
-        return "امكانية المسح فى وارد تام المقصات";
+
       case UserPermition.delete_in_cutting_order:
         return "المسح او الاغلاق فى اوامر التشغيل";
       case UserPermition.delete_in_consume_block:
@@ -560,13 +577,27 @@ extension QQ on UserPermition {
       case UserPermition.can_aprove_from_calculation:
         return "امكانية الموافقه من جهة الحسابات";
       case UserPermition.delete_in_imported_finalprodcut:
-        return "التاريخ فى  وارد تام المقصات";
+        return "امكانية المسح فى وارد تام المقصات";
       case UserPermition.incert_unregular_in_importedfinal_prodcut:
         return "اضافة مقاسات شاذه فى وارد تام المقصات";
       case UserPermition.show_not_final_stock:
         return "مخزن دون التام";
       case UserPermition.not_working:
         return "اخرى";
+      case UserPermition.can_get_data_of_blocks:
+        return "can_get_data_of_blocks";
+      case UserPermition.can_get_data_of_final_prodcut:
+        return "can_get_data_of_final_prodcut";
+      case UserPermition.can_get_data_of_invoice:
+        return "can_get_data_of_invoice";
+      case UserPermition.can_get_data_of_customers:
+        return "can_get_data_of_customers";
+      case UserPermition.can_get_data_of_orders:
+        return "can_get_data_of_orders";
+      case UserPermition.can_get_data_of_fractions:
+        return "can_get_data_of_fractions";
+      case UserPermition.can_get_data_of_notfinals:
+        return "can_get_data_of_notfinals";
     }
   }
 }

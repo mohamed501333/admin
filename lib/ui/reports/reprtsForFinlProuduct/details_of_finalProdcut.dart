@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:date_ranger/date_ranger.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -178,6 +179,9 @@ class details_of_finalProdcut extends StatelessWidget {
                       ],
                       gridLinesVisibility: GridLinesVisibility.both,
                       headerGridLinesVisibility: GridLinesVisibility.both,
+                      allowEditing: true,
+                      selectionMode: SelectionMode.multiple,
+                      navigationMode: GridNavigationMode.cell,
                       isScrollbarAlwaysShown: true,
                       key: kkkkk,
                       allowSorting: true,
@@ -200,6 +204,10 @@ class details_of_finalProdcut extends StatelessWidget {
 
 class EmployeeDataSource2233 extends DataGridSource {
 //DataGridRowهنا تحويل البيانات الى قائمه من
+
+  dynamic newCellValue;
+  TextEditingController editingController = TextEditingController();
+
   EmployeeDataSource2233(
     this.context, {
     required List<FinalProductModel> coumingData,
@@ -288,6 +296,91 @@ class EmployeeDataSource2233 extends DataGridSource {
         ),
       );
     }).toList());
+  }
+
+  @override
+  Future<void> onCellSubmit(DataGridRow dataGridRow,
+      RowColumnIndex rowColumnIndex, GridColumn column) {
+    final dynamic oldValue = dataGridRow
+            .getCells()
+            .firstWhereOrNull((DataGridCell dataGridCell) =>
+                dataGridCell.columnName == column.columnName)
+            ?.value ??
+        '';
+
+    final int dataRowIndex = data.indexOf(dataGridRow);
+
+    if (newCellValue == null || oldValue == newCellValue) {
+      return true;
+    }
+
+    if (column.columnName == 'id') {
+      data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+          DataGridCell<int>(columnName: 'id', value: newCellValue);
+      data[dataRowIndex] = newCellValue;
+    } else if (column.columnName == 'name') {
+      data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+          DataGridCell<String>(columnName: 'name', value: newCellValue);
+      data[dataRowIndex] = newCellValue;
+    } else if (column.columnName == 'designation') {
+      data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+          DataGridCell<String>(columnName: 'designation', value: newCellValue);
+      data[dataRowIndex] = newCellValue;
+    } else {
+      data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+          DataGridCell<int>(columnName: 'salary', value: newCellValue);
+      data[dataRowIndex] = newCellValue;
+    }
+  }
+
+  @override
+  Widget? buildEditWidget(DataGridRow dataGridRow,
+      RowColumnIndex rowColumnIndex, GridColumn column, CellSubmit submitCell) {
+    // Text going to display on editable widget
+    final String displayText = dataGridRow
+            .getCells()
+            .firstWhereOrNull((DataGridCell dataGridCell) =>
+                dataGridCell.columnName == column.columnName)
+            ?.value
+            ?.toString() ??
+        '';
+
+    // The new cell value must be reset.
+    // To avoid committing the [DataGridCell] value that was previously edited
+    // into the current non-modified [DataGridCell].
+    newCellValue = null;
+
+    final bool isNumericType =
+        column.columnName == 'id' || column.columnName == 'salary';
+
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      alignment: isNumericType ? Alignment.centerRight : Alignment.centerLeft,
+      child: TextField(
+        autofocus: true,
+        controller: editingController..text = displayText,
+        textAlign: isNumericType ? TextAlign.right : TextAlign.left,
+        decoration: const InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+        ),
+        keyboardType: isNumericType ? TextInputType.number : TextInputType.text,
+        onChanged: (String value) {
+          if (value.isNotEmpty) {
+            if (isNumericType) {
+              newCellValue = int.parse(value);
+            } else {
+              newCellValue = value;
+            }
+          } else {
+            newCellValue = null;
+          }
+        },
+        onSubmitted: (String value) {
+          print(value);
+          submitCell();
+        },
+      ),
+    );
   }
 }
 
