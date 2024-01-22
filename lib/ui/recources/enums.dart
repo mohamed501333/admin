@@ -518,7 +518,7 @@ extension QQ on UserPermition {
       case UserPermition.show_block_incetion:
         return "اضافه الى البلوكات";
       case UserPermition.show_blockconsume:
-        return "صرف بلوكات ";
+        return "صرف بلوكات";
       case UserPermition.show_cutting_orders:
         return "اوامر التشغيل";
       case UserPermition.show_finalProdcut_stock:
