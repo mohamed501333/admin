@@ -10,111 +10,117 @@
 import 'dart:typed_data';
 
 import 'package:flat_buffers/flat_buffers.dart' as fb;
-import 'package:jason_company/models/moderls.dart';
 import 'package:objectbox/internal.dart'; // generated code can access "internal" functionality
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
+
+import '../models/moderls.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 2015244925239452168),
+      id: const IdUid(1, 8270035808394733948),
       name: 'ChipBlockModel',
-      lastPropertyId: const IdUid(13, 3261639009652717753),
+      lastPropertyId: const IdUid(14, 6627704771325751214),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 1790817178631293790),
+            id: const IdUid(1, 3631079449638806069),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 3811530322767209551),
+            id: const IdUid(2, 8501412458957975813),
             name: 'title',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 6671159875649631399),
+            id: const IdUid(3, 9215423942782512455),
             name: 'color',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 8814152568559353469),
+            id: const IdUid(4, 111570357293258598),
             name: 'density',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 3733810281531421738),
+            id: const IdUid(5, 2196007138835517895),
             name: 'type',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(6, 3174536976192947366),
+            id: const IdUid(6, 4100383895590901476),
             name: 'serial',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(7, 5798955569406690223),
+            id: const IdUid(7, 2429974254413219178),
             name: 'number',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(8, 96514242531701386),
+            id: const IdUid(8, 8833240990742853681),
             name: 'width',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(9, 5727796209942622936),
+            id: const IdUid(9, 744817791137649596),
             name: 'lenth',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(10, 3035959731439974874),
+            id: const IdUid(10, 3225118537304772849),
             name: 'scissor',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(11, 7899842113936739697),
+            id: const IdUid(11, 6951603700313459266),
             name: 'hight',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(12, 3574241914799094215),
+            id: const IdUid(12, 827258658796565619),
             name: 'wight',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(13, 3261639009652717753),
+            id: const IdUid(13, 3028011085251127184),
             name: 'notes',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 6627704771325751214),
+            name: 'description',
             type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(2, 97117940785492925),
+      id: const IdUid(2, 5558201871620107121),
       name: 'ChipFraction',
-      lastPropertyId: const IdUid(4, 9223158076297314543),
+      lastPropertyId: const IdUid(4, 2841735505030618490),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 8376135679287693917),
+            id: const IdUid(1, 6566109302821088290),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 4846088898683996665),
+            id: const IdUid(2, 3613850702257291216),
             name: 'width',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 4803332614112622551),
+            id: const IdUid(3, 3075867272590908109),
             name: 'lenth',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 9223158076297314543),
+            id: const IdUid(4, 2841735505030618490),
             name: 'hight',
             type: 8,
             flags: 0)
@@ -122,68 +128,68 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(3, 501138952087645226),
+      id: const IdUid(3, 4677854116925811042),
       name: 'ChipfinalProducut',
-      lastPropertyId: const IdUid(12, 1850975540094892586),
+      lastPropertyId: const IdUid(12, 4103394296519612335),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 5942773127681590999),
+            id: const IdUid(1, 5910189028422840968),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 1496649440216294200),
+            id: const IdUid(2, 5946957732526766171),
             name: 'title',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 6673775500635340521),
+            id: const IdUid(3, 445662547417877837),
             name: 'color',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 8419808130356394852),
+            id: const IdUid(4, 4798961399589036996),
             name: 'density',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 2922816607494254128),
+            id: const IdUid(5, 7175544107474135524),
             name: 'type',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(6, 1692453529083943286),
+            id: const IdUid(6, 1697998348812150836),
             name: 'amount',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(7, 1440803366176324108),
+            id: const IdUid(7, 6395949023927143793),
             name: 'number',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(8, 7959595773506429201),
+            id: const IdUid(8, 7630725252404375574),
             name: 'width',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(9, 5366723079530702261),
+            id: const IdUid(9, 2700800057006974690),
             name: 'lenth',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(10, 2144281151360239731),
+            id: const IdUid(10, 6388336104792188983),
             name: 'hight',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(11, 4774758903985168373),
+            id: const IdUid(11, 5395221979200628178),
             name: 'company',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(12, 1850975540094892586),
+            id: const IdUid(12, 4103394296519612335),
             name: 'scissor',
             type: 9,
             flags: 0)
@@ -219,7 +225,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(3, 501138952087645226),
+      lastEntityId: const IdUid(3, 4677854116925811042),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -246,7 +252,8 @@ ModelDefinition getObjectBoxModel() {
           final typeOffset = fbb.writeString(object.type);
           final serialOffset = fbb.writeString(object.serial);
           final notesOffset = fbb.writeString(object.notes);
-          fbb.startTable(14);
+          final descriptionOffset = fbb.writeString(object.description);
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, titleOffset);
           fbb.addOffset(2, colorOffset);
@@ -260,6 +267,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(10, object.hight);
           fbb.addFloat64(11, object.wight);
           fbb.addOffset(12, notesOffset);
+          fbb.addOffset(13, descriptionOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -292,6 +300,9 @@ ModelDefinition getObjectBoxModel() {
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 26, 0);
           final notesParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 28, '');
+          final descriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 30, '');
           final object = ChipBlockModel(
               id: idParam,
               title: titleParam,
@@ -305,7 +316,8 @@ ModelDefinition getObjectBoxModel() {
               scissor: scissorParam,
               hight: hightParam,
               wight: wightParam,
-              notes: notesParam);
+              notes: notesParam,
+              description: descriptionParam);
 
           return object;
         }),
@@ -476,6 +488,10 @@ class ChipBlockModel_ {
   /// see [ChipBlockModel.notes]
   static final notes =
       QueryStringProperty<ChipBlockModel>(_entities[0].properties[12]);
+
+  /// see [ChipBlockModel.description]
+  static final description =
+      QueryStringProperty<ChipBlockModel>(_entities[0].properties[13]);
 }
 
 /// [ChipFraction] entity fields to define ObjectBox queries.

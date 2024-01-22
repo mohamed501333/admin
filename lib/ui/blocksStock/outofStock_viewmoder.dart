@@ -20,6 +20,7 @@ class BlocksStockViewModel extends BaseViewModel {
     widthcontroller.text = chi.width.removeTrailingZeros.toString();
     scissorcontroller.text = chi.scissor.removeTrailingZeros.toString();
     wightcontroller.text = chi.wight.removeTrailingZeros.toString();
+    blockdesription.text = chi.description.toString();
   }
 
   @override
@@ -41,7 +42,7 @@ class BlocksStockViewModel extends BaseViewModel {
   incertblock(BuildContext context) {
     bool co = context.read<SettingController>().valueOfRadio1;
     context.read<BlockFirebasecontroller>().addblock(BlockModel(
-        discreption: "",
+        discreption: blockdesription.text,
         actions: co == true
             ? [
                 BlockAction.create_block.add,
@@ -73,7 +74,7 @@ class BlocksStockViewModel extends BaseViewModel {
     int num = context.read<SettingController>().number;
     context.read<BlockFirebasecontroller>().addblock(
           BlockModel(
-            discreption: "",
+            discreption: chi.description,
             OutTo: outTo.text.isEmpty ? "" : outTo.text,
             cumingFrom: cummingFrom.text.isEmpty ? "المصنع" : cummingFrom.text,
             fractions: [],

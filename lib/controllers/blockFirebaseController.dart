@@ -43,36 +43,37 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
   List<BlockModel> all = [];
+  // List<BlockModel2> edits = [];
   List<BlockModel> blocks = [];
   List<BlockModel> archived_blocks = [];
   List<BlockModel> search = [];
 
-  c() {
-    for (var el in blocks.where((element) => element.discreption == "")) {
-      BlockModel e = BlockModel(
-          discreption: "---",
-          id: el.id,
-          color: el.color,
-          density: 28,
-          type: el.type,
-          serial: el.serial,
-          number: el.number,
-          Rcissor: el.Rcissor,
-          Hscissor: el.Hscissor,
-          width: el.width,
-          lenth: el.lenth,
-          hight: el.hight,
-          wight: el.wight,
-          cumingFrom: el.cumingFrom,
-          OutTo: el.OutTo,
-          notes: el.notes,
-          fractions: el.fractions,
-          actions: el.actions,
-          notfinals: el.notfinals);
+  // c() {
+  //   for (var el in edits) {
+  //     BlockModel e = BlockModel(
+  //         discreption: "",
+  //         id: el.id,
+  //         color: el.color,
+  //         density: el.density,
+  //         type: el.type,
+  //         serial: el.serial,
+  //         number: el.number,
+  //         Rcissor: el.Rcissor,
+  //         Hscissor: el.Hscissor,
+  //         width: el.width,
+  //         lenth: el.lenth,
+  //         hight: el.hight,
+  //         wight: el.wight,
+  //         cumingFrom: el.cumingFrom,
+  //         OutTo: el.OutTo,
+  //         notes: el.notes,
+  //         fractions: el.fractions,
+  //         actions: el.actions,
+  //         notfinals: el.notfinals);
 
-      FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
-    }
-  }
+  //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
+  //   }
+  // }
 
   void runFilter(String enteredKeyword) {
     if (enteredKeyword.isEmpty) {

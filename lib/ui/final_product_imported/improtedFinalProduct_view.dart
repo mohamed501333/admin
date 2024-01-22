@@ -162,11 +162,11 @@ class TheTable extends StatelessWidget {
                                                     .final_prodcut_DidQalityCheck
                                                     .getactionTitle) ==
                                                 true &&
-                                            user.isfinal == true &&
                                             permitionss(
                                                 context,
                                                 UserPermition
-                                                    .can_aprove_from_recive_from_final_prodcut)
+                                                    .can_aprove_from_recive_from_final_prodcut) &&
+                                            user.isfinal == true
                                         ? showmyAlertDialog(
                                             context, vm, user, "stock")
                                         : DoNothingAction();

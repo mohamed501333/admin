@@ -403,6 +403,7 @@ enum UserPermition {
   can_get_data_of_orders,
   can_get_data_of_fractions,
   can_get_data_of_notfinals,
+  allow_edit_in_details_finalProdcut,
 }
 
 extension QQ on UserPermition {
@@ -486,6 +487,8 @@ extension QQ on UserPermition {
             tittle: "اضافة مقاسات شاذه فى وارد تام المقصات");
       case UserPermition.show_not_final_stock:
         return UserpermitionTittle(tittle: "مخزن دون التام");
+      case UserPermition.allow_edit_in_details_finalProdcut:
+        return UserpermitionTittle(tittle: "التعديل فى تفاصيل منتج تام");
       case UserPermition.not_working:
         return UserpermitionTittle(tittle: "اخرى");
       case UserPermition.can_get_data_of_blocks:
@@ -573,7 +576,7 @@ extension QQ on UserPermition {
       case UserPermition.can_aprove_from_quality:
         return "امكانية الموافقه من جهة الجوده";
       case UserPermition.can_aprove_from_recive_from_final_prodcut:
-        return "امكانية الاستلام من جهة مخزن التام";
+        return "امكانية الاستلام من جهة مخزن تام";
       case UserPermition.can_aprove_from_calculation:
         return "امكانية الموافقه من جهة الحسابات";
       case UserPermition.delete_in_imported_finalprodcut:
@@ -598,6 +601,8 @@ extension QQ on UserPermition {
         return "can_get_data_of_fractions";
       case UserPermition.can_get_data_of_notfinals:
         return "can_get_data_of_notfinals";
+      case UserPermition.allow_edit_in_details_finalProdcut:
+        return "التعديل فى تفاصيل منتج تام";
     }
   }
 }

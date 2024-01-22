@@ -1,7 +1,6 @@
-// ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names, use_key_in_widget_constructors, unused_element
+// ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names, use_key_in_widget_constructors, unused_element, unused_local_variable
 
 import 'dart:io';
-
 import 'package:collection/collection.dart';
 import 'package:date_ranger/date_ranger.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +10,12 @@ import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/main.dart';
+import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/file_handle_api.dart';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_datagrid_export/export.dart';
 
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
-import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -65,7 +63,7 @@ class details_of_finalProdcut extends StatelessWidget {
             ))),
     GridColumn(
         allowFiltering: true,
-        columnName: 'denety',
+        columnName: 'density',
         label: Container(
             alignment: Alignment.center,
             child: Text(
@@ -179,7 +177,8 @@ class details_of_finalProdcut extends StatelessWidget {
                       ],
                       gridLinesVisibility: GridLinesVisibility.both,
                       headerGridLinesVisibility: GridLinesVisibility.both,
-                      allowEditing: true,
+                      allowEditing: permitionss(context,
+                          UserPermition.allow_edit_in_details_finalProdcut),
                       selectionMode: SelectionMode.multiple,
                       navigationMode: GridNavigationMode.cell,
                       isScrollbarAlwaysShown: true,
@@ -219,7 +218,7 @@ class EmployeeDataSource2233 extends DataGridSource {
                   value:
                       "${e.hight.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.lenth.removeTrailingZeros}"),
               DataGridCell<String>(columnName: 'color', value: e.color),
-              DataGridCell<double>(columnName: 'denety', value: e.density),
+              DataGridCell<double>(columnName: 'density', value: e.density),
               DataGridCell<String>(columnName: 'type', value: e.type),
               DataGridCell<int>(columnName: 'amount', value: e.amount),
               DataGridCell<String>(
@@ -255,10 +254,11 @@ class EmployeeDataSource2233 extends DataGridSource {
                       : "--"),
             ]))
         .toList();
+    data2 = coumingData;
   }
   final BuildContext context;
   List<DataGridRow> data = [];
-
+  List<FinalProductModel> data2 = [];
   @override
   List<DataGridRow> get rows => data;
   @override
@@ -298,40 +298,40 @@ class EmployeeDataSource2233 extends DataGridSource {
     }).toList());
   }
 
-  @override
-  Future<void> onCellSubmit(DataGridRow dataGridRow,
-      RowColumnIndex rowColumnIndex, GridColumn column) {
-    final dynamic oldValue = dataGridRow
-            .getCells()
-            .firstWhereOrNull((DataGridCell dataGridCell) =>
-                dataGridCell.columnName == column.columnName)
-            ?.value ??
-        '';
+  // @override
+  // Future<void> onCellSubmit(DataGridRow dataGridRow,
+  //     RowColumnIndex rowColumnIndex, GridColumn column) {
+  //   final dynamic oldValue = dataGridRow
+  //           .getCells()
+  //           .firstWhereOrNull((DataGridCell dataGridCell) =>
+  //               dataGridCell.columnName == column.columnName)
+  //           ?.value ??
+  //       '';
 
-    final int dataRowIndex = data.indexOf(dataGridRow);
+  //   final int dataRowIndex = data.indexOf(dataGridRow);
 
-    if (newCellValue == null || oldValue == newCellValue) {
-      return true;
-    }
+  //   if (newCellValue == null || oldValue == newCellValue) {
+  //     return;
+  //   }
 
-    if (column.columnName == 'id') {
-      data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<int>(columnName: 'id', value: newCellValue);
-      data[dataRowIndex] = newCellValue;
-    } else if (column.columnName == 'name') {
-      data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(columnName: 'name', value: newCellValue);
-      data[dataRowIndex] = newCellValue;
-    } else if (column.columnName == 'designation') {
-      data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<String>(columnName: 'designation', value: newCellValue);
-      data[dataRowIndex] = newCellValue;
-    } else {
-      data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
-          DataGridCell<int>(columnName: 'salary', value: newCellValue);
-      data[dataRowIndex] = newCellValue;
-    }
-  }
+  //   if (column.columnName == 'id') {
+  //     data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+  //         DataGridCell<int>(columnName: 'id', value: newCellValue);
+  //     data[dataRowIndex] = newCellValue;
+  //   } else if (column.columnName == 'name') {
+  //     data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+  //         DataGridCell<String>(columnName: 'name', value: newCellValue);
+  //     data[dataRowIndex] = newCellValue;
+  //   } else if (column.columnName == 'designation') {
+  //     data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+  //         DataGridCell<String>(columnName: 'designation', value: newCellValue);
+  //     data[dataRowIndex] = newCellValue;
+  //   } else {
+  //     data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+  //         DataGridCell<int>(columnName: 'salary', value: newCellValue);
+  //     data[dataRowIndex] = newCellValue;
+  //   }
+  // }
 
   @override
   Widget? buildEditWidget(DataGridRow dataGridRow,
@@ -344,14 +344,41 @@ class EmployeeDataSource2233 extends DataGridSource {
             ?.value
             ?.toString() ??
         '';
+    final dynamic oldValue = dataGridRow
+            .getCells()
+            .firstWhereOrNull((DataGridCell dataGridCell) =>
+                dataGridCell.columnName == column.columnName)
+            ?.value ??
+        '';
 
+    final int dataRowIndex = data.indexOf(dataGridRow);
+    final FinalProductModel u = data2.elementAt(dataRowIndex);
+
+    // if (column.columnName == 'id') {
+    //   data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+    //       DataGridCell<int>(columnName: 'id', value: newCellValue);
+    //   data[dataRowIndex] = newCellValue;
+    // }
+    //  else if (column.columnName == 'name') {
+    //   data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+    //       DataGridCell<String>(columnName: 'name', value: newCellValue);
+    //   data[dataRowIndex] = newCellValue;
+    // } else if (column.columnName == 'designation') {
+    //   data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+    //       DataGridCell<String>(columnName: 'designation', value: newCellValue);
+    //   data[dataRowIndex] = newCellValue;
+    // } else {
+    //   data[dataRowIndex].getCells()[rowColumnIndex.columnIndex] =
+    //       DataGridCell<int>(columnName: 'salary', value: newCellValue);
+    //   data[dataRowIndex] = newCellValue;
+    // }
     // The new cell value must be reset.
     // To avoid committing the [DataGridCell] value that was previously edited
     // into the current non-modified [DataGridCell].
-    newCellValue = null;
+    newCellValue = "";
 
     final bool isNumericType =
-        column.columnName == 'id' || column.columnName == 'salary';
+        column.columnName == 'id' || column.columnName == 'amount';
 
     return Container(
       padding: const EdgeInsets.all(8.0),
@@ -376,8 +403,22 @@ class EmployeeDataSource2233 extends DataGridSource {
           }
         },
         onSubmitted: (String value) {
+          // print(u);
           print(value);
-          submitCell();
+          print(column.columnName);
+          if (column.columnName == "size") {
+            String i = value;
+            List<String> b = i.replaceAll("*", " ").split(" ");
+            print(b);
+            context
+                .read<final_prodcut_controller>()
+                .edit_cell_size(u.id, column.columnName, b);
+          } else {
+            context
+                .read<final_prodcut_controller>()
+                .edit_cell(u.id, column.columnName, value);
+            submitCell();
+          }
         },
       ),
     );

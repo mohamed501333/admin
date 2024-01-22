@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 class ConstantsViewModel extends BaseViewModel {
   addchipblock(BuildContext context) {
     database.addchips(ChipBlockModel(
+      description: blockdesription.text,
       notes: notes.text,
       wight: wightcontroller.text.to_double(),
       title: tiitlecontroller.text,
