@@ -50,7 +50,7 @@ class _FinalProductViewState extends State<FinalProductView> {
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ))
                 .permition(
-                    context, UserPermition.delete_in_imported_finalprodcut),
+                    context, UserPermition.show_date_in_finalProduct_imported),
             AddUnregular().permition(context,
                 UserPermition.incert_unregular_in_importedfinal_prodcut)
           ],

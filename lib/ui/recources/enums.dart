@@ -378,6 +378,7 @@ enum UserPermition {
   show_Reports_details_of_finalProdcut_stock,
   show_date_in_block_out_of_stock,
   show_date_in_block_stock,
+  show_date_in_finalProduct_imported,
   show_not_final_stock,
   incert_in_finalProdcut_imorted,
   incert_in_block_stock,
@@ -466,6 +467,8 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "المسح فى صرف بلوكات");
       case UserPermition.show_date_in_block_out_of_stock:
         return UserpermitionTittle(tittle: "التاريخ فى صرف البلوكات");
+      case UserPermition.show_date_in_finalProduct_imported:
+        return UserpermitionTittle(tittle: "التاريخ فى  وارد تام المقصات");
       case UserPermition.delete_in_imported_finalprodcut:
         return UserpermitionTittle(tittle: "امكانية المسح فى وارد تام المقصات");
       case UserPermition.show_date_in_block_stock:
@@ -565,6 +568,10 @@ extension QQ on UserPermition {
         return "المسح فى صرف بلوكات";
       case UserPermition.show_date_in_block_out_of_stock:
         return "التاريخ فى صرف البلوكات";
+      case UserPermition.allow_edit_in_details_finalProdcut:
+        return "التعديل فى تفاصيل منتج تام";
+      case UserPermition.show_date_in_finalProduct_imported:
+        return "التاريخ فى  وارد تام المقصات";
       case UserPermition.show_date_in_block_stock:
         return "التاريخ فى رصيد البلوكات";
       case UserPermition.can_print_in_cutting_order:
@@ -601,8 +608,6 @@ extension QQ on UserPermition {
         return "can_get_data_of_fractions";
       case UserPermition.can_get_data_of_notfinals:
         return "can_get_data_of_notfinals";
-      case UserPermition.allow_edit_in_details_finalProdcut:
-        return "التعديل فى تفاصيل منتج تام";
     }
   }
 }
