@@ -20,6 +20,7 @@ class Invoice_controller extends ChangeNotifier {
             invoices.add(Invoice.fromJson(item.toString()));
           }
         }
+        print("get data of invoice");
         notifyListeners();
       });
     } catch (e) {}

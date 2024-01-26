@@ -44,6 +44,8 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
     context
         .read<final_prodcut_controller>()
         .incert_finalProduct_from_Others(FinalProductModel(
+          invoiceNum: 0,
+          price: 0,
           worker: "",
           stageOfR: 0,
           isfinal: true,
@@ -77,6 +79,8 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
       context
           .read<final_prodcut_controller>()
           .incert_finalProduct_from_Others(FinalProductModel(
+            invoiceNum: 0,
+            price: 0.0,
             worker: "",
             stageOfR: 0,
             isfinal: true,

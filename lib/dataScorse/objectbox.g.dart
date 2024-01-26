@@ -20,78 +20,78 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 8270035808394733948),
+      id: const IdUid(1, 5766817127886087310),
       name: 'ChipBlockModel',
-      lastPropertyId: const IdUid(14, 6627704771325751214),
+      lastPropertyId: const IdUid(14, 6933484263989904874),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 3631079449638806069),
+            id: const IdUid(1, 7047598725054373159),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 8501412458957975813),
+            id: const IdUid(2, 7494847655725877467),
             name: 'title',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 9215423942782512455),
+            id: const IdUid(3, 5373123020180861790),
             name: 'color',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 111570357293258598),
+            id: const IdUid(4, 2619053772108324263),
             name: 'density',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 2196007138835517895),
+            id: const IdUid(5, 5425707442905255812),
             name: 'type',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(6, 4100383895590901476),
+            id: const IdUid(6, 857032885791670872),
             name: 'serial',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(7, 2429974254413219178),
+            id: const IdUid(7, 8369124864272671287),
             name: 'number',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(8, 8833240990742853681),
+            id: const IdUid(8, 4213282529751350916),
             name: 'width',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(9, 744817791137649596),
+            id: const IdUid(9, 8830288111525140463),
             name: 'lenth',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(10, 3225118537304772849),
+            id: const IdUid(10, 5747086196920148615),
             name: 'scissor',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(11, 6951603700313459266),
+            id: const IdUid(11, 8094156766797092793),
             name: 'hight',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(12, 827258658796565619),
+            id: const IdUid(12, 4204673584453909539),
             name: 'wight',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(13, 3028011085251127184),
+            id: const IdUid(13, 5649748582041743292),
             name: 'notes',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(14, 6627704771325751214),
+            id: const IdUid(14, 6933484263989904874),
             name: 'description',
             type: 9,
             flags: 0)
@@ -99,99 +99,30 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(2, 5558201871620107121),
+      id: const IdUid(2, 4834809552106828592),
       name: 'ChipFraction',
-      lastPropertyId: const IdUid(4, 2841735505030618490),
+      lastPropertyId: const IdUid(4, 3612354499078491459),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 6566109302821088290),
+            id: const IdUid(1, 880670482980990046),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 3613850702257291216),
+            id: const IdUid(2, 7474492443085524871),
             name: 'width',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 3075867272590908109),
+            id: const IdUid(3, 832437133360807654),
             name: 'lenth',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 2841735505030618490),
+            id: const IdUid(4, 3612354499078491459),
             name: 'hight',
             type: 8,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(3, 4677854116925811042),
-      name: 'ChipfinalProducut',
-      lastPropertyId: const IdUid(12, 4103394296519612335),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 5910189028422840968),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 5946957732526766171),
-            name: 'title',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 445662547417877837),
-            name: 'color',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 4798961399589036996),
-            name: 'density',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(5, 7175544107474135524),
-            name: 'type',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(6, 1697998348812150836),
-            name: 'amount',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(7, 6395949023927143793),
-            name: 'number',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(8, 7630725252404375574),
-            name: 'width',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(9, 2700800057006974690),
-            name: 'lenth',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(10, 6388336104792188983),
-            name: 'hight',
-            type: 8,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(11, 5395221979200628178),
-            name: 'company',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(12, 4103394296519612335),
-            name: 'scissor',
-            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -225,7 +156,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(3, 4677854116925811042),
+      lastEntityId: const IdUid(2, 4834809552106828592),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -356,79 +287,6 @@ ModelDefinition getObjectBoxModel() {
               hight: hightParam);
 
           return object;
-        }),
-    ChipfinalProducut: EntityDefinition<ChipfinalProducut>(
-        model: _entities[2],
-        toOneRelations: (ChipfinalProducut object) => [],
-        toManyRelations: (ChipfinalProducut object) => {},
-        getId: (ChipfinalProducut object) => object.id,
-        setId: (ChipfinalProducut object, int id) {
-          object.id = id;
-        },
-        objectToFB: (ChipfinalProducut object, fb.Builder fbb) {
-          final titleOffset = fbb.writeString(object.title);
-          final colorOffset = fbb.writeString(object.color);
-          final typeOffset = fbb.writeString(object.type);
-          final companyOffset = fbb.writeString(object.company);
-          final scissorOffset = fbb.writeString(object.scissor);
-          fbb.startTable(13);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, titleOffset);
-          fbb.addOffset(2, colorOffset);
-          fbb.addFloat64(3, object.density);
-          fbb.addOffset(4, typeOffset);
-          fbb.addFloat64(5, object.amount);
-          fbb.addFloat64(6, object.number);
-          fbb.addFloat64(7, object.width);
-          fbb.addFloat64(8, object.lenth);
-          fbb.addFloat64(9, object.hight);
-          fbb.addOffset(10, companyOffset);
-          fbb.addOffset(11, scissorOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final titleParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 6, '');
-          final scissorParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 26, '');
-          final colorParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 8, '');
-          final densityParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
-          final typeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 12, '');
-          final amountParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0);
-          final numberParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 16, 0);
-          final widthParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 18, 0);
-          final lenthParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 20, 0);
-          final hightParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 22, 0);
-          final companyParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 24, '');
-          final object = ChipfinalProducut(
-              id: idParam,
-              title: titleParam,
-              scissor: scissorParam,
-              color: colorParam,
-              density: densityParam,
-              type: typeParam,
-              amount: amountParam,
-              number: numberParam,
-              width: widthParam,
-              lenth: lenthParam,
-              hight: hightParam,
-              company: companyParam);
-
-          return object;
         })
   };
 
@@ -511,55 +369,4 @@ class ChipFraction_ {
   /// see [ChipFraction.hight]
   static final hight =
       QueryDoubleProperty<ChipFraction>(_entities[1].properties[3]);
-}
-
-/// [ChipfinalProducut] entity fields to define ObjectBox queries.
-class ChipfinalProducut_ {
-  /// see [ChipfinalProducut.id]
-  static final id =
-      QueryIntegerProperty<ChipfinalProducut>(_entities[2].properties[0]);
-
-  /// see [ChipfinalProducut.title]
-  static final title =
-      QueryStringProperty<ChipfinalProducut>(_entities[2].properties[1]);
-
-  /// see [ChipfinalProducut.color]
-  static final color =
-      QueryStringProperty<ChipfinalProducut>(_entities[2].properties[2]);
-
-  /// see [ChipfinalProducut.density]
-  static final density =
-      QueryDoubleProperty<ChipfinalProducut>(_entities[2].properties[3]);
-
-  /// see [ChipfinalProducut.type]
-  static final type =
-      QueryStringProperty<ChipfinalProducut>(_entities[2].properties[4]);
-
-  /// see [ChipfinalProducut.amount]
-  static final amount =
-      QueryDoubleProperty<ChipfinalProducut>(_entities[2].properties[5]);
-
-  /// see [ChipfinalProducut.number]
-  static final number =
-      QueryDoubleProperty<ChipfinalProducut>(_entities[2].properties[6]);
-
-  /// see [ChipfinalProducut.width]
-  static final width =
-      QueryDoubleProperty<ChipfinalProducut>(_entities[2].properties[7]);
-
-  /// see [ChipfinalProducut.lenth]
-  static final lenth =
-      QueryDoubleProperty<ChipfinalProducut>(_entities[2].properties[8]);
-
-  /// see [ChipfinalProducut.hight]
-  static final hight =
-      QueryDoubleProperty<ChipfinalProducut>(_entities[2].properties[9]);
-
-  /// see [ChipfinalProducut.company]
-  static final company =
-      QueryStringProperty<ChipfinalProducut>(_entities[2].properties[10]);
-
-  /// see [ChipfinalProducut.scissor]
-  static final scissor =
-      QueryStringProperty<ChipfinalProducut>(_entities[2].properties[11]);
 }

@@ -123,7 +123,7 @@ class HomeView extends StatelessWidget {
                     "اذون صرف منتج تام",
                     IconsManager.itemIcon1,
                     ontap: () {
-                      context.gonext(context, const InvicesView());
+                      context.gonext(context, InvicesView());
                     },
                   ).permition(context, UserPermition.show_finalprodcut_invoice),
                 ],

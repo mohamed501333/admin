@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, camel_case_types, file_names
 
+import 'package:advanced_search/advanced_search.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -25,6 +26,49 @@ class Customers_view extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AdvancedSearch(
+                      searchItems: context
+                          .read<Customer_controller>()
+                          .customers
+                          .map((e) => '${e.name} : ${e.serial}')
+                          .toList(),
+                      maxElementsToDisplay: 4,
+                      singleItemHeight: 50,
+                      borderColor: Colors.grey,
+                      minLettersForSearch: 1,
+                      selectedTextColor: const Color(0xFF3363D9),
+                      fontSize: 14,
+                      borderRadius: 12.0,
+                      hintText: ' ابحث عن عميل',
+                      cursorColor: Colors.blueGrey,
+                      autoCorrect: false,
+                      focusedBorderColor: Colors.blue,
+                      searchResultsBgColor: const Color(0xFAFAFA),
+                      disabledBorderColor: Colors.cyan,
+                      enabledBorderColor: Colors.black,
+                      enabled: true,
+                      caseSensitive: false,
+                      inputTextFieldBgColor: Colors.white10,
+                      clearSearchEnabled: true,
+                      itemsShownAtStart: 2,
+                      searchMode: SearchMode.CONTAINS,
+                      showListOfResults: true,
+                      unSelectedTextColor: Colors.black54,
+                      verticalPadding: 10,
+                      horizontalPadding: 10,
+                      hideHintOnTextInputFocus: true,
+                      hintTextColor: Colors.grey,
+                      onItemTap: (index, value) {
+                        vm.customerName.text = value;
+                      },
+                      onSearchClear: () {},
+                      onSubmitted: (searchText, listOfResults) {},
+                      onEditingProgress: (searchText, listOfResults) {},
+                    ).permition(
+                        context, UserPermition.show_search_in_customers),
                     const SizedBox(
                       height: 20,
                     ),

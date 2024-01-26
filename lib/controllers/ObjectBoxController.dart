@@ -22,11 +22,6 @@ class ObjectBoxController extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  addfinalProductchips(ChipfinalProducut chip) {
-    database.addfinalProuductchips(chip);
-    notifyListeners();
-  }
-
   // addFraction(BuildContext context, List<FractionModel> fract) {
   //   print("add fraction");
   //   fract.map((e) => context.read<FractionFirebaseController>().addfraction(e));
@@ -40,7 +35,6 @@ class ObjectBoxController extends ChangeNotifier {
 
   List<ChipBlockModel> chips = database.getchips();
   // List<BlockModel> blocks = database.getblocks();
-  List<ChipfinalProducut> chipsfinalprouduct = database.getfinalProuductchips();
   // List<FinalProductModel> finalproducts = database.getFinalProuduct();
   // List<FractionModel> fractions = database.getFraction();
   List<ChipFraction> fractionchips = database.getFractionchip();
@@ -54,11 +48,6 @@ class ObjectBoxController extends ChangeNotifier {
   //   database.deleteblock(id);
   //   notifyListeners();
   // }
-
-  deletechipfinalproduct(id) {
-    database.deletefinalProuductchips(id);
-    notifyListeners();
-  }
 
   // deletefinalProudut(id) {
   //   database.deleteFinalProuduct(id);

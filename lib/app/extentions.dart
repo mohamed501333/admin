@@ -347,6 +347,22 @@ extension A1 on List<BlockModel> {
     return nonRepetitive;
   }
 
+  List<BlockModel> filter_description() {
+    List<BlockModel> nonRepetitive = [];
+    for (var i = 0; i < length; i++) {
+      bool repeated = false;
+      for (var j = 0; j < nonRepetitive.length; j++) {
+        if (this[i].discreption == nonRepetitive[j].discreption) {
+          repeated = true;
+        }
+      }
+      if (!repeated) {
+        nonRepetitive.add(this[i]);
+      }
+    }
+    return nonRepetitive;
+  }
+
   List<BlockModel> filter_filter_type_density_color_size() {
     List<BlockModel> nonRepetitive = [];
     for (var i = 0; i < length; i++) {

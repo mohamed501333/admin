@@ -22,6 +22,8 @@ class FinalProductStockViewModel extends BaseViewModel {
       context
           .read<final_prodcut_controller>()
           .incert_finalProduct_from_cutingUnit(FinalProductModel(
+            invoiceNum: 0,
+            price: 0.0,
             worker: "",
             stageOfR: 0,
             isfinal: context.read<SettingController>().switchValue_for_final,
@@ -48,6 +50,8 @@ class FinalProductStockViewModel extends BaseViewModel {
 
   add_unregular(BuildContext context) {
     FinalProductModel user = FinalProductModel(
+        invoiceNum: 0,
+        price: 0.0,
         stageOfR: 0,
         id: DateTime.now().millisecondsSinceEpoch,
         color: colercontroller.text,

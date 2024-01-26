@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 
 class final_prodcut_controller extends ChangeNotifier {
   get_finalProdcut_data(BuildContext context) {
+    print("get data");
+
     try {
       FirebaseDatabase.instance
           .ref("finalproducts")
@@ -38,6 +40,7 @@ class final_prodcut_controller extends ChangeNotifier {
                   false &&
               element.isfinal == false));
         }
+        print("get data of final prodctu");
 
         notifyListeners();
         context.read<OrderController>().Refrsh_ui();
@@ -47,27 +50,28 @@ class final_prodcut_controller extends ChangeNotifier {
 
   // c() {
   //   print("5555555");
-  //   for (var el in finalproducts) {
-  //     el.actions.add(finalProdcutAction.recive_Done_Form_FinalProdcutStock.add);
+  //   for (var el in finalproducts.where((element) => element.amount < 0)) {
+  //     el.actions.removeWhere(
+  //         (element) => element.action == "recive_Done_Form_FinalProdcutStock");
 
   //     FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(el.toJson());
   //   }
   // }
 
-  cd() {
-    // print("5555555");
-    // for (var el in finalproducts) {
-    //   while (el.actions
-    //           .where((element) => element.action == "createInvoice")
-    //           .toList()
-    //           .length >=
-    //       2) {
-    //     el.actions.removeWhere((element) => element.action == "createInvoice");
-    //   }
+  // cd() {
+  //   print("5555555");
+  //   for (var el in finalproducts) {
+  //     while (el.actions
+  //             .where((element) => element.action == "createInvoice")
+  //             .toList()
+  //             .length >=
+  //         2) {
+  //       el.actions.removeWhere((element) => element.action == "createInvoice");
+  //     }
 
-    //   FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(el.toJson());
-    // }
-  }
+  //     FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(el.toJson());
+  //   }
+  // }
 
   List<FinalProductModel> finalproducts = [];
   List<FinalProductModel> search = [];
@@ -137,6 +141,17 @@ class final_prodcut_controller extends ChangeNotifier {
     } catch (e) {}
   }
 
+  //الitem اضافة رقم الازن الى
+  add_invoice_umm_to(FinalProductModel user, int number) {
+    user.invoiceNum = number;
+    try {
+      FirebaseDatabase.instance
+          .ref("finalproducts/${user.id}")
+          .set(user.toJson());
+      notifyListeners();
+    } catch (e) {}
+  }
+
   edit_cell(int id, String cell, String newvalue) {
     FinalProductModel user =
         finalproducts.where((element) => element.id == id).first;
@@ -145,16 +160,15 @@ class final_prodcut_controller extends ChangeNotifier {
         action: "edit $cell",
         who: FirebaseAuth.instance.currentUser!.email ?? "",
         when: DateTime.now()));
-    print(newvalue.to_int());
     cell == "amount" ? user.amount = newvalue.to_int() : DoNothingAction();
     cell == "type" ? user.type = newvalue : DoNothingAction();
     cell == "density" ? user.density = newvalue.to_double() : DoNothingAction();
     cell == "color" ? user.color = newvalue : DoNothingAction();
+    cell == "customer" ? user.customer = newvalue : DoNothingAction();
     try {
       FirebaseDatabase.instance
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 
@@ -174,7 +188,6 @@ class final_prodcut_controller extends ChangeNotifier {
       FirebaseDatabase.instance
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 

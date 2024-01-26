@@ -46,8 +46,6 @@ class finalProductInvoice {
                     Text("serial: ${invoices.number}",
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold)),
-                    Text("customer : ${invoices.items.first.customer}",
-                        style: const TextStyle(fontSize: 14))
                   ]),
                   SizedBox(height: .3 * PdfPageFormat.mm),
                   Divider(),
@@ -211,7 +209,7 @@ foter(Invoice invoice) {
               ),
               SizedBox(height: 1 * PdfPageFormat.mm),
               Text(
-                'Date : ${d.DateFormat('dd-MM-yy/hh:mm a').format(DateTime.now())}',
+                'Date : ${d.DateFormat('dd-MM-yy/hh:mm a').format(invoice.date)}',
               ),
               SizedBox(height: 1 * PdfPageFormat.mm),
             ]),
@@ -224,6 +222,14 @@ foter(Invoice invoice) {
               SizedBox(height: 1 * PdfPageFormat.mm),
               Text(
                 'dispatcher : ${invoice.makeLoad}',
+              ),
+              SizedBox(height: 1 * PdfPageFormat.mm),
+            ]),
+            SizedBox(width: 30),
+            Column(children: [
+              SizedBox(height: 2 * PdfPageFormat.mm),
+              Text(
+                'car number : ${invoice.carNumber} ',
               ),
               SizedBox(height: 1 * PdfPageFormat.mm),
             ]),

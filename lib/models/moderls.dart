@@ -609,7 +609,6 @@ class FractionModel {
   }
 }
 
-// many finalProuduct to many fractoin
 class FinalProductModel {
   int stageOfR;
   int id;
@@ -619,9 +618,11 @@ class FinalProductModel {
   String type;
   int amount;
   int scissor;
+  int invoiceNum;
   double width;
   double lenth;
   double hight;
+  double price;
   String customer;
   String worker;
 
@@ -638,9 +639,11 @@ class FinalProductModel {
     required this.type,
     required this.amount,
     required this.scissor,
+    required this.invoiceNum,
     required this.width,
     required this.lenth,
     required this.hight,
+    required this.price,
     required this.customer,
     required this.worker,
     required this.notes,
@@ -657,9 +660,11 @@ class FinalProductModel {
     String? type,
     int? amount,
     int? scissor,
+    int? invoiceNum,
     double? width,
     double? lenth,
     double? hight,
+    double? price,
     String? customer,
     String? worker,
     String? notes,
@@ -675,9 +680,11 @@ class FinalProductModel {
       type: type ?? this.type,
       amount: amount ?? this.amount,
       scissor: scissor ?? this.scissor,
+      invoiceNum: invoiceNum ?? this.invoiceNum,
       width: width ?? this.width,
       lenth: lenth ?? this.lenth,
       hight: hight ?? this.hight,
+      price: price ?? this.price,
       customer: customer ?? this.customer,
       worker: worker ?? this.worker,
       notes: notes ?? this.notes,
@@ -696,9 +703,11 @@ class FinalProductModel {
       'type': type,
       'amount': amount,
       'scissor': scissor,
+      'invoiceNum': invoiceNum,
       'width': width,
       'lenth': lenth,
       'hight': hight,
+      'price': price,
       'customer': customer,
       'worker': worker,
       'notes': notes,
@@ -717,9 +726,11 @@ class FinalProductModel {
       type: map['type'] as String,
       amount: map['amount'] as int,
       scissor: map['scissor'] as int,
+      invoiceNum: map['invoiceNum'] as int,
       width: map['width'] as double,
       lenth: map['lenth'] as double,
       hight: map['hight'] as double,
+      price: map['price'] as double,
       customer: map['customer'] as String,
       worker: map['worker'] as String,
       notes: map['notes'] as String,
@@ -739,7 +750,7 @@ class FinalProductModel {
 
   @override
   String toString() {
-    return 'FinalProductModel(stageOfR: $stageOfR, id: $id, color: $color, isfinal: $isfinal, density: $density, type: $type, amount: $amount, scissor: $scissor, width: $width, lenth: $lenth, hight: $hight, customer: $customer, worker: $worker, notes: $notes, cuting_order_number: $cuting_order_number, actions: $actions)';
+    return 'FinalProductModel2(stageOfR: $stageOfR, id: $id, color: $color, isfinal: $isfinal, density: $density, type: $type, amount: $amount, scissor: $scissor, invoiceNum: $invoiceNum, width: $width, lenth: $lenth, hight: $hight, price: $price, customer: $customer, worker: $worker, notes: $notes, cuting_order_number: $cuting_order_number, actions: $actions)';
   }
 
   @override
@@ -754,9 +765,11 @@ class FinalProductModel {
         other.type == type &&
         other.amount == amount &&
         other.scissor == scissor &&
+        other.invoiceNum == invoiceNum &&
         other.width == width &&
         other.lenth == lenth &&
         other.hight == hight &&
+        other.price == price &&
         other.customer == customer &&
         other.worker == worker &&
         other.notes == notes &&
@@ -774,9 +787,11 @@ class FinalProductModel {
         type.hashCode ^
         amount.hashCode ^
         scissor.hashCode ^
+        invoiceNum.hashCode ^
         width.hashCode ^
         lenth.hashCode ^
         hight.hashCode ^
+        price.hashCode ^
         customer.hashCode ^
         worker.hashCode ^
         notes.hashCode ^
@@ -953,38 +968,6 @@ class ChipFraction {
       required this.width,
       required this.lenth,
       required this.hight});
-}
-
-@Entity()
-class ChipfinalProducut {
-  @Id()
-  int id = 0;
-  String title;
-  String color;
-  double density;
-  String type;
-  double amount;
-  double number;
-  double width;
-  double lenth;
-  double hight;
-  String company;
-  String scissor;
-
-  ChipfinalProducut({
-    this.id = 0,
-    required this.title,
-    required this.scissor,
-    required this.color,
-    required this.density,
-    required this.type,
-    required this.amount,
-    required this.number,
-    required this.width,
-    required this.lenth,
-    required this.hight,
-    required this.company,
-  });
 }
 
 class NotFinalmodel {

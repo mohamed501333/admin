@@ -1,9 +1,11 @@
 // ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters, camel_case_types
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/cutting_order/cutting_ordera_viewModer.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class dropDowenContoller extends ChangeNotifier {
@@ -34,11 +36,22 @@ class dropDowenContoller extends ChangeNotifier {
   }
 
   getBlocks(BuildContext context, CuttingOrderViewModel vm) {
-    List<BlockModel> x = context.read<BlockFirebasecontroller>().blocks;
+    List<BlockModel> x = context
+        .read<BlockFirebasecontroller>()
+        .blocks
+        .where((element) =>
+            element.actions
+                .if_action_exist(BlockAction.consume_block.getactionTitle) ==
+            false)
+        .toList();
     initialdensity != null
         ? x = context
             .read<BlockFirebasecontroller>()
             .blocks
+            .where((element) =>
+                element.actions.if_action_exist(
+                    BlockAction.consume_block.getactionTitle) ==
+                false)
             .where((element) => element.density == initialdensity)
             .toList()
         : DoNothingAction;
@@ -46,6 +59,10 @@ class dropDowenContoller extends ChangeNotifier {
         ? x = context
             .read<BlockFirebasecontroller>()
             .blocks
+            .where((element) =>
+                element.actions.if_action_exist(
+                    BlockAction.consume_block.getactionTitle) ==
+                false)
             .where((element) => element.color == initialcolor)
             .toList()
         : DoNothingAction;
@@ -53,6 +70,10 @@ class dropDowenContoller extends ChangeNotifier {
         ? x = context
             .read<BlockFirebasecontroller>()
             .blocks
+            .where((element) =>
+                element.actions.if_action_exist(
+                    BlockAction.consume_block.getactionTitle) ==
+                false)
             .where((element) => element.type == initialtype)
             .toList()
         : DoNothingAction;
@@ -60,6 +81,10 @@ class dropDowenContoller extends ChangeNotifier {
       x = context
           .read<BlockFirebasecontroller>()
           .blocks
+          .where((element) =>
+              element.actions
+                  .if_action_exist(BlockAction.consume_block.getactionTitle) ==
+              false)
           .where((element) =>
               element.color == initialcolor && element.type == initialtype)
           .toList();
@@ -69,6 +94,10 @@ class dropDowenContoller extends ChangeNotifier {
           .read<BlockFirebasecontroller>()
           .blocks
           .where((element) =>
+              element.actions
+                  .if_action_exist(BlockAction.consume_block.getactionTitle) ==
+              false)
+          .where((element) =>
               element.density == initialdensity && element.type == initialtype)
           .toList();
     }
@@ -76,6 +105,10 @@ class dropDowenContoller extends ChangeNotifier {
       x = context
           .read<BlockFirebasecontroller>()
           .blocks
+          .where((element) =>
+              element.actions
+                  .if_action_exist(BlockAction.consume_block.getactionTitle) ==
+              false)
           .where((element) =>
               element.density == initialdensity &&
               element.color == initialcolor)

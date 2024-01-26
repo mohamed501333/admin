@@ -368,35 +368,46 @@ enum UserPermition {
   show_finalprodcut_invoicemaking,
   show_customers,
   show_massaging,
-  show_users_actions,
   show_scissors,
+  show_not_final_stock,
+
   show_Reports_finalprodcut,
   show_Reports_final_prodcutscisors,
   show_Reports_totals_of_blocks,
   show_Reports_consume_boock,
   show_Reports_details_of_block_stock,
   show_Reports_details_of_finalProdcut_stock,
+
   show_date_in_block_out_of_stock,
   show_date_in_block_stock,
   show_date_in_finalProduct_imported,
-  show_not_final_stock,
-  incert_in_finalProdcut_imorted,
-  incert_in_block_stock,
+  show_date_in_invoices,
   fields_buttoms_consumeBlock,
+  show_search_in_customers,
+  show_cusotmer_name_in_cutting_order,
+
+  incert_in_finalProdcut_imorted,
+  incert_unregular_in_importedfinal_prodcut,
+  incert_in_block_stock,
   incert_in_final_prodcutStock,
   incert_in_cutting_order,
   incert_in_customers,
+
   delete_in_cutting_order,
   delete_in_consume_block,
   delete_in_imported_finalprodcut,
+  delete_in_finalprodcut_details,
+
   can_print_in_cutting_order,
+
   can_close_in_cutting_order,
   can_aprove_from_controll,
   can_aprove_from_calculation,
   can_aprove_from_quality,
   can_aprove_from_recive_from_final_prodcut,
-  incert_unregular_in_importedfinal_prodcut,
-  not_working,
+  allow_edit_in_details_finalProdcut,
+
+  show_users_actions,
   can_get_data_of_blocks,
   can_get_data_of_final_prodcut,
   can_get_data_of_invoice,
@@ -404,7 +415,7 @@ enum UserPermition {
   can_get_data_of_orders,
   can_get_data_of_fractions,
   can_get_data_of_notfinals,
-  allow_edit_in_details_finalProdcut,
+  not_working,
 }
 
 extension QQ on UserPermition {
@@ -508,11 +519,28 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "can_get_data_of_fractions");
       case UserPermition.can_get_data_of_notfinals:
         return UserpermitionTittle(tittle: "can_get_data_of_notfinals");
+
+      case UserPermition.delete_in_finalprodcut_details:
+        return UserpermitionTittle(tittle: "المسح فى تفاصيل تام الصنع");
+      case UserPermition.show_date_in_invoices:
+        return UserpermitionTittle(tittle: " التاريخ فى ازون التحميل");
+      case UserPermition.show_search_in_customers:
+        return UserpermitionTittle(tittle: "عرض البحث فى العملاء");
+      case UserPermition.show_cusotmer_name_in_cutting_order:
+        return UserpermitionTittle(tittle: "عرض اسم العميل فى اوامر التشغيل");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_cusotmer_name_in_cutting_order:
+        return "عرض اسم العميل فى اوامر التشغيل";
+      case UserPermition.show_search_in_customers:
+        return "عرض البحث فى العملاء";
+      case UserPermition.show_date_in_invoices:
+        return " التاريخ فى ازون التحميل";
+      case UserPermition.delete_in_finalprodcut_details:
+        return "المسح فى تفاصيل تام الصنع";
       case UserPermition.show_all:
         return "show_all";
       case UserPermition.show_block_incetion:

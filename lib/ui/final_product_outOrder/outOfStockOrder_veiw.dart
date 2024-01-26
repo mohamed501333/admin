@@ -75,8 +75,9 @@ class outOfStockOrder extends StatelessWidget {
                 ),
                 Column(
                   children: finals
+                      .take(15)
                       .map((i) => vm.get_total(scorce, i) == 0
-                          ? SizedBox()
+                          ? const SizedBox()
                           : Container(
                               margin: const EdgeInsets.only(bottom: 5),
                               decoration: BoxDecoration(

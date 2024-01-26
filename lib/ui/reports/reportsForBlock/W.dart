@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: must_be_immutable, file_names
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -20,13 +21,7 @@ class HeaderOftable4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Table(
-      columnWidths: const {
-        0: FlexColumnWidth(1),
-        1: FlexColumnWidth(1),
-        2: FlexColumnWidth(1),
-        3: FlexColumnWidth(.4),
-        4: FlexColumnWidth(.4),
-      },
+      columnWidths: const {},
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
         TableRow(
@@ -34,15 +29,18 @@ class HeaderOftable4 extends StatelessWidget {
               color: Colors.amber[50],
             ),
             children: [
+              // Container(
+              //     padding: const EdgeInsets.all(0),
+              //     child: const Text("m3اجمالى المنصرف")),
+              // Container(
+              //     padding: const EdgeInsets.all(0),
+              //     child: const Text("m3رصيد اخر المده")),
               Container(
                   padding: const EdgeInsets.all(0),
-                  child: const Text("m3اجمالى المنصرف")),
+                  child: const Text('m3  رصيد  ب ')),
+
               Container(
-                  padding: const EdgeInsets.all(0),
-                  child: const Text("m3رصيد اخر المده")),
-              Container(
-                  padding: const EdgeInsets.all(0),
-                  child: const Text('m3رصيد اول المده')),
+                  padding: const EdgeInsets.all(0), child: const Text('اللون')),
               Container(
                   padding: const EdgeInsets.all(0), child: const Text('كثافه')),
               Container(
@@ -64,62 +62,63 @@ class TheTable2 extends StatelessWidget {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, blocks, child) {
         return SizedBox(
-          height: 150,
-          child: SingleChildScrollView(
-            child: Table(
-              columnWidths: const {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(1),
-                2: FlexColumnWidth(1),
-                3: FlexColumnWidth(.4),
-                4: FlexColumnWidth(.4),
-              },
-              children: blocks.blocks
+          child: Table(
+            columnWidths: const {},
+            children: blocks.blocks
 
-                  // .filter_date(context)
-                  .filter_filter_type_and_density()
-                  .map((e) {
-                return TableRow(
-                    decoration: BoxDecoration(
-                      color: 2 % 2 == 0 ? Colors.teal[50] : Colors.amber[50],
-                    ),
-                    children: [
-                      //اجمالى المنصرف
-                      Container(
-                          padding: const EdgeInsets.all(2),
-                          child: Text(vm
-                              .total_spend(
-                                  context,
-                                  blocks.blocks.filter_date_consumed(context),
-                                  e)
-                              .toStringAsFixed(4))),
-                      //رصيد اخر المده
-                      Container(
-                          padding: const EdgeInsets.all(2),
-                          child: Text(
-                              vm.Last_period_balance(context, blocks.blocks, e)
-                                  .toStringAsFixed(4))),
-                      //رصيد اول المده
-                      Container(
-                          padding: const EdgeInsets.all(1),
-                          child: Text((vm.Last_period_balance(
-                                      context, blocks.blocks, e) +
-                                  vm.total_spend(
-                                      context,
-                                      blocks.blocks
-                                          .filter_date_consumed(context),
-                                      e))
-                              .toStringAsFixed(4))),
-                      Container(
-                          padding: const EdgeInsets.all(0),
-                          child: Text(e.density.toString())),
-                      Container(
-                          padding: const EdgeInsets.all(0),
-                          child: Text(e.type)),
-                    ]);
-              }).toList(),
-              border: TableBorder.all(width: 1, color: Colors.black),
-            ),
+                // .filter_date(context)
+                .filter_filter_type_and_density()
+                .sortedBy<num>((element) => element.density)
+                .map((e) {
+              String x = (vm.Last_period_balance(context, blocks.blocks, e) +
+                      vm.total_spend(context,
+                          blocks.blocks.filter_date_consumed(context), e))
+                  .toStringAsFixed(1);
+              return TableRow(
+                  decoration: BoxDecoration(
+                    color: 2 % 2 == 0 ? Colors.teal[50] : Colors.amber[50],
+                  ),
+                  children: [
+                    //اجمالى المنصرف
+                    // Container(
+                    //     padding: const EdgeInsets.all(2),
+                    //     child: Text(vm
+                    //         .total_spend(
+                    //             context,
+                    //             blocks.blocks.filter_date_consumed(context),
+                    //             e)
+                    //         .toStringAsFixed(1))),
+                    // //رصيد اخر المده
+                    // Container(
+                    //     padding: const EdgeInsets.all(2),
+                    //     child: Text(
+                    //         vm.Last_period_balance(context, blocks.blocks, e)
+                    //             .toStringAsFixed(1))),
+                    //رصيد اول المده
+                    x.to_double() != 0
+                        ? Container(
+                            padding: const EdgeInsets.all(5),
+                            child: Text("${x.to_double()}"))
+                        : const SizedBox(),
+
+                    x.to_double() != 0
+                        ? Container(
+                            padding: const EdgeInsets.all(0),
+                            child: Text(e.color.toString()))
+                        : const SizedBox(),
+                    x.to_double() != 0
+                        ? Container(
+                            padding: const EdgeInsets.all(0),
+                            child: Text(e.density.toString()))
+                        : const SizedBox(),
+                    x.to_double() != 0
+                        ? Container(
+                            padding: const EdgeInsets.all(0),
+                            child: Text(e.type))
+                        : const SizedBox(),
+                  ]);
+            }).toList(),
+            border: TableBorder.all(width: 1, color: Colors.black),
           ),
         );
       },

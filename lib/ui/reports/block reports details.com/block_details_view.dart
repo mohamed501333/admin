@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/main.dart';
 import 'package:jason_company/services/file_handle_api.dart';
 
 import 'package:path_provider/path_provider.dart';
@@ -31,7 +32,7 @@ Future<void> createAndopenEXL(
   final Worksheet worksheet = workbook.worksheets[0];
   mkey.currentState!.exportToExcelWorksheet(worksheet);
   final List<int> bytes = workbook.saveAsStream();
-  File('${appDocDirectory!.path}/البلوكات.xlsx')
+  File('${appDocDirectory!.path}/${formatwitTime2.format(DateTime.now())}تفاصيل البلوكات.xlsx')
       .writeAsBytes(bytes, flush: true)
       .then((value) => FileHandleApi.openFile(value));
 }

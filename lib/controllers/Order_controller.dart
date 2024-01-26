@@ -28,7 +28,7 @@ class OrderController extends ChangeNotifier {
                   .if_action_exist(OrderAction.Archive_order.getTitle) ==
               false));
         }
-
+        print("get data of order");
         notifyListeners();
       });
     } catch (e) {}

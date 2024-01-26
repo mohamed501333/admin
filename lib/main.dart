@@ -23,6 +23,8 @@ import 'package:jason_company/ui/main/main_view.dart';
 
 DateFormat format = DateFormat('yyyy/MM/dd');
 DateFormat formatwitTime = DateFormat('yyyy-MM-dd/hh:mm a');
+DateFormat formatwitTime2 = DateFormat('yyyy-MM-dd -hh:mm a');
+DateFormat formatwitTime3 = DateFormat('hh:mm a');
 late Database database;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +36,7 @@ void main() async {
           projectId: "janson-11f24"));
   FirebaseDatabase.instance.setPersistenceEnabled(true);
   FirebaseDatabase.instance.ref();
-  database = await Database.create();
+  // database = await Database.create();
   runApp(const MyApp());
 }
 

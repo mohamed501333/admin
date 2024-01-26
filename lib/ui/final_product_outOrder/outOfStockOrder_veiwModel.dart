@@ -15,12 +15,10 @@ class outOfStockOrderveiwModel extends BaseViewModel {
     var x = finalproducts;
     return x
         .filter_density_type_size()
-        .where((element) =>
-            element.lenth.removeTrailingZeros.to_int() ==
-                enterkeyword.to_int() ||
-            element.width.removeTrailingZeros.to_int() ==
-                enterkeyword.to_int() ||
-            element.hight.removeTrailingZeros.to_int() == enterkeyword.to_int())
+        .where((element) => (element.lenth.removeTrailingZeros +
+                element.width.removeTrailingZeros +
+                element.hight.removeTrailingZeros)
+            .contains(enterkeyword))
         .toList();
   }
 
@@ -45,6 +43,8 @@ class outOfStockOrderveiwModel extends BaseViewModel {
       context
           .read<final_prodcut_controller>()
           .finalProdcut_out_order(FinalProductModel(
+            invoiceNum: 0,
+            price: 0.0,
             worker: "",
             stageOfR: 0,
             isfinal: true,
@@ -69,43 +69,58 @@ class outOfStockOrderveiwModel extends BaseViewModel {
   addInvoice(BuildContext context, List<FinalProductModel> finals) {
     List<Invoice> invoices = context.read<Invoice_controller>().invoices;
 
-    if (formKey.currentState!.validate() && finals.isNotEmpty) {
-      List<InvoiceItem> items = finals
-          .where((element) =>
-              element.actions.if_action_exist(
-                  finalProdcutAction.createInvoice.getactionTitle) ==
-              false)
-          .map((e) => InvoiceItem(
-              amount: e.amount,
-              lenth: e.lenth,
-              width: e.width,
-              hight: e.hight,
-              wight: double.parse(
-                      "${e.amount * -1 * e.lenth * e.width * e.hight * e.density / 1000000}")
-                  .removeTrailingZeros
-                  .to_double(),
-              color: e.color,
-              density: e.density,
-              customer: customerName.text))
-          .toList();
-      var invoice = Invoice(
-          notes: "",
-          id: DateTime.now().millisecondsSinceEpoch,
-          number: invoices.length + 1,
-          date: DateTime.now(),
-          driverName: driverName.text,
-          carNumber: carnumber.text.to_int(),
-          makeLoad: whoLoad.text,
-          actions: [InvoiceAction.creat_invoice.add],
-          items: items);
-      context.read<Invoice_controller>().addInvoice(invoice);
-      context.read<final_prodcut_controller>().addinvoice(finals
-          .where((element) =>
-              element.actions.if_action_exist(
-                  finalProdcutAction.createInvoice.getactionTitle) ==
-              false)
-          .toList());
-      clearfields();
+    if (finals
+        .where((element) =>
+            element.actions.if_action_exist(
+                finalProdcutAction.createInvoice.getactionTitle) ==
+            false)
+        .isNotEmpty) {
+      if (formKey.currentState!.validate()) {
+        List<InvoiceItem> items = finals
+            .where((element) =>
+                element.actions.if_action_exist(
+                    finalProdcutAction.createInvoice.getactionTitle) ==
+                false)
+            .map((e) => InvoiceItem(
+                amount: e.amount,
+                lenth: e.lenth,
+                width: e.width,
+                hight: e.hight,
+                wight: double.parse(
+                        "${e.amount * -1 * e.lenth * e.width * e.hight * e.density / 1000000}")
+                    .removeTrailingZeros
+                    .to_double(),
+                color: e.color,
+                density: e.density,
+                customer: customerName.text))
+            .toList();
+        var invoice = Invoice(
+            notes: "",
+            id: DateTime.now().millisecondsSinceEpoch,
+            number: invoices.last.number + 1,
+            date: DateTime.now(),
+            driverName: driverName.text,
+            carNumber: carnumber.text.to_int(),
+            makeLoad: whoLoad.text,
+            actions: [InvoiceAction.creat_invoice.add],
+            items: items);
+        context.read<Invoice_controller>().addInvoice(invoice);
+        context.read<final_prodcut_controller>().addinvoice(finals
+            .where((element) =>
+                element.actions.if_action_exist(
+                    finalProdcutAction.createInvoice.getactionTitle) ==
+                false)
+            .toList());
+        finals
+            .where((element) =>
+                element.actions.if_action_exist(
+                    finalProdcutAction.createInvoice.getactionTitle) ==
+                false)
+            .map((c) => context
+                .read<final_prodcut_controller>()
+                .add_invoice_umm_to(c, invoices.last.number + 1));
+        clearfields();
+      }
     }
   }
 }

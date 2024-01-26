@@ -27,6 +27,7 @@ class Customer_controller extends ChangeNotifier {
                   .if_action_exist(customerAction.archive_customer.getTitle) ==
               false));
         }
+        print("get data of customers ");
 
         notifyListeners();
       });

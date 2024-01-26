@@ -32,7 +32,7 @@ Future<void> createAndopenEXL(
   final Worksheet worksheet = workbook.worksheets[0];
   mkey.currentState!.exportToExcelWorksheet(worksheet);
   final List<int> bytes = workbook.saveAsStream();
-  File('${appDocDirectory!.path}/البلوكات.xlsx')
+  File('${appDocDirectory!.path}/${formatwitTime2.format(DateTime.now())}تفاصيل التام.xlsx')
       .writeAsBytes(bytes, flush: true)
       .then((value) => FileHandleApi.openFile(value));
 }
@@ -41,6 +41,17 @@ class details_of_finalProdcut extends StatelessWidget {
   details_of_finalProdcut();
 
   var columns = <GridColumn>[
+    GridColumn(
+        visible: false,
+        allowFiltering: true,
+        columnName: 'id',
+        label: Container(
+            padding: const EdgeInsets.all(4),
+            alignment: Alignment.center,
+            child: Text(
+              'id',
+              style: textstyle11,
+            ))),
     GridColumn(
         allowFiltering: true,
         columnName: 'size',
@@ -98,6 +109,16 @@ class details_of_finalProdcut extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               'عميل',
+              style: textstyle11,
+            ))),
+    GridColumn(
+        allowFiltering: true,
+        columnName: 'scisorrs',
+        label: Container(
+            padding: const EdgeInsets.all(4.0),
+            alignment: Alignment.center,
+            child: Text(
+              'مقص',
               style: textstyle11,
             ))),
     GridColumn(
@@ -162,6 +183,25 @@ class details_of_finalProdcut extends StatelessWidget {
                     height: MediaQuery.of(context).size.height,
                     width: 1000,
                     child: SfDataGrid(
+                      allowSwiping: true,
+                      swipeMaxOffset: 100.0,
+                      endSwipeActionsBuilder: (BuildContext context,
+                          DataGridRow row, int rowIndex) {
+                        return GestureDetector(
+                            onTap: () {
+                              print(row.getCells().first.value);
+                              mytype.deletefinalProudut(mytype.finalproducts
+                                  .where((element) =>
+                                      element.id == row.getCells().first.value)
+                                  .first);
+                            },
+                            child: Container(
+                                color: Colors.redAccent,
+                                child: const Center(
+                                  child: Icon(Icons.delete),
+                                ))).permition(context,
+                            UserPermition.delete_in_finalprodcut_details);
+                      },
                       tableSummaryRows: [
                         GridTableSummaryRow(
                             showSummaryInRow: true,
@@ -213,6 +253,7 @@ class EmployeeDataSource2233 extends DataGridSource {
   }) {
     data = coumingData
         .map<DataGridRow>((e) => DataGridRow(cells: [
+              DataGridCell<int>(columnName: 'id', value: e.id),
               DataGridCell<String>(
                   columnName: 'size',
                   value:
@@ -229,6 +270,7 @@ class EmployeeDataSource2233 extends DataGridSource {
                       .where((element) => element.serial == e.customer.to_int())
                       .first
                       .name),
+              DataGridCell<int>(columnName: 'scisorrs', value: e.scissor),
               DataGridCell<String>(
                   columnName: 'ading',
                   value: e.actions.if_action_exist(finalProdcutAction

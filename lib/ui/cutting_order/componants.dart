@@ -489,7 +489,19 @@ class TheTable001 extends StatelessWidget {
                                   child: Container(
                                       padding: const EdgeInsets.only(bottom: 3),
                                       child: Text(
-                                        order.customer.toString(),
+                                        permitionss(
+                                                context,
+                                                UserPermition
+                                                    .show_cusotmer_name_in_cutting_order)
+                                            ? context
+                                                .read<Customer_controller>()
+                                                .customers
+                                                .where((element) =>
+                                                    element.serial ==
+                                                    order.customer.to_int())
+                                                .first
+                                                .name
+                                            : order.customer.toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 12,

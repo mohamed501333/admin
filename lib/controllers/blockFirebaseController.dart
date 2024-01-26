@@ -36,6 +36,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
                   .if_action_exist(BlockAction.archive_block.getactionTitle) ==
               true));
         }
+        print("get data of blocks");
 
         notifyListeners();
       });
@@ -43,37 +44,39 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
   List<BlockModel> all = [];
-  // List<BlockModel2> edits = [];
   List<BlockModel> blocks = [];
   List<BlockModel> archived_blocks = [];
   List<BlockModel> search = [];
 
-  // c() {
-  //   for (var el in edits) {
-  //     BlockModel e = BlockModel(
-  //         discreption: "",
-  //         id: el.id,
-  //         color: el.color,
-  //         density: el.density,
-  //         type: el.type,
-  //         serial: el.serial,
-  //         number: el.number,
-  //         Rcissor: el.Rcissor,
-  //         Hscissor: el.Hscissor,
-  //         width: el.width,
-  //         lenth: el.lenth,
-  //         hight: el.hight,
-  //         wight: el.wight,
-  //         cumingFrom: el.cumingFrom,
-  //         OutTo: el.OutTo,
-  //         notes: el.notes,
-  //         fractions: el.fractions,
-  //         actions: el.actions,
-  //         notfinals: el.notfinals);
+  // List<BlockModel2> edits = [];
+  c() {
+    print(33);
+    for (var el
+        in blocks.where((element) => element.discreption == "D25h-gray-190")) {
+      BlockModel e = BlockModel(
+          discreption: "D25h-gray-192",
+          id: el.id,
+          color: el.color,
+          density: el.density,
+          type: el.type,
+          serial: el.serial,
+          number: el.number,
+          Rcissor: el.Rcissor,
+          Hscissor: el.Hscissor,
+          width: el.width,
+          lenth: el.lenth,
+          hight: el.hight,
+          wight: el.wight,
+          cumingFrom: el.cumingFrom,
+          OutTo: el.OutTo,
+          notes: el.notes,
+          fractions: el.fractions,
+          actions: el.actions,
+          notfinals: el.notfinals);
 
-  //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
-  //   }
-  // }
+      FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
+    }
+  }
 
   void runFilter(String enteredKeyword) {
     if (enteredKeyword.isEmpty) {
@@ -94,7 +97,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
   Refresh_the_UI() {
-    notifyListeners();
+    // notifyListeners();
   }
 
   addblock(BlockModel block) async {
