@@ -89,8 +89,9 @@ class final_prodcut_controller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  addinvoice(List<FinalProductModel> finalss) {
+  addinvoice(List<FinalProductModel> finalss, int invoiceNum) {
     for (var x in finalss) {
+      x.invoiceNum = invoiceNum;
       x.actions.add(finalProdcutAction.createInvoice.add);
       try {
         FirebaseDatabase.instance.ref("finalproducts/${x.id}").set(x.toJson());
@@ -133,17 +134,6 @@ class final_prodcut_controller extends ChangeNotifier {
 
   finalProdcut_out_order(FinalProductModel user) {
     user.actions.add(finalProdcutAction.out_order.add);
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts/${user.id}")
-          .set(user.toJson());
-      notifyListeners();
-    } catch (e) {}
-  }
-
-  //الitem اضافة رقم الازن الى
-  add_invoice_umm_to(FinalProductModel user, int number) {
-    user.invoiceNum = number;
     try {
       FirebaseDatabase.instance
           .ref("finalproducts/${user.id}")

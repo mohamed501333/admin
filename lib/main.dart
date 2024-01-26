@@ -13,6 +13,7 @@ import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
+import 'package:jason_company/controllers/zupdate.dart';
 import 'package:jason_company/setings/login.dart';
 import 'package:provider/provider.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
@@ -36,7 +37,7 @@ void main() async {
           projectId: "janson-11f24"));
   FirebaseDatabase.instance.setPersistenceEnabled(true);
   FirebaseDatabase.instance.ref();
-  // database = await Database.create();
+  database = await Database.create();
   runApp(const MyApp());
 }
 
@@ -46,70 +47,78 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => MainController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ScissorsController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ObjectBoxController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => SettingController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => final_prodcut_controller(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FractionFirebaseController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => BlockFirebasecontroller(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => NonFinalController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => Invoice_controller(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => Customer_controller(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => OrderController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => dropDowenContoller(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => Users_controller(),
-        ),
-      ],
-      child: MaterialApp(
-        theme: ThemeData(useMaterial3: false),
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        home: a()
-            ? FirebaseAuth.instance.currentUser?.uid == null
-                ? const MyloginPage()
-                : Mainview()
-            : const CircularProgressIndicator(),
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => MainController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ScissorsController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ObjectBoxController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => SettingController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => final_prodcut_controller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => FractionFirebaseController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => UpdatesController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => BlockFirebasecontroller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => NonFinalController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Invoice_controller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Customer_controller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => OrderController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => dropDowenContoller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Users_controller(),
+          ),
+        ],
+        child: MaterialApp(
+          theme: ThemeData(useMaterial3: false),
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          home: Builder(
+            builder: (c) {
+              c.read<Users_controller>().get_users_data();
+              c.read<UpdatesController>().Updates_up();
+              return a(c)
+                  ? FirebaseAuth.instance.currentUser?.uid == null
+                      ? const MyloginPage()
+                      : Mainview()
+                  : const CircularProgressIndicator();
+            },
+          ),
+        ));
   }
-}
 
-a() {
-  //    هذا المتغير اجعله ثابت على الجهاز او من الانترنت
-  bool x = true;
-  //اطرح هنا التاريخ
-  if (DateTime.now().compareTo(DateTime(2024, 3, 3)) >= 0) {
-    x = false;
+  a(BuildContext c) {
+    //    هذا المتغير اجعله ثابت على الجهاز او من الانترنت
+    bool x = c.watch<UpdatesController>().updates == 0;
+    //اطرح هنا التاريخ
+    if (DateTime.now().compareTo(DateTime(2024, 3, 3)) >= 0) {
+      x = false;
+    }
+
+    return x;
   }
-
-  return x;
 }
 
 class Commons {

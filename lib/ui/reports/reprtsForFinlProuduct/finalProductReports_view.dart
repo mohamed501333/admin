@@ -271,7 +271,7 @@ class EmployeeDataSource extends DataGridSource {
 
 // جدول الاجمالى
 class Results extends StatelessWidget {
-  Results({super.key, required this.chosenDate});
+  const Results({super.key, required this.chosenDate});
   final String chosenDate;
   @override
   Widget build(BuildContext context) {

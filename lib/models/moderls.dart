@@ -1137,6 +1137,7 @@ class Invoice {
   final int carNumber;
   final String makeLoad;
   final String notes;
+  final double biscole;
   final List<ActionModel> actions;
   final List<InvoiceItem> items;
   Invoice({
@@ -1147,6 +1148,7 @@ class Invoice {
     required this.carNumber,
     required this.makeLoad,
     required this.notes,
+    required this.biscole,
     required this.actions,
     required this.items,
   });
@@ -1159,6 +1161,7 @@ class Invoice {
     int? carNumber,
     String? makeLoad,
     String? notes,
+    double? biscole,
     List<ActionModel>? actions,
     List<InvoiceItem>? items,
   }) {
@@ -1170,6 +1173,7 @@ class Invoice {
       carNumber: carNumber ?? this.carNumber,
       makeLoad: makeLoad ?? this.makeLoad,
       notes: notes ?? this.notes,
+      biscole: biscole ?? this.biscole,
       actions: actions ?? this.actions,
       items: items ?? this.items,
     );
@@ -1184,6 +1188,7 @@ class Invoice {
       'carNumber': carNumber,
       'makeLoad': makeLoad,
       'notes': notes,
+      'biscole': biscole,
       'actions': actions.map((x) => x.toMap()).toList(),
       'items': items.map((x) => x.toMap()).toList(),
     };
@@ -1198,6 +1203,7 @@ class Invoice {
       carNumber: map['carNumber'] as int,
       makeLoad: map['makeLoad'] as String,
       notes: map['notes'] as String,
+      biscole: map['biscole'] as double,
       actions: List<ActionModel>.from(
         (map['actions'] as List<dynamic>).map<ActionModel>(
           (x) => ActionModel.fromMap(x as Map<String, dynamic>),
@@ -1218,7 +1224,7 @@ class Invoice {
 
   @override
   String toString() {
-    return 'Invoice(id: $id, number: $number, date: $date, driverName: $driverName, carNumber: $carNumber, makeLoad: $makeLoad, notes: $notes, actions: $actions, items: $items)';
+    return 'Invoice(id: $id, number: $number, date: $date, driverName: $driverName, carNumber: $carNumber, makeLoad: $makeLoad, notes: $notes, biscole: $biscole, actions: $actions, items: $items)';
   }
 
   @override
@@ -1232,6 +1238,7 @@ class Invoice {
         other.carNumber == carNumber &&
         other.makeLoad == makeLoad &&
         other.notes == notes &&
+        other.biscole == biscole &&
         listEquals(other.actions, actions) &&
         listEquals(other.items, items);
   }
@@ -1245,6 +1252,7 @@ class Invoice {
         carNumber.hashCode ^
         makeLoad.hashCode ^
         notes.hashCode ^
+        biscole.hashCode ^
         actions.hashCode ^
         items.hashCode;
   }
@@ -1257,9 +1265,9 @@ class InvoiceItem {
   double wight;
   String color;
   double density;
+  double price;
   String customer;
   int amount;
-
   InvoiceItem({
     required this.lenth,
     required this.width,
@@ -1267,6 +1275,7 @@ class InvoiceItem {
     required this.wight,
     required this.color,
     required this.density,
+    required this.price,
     required this.customer,
     required this.amount,
   });
@@ -1278,6 +1287,7 @@ class InvoiceItem {
     double? wight,
     String? color,
     double? density,
+    double? price,
     String? customer,
     int? amount,
   }) {
@@ -1288,6 +1298,7 @@ class InvoiceItem {
       wight: wight ?? this.wight,
       color: color ?? this.color,
       density: density ?? this.density,
+      price: price ?? this.price,
       customer: customer ?? this.customer,
       amount: amount ?? this.amount,
     );
@@ -1301,6 +1312,7 @@ class InvoiceItem {
       'wight': wight,
       'color': color,
       'density': density,
+      'price': price,
       'customer': customer,
       'amount': amount,
     };
@@ -1314,6 +1326,7 @@ class InvoiceItem {
       wight: map['wight'] as double,
       color: map['color'] as String,
       density: map['density'] as double,
+      price: map['price'] as double,
       customer: map['customer'] as String,
       amount: map['amount'] as int,
     );
@@ -1326,7 +1339,7 @@ class InvoiceItem {
 
   @override
   String toString() {
-    return 'InvoiceItem(lenth: $lenth, width: $width, hight: $hight, wight: $wight, color: $color, density: $density, customer: $customer, amount: $amount)';
+    return 'InvoiceItem(lenth: $lenth, width: $width, hight: $hight, wight: $wight, color: $color, density: $density, price: $price, customer: $customer, amount: $amount)';
   }
 
   @override
@@ -1339,6 +1352,7 @@ class InvoiceItem {
         other.wight == wight &&
         other.color == color &&
         other.density == density &&
+        other.price == price &&
         other.customer == customer &&
         other.amount == amount;
   }
@@ -1351,6 +1365,7 @@ class InvoiceItem {
         wight.hashCode ^
         color.hashCode ^
         density.hashCode ^
+        price.hashCode ^
         customer.hashCode ^
         amount.hashCode;
   }

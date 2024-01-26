@@ -97,10 +97,10 @@ class BlockReportsView extends StatelessWidget {
                                     false)
                                 .toList()
                                 .filter_description()
-                                .sortedBy<String>(
-                                    (element) => element.discreption)
                                 .sortedBy<num>(
                                     (element) => element.serial.to_int())
+                                .sortedBy<String>(
+                                    (element) => element.discreption)
                                 .map((e) => TableRow(children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),

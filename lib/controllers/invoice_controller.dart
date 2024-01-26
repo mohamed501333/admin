@@ -18,6 +18,7 @@ class Invoice_controller extends ChangeNotifier {
               event.snapshot.value as Map<Object?, Object?>;
           for (var item in map.values.toList()) {
             invoices.add(Invoice.fromJson(item.toString()));
+            edits = invoices;
           }
         }
         print("get data of invoice");
@@ -27,6 +28,39 @@ class Invoice_controller extends ChangeNotifier {
   }
 
   List<Invoice> invoices = [];
+  List<Invoice> edits = [];
+
+  rr() async {
+    // print("v");
+    // for (var t in edits) {
+    //   var n = Invoice(
+    //       id: t.id,
+    //       number: t.number + 2062,
+    //       date: t.date,
+    //       driverName: t.driverName,
+    //       carNumber: t.carNumber,
+    //       makeLoad: t.makeLoad,
+    //       notes: t.notes,
+    //       biscole: t.biscole,
+    //       actions: t.actions,
+    //       items: t.items
+    //       // .map((e) => InvoiceItem(
+    //       //     lenth: e.lenth,
+    //       //     width: e.width,
+    //       //     hight: e.hight,
+    //       //     wight: e.wight,
+    //       //     color: e.color,
+    //       //     density: e.density,
+    //       //     price: e.price,
+    //       //     customer: e.customer,
+    //       //     amount: e.amount)
+    //       //     )
+    //       // .toList()
+    //       );
+
+    //   await FirebaseDatabase.instance.ref("invoice/${n.id}").set(n.toJson());
+    // }
+  }
 
   addInvoice(Invoice invoice) async {
     try {

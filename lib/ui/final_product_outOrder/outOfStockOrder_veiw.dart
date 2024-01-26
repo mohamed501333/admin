@@ -57,7 +57,7 @@ class outOfStockOrder extends StatelessWidget {
               children: [
                 TextField(
                   cursorColor: Colors.black,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                       hintText: "Search",
                       hintStyle: TextStyle(color: ColorManager.gray),

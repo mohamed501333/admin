@@ -82,6 +82,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
                     finalProdcutAction.createInvoice.getactionTitle) ==
                 false)
             .map((e) => InvoiceItem(
+                price: 0.0,
                 amount: e.amount,
                 lenth: e.lenth,
                 width: e.width,
@@ -95,6 +96,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
                 customer: customerName.text))
             .toList();
         var invoice = Invoice(
+            biscole: 0.0,
             notes: "",
             id: DateTime.now().millisecondsSinceEpoch,
             number: invoices.last.number + 1,
@@ -105,20 +107,15 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             actions: [InvoiceAction.creat_invoice.add],
             items: items);
         context.read<Invoice_controller>().addInvoice(invoice);
-        context.read<final_prodcut_controller>().addinvoice(finals
-            .where((element) =>
-                element.actions.if_action_exist(
-                    finalProdcutAction.createInvoice.getactionTitle) ==
-                false)
-            .toList());
-        finals
-            .where((element) =>
-                element.actions.if_action_exist(
-                    finalProdcutAction.createInvoice.getactionTitle) ==
-                false)
-            .map((c) => context
-                .read<final_prodcut_controller>()
-                .add_invoice_umm_to(c, invoices.last.number + 1));
+        context.read<final_prodcut_controller>().addinvoice(
+            finals
+                .where((element) =>
+                    element.actions.if_action_exist(
+                        finalProdcutAction.createInvoice.getactionTitle) ==
+                    false)
+                .toList(),
+            invoices.last.number + 1);
+
         clearfields();
       }
     }

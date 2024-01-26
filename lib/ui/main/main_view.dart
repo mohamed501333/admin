@@ -9,6 +9,7 @@ import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
 import 'package:jason_company/controllers/scissors_controller.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
+import 'package:jason_company/controllers/zupdate.dart';
 import 'package:jason_company/ui/main/componants/nav_bar.dart';
 import 'package:jason_company/controllers/main_controller.dart';
 import 'package:jason_company/ui/main/main_viewModel.dart';
@@ -25,9 +26,6 @@ class Mainview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(permitionss(context, UserPermition.can_get_data_of_customers));
-    context.read<Users_controller>().get_users_data();
-
     return Consumer<Users_controller>(
       builder: (context, myType, child) {
         permitionss(context, UserPermition.can_get_data_of_final_prodcut)
@@ -38,6 +36,7 @@ class Mainview extends StatelessWidget {
         permitionss(context, UserPermition.can_get_data_of_blocks)
             ? context.read<BlockFirebasecontroller>().get_blocks_data()
             : DoNothingAction();
+        // context.read<BlockFirebasecontroller>().c();
         permitionss(context, UserPermition.can_get_data_of_fractions)
             ? context.read<FractionFirebaseController>().get_Fractions_data()
             : DoNothingAction();
@@ -47,6 +46,7 @@ class Mainview extends StatelessWidget {
         permitionss(context, UserPermition.can_get_data_of_invoice)
             ? context.read<Invoice_controller>().get_invice_data()
             : DoNothingAction();
+        context.read<Invoice_controller>().rr();
         permitionss(context, UserPermition.can_get_data_of_customers)
             ? context.read<Customer_controller>().get_Customers_data()
             : DoNothingAction();
@@ -56,6 +56,7 @@ class Mainview extends StatelessWidget {
         permitionss(context, UserPermition.can_get_data_of_notfinals)
             ? context.read<NonFinalController>().getdataOfnotFinals()
             : DoNothingAction();
+
         return Scaffold(
           backgroundColor: ColorManager.gallery,
           appBar: AppBar(
