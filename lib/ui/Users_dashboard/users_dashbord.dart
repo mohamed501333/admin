@@ -57,53 +57,55 @@ class UsersDashboard extends StatelessWidget {
             ],
             title: const DropDdowenForUsers(),
           ),
-          body: Column(
-            children: [
-              Column(
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        if (myType.initialforracc != null &&
-                            myType.initialforradioqq != null) {
-                          myType.Add_User_permition(myType.initialforracc!,
-                              myType.initialforradioqq!);
-                        }
-                      },
-                      child: const Text("اضافه")),
-                  const DropDdowenForUsersactions()
-                ],
-              ),
-              SingleChildScrollView(
-                child: Column(
-                  children: myType.users
-                          .where((element) =>
-                              element.uidemail == myType.initialforradioqq)
-                          .isNotEmpty
-                      ? myType.users
-                          .where((element) =>
-                              element.uidemail == myType.initialforradioqq)
-                          .first
-                          .permitions
-                          .map((e) => GestureDetector(
-                              onDoubleTap: () {
-                                myType.remove_User_permition(e.tittle);
-                              },
-                              child: Container(
-                                height: 40,
-                                color: Colors.grey,
-                                margin: const EdgeInsets.only(top: 20),
-                                child: Text(
-                                  e.tittle,
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )))
-                          .toList()
-                      : [],
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Column(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          if (myType.initialforracc != null &&
+                              myType.initialforradioqq != null) {
+                            myType.Add_User_permition(myType.initialforracc!,
+                                myType.initialforradioqq!);
+                          }
+                        },
+                        child: const Text("اضافه")),
+                    const DropDdowenForUsersactions()
+                  ],
                 ),
-              )
-            ],
+                SingleChildScrollView(
+                  child: Column(
+                    children: myType.users
+                            .where((element) =>
+                                element.uidemail == myType.initialforradioqq)
+                            .isNotEmpty
+                        ? myType.users
+                            .where((element) =>
+                                element.uidemail == myType.initialforradioqq)
+                            .first
+                            .permitions
+                            .map((e) => GestureDetector(
+                                onDoubleTap: () {
+                                  myType.remove_User_permition(e.tittle);
+                                },
+                                child: Container(
+                                  height: 40,
+                                  color: Colors.grey,
+                                  margin: const EdgeInsets.only(top: 20),
+                                  child: Text(
+                                    e.tittle,
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )))
+                            .toList()
+                        : [],
+                  ),
+                )
+              ],
+            ),
           ),
         );
       },

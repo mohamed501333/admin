@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters, empty_catches
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -102,6 +103,48 @@ class OrderController extends ChangeNotifier {
     } else {
       return [];
     }
+  }
+
+  edit_cell(dynamic oldvalue, int id, int id2, String cell, String newvalue) {
+    OrderModel user = orders.where((element) => element.id == id).first;
+
+    user.actions.add(ActionModel(
+        action:
+            "edit $cell of order  ${user.serial}  from  $oldvalue  to  $newvalue",
+        who: FirebaseAuth.instance.currentUser!.email ?? "",
+        when: DateTime.now()));
+
+    cell == "serial" ? user.serial = newvalue.to_int() : DoNothingAction();
+    cell == "len"
+        ? user.items.where((element) => element.id == id2).first.lenth =
+            newvalue.to_double()
+        : DoNothingAction();
+    cell == "wed"
+        ? user.items.where((element) => element.id == id2).first.widti =
+            newvalue.to_double()
+        : DoNothingAction();
+    cell == "hight"
+        ? user.items.where((element) => element.id == id2).first.hight =
+            newvalue.to_double()
+        : DoNothingAction();
+    cell == "den"
+        ? user.items.where((element) => element.id == id2).first.density =
+            newvalue.to_double()
+        : DoNothingAction();
+    cell == "type"
+        ? user.items.where((element) => element.id == id2).first.type = newvalue
+        : DoNothingAction();
+    cell == "color"
+        ? user.items.where((element) => element.id == id2).first.color =
+            newvalue
+        : DoNothingAction();
+    cell == "amount"
+        ? user.items.where((element) => element.id == id2).first.Qantity =
+            newvalue.to_int()
+        : DoNothingAction();
+    try {
+      FirebaseDatabase.instance.ref("orders/${user.id}").set(user.toJson());
+    } catch (e) {}
   }
 
   Refrsh_ui() {
