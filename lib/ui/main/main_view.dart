@@ -9,7 +9,6 @@ import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
 import 'package:jason_company/controllers/scissors_controller.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
-import 'package:jason_company/controllers/zupdate.dart';
 import 'package:jason_company/ui/main/componants/nav_bar.dart';
 import 'package:jason_company/controllers/main_controller.dart';
 import 'package:jason_company/ui/main/main_viewModel.dart';
@@ -46,7 +45,7 @@ class Mainview extends StatelessWidget {
         permitionss(context, UserPermition.can_get_data_of_invoice)
             ? context.read<Invoice_controller>().get_invice_data()
             : DoNothingAction();
-        context.read<Invoice_controller>().rr();
+        // context.read<Invoice_controller>().rr();
         permitionss(context, UserPermition.can_get_data_of_customers)
             ? context.read<Customer_controller>().get_Customers_data()
             : DoNothingAction();
