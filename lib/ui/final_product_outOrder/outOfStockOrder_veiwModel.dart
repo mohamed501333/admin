@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, file_names, non_constant_identifier_names
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
@@ -99,7 +100,8 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             biscole: 0.0,
             notes: "",
             id: DateTime.now().millisecondsSinceEpoch,
-            number: invoices.last.number + 1,
+            number:
+                invoices.sortedBy<num>((element) => element.id).last.number + 1,
             date: DateTime.now(),
             driverName: driverName.text,
             carNumber: carnumber.text.to_int(),
