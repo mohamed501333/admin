@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/ui/reports/block%20reports%20details.com/block_details_view.dart';
+import 'package:jason_company/ui/reports/cuttingOrderReports/cutting_orderDetails_view.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/Bolck_reports_view.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/details_of_finalProdcut.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/finalProductReports_view.dart';
@@ -25,6 +26,9 @@ class ReportsView extends StatelessWidget {
     Reportmodel(
         title: "      تفاصيل مخزن المنتج التام     ",
         route: details_of_finalProdcut()),
+    Reportmodel(
+        title: "      تفاصيل  اوامر الشغل     ",
+        route: CuttingOrderDetailsReports()),
   ];
   @override
   Widget build(BuildContext context) {
