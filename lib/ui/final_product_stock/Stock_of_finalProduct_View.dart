@@ -76,29 +76,32 @@ class FinalProductStockView extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         color: Colors.blue[50],
                                         border: Border.all(width: .5)),
-                                    child: ListTile(
-                                      trailing: Text(
-                                        "${i.total}",
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: ColorManager.red),
-                                      ),
-                                      leading: Text("${i.density}" "ك"),
-                                      title: Row(
-                                        children: [
-                                          Text(i.type.toString()),
-                                          const SizedBox(
-                                            width: 40,
+                                    child: i.total < 1
+                                        ? const SizedBox()
+                                        : ListTile(
+                                            trailing: Text(
+                                              "${i.total}",
+                                              style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: ColorManager.red),
+                                            ),
+                                            leading: Text("${i.density}" "ك"),
+                                            title: Row(
+                                              children: [
+                                                Text(i.type.toString()),
+                                                const SizedBox(
+                                                  width: 40,
+                                                ),
+                                                Text(
+                                                    "${i.lenth.removeTrailingZeros}"
+                                                    "*"
+                                                    "${i.width.removeTrailingZeros}"
+                                                    "*"
+                                                    " ${i.hight.removeTrailingZeros}"),
+                                              ],
+                                            ),
                                           ),
-                                          Text("${i.lenth.removeTrailingZeros}"
-                                              "*"
-                                              "${i.width.removeTrailingZeros}"
-                                              "*"
-                                              " ${i.hight.removeTrailingZeros}"),
-                                        ],
-                                      ),
-                                    ),
                                   ),
                                 ))
                             .toList()),

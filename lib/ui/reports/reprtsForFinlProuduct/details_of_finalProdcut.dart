@@ -123,6 +123,26 @@ class details_of_finalProdcut extends StatelessWidget {
             ))),
     GridColumn(
         allowFiltering: true,
+        columnName: 'invoiceNum',
+        label: Container(
+            padding: const EdgeInsets.all(4.0),
+            alignment: Alignment.center,
+            child: Text(
+              'invoiceNum',
+              style: textstyle11,
+            ))),
+    GridColumn(
+        allowFiltering: true,
+        columnName: 'orderNum',
+        label: Container(
+            padding: const EdgeInsets.all(4.0),
+            alignment: Alignment.center,
+            child: Text(
+              'orderNum',
+              style: textstyle11,
+            ))),
+    GridColumn(
+        allowFiltering: true,
         columnName: 'ading',
         label: Container(
             padding: const EdgeInsets.all(4.0),
@@ -271,6 +291,9 @@ class EmployeeDataSource2233 extends DataGridSource {
                       .first
                       .name),
               DataGridCell<int>(columnName: 'scisorrs', value: e.scissor),
+              DataGridCell<int>(columnName: 'invoiceNum', value: e.invoiceNum),
+              DataGridCell<int>(
+                  columnName: 'OrderNum', value: e.cuting_order_number),
               DataGridCell<String>(
                   columnName: 'ading',
                   value: e.actions.if_action_exist(finalProdcutAction

@@ -198,11 +198,19 @@ class buttoms extends StatelessWidget {
                 BlockModel m = b
                     .where((e) =>
                         e.number ==
-                        vm.get_block_of_num_in_controller(b, context).number)
+                            vm
+                                .get_block_of_num_in_controller(b, context)
+                                .number &&
+                        e.serial ==
+                            vm
+                                .get_block_of_num_in_controller(b, context)
+                                .serial)
                     .toList()[0];
                 double vloumeOfFractions;
+                double vloumeOfblock;
+
                 if (vm.permanentFractons.isNotEmpty) {
-                  var vloumeOfblock = m.width * m.lenth * m.hight / 1000000;
+                  vloumeOfblock = m.width * m.lenth * m.hight / 1000000;
                   vloumeOfFractions = vm.permanentFractons
                       .map((e) => e.wedth * e.hight * e.lenth / 1000000)
                       .reduce((a, b) => a + b);

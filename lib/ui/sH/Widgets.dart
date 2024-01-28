@@ -78,12 +78,14 @@ class TheTable0001 extends StatelessWidget {
                     children: blocks.blocks
                         .where((element) => element.Hscissor == scissor)
                         .toList()
-                        .filter_date_consumed(context)
                         .where((element) =>
                             element.actions.block_action_Stutus(
                                 BlockAction.consume_block) ==
                             true)
-                        .sortedBy<num>((element) => element.id)
+                        .sortedBy<num>((element) => element.actions
+                            .get_Date_of_action(
+                                BlockAction.cut_block_on_H.getactionTitle)
+                            .millisecondsSinceEpoch)
                         .map((user) {
                           x++;
                           return TableRow(

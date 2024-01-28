@@ -78,6 +78,14 @@ class BlockFirebasecontroller extends ChangeNotifier {
   //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
   //   }
   // }
+  c() {
+    // print(33);
+    // for (var el in blocks) {
+    //   el.wight = el.width * el.lenth * el.hight * el.density / 1000000;
+
+    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    // }
+  }
 
   void runFilter(String enteredKeyword) {
     if (enteredKeyword.isEmpty) {
