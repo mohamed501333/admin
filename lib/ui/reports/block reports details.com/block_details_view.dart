@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:date_ranger/date_ranger.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -41,6 +42,17 @@ class Block_detaild_view extends StatelessWidget {
   Block_detaild_view();
 
   var columns = <GridColumn>[
+    GridColumn(
+        visible: false,
+        allowFiltering: true,
+        columnName: 'id',
+        label: Container(
+            padding: const EdgeInsets.all(4),
+            alignment: Alignment.center,
+            child: Text(
+              'ID',
+              style: textstyle11,
+            ))),
     GridColumn(
         allowFiltering: true,
         columnName: 'size',
@@ -174,8 +186,31 @@ class Block_detaild_view extends StatelessWidget {
                             ],
                             position: GridTableSummaryRowPosition.top),
                       ],
+                      allowSwiping: true,
+                      swipeMaxOffset: 100.0,
+                      endSwipeActionsBuilder: (BuildContext context,
+                          DataGridRow row, int rowIndex) {
+                        return GestureDetector(
+                            onTap: () {
+                              print(row.getCells().first.value);
+                              blocks.deleteblock(blocks.blocks
+                                  .where((element) =>
+                                      element.id == row.getCells().first.value)
+                                  .first);
+                            },
+                            child: Container(
+                                color: Colors.redAccent,
+                                child: const Center(
+                                  child: Icon(Icons.delete),
+                                ))).permition(context,
+                            UserPermition.delete_in_finalprodcut_details);
+                      },
                       gridLinesVisibility: GridLinesVisibility.both,
                       headerGridLinesVisibility: GridLinesVisibility.both,
+                      allowEditing: permitionss(
+                          context, UserPermition.allow_edit_in_details_blocks),
+                      selectionMode: SelectionMode.multiple,
+                      navigationMode: GridNavigationMode.cell,
                       isScrollbarAlwaysShown: true,
                       key: kkkkk,
                       allowSorting: true,
@@ -195,6 +230,9 @@ class Block_detaild_view extends StatelessWidget {
   }
 }
 
+dynamic newCellValue;
+TextEditingController editingController = TextEditingController();
+
 class EmployeeDataSource22 extends DataGridSource {
 //DataGridRowهنا تحويل البيانات الى قائمه من
   EmployeeDataSource22({
@@ -202,6 +240,7 @@ class EmployeeDataSource22 extends DataGridSource {
   }) {
     data = coumingData
         .map<DataGridRow>((e) => DataGridRow(cells: [
+              DataGridCell<int>(columnName: 'id', value: e.id),
               DataGridCell<String>(
                   columnName: 'size',
                   value: "${e.hight}*${e.width}*${e.lenth}"),
@@ -238,6 +277,67 @@ class EmployeeDataSource22 extends DataGridSource {
     return Container(
       padding: EdgeInsets.all(15.0),
       child: Text(summaryValue),
+    );
+  }
+
+  @override
+  Widget? buildEditWidget(DataGridRow dataGridRow,
+      RowColumnIndex rowColumnIndex, GridColumn column, CellSubmit submitCell) {
+    // Text going to display on editable widget
+    final String displayText = dataGridRow
+            .getCells()
+            .firstWhereOrNull((DataGridCell dataGridCell) =>
+                dataGridCell.columnName == column.columnName)
+            ?.value
+            ?.toString() ??
+        '';
+    final dynamic oldValue = dataGridRow
+            .getCells()
+            .firstWhereOrNull((DataGridCell dataGridCell) =>
+                dataGridCell.columnName == column.columnName)
+            ?.value ??
+        '';
+
+    // final int dataRowIndex = data.indexOf(dataGridRow);
+    // final OrderModel u = data2.elementAt(dataRowIndex);
+
+    newCellValue = "";
+
+    final bool isNumericType =
+        column.columnName == 'id' || column.columnName == 'amount';
+
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      alignment: isNumericType ? Alignment.centerRight : Alignment.centerLeft,
+      child: TextField(
+        autofocus: true,
+        controller: editingController..text = displayText,
+        textAlign: isNumericType ? TextAlign.right : TextAlign.left,
+        decoration: const InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 16.0),
+        ),
+        keyboardType: isNumericType ? TextInputType.number : TextInputType.text,
+        onChanged: (String value) {
+          if (value.isNotEmpty) {
+            if (isNumericType) {
+              newCellValue = int.parse(value);
+            } else {
+              newCellValue = value;
+            }
+          } else {
+            newCellValue = null;
+          }
+        },
+        onSubmitted: (String value) {
+          // print(u);
+          print(dataGridRow.getCells()[0].value);
+          print(dataGridRow.getCells()[1].value);
+          print(oldValue);
+          print(column.columnName);
+
+          submitCell();
+        },
+      ),
     );
   }
 

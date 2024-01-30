@@ -81,9 +81,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
   c() {
     int x = 0;
     print(33);
-    for (var el in all.where((e) => e.serial == "D26s_10-12-23")) {
+    for (var el in all.where((e) => e.serial == "D30s_7-12-23")) {
       x++;
-      el.number = x;
+      el.serial = "D30s_07-12-23";
 
       FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
     }
@@ -103,7 +103,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
       // we use the toLowerCase() method to make it case-insensitive
     }
 
-    Refresh_the_UI();
+    // Refresh_the_UI();
   }
 
   Refresh_the_UI() {
