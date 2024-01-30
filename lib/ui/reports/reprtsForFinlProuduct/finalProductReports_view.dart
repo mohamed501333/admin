@@ -182,7 +182,8 @@ Future<void> createAndopenPdf(
     readFontData, GlobalKey<SfDataGridState> mkey, String date) async {
   Directory? appDocDirectory = await getExternalStorageDirectory();
 
-  String x = "${appDocDirectory!.path}/ الانتاج التام ";
+  String x =
+      "${appDocDirectory!.path}/${formatwitTime2.format(DateTime.now())} يومية تام";
   permission();
   var arabicFont = PdfTrueTypeFont(await readFontData(), 14);
   PdfDocument document = mkey.currentState!.exportToPdfDocument(

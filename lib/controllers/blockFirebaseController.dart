@@ -79,12 +79,14 @@ class BlockFirebasecontroller extends ChangeNotifier {
   //   }
   // }
   c() {
-    // print(33);
-    // for (var el in blocks) {
-    //   el.wight = el.width * el.lenth * el.hight * el.density / 1000000;
+    int x = 0;
+    print(33);
+    for (var el in all.where((e) => e.serial == "D26s_10-12-23")) {
+      x++;
+      el.number = x;
 
-    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-    // }
+      FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    }
   }
 
   void runFilter(String enteredKeyword) {
@@ -101,12 +103,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
       // we use the toLowerCase() method to make it case-insensitive
     }
 
-    // Refresh the UI
-    // notifyListeners();
+    Refresh_the_UI();
   }
 
   Refresh_the_UI() {
-    // notifyListeners();
+    notifyListeners();
   }
 
   addblock(BlockModel block) async {
