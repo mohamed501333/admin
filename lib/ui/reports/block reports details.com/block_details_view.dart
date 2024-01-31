@@ -75,7 +75,7 @@ class Block_detaild_view extends StatelessWidget {
             ))),
     GridColumn(
         allowFiltering: true,
-        columnName: 'denety',
+        columnName: 'density',
         label: Container(
             alignment: Alignment.center,
             child: Text(
@@ -217,7 +217,8 @@ class Block_detaild_view extends StatelessWidget {
                       allowMultiColumnSorting: true,
                       allowTriStateSorting: true,
                       allowFiltering: true,
-                      source: EmployeeDataSource22(coumingData: blocks.blocks),
+                      source: EmployeeDataSource22(context,
+                          coumingData: blocks.blocks),
                       columnWidthMode: ColumnWidthMode.fill,
                       columns: columns,
                     ),
@@ -235,7 +236,8 @@ TextEditingController editingController = TextEditingController();
 
 class EmployeeDataSource22 extends DataGridSource {
 //DataGridRowهنا تحويل البيانات الى قائمه من
-  EmployeeDataSource22({
+  EmployeeDataSource22(
+    this.context, {
     required List<BlockModel> coumingData,
   }) {
     data = coumingData
@@ -245,7 +247,7 @@ class EmployeeDataSource22 extends DataGridSource {
                   columnName: 'size',
                   value: "${e.hight}*${e.width}*${e.lenth}"),
               DataGridCell<String>(columnName: 'color', value: e.color),
-              DataGridCell<double>(columnName: 'denety', value: e.density),
+              DataGridCell<double>(columnName: 'density', value: e.density),
               DataGridCell<String>(columnName: 'type', value: e.type),
               DataGridCell<String>(columnName: 'serial', value: e.serial),
               DataGridCell<String>(
@@ -262,9 +264,12 @@ class EmployeeDataSource22 extends DataGridSource {
                       : '0 غير مصروف '),
             ]))
         .toList();
+    data2 = coumingData;
   }
+  final BuildContext context;
 
   List<DataGridRow> data = [];
+  List<BlockModel> data2 = [];
 
   @override
   List<DataGridRow> get rows => data;
@@ -298,8 +303,8 @@ class EmployeeDataSource22 extends DataGridSource {
             ?.value ??
         '';
 
-    // final int dataRowIndex = data.indexOf(dataGridRow);
-    // final OrderModel u = data2.elementAt(dataRowIndex);
+    final int dataRowIndex = data.indexOf(dataGridRow);
+    final BlockModel u = data2.elementAt(dataRowIndex);
 
     newCellValue = "";
 
@@ -334,7 +339,19 @@ class EmployeeDataSource22 extends DataGridSource {
           print(dataGridRow.getCells()[1].value);
           print(oldValue);
           print(column.columnName);
-
+          if (column.columnName == "size") {
+            String i = value;
+            List<String> b = i.replaceAll("*", " ").split(" ");
+            print(b);
+            context
+                .read<BlockFirebasecontroller>()
+                .edit_cell_size(oldValue, u.id, column.columnName, b);
+          } else {
+            // context
+            //     .read<final_prodcut_controller>()
+            //     .edit_cell(u.id, column.columnName, value);
+            submitCell();
+          }
           submitCell();
         },
       ),

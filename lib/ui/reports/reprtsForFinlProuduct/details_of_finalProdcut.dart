@@ -334,7 +334,7 @@ class EmployeeDataSource2233 extends DataGridSource {
       RowColumnIndex rowColumnIndex,
       String summaryValue) {
     return Container(
-      padding: EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(15.0),
       child: Text(summaryValue),
     );
   }
