@@ -406,6 +406,7 @@ enum UserPermition {
   can_aprove_from_quality,
   can_aprove_from_recive_from_final_prodcut,
   allow_edit_in_details_finalProdcut,
+  allow_edit_in_details_blocks,
 
   show_users_actions,
   can_get_data_of_blocks,
@@ -528,11 +529,16 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "عرض البحث فى العملاء");
       case UserPermition.show_cusotmer_name_in_cutting_order:
         return UserpermitionTittle(tittle: "عرض اسم العميل فى اوامر التشغيل");
+      case UserPermition.allow_edit_in_details_blocks:
+        return UserpermitionTittle(
+            tittle: "امكانية التعديل فى تفاصيل البلوكات");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.allow_edit_in_details_blocks:
+        return "امكانية التعديل فى تفاصيل البلوكات";
       case UserPermition.show_cusotmer_name_in_cutting_order:
         return "عرض اسم العميل فى اوامر التشغيل";
       case UserPermition.show_search_in_customers:

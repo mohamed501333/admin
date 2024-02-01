@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, empty_catches, file_names
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -81,9 +82,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
   c() {
     int x = 43;
     print(33);
-    for (var el in all.where((e) => e.serial == "D26s_10-12-23")) {
+    for (var el in all.where((e) => e.serial == "D30s_7-12-23")) {
       x++;
-      el.actions.removeWhere((element) => element.action == "consume_block");
+      el.serial = "D30s_07-12-23";
 
       FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
     }
@@ -103,7 +104,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
       // we use the toLowerCase() method to make it case-insensitive
     }
 
-    Refresh_the_UI();
+    // Refresh_the_UI();
   }
 
   Refresh_the_UI() {
@@ -255,5 +256,41 @@ class BlockFirebasecontroller extends ChangeNotifier {
     }
     blocks.clear();
     blocks.addAll(filterdBlocks);
+  }
+
+  edit_cell_size(dynamic oldvalue, int id, String cell, List<String> newvalue) {
+    BlockModel user = blocks.where((element) => element.id == id).first;
+
+    user.actions.add(ActionModel(
+        action:
+            "edit $cell of block  ${user.serial}/${user.number}/  from  $oldvalue  to  $newvalue",
+        who: FirebaseAuth.instance.currentUser!.email ?? "",
+        when: DateTime.now()));
+    user.lenth = newvalue[0].to_int();
+    user.width = newvalue[1].to_int();
+    user.hight = newvalue[2].to_int();
+
+    try {
+      FirebaseDatabase.instance.ref("blocks/${user.id}").set(user.toJson());
+    } catch (e) {}
+  }
+
+  edit_cell(int id, String cell, String newvalue) {
+    BlockModel user = blocks.where((element) => element.id == id).first;
+
+    user.actions.add(ActionModel(
+        action: "edit $cell",
+        who: FirebaseAuth.instance.currentUser!.email ?? "",
+        when: DateTime.now()));
+    cell == "color" ? user.color = newvalue : DoNothingAction();
+    cell == "type" ? user.type = newvalue : DoNothingAction();
+    cell == "density" ? user.density = newvalue.to_double() : DoNothingAction();
+    cell == "serial" ? user.serial = newvalue : DoNothingAction();
+    cell == "num" ? user.number = newvalue.to_int() : DoNothingAction();
+    cell == "description" ? user.discreption = newvalue : DoNothingAction();
+    cell == "wight" ? user.wight = newvalue.to_double() : DoNothingAction();
+    try {
+      FirebaseDatabase.instance.ref("blocks/${user.id}").set(user.toJson());
+    } catch (e) {}
   }
 }
