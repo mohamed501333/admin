@@ -79,11 +79,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
   //   }
   // }
   c() {
-    int x = 0;
+    int x = 43;
     print(33);
     for (var el in all.where((e) => e.serial == "D26s_10-12-23")) {
       x++;
-      el.number = x;
+      el.actions.removeWhere((element) => element.action == "consume_block");
 
       FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
     }
