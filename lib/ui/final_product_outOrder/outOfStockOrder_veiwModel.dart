@@ -116,7 +116,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
                         finalProdcutAction.createInvoice.getactionTitle) ==
                     false)
                 .toList(),
-            invoices.last.number + 1);
+            invoices.sortedBy<num>((element) => element.id).last.number + 1);
 
         clearfields();
       }
