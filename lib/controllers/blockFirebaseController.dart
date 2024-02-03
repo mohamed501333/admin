@@ -97,10 +97,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
       search = blocks;
     } else {
       search = blocks
-          .where((user) =>
-              user.number.toString().toLowerCase() ==
+          .where((user) => user.number.toString().contains(enteredKeyword)
+              // .toString().toLowerCase() ==
               // .contains(enteredKeyword.toLowerCase()))
-              enteredKeyword.toLowerCase())
+              // enteredKeyword.toLowerCase()
+              )
           .toList();
 
       // we use the toLowerCase() method to make it case-insensitive

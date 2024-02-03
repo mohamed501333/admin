@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
@@ -12,15 +13,59 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 import 'package:provider/provider.dart';
 
-class ReportwForHView extends StatelessWidget {
+class ReportwForHView extends StatefulWidget {
   ReportwForHView({super.key, required this.scissor});
-  BlocksStockViewModel vm = BlocksStockViewModel();
   final int scissor;
+
+  @override
+  State<ReportwForHView> createState() => _ReportwForHViewState();
+}
+
+class _ReportwForHViewState extends State<ReportwForHView> {
+  BlocksStockViewModel vm = BlocksStockViewModel();
+  String chosenDate = format.format(DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          TextButton(
+              onPressed: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101));
+
+                if (pickedDate != null) {
+                  setState(() {
+                    String formattedDate = format.format(pickedDate);
+                    chosenDate = formattedDate;
+                  });
+                } else {}
+              },
+              child: Text(
+                chosenDate,
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+              )),
+          SizedBox(
+            width: 100,
+            child: Container(
+              color: Color.fromARGB(96, 230, 218, 218),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                    icon: Icon(Icons.search), border: OutlineInputBorder()),
+                onChanged: (v) {
+                  context.read<BlockFirebasecontroller>().runFilter(v);
+                  context.read<BlockFirebasecontroller>().Refresh_the_UI();
+                  print(v);
+                },
+              ),
+            ),
+          ),
           IconButton(
               onPressed: () {
                 thedialog(context);
@@ -32,7 +77,8 @@ class ReportwForHView extends StatelessWidget {
         children: [
           TheTable0001(
             vm: vm,
-            scissor: scissor,
+            scissor: widget.scissor,
+            chosenDate: chosenDate,
           )
         ],
       ),
@@ -84,9 +130,11 @@ class TheTable0001 extends StatelessWidget {
     super.key,
     required this.vm,
     required this.scissor,
+    required this.chosenDate,
   });
   final BlocksStockViewModel vm;
   final int scissor;
+  String chosenDate;
   H1VeiwModel vm2 = H1VeiwModel();
 
   @override
@@ -94,7 +142,11 @@ class TheTable0001 extends StatelessWidget {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, blocks, child) {
         int x = 0;
-        List<BlockModel> b = blocks.blocks
+        List<BlockModel> b = blocks.search
+            .where((element) =>
+                format.format(element.actions.get_Date_of_action(
+                    BlockAction.cut_block_on_H.getactionTitle)) ==
+                chosenDate)
             .where((element) => element.Hscissor == scissor)
             .toList()
             .where((element) =>
@@ -346,7 +398,7 @@ class TheTable0001 extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text("${b.indexOf(user)}"))),
+                                        child: Text("${b.indexOf(user) + 1}"))),
                               ]);
                         })
                         .toList()

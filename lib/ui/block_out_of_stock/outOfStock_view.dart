@@ -11,6 +11,7 @@ import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/sH/Widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
@@ -35,6 +36,11 @@ class _OutOfStockViewState extends State<OutOfStockView> {
         child: Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(
+              onPressed: () {
+                thedialog(context);
+              },
+              icon: const Icon(Icons.settings)),
           TextButton(
                   onPressed: () async {
                     DateTime? pickedDate = await showDatePicker(
@@ -184,8 +190,20 @@ class TheTable0001 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, blocks, child) {
-        int x = 0;
         blocks.runFilter(vm.blocknumbercontroller.text);
+        List<BlockModel> b = blocks.blocks.reversed
+            .toList()
+            .where((element) =>
+                format.format(element.actions.get_Date_of_action(
+                    BlockAction.consume_block.getactionTitle)) ==
+                chosenDate)
+            .sortedBy<DateTime>((element) => element.actions
+                .get_Date_of_action(BlockAction.consume_block.getactionTitle))
+            .where((element) =>
+                element.actions
+                    .block_action_Stutus(BlockAction.consume_block) ==
+                true)
+            .toList();
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(
@@ -216,21 +234,15 @@ class TheTable0001 extends StatelessWidget {
                       15: FlexColumnWidth(.8),
                       16: FlexColumnWidth(.8),
                     },
-                    children: blocks.blocks.reversed
+                    children: b
                         .toList()
-                        .where((element) =>
-                            format.format(element.actions.get_Date_of_action(
-                                BlockAction.consume_block.getactionTitle)) ==
-                            chosenDate)
-                        .sortedBy<DateTime>((element) => element.actions
-                            .get_Date_of_action(
-                                BlockAction.consume_block.getactionTitle))
-                        .where((element) =>
-                            element.actions.block_action_Stutus(
-                                BlockAction.consume_block) ==
-                            true)
+                        .reversed
+                        .take(context
+                            .read<BlockFirebasecontroller>()
+                            .amountofView)
+                        .toList()
+                        .reversed
                         .map((user) {
-                          x++;
                           return TableRow(
                               decoration: BoxDecoration(
                                 color: blocks.search.indexOf(user) % 2 == 0
@@ -395,7 +407,8 @@ class TheTable0001 extends StatelessWidget {
                                     )),
                                 Container(
                                     padding: const EdgeInsets.all(2),
-                                    child: Center(child: Text("$x"))),
+                                    child: Center(
+                                        child: Text("${b.indexOf(user) + 1}"))),
                               ]);
                         })
                         .toList()
