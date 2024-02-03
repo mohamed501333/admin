@@ -79,16 +79,18 @@ class BlockFirebasecontroller extends ChangeNotifier {
   //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
   //   }
   // }
-  // c() {
-  //   int x = 43;
-  //   print(33);
-  //   for (var el in all.where((e) => e.serial == "D30s_7-12-23")) {
-  //     x++;
-  //     el.serial = "D30s_07-12-23";
+  c() {
+    // int x = 43;
+    // print(33);
+    // for (var el in all.where((e) =>
+    //     e.actions.if_action_exist(BlockAction.consume_block.getactionTitle) ==
+    //         true &&
+    //     e.Hscissor == 0)) {
+    //   el.Hscissor = 55;
 
-  //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-  //   }
-  // }
+    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    // }
+  }
 
   void runFilter(String enteredKeyword) {
     if (enteredKeyword.isEmpty) {
@@ -110,6 +112,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
   Refresh_the_UI() {
     notifyListeners();
   }
+
+  int amountofView = 5;
 
   addblock(BlockModel block) async {
     try {

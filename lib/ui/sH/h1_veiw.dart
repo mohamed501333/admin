@@ -286,14 +286,15 @@ class fields extends StatelessWidget {
           ),
           Column(
             children: [
-              DropDdowen(b: b),
+              DropDdowenFor_blockColor123(b: b),
+              const DropDdowen_forCode123(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 0),
                 child: CustomTextFormField(
                     autovalidate: true,
                     hint: "رقم البلوك ",
                     width: 90,
-                    validator: vm.validate_if_Exist(b, context),
+                    validator: vm.validate_if_ExistforH(b, context),
                     controller: vm.numbercontroller),
               ),
             ],
@@ -304,20 +305,53 @@ class fields extends StatelessWidget {
   }
 }
 
-class DropDdowen extends StatelessWidget {
-  const DropDdowen({super.key, required this.b});
+class DropDdowenFor_blockColor123 extends StatelessWidget {
+  const DropDdowenFor_blockColor123({super.key, required this.b});
   final List<BlockModel> b;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ObjectBoxController>(
-      builder: (context, v, child) {
-        b.isEmpty
-            ? context.read<ObjectBoxController>().serial = null
-            : DoNothingAction();
+      builder: (context, myType, child) {
+        myType.getBlocksConsumedAndNotCutted(context);
+
         return DropdownButton(
-            value: context.read<ObjectBoxController>().serial,
-            items: b
+            value: context.read<ObjectBoxController>().initialcolorforH,
+            items: myType
+                .filtercolorforH(context.read<BlockFirebasecontroller>().blocks)
+                .map((e) => e)
+                .toList()
+                .map((e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e.toString()),
+                    ))
+                .toList(),
+            onChanged: (v) {
+              if (v != null) {
+                myType.getBlocks(context);
+                context.read<ObjectBoxController>().initialcolorforH = v;
+                myType.serialforH = null;
+                context.read<ObjectBoxController>().get();
+              }
+            });
+      },
+    );
+  }
+}
+
+class DropDdowen_forCode123 extends StatelessWidget {
+  const DropDdowen_forCode123({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ObjectBoxController>(
+      builder: (context, mytype, child) {
+        mytype.getBlocksConsumedAndNotCutted(context);
+        return DropdownButton(
+            value: context.read<ObjectBoxController>().serialforH,
+            items: mytype.blocksforH
                 .filterserials()
                 .map((e) => e.serial)
                 .toList()
@@ -328,7 +362,9 @@ class DropDdowen extends StatelessWidget {
                 .toList(),
             onChanged: (v) {
               if (v != null) {
-                context.read<ObjectBoxController>().serial = v;
+                mytype.getBlocks(context);
+                context.read<ObjectBoxController>().serialforH = v;
+                mytype.getBlocks(context);
                 context.read<ObjectBoxController>().get();
               }
             });

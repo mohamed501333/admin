@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/models/moderls.dart';
 
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 import 'package:provider/provider.dart';
 
 class ReportwForHView extends StatelessWidget {
@@ -17,7 +19,15 @@ class ReportwForHView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                thedialog(context);
+              },
+              icon: const Icon(Icons.settings))
+        ],
+      ),
       body: Column(
         children: [
           TheTable0001(
@@ -30,19 +40,70 @@ class ReportwForHView extends StatelessWidget {
   }
 }
 
+thedialog(BuildContext context) {
+  H1VeiwModel vm = H1VeiwModel();
+  TextEditingController c = TextEditingController();
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('  ?'),
+          content: SizedBox(
+            height: 200,
+            child: Column(children: [
+              const Text("كميه العرض"),
+              SizedBox(
+                width: 50,
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  decoration:
+                      const InputDecoration(border: OutlineInputBorder()),
+                  controller: c,
+                ),
+              )
+            ]),
+          ),
+          actions: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                onPressed: () {
+                  vm.amountofView = c.text.to_int();
+                  context.read<BlockFirebasecontroller>().amountofView =
+                      c.text.to_int();
+                  context.read<BlockFirebasecontroller>().Refresh_the_UI();
+                  Navigator.pop(context);
+                },
+                child: const Text('تم')),
+          ],
+        );
+      });
+}
+
 class TheTable0001 extends StatelessWidget {
-  const TheTable0001({
+  TheTable0001({
     super.key,
     required this.vm,
     required this.scissor,
   });
   final BlocksStockViewModel vm;
   final int scissor;
+  H1VeiwModel vm2 = H1VeiwModel();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, blocks, child) {
         int x = 0;
+        List<BlockModel> b = blocks.blocks
+            .where((element) => element.Hscissor == scissor)
+            .toList()
+            .where((element) =>
+                element.actions
+                    .block_action_Stutus(BlockAction.consume_block) ==
+                true)
+            .sortedBy<num>((element) => element.actions
+                .get_Date_of_action(BlockAction.cut_block_on_H.getactionTitle)
+                .millisecondsSinceEpoch);
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(
@@ -75,17 +136,15 @@ class TheTable0001 extends StatelessWidget {
                       17: FlexColumnWidth(1),
                       18: FlexColumnWidth(1),
                     },
-                    children: blocks.blocks
-                        .where((element) => element.Hscissor == scissor)
+                    children: b
+                        // .takeWhile((value) => b.indexOf(value) < 21)
                         .toList()
-                        .where((element) =>
-                            element.actions.block_action_Stutus(
-                                BlockAction.consume_block) ==
-                            true)
-                        .sortedBy<num>((element) => element.actions
-                            .get_Date_of_action(
-                                BlockAction.cut_block_on_H.getactionTitle)
-                            .millisecondsSinceEpoch)
+                        .reversed
+                        .take(context
+                            .read<BlockFirebasecontroller>()
+                            .amountofView)
+                        .toList()
+                        .reversed
                         .map((user) {
                           x++;
                           return TableRow(
@@ -286,7 +345,8 @@ class TheTable0001 extends StatelessWidget {
                                     )),
                                 Container(
                                     padding: const EdgeInsets.all(2),
-                                    child: Center(child: Text("${x}"))),
+                                    child: Center(
+                                        child: Text("${b.indexOf(user)}"))),
                               ]);
                         })
                         .toList()

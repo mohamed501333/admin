@@ -1,9 +1,11 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class ObjectBoxController extends ChangeNotifier {
@@ -89,10 +91,25 @@ class ObjectBoxController extends ChangeNotifier {
   }
 
   String? serial;
-
   String? initialcolor;
+
+  String? serialforH;
+  String? initialcolorforH;
+
   List<String> filtercolor(List<BlockModel> blocks) {
     return blocks.map((e) => e.color).toSet().toList();
+  }
+
+  List<String> filtercolorforH(List<BlockModel> blocks) {
+    return blocks
+        .where((element) =>
+            element.actions.if_action_exist(
+                    BlockAction.consume_block.getactionTitle) ==
+                true &&
+            element.Hscissor == 0)
+        .map((e) => e.color)
+        .toSet()
+        .toList();
   }
 
   getBlocks(BuildContext context) {
@@ -116,7 +133,49 @@ class ObjectBoxController extends ChangeNotifier {
     blocks = x;
   }
 
+  getBlocksConsumedAndNotCutted(BuildContext context) {
+    List<BlockModel> x = context
+        .read<BlockFirebasecontroller>()
+        .blocks
+        .where((element) =>
+            element.actions.if_action_exist(
+                    BlockAction.consume_block.getactionTitle) ==
+                true &&
+            element.Hscissor == 0)
+        .toList();
+
+    initialcolor != null
+        ? x = context
+            .read<BlockFirebasecontroller>()
+            .blocks
+            .where((element) =>
+                element.actions.if_action_exist(
+                        BlockAction.consume_block.getactionTitle) ==
+                    true &&
+                element.Hscissor == 0)
+            .toList()
+            .where((element) => element.color == initialcolorforH)
+            .toList()
+        : DoNothingAction;
+    serial != null
+        ? x = context
+            .read<BlockFirebasecontroller>()
+            .blocks
+            .where((element) =>
+                element.actions.if_action_exist(
+                        BlockAction.consume_block.getactionTitle) ==
+                    true &&
+                element.Hscissor == 0)
+            .toList()
+            .where((element) => element.serial == serialforH)
+            .toList()
+        : DoNothingAction;
+
+    blocksforH = x;
+  }
+
   List<BlockModel> blocks = [];
+  List<BlockModel> blocksforH = [];
 
   List<String> notfials = [
     "جوانب",

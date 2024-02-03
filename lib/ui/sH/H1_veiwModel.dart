@@ -13,19 +13,19 @@ class H1VeiwModel extends BaseViewModel {
   TextEditingController numbercontroller = TextEditingController();
   TextEditingController hightcontroller = TextEditingController();
   TextEditingController constantserial = TextEditingController();
-
+  int amountofView = 5;
   BlockModel get_block_of_num_in_controller(
       List<BlockModel> b, BuildContext context) {
     BlockModel m = b
         .where((e) =>
             e.number == int.parse(numbercontroller.text) &&
-            e.serial == context.read<ObjectBoxController>().serial)
+            e.serial == context.read<ObjectBoxController>().serialforH)
         .toList()[0];
     return m;
   }
 
-  validate_if_Exist(List<BlockModel> b, BuildContext context) {
-// standerd validation
+  validate_if_ExistforH(List<BlockModel> b, BuildContext context) {
+    // standerd validation
     return (String? value) {
       if (value!.isEmpty) {
         return "فارغ";
@@ -38,7 +38,7 @@ class H1VeiwModel extends BaseViewModel {
       // validate on serial
       var condition3 = !b
           .map((e) => e.serial)
-          .contains(context.read<ObjectBoxController>().serial);
+          .contains(context.read<ObjectBoxController>().serialforH);
 
       if (condition3) {
         return "غير موجود";
@@ -48,7 +48,7 @@ class H1VeiwModel extends BaseViewModel {
       List<bool> condition5 = b
           .where((e) =>
               e.number == int.parse(value) &&
-              e.serial == context.read<ObjectBoxController>().serial)
+              e.serial == context.read<ObjectBoxController>().serialforH)
           .map((e) => e.actions
               .if_action_exist(BlockAction.cut_block_on_H.getactionTitle))
           .toList();
@@ -56,11 +56,11 @@ class H1VeiwModel extends BaseViewModel {
       if (condition5.isEmpty) {
         return "غير موجود";
       }
-// validate if cutted
+      // validate if cutted
       bool condition2 = b
           .where((e) =>
               e.number == int.parse(value) &&
-              e.serial == context.read<ObjectBoxController>().serial)
+              e.serial == context.read<ObjectBoxController>().serialforH)
           .map((e) => e.actions
               .if_action_exist(BlockAction.cut_block_on_H.getactionTitle))
           .toList()[0];

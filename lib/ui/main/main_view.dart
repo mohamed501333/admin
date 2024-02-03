@@ -35,7 +35,7 @@ class Mainview extends StatelessWidget {
         permitionss(context, UserPermition.can_get_data_of_blocks)
             ? context.read<BlockFirebasecontroller>().get_blocks_data()
             : DoNothingAction();
-        // context.read<BlockFirebasecontroller>().c();
+        context.read<BlockFirebasecontroller>().c();
         permitionss(context, UserPermition.can_get_data_of_fractions)
             ? context.read<FractionFirebaseController>().get_Fractions_data()
             : DoNothingAction();
