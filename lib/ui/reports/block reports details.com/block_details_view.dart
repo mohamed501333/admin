@@ -280,7 +280,7 @@ class EmployeeDataSource22 extends DataGridSource {
       RowColumnIndex rowColumnIndex,
       String summaryValue) {
     return Container(
-      padding: EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(15.0),
       child: Text(summaryValue),
     );
   }
@@ -347,9 +347,9 @@ class EmployeeDataSource22 extends DataGridSource {
                 .read<BlockFirebasecontroller>()
                 .edit_cell_size(oldValue, u.id, column.columnName, b);
           } else {
-            // context
-            //     .read<final_prodcut_controller>()
-            //     .edit_cell(u.id, column.columnName, value);
+            context
+                .read<BlockFirebasecontroller>()
+                .edit_cell(u.id, column.columnName, value);
             submitCell();
           }
           submitCell();

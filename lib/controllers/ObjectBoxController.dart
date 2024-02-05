@@ -9,26 +9,10 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class ObjectBoxController extends ChangeNotifier {
-  // addBlock(BlockModel block) {
-  //   database.addBlock(block);
-  //   notifyListeners();
-  // }
-
   addchips(ChipBlockModel chip) {
     database.addchips(chip);
     notifyListeners();
   }
-
-  // addfinalProduct(FinalProductModel f) {
-  //   database.addFinalProuduct(f);
-  //   notifyListeners();
-  // }
-
-  // addFraction(BuildContext context, List<FractionModel> fract) {
-  //   print("add fraction");
-  //   fract.map((e) => context.read<FractionFirebaseController>().addfraction(e));
-  //   notifyListeners();
-  // }
 
   addFractionchip(ChipFraction fract) {
     database.addFractionchip(fract);
@@ -36,9 +20,7 @@ class ObjectBoxController extends ChangeNotifier {
   }
 
   List<ChipBlockModel> chips = database.getchips();
-  // List<BlockModel> blocks = database.getblocks();
-  // List<FinalProductModel> finalproducts = database.getFinalProuduct();
-  // List<FractionModel> fractions = database.getFraction();
+
   List<ChipFraction> fractionchips = database.getFractionchip();
 
   deletechip(id) {
@@ -46,21 +28,6 @@ class ObjectBoxController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // deleteblock(id) {
-  //   database.deleteblock(id);
-  //   notifyListeners();
-  // }
-
-  // deletefinalProudut(id) {
-  //   database.deleteFinalProuduct(id);
-  //   notifyListeners();
-  // }
-
-  // deleteFraction(id) {
-  //   database.deleteFraction(id);
-  //   notifyListeners();
-  // }
-  //
   int lenthInFilter = 0;
   Rfrech_ui() {
     notifyListeners();
@@ -70,21 +37,6 @@ class ObjectBoxController extends ChangeNotifier {
     database.deleteFractionchip(id);
     notifyListeners();
   }
-
-  // finishBlick(int id, int scissor) {
-  //   database.finishBloc(id, scissor);
-  //   notifyListeners();
-  // }
-
-  // consumeBlock(int id) {
-  //   database.consumeBlock(id);
-  //   notifyListeners();
-  // }
-
-  // unconsumeBlock(int id) {
-  //   database.unconsumeBlock(id);
-  //   notifyListeners();
-  // }
 
   get() {
     notifyListeners();
@@ -144,7 +96,7 @@ class ObjectBoxController extends ChangeNotifier {
             element.Hscissor == 0)
         .toList();
 
-    initialcolor != null
+    initialcolorforH != null
         ? x = context
             .read<BlockFirebasecontroller>()
             .blocks
@@ -157,7 +109,7 @@ class ObjectBoxController extends ChangeNotifier {
             .where((element) => element.color == initialcolorforH)
             .toList()
         : DoNothingAction;
-    serial != null
+    serialforH != null
         ? x = context
             .read<BlockFirebasecontroller>()
             .blocks

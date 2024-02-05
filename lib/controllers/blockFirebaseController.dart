@@ -80,16 +80,14 @@ class BlockFirebasecontroller extends ChangeNotifier {
   //   }
   // }
   c() {
-    // int x = 43;
-    // print(33);
-    // for (var el in all.where((e) =>
-    //     e.actions.if_action_exist(BlockAction.consume_block.getactionTitle) ==
-    //         true &&
-    //     e.Hscissor == 0)) {
-    //   el.Hscissor = 55;
+    for (var el in all.where((element) =>
+        element.serial == "21-1-2024" &&
+        element.number > 93 &&
+        element.number < 137)) {
+      el.hight = 123;
 
-    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-    // }
+      FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    }
   }
 
   void runFilter(String enteredKeyword) {
@@ -180,6 +178,16 @@ class BlockFirebasecontroller extends ChangeNotifier {
     block.actions.add(BlockAction.cut_block_on_H.add);
     block.Hscissor = Hscissor;
     block.fractions.addAll(fractions);
+    block.notfinals.add(notfinal);
+
+    try {
+      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      notifyListeners();
+    } catch (e) {}
+  }
+
+  Add_not_finalTo_block(
+      {required BlockModel block, required NotFinalmodel notfinal}) {
     block.notfinals.add(notfinal);
 
     try {

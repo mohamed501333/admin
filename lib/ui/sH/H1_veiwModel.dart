@@ -123,6 +123,20 @@ class H1VeiwModel extends BaseViewModel {
     }
   }
 
+  Add_not_finalTo_block(BuildContext context, BlockModel b) {
+    context.read<BlockFirebasecontroller>().Add_not_finalTo_block(
+          notfinal: NotFinalmodel(
+              id: DateTime.now().millisecond,
+              date: DateTime.now(),
+              wight: wightcontroller.text.to_double(),
+              type: context.read<ObjectBoxController>().gdet(),
+              Rscissor: 0,
+              Hscissor: b.Hscissor,
+              actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]),
+          block: b,
+        );
+  }
+
   @override
   clearfields() {
     lenthcontroller.clear();

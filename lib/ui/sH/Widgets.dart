@@ -4,13 +4,16 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
+import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sH/H1_veiwModel.dart';
+import 'package:jason_company/ui/sH/h1_veiw.dart';
 import 'package:provider/provider.dart';
 
 class ReportwForHView extends StatefulWidget {
@@ -53,7 +56,7 @@ class _ReportwForHViewState extends State<ReportwForHView> {
           SizedBox(
             width: 100,
             child: Container(
-              color: Color.fromARGB(96, 230, 218, 218),
+              color: const Color.fromARGB(96, 230, 218, 218),
               child: TextField(
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -61,7 +64,6 @@ class _ReportwForHViewState extends State<ReportwForHView> {
                 onChanged: (v) {
                   context.read<BlockFirebasecontroller>().runFilter(v);
                   context.read<BlockFirebasecontroller>().Refresh_the_UI();
-                  print(v);
                 },
               ),
             ),
@@ -125,6 +127,7 @@ thedialog(BuildContext context) {
       });
 }
 
+//تقرير المقص الراسى
 class TheTable0001 extends StatelessWidget {
   TheTable0001({
     super.key,
@@ -385,20 +388,25 @@ class TheTable0001 extends StatelessWidget {
                                       child: Text(
                                           "${user.hight}*${user.width}*${user.lenth}"),
                                     )),
+                                GestureDetector(
+                                  onTap: () {
+                                    dialogOfAddNotFinalToBlock(context, user);
+                                  },
+                                  child: Container(
+                                      padding: const EdgeInsets.all(2),
+                                      child: Center(
+                                        child: Text(
+                                          user.number.toString(),
+                                          style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 221, 2, 75)),
+                                        ),
+                                      )),
+                                ),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                      child: Text(
-                                        user.number.toString(),
-                                        style: const TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 221, 2, 75)),
-                                      ),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child: Text("${b.indexOf(user) + 1}"))),
+                                        child: Text("${b.indexOf(user) + 1}")))
                               ]);
                         })
                         .toList()
@@ -414,6 +422,44 @@ class TheTable0001 extends StatelessWidget {
       },
     );
   }
+}
+
+dialogOfAddNotFinalToBlock(
+  BuildContext context,
+  BlockModel user,
+) {
+  H1VeiwModel vm = H1VeiwModel();
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('اضافة هوالك الى هذا البلوك'),
+          content: SizedBox(
+            height: 200,
+            child: Column(children: [
+              const DropDdowen002(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 2, vertical: 18),
+                child: CustomTextFormField(
+                    hint: " وزن دون التام",
+                    width: 120,
+                    validator: Validation.validateothers,
+                    controller: vm.wightcontroller),
+              ),
+            ]),
+          ),
+          actions: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                onPressed: () {
+                  vm.Add_not_finalTo_block(context, user);
+                  Navigator.pop(context);
+                },
+                child: const Text('تم')),
+          ],
+        );
+      });
 }
 
 class HeaderOftable0011 extends StatelessWidget {

@@ -6,6 +6,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/ui/reports/block%20reports%20details.com/block_details_view.dart';
 import 'package:jason_company/ui/reports/cuttingOrderReports/cutting_orderDetails_view.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/Bolck_reports_view.dart';
+import 'package:jason_company/ui/reports/reportsForBlock/blockReport2.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/details_of_finalProdcut.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/finalProductReports_view.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/scissorsFInalProducts.dart';
@@ -29,6 +30,7 @@ class ReportsView extends StatelessWidget {
     Reportmodel(
         title: "      تفاصيل  اوامر الشغل     ",
         route: CuttingOrderDetailsReports()),
+    Reportmodel(title: " تقرير البلوكات     ", route: const BlockReport2()),
   ];
   @override
   Widget build(BuildContext context) {

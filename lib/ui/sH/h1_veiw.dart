@@ -328,7 +328,7 @@ class DropDdowenFor_blockColor123 extends StatelessWidget {
                 .toList(),
             onChanged: (v) {
               if (v != null) {
-                myType.getBlocks(context);
+                myType.getBlocksConsumedAndNotCutted(context);
                 context.read<ObjectBoxController>().initialcolorforH = v;
                 myType.serialforH = null;
                 context.read<ObjectBoxController>().get();
