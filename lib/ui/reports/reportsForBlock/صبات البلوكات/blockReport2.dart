@@ -1,29 +1,18 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, camel_case_types
 // ignore_for_file: file_names
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
+import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/reports/reportsForBlock/%D8%B5%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/pdf.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
-
-class BlockReport2 extends StatelessWidget {
-  const BlockReport2({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const Column(
-        children: [],
-      ),
-    );
-  }
-}
 
 //تقرير كل صبه
 class BlockReport3 extends StatelessWidget {
@@ -31,19 +20,32 @@ class BlockReport3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          actions: const [DropDdowen_forCode()],
-        ),
-        body: Consumer<BlockFirebasecontroller>(
-          builder: (context, myType, child) {
-            List<BlockModel> blocks = myType.blocks
-                .where((element) =>
-                    element.serial ==
-                    context.read<ObjectBoxController>().serial2)
-                .sortedBy<num>((element) => element.number)
-                .toList();
-            return ListView(children: [
+    return Consumer<BlockFirebasecontroller>(
+      builder: (context, myType, child) {
+        List<BlockModel> blocks = myType.blocks
+            .where((element) =>
+                element.serial == context.read<ObjectBoxController>().serial2)
+            .sortedBy<num>((element) => element.number)
+            .toList();
+        return Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      permission().then((value) async {
+                        PdfBlockReport2.generate(context, blocks)
+                            .then((value) => context.gonext(
+                                context,
+                                PDfpreview(
+                                  v: value.save(),
+                                )));
+                      });
+                    },
+                    icon: const Icon(Icons.picture_as_pdf)),
+                const DropDdowen_forCode()
+              ],
+            ),
+            body: ListView(children: [
               SingleChildScrollView(
                 reverse: true,
                 scrollDirection: Axis.horizontal,
@@ -55,31 +57,27 @@ class BlockReport3 extends StatelessWidget {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Container(
-                              child: Text("اجمالى الصبه : ${blocks.length}"),
-                            ),
-                            Container(
-                              child: Text(
-                                  "اجمالى المنصرف : ${blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
-                            ),
-                            Container(
-                              child: Text(
-                                  "المتبقى  : ${blocks.length - blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
-                            ),
+                            Text("اجمالى الصبه : ${blocks.length}"),
+                            Text(
+                                "اجمالى المنصرف : ${blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
+                            Text(
+                                "المتبقى  : ${blocks.length - blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
                           ],
                         ),
                       ],
                     ),
-                    const Header(),
+                    const Headerr(),
                     Column(
-                      children: blocks.map((e) => RowItem(item: e)).toList(),
+                      children: blocks
+                          .map((e) => RowItem(item: e, i: blocks.indexOf(e)))
+                          .toList(),
                     )
                   ],
                 ),
               )
-            ]);
-          },
-        ));
+            ])).permition(context, UserPermition.show_Reports_every_serial);
+      },
+    );
   }
 }
 
@@ -116,8 +114,8 @@ class DropDdowen_forCode extends StatelessWidget {
   }
 }
 
-class Header extends StatelessWidget {
-  const Header({super.key});
+class Headerr extends StatelessWidget {
+  const Headerr({super.key});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -136,14 +134,19 @@ class Header extends StatelessWidget {
             child: const Center(child: Text("رقم")),
           ),
           Container(
-            width: 100,
+            width: 120,
             decoration: BoxDecoration(border: Border.all(width: 1)),
             child: const Center(child: Text("كود")),
           ),
           Container(
-            width: 150,
+            width: 50,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: const Center(child: Text("بيان")),
+            child: const Center(child: Text("كثافه")),
+          ),
+          Container(
+            width: 50,
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            child: const Center(child: Text("لون")),
           ),
           Container(
             width: 80,
@@ -159,6 +162,11 @@ class Header extends StatelessWidget {
             width: 80,
             decoration: BoxDecoration(border: Border.all(width: 1)),
             child: const Center(child: Text("ارتفاع")),
+          ),
+          Container(
+            width: 150,
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            child: const Center(child: Text("بيان")),
           ),
           Container(
             width: 130,
@@ -177,14 +185,20 @@ class Header extends StatelessWidget {
 }
 
 class RowItem extends StatelessWidget {
-  RowItem({
-    Key? key,
+  const RowItem({
+    super.key,
     required this.item,
-  }) : super(key: key);
+    required this.i,
+  });
   final BlockModel item;
+  final int i;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      decoration: BoxDecoration(
+          color: i % 2 == 1
+              ? Colors.white
+              : const Color.fromARGB(255, 153, 210, 218)),
       height: 50,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -192,7 +206,7 @@ class RowItem extends StatelessWidget {
           Container(
             width: 50,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Center(child: Text("${1}")),
+            child: Center(child: Text("${i + 1}")),
           ),
           Container(
             width: 50,
@@ -200,14 +214,19 @@ class RowItem extends StatelessWidget {
             child: Center(child: Text("${item.number}")),
           ),
           Container(
-            width: 100,
+            width: 120,
             decoration: BoxDecoration(border: Border.all(width: 1)),
             child: Center(child: Text(item.serial)),
           ),
           Container(
-            width: 150,
+            width: 50,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Center(child: Text("${item.discreption}")),
+            child: Center(child: Text(item.density.toString())),
+          ),
+          Container(
+            width: 50,
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            child: Center(child: Text(item.color)),
           ),
           Container(
             width: 80,
@@ -225,18 +244,27 @@ class RowItem extends StatelessWidget {
             child: Center(child: Text("${item.hight}")),
           ),
           Container(
+            width: 150,
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            child: Center(child: Text(item.discreption)),
+          ),
+          Container(
             width: 130,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Center(child: Text("${item.notes}")),
+            child: Center(child: Text(item.notes)),
           ),
           Container(
             width: 130,
             decoration: BoxDecoration(border: Border.all(width: 1)),
             child: Center(
-                child: Text(item.actions
-                    .get_Date_of_action(
-                        BlockAction.consume_block.getactionTitle)
-                    .formatt())),
+                child: Text(item.actions.if_action_exist(
+                            BlockAction.consume_block.getactionTitle) ==
+                        false
+                    ? "غير منصرف"
+                    : item.actions
+                        .get_Date_of_action(
+                            BlockAction.consume_block.getactionTitle)
+                        .formatt())),
           ),
         ].reversed.toList(),
       ),
