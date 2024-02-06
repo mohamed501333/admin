@@ -31,31 +31,35 @@ class ReportsView extends StatelessWidget {
         title: "      تفاصيل  اوامر الشغل     ",
         route: CuttingOrderDetailsReports()),
     Reportmodel(title: " تقرير البلوكات     ", route: const BlockReport2()),
+    Reportmodel(
+        title: " تقرير اضافات البلوكات     ", route: const BlockReport3()),
   ];
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: r
-            .map(
-              (e) => GestureDetector(
-                onTap: () => context.gonext(context, e.route),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        e.title,
-                        style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      const Icon(Icons.arrow_back),
-                    ],
+    return SingleChildScrollView(
+      child: Column(
+          children: r
+              .map(
+                (e) => GestureDetector(
+                  onTap: () => context.gonext(context, e.route),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          e.title,
+                          style: const TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        const Icon(Icons.arrow_back),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-            .toList());
+              )
+              .toList()),
+    );
   }
 }
 

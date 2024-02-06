@@ -80,14 +80,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
   //   }
   // }
   c() {
-    for (var el in all.where((element) =>
-        element.serial == "21-1-2024" &&
-        element.number > 93 &&
-        element.number < 137)) {
-      el.hight = 123;
-
-      FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-    }
+    // print(11);
+    // for (var el in all.where((element) => element.serial == "D35h_4-2-24")) {
+    //   el.type = "هارد";
+    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    // }
   }
 
   void runFilter(String enteredKeyword) {
