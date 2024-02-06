@@ -43,6 +43,8 @@ class ObjectBoxController extends ChangeNotifier {
   }
 
   String? serial;
+  //for reports
+  String? serial2;
   String? initialcolor;
 
   String? serialforH;
