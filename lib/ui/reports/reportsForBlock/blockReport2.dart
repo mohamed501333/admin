@@ -146,6 +146,16 @@ class Header extends StatelessWidget {
             child: const Center(child: Text("بيان")),
           ),
           Container(
+            width: 50,
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            child: const Center(child: Text("كثافه")),
+          ),
+          Container(
+            width: 50,
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            child: const Center(child: Text("لون")),
+          ),
+          Container(
             width: 80,
             decoration: BoxDecoration(border: Border.all(width: 1)),
             child: const Center(child: Text("طول")),
@@ -192,7 +202,7 @@ class RowItem extends StatelessWidget {
           Container(
             width: 50,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Center(child: Text("${1}")),
+            child: const Center(child: Text("${1}")),
           ),
           Container(
             width: 50,
@@ -207,7 +217,17 @@ class RowItem extends StatelessWidget {
           Container(
             width: 150,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Center(child: Text("${item.discreption}")),
+            child: Center(child: Text(item.discreption)),
+          ),
+          Container(
+            width: 50,
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            child: Center(child: Text(item.density.toString())),
+          ),
+          Container(
+            width: 50,
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            child: Center(child: Text(item.color)),
           ),
           Container(
             width: 80,
@@ -227,16 +247,20 @@ class RowItem extends StatelessWidget {
           Container(
             width: 130,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Center(child: Text("${item.notes}")),
+            child: Center(child: Text(item.notes)),
           ),
           Container(
             width: 130,
             decoration: BoxDecoration(border: Border.all(width: 1)),
             child: Center(
-                child: Text(item.actions
-                    .get_Date_of_action(
-                        BlockAction.consume_block.getactionTitle)
-                    .formatt())),
+                child: Text(item.actions.if_action_exist(
+                            BlockAction.consume_block.getactionTitle) ==
+                        false
+                    ? "غير مصروف"
+                    : item.actions
+                        .get_Date_of_action(
+                            BlockAction.consume_block.getactionTitle)
+                        .formatt())),
           ),
         ].reversed.toList(),
       ),
