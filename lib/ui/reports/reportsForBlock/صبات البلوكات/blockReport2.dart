@@ -149,16 +149,6 @@ class Headerr extends StatelessWidget {
             child: const Center(child: Text("لون")),
           ),
           Container(
-            width: 50,
-            decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: const Center(child: Text("كثافه")),
-          ),
-          Container(
-            width: 50,
-            decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: const Center(child: Text("لون")),
-          ),
-          Container(
             width: 80,
             decoration: BoxDecoration(border: Border.all(width: 1)),
             child: const Center(child: Text("طول")),
