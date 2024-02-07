@@ -11,6 +11,8 @@ import 'package:jason_company/ui/reports/reprtsForFinlProuduct/details_of_finalP
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/finalProductReports_view.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/scissorsFInalProducts.dart';
 
+import 'تقارير المقصات/scissor_reports_view.dart';
+
 // ignore: must_be_immutable
 class ReportsView extends StatelessWidget {
   ReportsView({super.key});
@@ -32,6 +34,7 @@ class ReportsView extends StatelessWidget {
         route: CuttingOrderDetailsReports()),
     Reportmodel(
         title: " تقرير  صبات البلوكات     ", route: const BlockReport3()),
+    Reportmodel(title: " تقرير   المقصات     ", route: const H_Reports_view()),
   ];
   @override
   Widget build(BuildContext context) {
