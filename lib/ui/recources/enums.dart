@@ -377,6 +377,7 @@ enum UserPermition {
   show_Reports_consume_boock,
   show_Reports_details_of_block_stock,
   show_Reports_details_of_finalProdcut_stock,
+  show_Reports_every_serial,
 
   show_date_in_block_out_of_stock,
   show_date_in_block_stock,
@@ -532,11 +533,15 @@ extension QQ on UserPermition {
       case UserPermition.allow_edit_in_details_blocks:
         return UserpermitionTittle(
             tittle: "امكانية التعديل فى تفاصيل البلوكات");
+      case UserPermition.show_Reports_every_serial:
+        return UserpermitionTittle(tittle: "عرض تقرير صبات البلوكات");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_Reports_every_serial:
+        return "عرض تقرير صبات البلوكات";
       case UserPermition.allow_edit_in_details_blocks:
         return "امكانية التعديل فى تفاصيل البلوكات";
       case UserPermition.show_cusotmer_name_in_cutting_order:

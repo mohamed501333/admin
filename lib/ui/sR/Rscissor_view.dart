@@ -27,80 +27,82 @@ class Rscissor extends StatelessWidget {
             children: [
               SizedBox(
                 width: 250,
-                child: Column(
-                  children: vm
-                      .fractions_Not_Cut_On_RScissor(context, myType.blocks)
-                      .filter_Fractios___()
-                      .map(
-                        (e) => GestureDetector(
-                          onTap: () {
-                            if (vm.validate()) {
-                              for (var element in vm
-                                  .fractions_Not_Cut_On_RScissor(
-                                      context, myType.blocks)
-                                  .where((f) =>
-                                      f.wedth == e.wedth &&
-                                      f.hight == e.hight &&
-                                      f.lenth == e.lenth)
-                                  .take(vm.amountcontroller.text.to_int())) {
-                                myType.add_on_R_scissor(
-                                    context: context,
-                                    fractiond: element,
-                                    scissor: scissor,
-                                    w: vm.wightcontroller.text.to_double() /
-                                        vm.amountcontroller.text.to_double());
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: vm
+                        .fractions_Not_Cut_On_RScissor(context, myType.blocks)
+                        .filter_Fractios___()
+                        .map(
+                          (e) => GestureDetector(
+                            onTap: () {
+                              if (vm.validate()) {
+                                for (var element in vm
+                                    .fractions_Not_Cut_On_RScissor(
+                                        context, myType.blocks)
+                                    .where((f) =>
+                                        f.wedth == e.wedth &&
+                                        f.hight == e.hight &&
+                                        f.lenth == e.lenth)
+                                    .take(vm.amountcontroller.text.to_int())) {
+                                  myType.add_on_R_scissor(
+                                      context: context,
+                                      fractiond: element,
+                                      scissor: scissor,
+                                      w: vm.wightcontroller.text.to_double() /
+                                          vm.amountcontroller.text.to_double());
+                                }
                               }
-                            }
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            width: 200,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 10,
-                            ),
-                            decoration: ShapeDecoration(
-                              color: const Color.fromARGB(255, 46, 158, 149),
-                              shape: StadiumBorder(
-                                side: BorderSide(
-                                  width: 2,
-                                  color: Colors.green[200]!,
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              width: 200,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 30,
+                                vertical: 10,
+                              ),
+                              decoration: ShapeDecoration(
+                                color: const Color.fromARGB(255, 46, 158, 149),
+                                shape: StadiumBorder(
+                                  side: BorderSide(
+                                    width: 2,
+                                    color: Colors.green[200]!,
+                                  ),
                                 ),
                               ),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "${e.wedth}*${e.lenth}*${e.hight}",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  width: 22,
-                                ),
-                                Text(
-                                  vm
-                                      .fractions_Not_Cut_On_RScissor(
-                                          context, myType.blocks)
-                                      .where((element) =>
-                                          element.wedth == e.wedth &&
-                                          element.lenth == e.lenth &&
-                                          element.hight == e.hight)
-                                      .toList()
-                                      .length
-                                      .toString(),
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 191, 7, 236),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "${e.wedth}*${e.lenth}*${e.hight}",
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    width: 22,
+                                  ),
+                                  Text(
+                                    vm
+                                        .fractions_Not_Cut_On_RScissor(
+                                            context, myType.blocks)
+                                        .where((element) =>
+                                            element.wedth == e.wedth &&
+                                            element.lenth == e.lenth &&
+                                            element.hight == e.hight)
+                                        .toList()
+                                        .length
+                                        .toString(),
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 191, 7, 236),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
               SizedBox(
@@ -194,6 +196,7 @@ class ReportsFroH extends StatelessWidget {
                 DateTime.now().formatt())
             .toList();
 
+//المنتج التام لهاذا اليوم
         var output = context
             .read<final_prodcut_controller>()
             .finalproducts
@@ -204,6 +207,7 @@ class ReportsFroH extends StatelessWidget {
                     .formatt() ==
                 DateTime.now().formatt())
             .where((element) => element.scissor == scissor + 3);
+        //اجمالى حجم المنتج التام لهذا اليوم
         double totalOUtput = output.isNotEmpty
             ? output
                 .map((e) =>
@@ -215,6 +219,8 @@ class ReportsFroH extends StatelessWidget {
                     1000000)
                 .reduce((a, b) => a + b)
             : 0;
+
+        //اجمالى حجم الفرد لهذا اليوم
         double totalinput = fractions.isNotEmpty
             ? fractions
                 .map((element) =>
@@ -225,6 +231,8 @@ class ReportsFroH extends StatelessWidget {
                     1000000)
                 .reduce((a, b) => a + b)
             : 0;
+        //هوالك الدائرى فى الفرد
+        //اجمالى الهالك
         double totalNotfinal = fractions.isNotEmpty
             ? fractions
                 .map((element) => element.notfinals.map((e) => e.wight))
