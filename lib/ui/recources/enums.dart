@@ -376,8 +376,11 @@ enum UserPermition {
   show_Reports_totals_of_blocks,
   show_Reports_consume_boock,
   show_Reports_details_of_block_stock,
+  show_Reports_details_of_sizes_of_block_stock,
   show_Reports_details_of_finalProdcut_stock,
   show_Reports_every_serial,
+  show_Reports_H,
+  show_Reports_R,
 
   show_date_in_block_out_of_stock,
   show_date_in_block_stock,
@@ -535,11 +538,23 @@ extension QQ on UserPermition {
             tittle: "امكانية التعديل فى تفاصيل البلوكات");
       case UserPermition.show_Reports_every_serial:
         return UserpermitionTittle(tittle: "عرض تقرير صبات البلوكات");
+      case UserPermition.show_Reports_details_of_sizes_of_block_stock:
+        return UserpermitionTittle(tittle: "عرض تقرير  تفاصيل مقاسات البلوكات");
+      case UserPermition.show_Reports_H:
+        return UserpermitionTittle(tittle: "عرض تقرير  المقصات الراسى");
+      case UserPermition.show_Reports_R:
+        return UserpermitionTittle(tittle: "عرض تقرير المقصات الدائرى");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_Reports_H:
+        return "عرض تقرير  المقصات الراسى";
+      case UserPermition.show_Reports_R:
+        return "عرض تقرير المقصات الدائرى";
+      case UserPermition.show_Reports_details_of_sizes_of_block_stock:
+        return "عرض تقرير  تفاصيل مقاسات البلوكات";
       case UserPermition.show_Reports_every_serial:
         return "عرض تقرير صبات البلوكات";
       case UserPermition.allow_edit_in_details_blocks:

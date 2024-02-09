@@ -47,7 +47,7 @@ class BlockReportsViewModel extends BaseViewModel {
           (f) =>
               e.color == f.color &&
               e.density == f.density &&
-              e.hight == f.hight &&
+              // e.hight == f.hight &&
               e.width == f.width &&
               e.lenth == f.lenth &&
               e.type == f.type,

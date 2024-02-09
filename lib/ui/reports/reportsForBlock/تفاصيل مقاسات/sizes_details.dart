@@ -53,6 +53,7 @@ class BlocksSizesDetials extends StatelessWidget {
                       .sortedBy<num>((element) => element.density)
                       .map((e) => Column(
                             children: [
+                              //الجزء الاصفر
                               Container(
                                   width: MediaQuery.of(context).size.width * .7,
                                   decoration:
@@ -80,6 +81,7 @@ class BlocksSizesDetials extends StatelessWidget {
                                       ],
                                     ),
                                   ))),
+
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * .7,
                                 child: Table(
@@ -106,7 +108,7 @@ class BlocksSizesDetials extends StatelessWidget {
                                                   const EdgeInsets.all(4.0),
                                               child: Center(
                                                 child: Text(
-                                                  "${r.lenth}*${r.width}*${r.hight}",
+                                                  "${r.lenth}*${r.width}",
                                                   style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
@@ -148,7 +150,8 @@ class BlocksSizesDetials extends StatelessWidget {
               ],
             ),
           ),
-        );
+        ).permition(context,
+            UserPermition.show_Reports_details_of_sizes_of_block_stock);
       },
     );
   }

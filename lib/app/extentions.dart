@@ -417,9 +417,11 @@ extension A1 on List<BlockModel> {
         if (this[i].type == nonRepetitive[j].type &&
             this[i].density == nonRepetitive[j].density &&
             this[i].color == nonRepetitive[j].color &&
+
+            // this[i].hight == nonRepetitive[j].hight &&
+
             this[i].lenth == nonRepetitive[j].lenth &&
-            this[i].width == nonRepetitive[j].width &&
-            this[i].hight == nonRepetitive[j].hight) {
+            this[i].width == nonRepetitive[j].width) {
           repeated = true;
         }
       }
