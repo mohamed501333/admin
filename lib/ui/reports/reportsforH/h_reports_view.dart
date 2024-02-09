@@ -22,7 +22,10 @@ class HReprotsView extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          Results(scissor: e),
+                          Results(
+                            scissor: e,
+                            blocks: [],
+                          ),
                           SizedBox(
                               width: 500,
                               child: BlockStockInventoryForH(

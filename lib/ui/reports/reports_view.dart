@@ -3,15 +3,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84/block_details_view.dart';
+import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_reports_view.dart';
+import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/round/scissor_reports_view.dart';
+import 'package:jason_company/ui/reports/reportsForBlock/%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84/block%20reports%20details.com/block_details_view.dart';
 import 'package:jason_company/ui/reports/cuttingOrderReports/cutting_orderDetails_view.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/%D8%B5%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/blockReport2.dart';
+import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/blockReport2.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/Bolck_reports_view.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/details_of_finalProdcut.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/finalProductReports_view.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/scissorsFInalProducts.dart';
-
-import 'تقارير المقصات/scissor_reports_view.dart';
 
 // ignore: must_be_immutable
 class ReportsView extends StatelessWidget {
@@ -34,7 +34,11 @@ class ReportsView extends StatelessWidget {
         route: CuttingOrderDetailsReports()),
     Reportmodel(
         title: " تقرير  صبات البلوكات     ", route: const BlockReport3()),
-    Reportmodel(title: " تقرير   المقصات     ", route: const H_Reports_view()),
+    Reportmodel(
+        title: "  تقرير   المقصات  الراسى     ", route: const H_Reports_view()),
+    Reportmodel(
+        title: "  تقرير   المقصات  الدائرى     ",
+        route: const R_Reports_view()),
   ];
   @override
   Widget build(BuildContext context) {

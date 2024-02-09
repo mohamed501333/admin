@@ -8,7 +8,7 @@ import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/%D8%B5%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/pdf.dart';
+import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/pdf.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/controllers/blockFirebaseController.dart';

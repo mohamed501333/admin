@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84/block_details_view.dart';
+import 'package:jason_company/ui/reports/cuttingOrderReports/cutting_orderDetails_view.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/W.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';

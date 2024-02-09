@@ -35,6 +35,32 @@ class dropDowenContoller extends ChangeNotifier {
     }
   }
 
+  int? initioalFor_ScissorsReports;
+  List<int> scissorsReports = [1, 2, 3];
+  get_labelReports(int e) {
+    switch (e) {
+      case 1:
+        return const Text("مقص راسى 1");
+      case 2:
+        return const Text("مقص راسى 2");
+      case 3:
+        return const Text("مقص راسى 3");
+    }
+  }
+
+  int? initioalFor_RScissorsReports;
+  List<int> scissorsRReports = [1, 2, 3];
+  get_RlabelReports(int e) {
+    switch (e) {
+      case 1:
+        return const Text("مقص دائرى 1");
+      case 2:
+        return const Text("مقص دائرى 2");
+      case 3:
+        return const Text("مقص دائرى 3");
+    }
+  }
+
   getBlocks(BuildContext context, CuttingOrderViewModel vm) {
     List<BlockModel> x = context
         .read<BlockFirebasecontroller>()

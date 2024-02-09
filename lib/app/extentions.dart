@@ -231,7 +231,30 @@ extension Filterfgddf on List<FractionModel> {
       for (var j = 0; j < nonRepetitive.length; j++) {
         if (this[i].lenth == nonRepetitive[j].lenth &&
             this[i].hight == nonRepetitive[j].hight &&
+            this[i].color == nonRepetitive[j].color &&
+            this[i].type == nonRepetitive[j].type &&
+            this[i].density == nonRepetitive[j].density &&
             this[i].wedth == nonRepetitive[j].wedth) {
+          repeated = true;
+        }
+      }
+      if (!repeated) {
+        nonRepetitive.add(this[i]);
+      }
+    }
+    return nonRepetitive;
+  }
+
+// filter date and not archive
+}
+
+extension C33r on List<NotFinalmodel> {
+  List<NotFinalmodel> filter_notfinals___() {
+    List<NotFinalmodel> nonRepetitive = [];
+    for (var i = 0; i < length; i++) {
+      bool repeated = false;
+      for (var j = 0; j < nonRepetitive.length; j++) {
+        if (this[i].type == nonRepetitive[j].type) {
           repeated = true;
         }
       }

@@ -1,15 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
-import 'package:jason_company/controllers/fractinsFirebaseController.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/recources/enums.dart';
-import 'package:jason_company/ui/reports/reportsforH/h_reports_viewModel.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+
+import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/reports/reportsforH/h_reports_viewModel.dart';
 
 //جدول المنصرف من الخزن
 class BlockStockInventoryForH extends StatelessWidget {
@@ -84,14 +84,7 @@ class BlockStockInventoryForH extends StatelessWidget {
             allowMultiColumnSorting: true,
             allowTriStateSorting: true,
             source: EmployeeDataSourcee(
-                coumingData: blocks.blocks
-                    .filter_date_consumed(context)
-                    .where((element) =>
-                        element.actions.if_action_exist(
-                            BlockAction.consume_block.getactionTitle) ==
-                        false)
-                    .toList(),
-                scissor: scissor),
+                coumingData: blocks.blocks, scissor: scissor),
             columnWidthMode: ColumnWidthMode.fill,
             columns: columns,
           ),
@@ -159,8 +152,13 @@ class EmployeeDataSourcee extends DataGridSource {
 
 //جدول النواتج
 class Results extends StatelessWidget {
-  const Results({super.key, required this.scissor});
+  const Results({
+    Key? key,
+    required this.scissor,
+    required this.blocks,
+  }) : super(key: key);
   final int scissor;
+  final List<BlockModel> blocks;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -170,6 +168,7 @@ class Results extends StatelessWidget {
           const HeaderOftable22(),
           TheTable23(
             scissor: scissor,
+            blocks: blocks,
           )
         ],
       ),
@@ -216,62 +215,63 @@ class HeaderOftable22 extends StatelessWidget {
 
 class TheTable23 extends StatelessWidget {
   TheTable23({
-    super.key,
+    Key? key,
     required this.scissor,
-  });
+    required this.blocks,
+  }) : super(key: key);
   final int scissor;
+  final List<BlockModel> blocks;
   HReportsViewModel vm = HReportsViewModel();
 
   @override
   Widget build(BuildContext context) {
     int x = 0;
-    return Consumer<FractionFirebaseController>(
-      builder: (context, fractions, child) {
-        return Expanded(
-          flex: 4,
-          child: SingleChildScrollView(
-            child: Table(
-              columnWidths: const {
-                0: FlexColumnWidth(.4),
-                1: FlexColumnWidth(1),
-                2: FlexColumnWidth(.3),
-              },
-              children: fractions.fractions
-                  .where((element) => element.Hscissor == scissor)
-                  .toList()
-                  .filter_Fractios___()
-                  .map((e) {
-                x++;
+    return Expanded(
+      flex: 4,
+      child: SingleChildScrollView(
+        child: Table(
+          columnWidths: const {
+            0: FlexColumnWidth(.4),
+            1: FlexColumnWidth(1),
+            2: FlexColumnWidth(.3),
+          },
+          children: blocks
+              .expand((e) => e.fractions)
+              .where((element) => element.Hscissor == scissor)
+              .toList()
+              .filter_Fractios___()
+              .map((e) {
+            x++;
 
-                return TableRow(
-                    decoration: BoxDecoration(
-                      color: Colors.teal[50],
-                    ),
-                    children: [
-                      Container(
-                          padding: const EdgeInsets.all(4),
-                          child: Text(
-                            vm
-                                .total_amount_for_single_siz__fractions(
-                                    e, fractions.fractions, scissor)
-                                .toString(),
-                          )),
-                      Container(
-                          padding: const EdgeInsets.all(4),
-                          child: Text(
-                            "${e.hight}*${e.wedth}*${e.lenth}",
-                            style: const TextStyle(
-                                color: Color.fromARGB(255, 221, 2, 75)),
-                          )),
-                      Container(
-                          padding: const EdgeInsets.all(4), child: Text("$x")),
-                    ]);
-              }).toList(),
-              border: TableBorder.all(width: 1, color: Colors.black),
-            ),
-          ),
-        );
-      },
+            return TableRow(
+                decoration: BoxDecoration(
+                  color: Colors.teal[50],
+                ),
+                children: [
+                  Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Text(
+                        vm
+                            .total_amount_for_single_siz__fractions(
+                                e,
+                                blocks.expand((e) => e.fractions).toList(),
+                                scissor)
+                            .toString(),
+                      )),
+                  Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Text(
+                        "${e.hight}*${e.wedth}*${e.lenth}",
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 221, 2, 75)),
+                      )),
+                  Container(
+                      padding: const EdgeInsets.all(4), child: Text("$x")),
+                ]);
+          }).toList(),
+          border: TableBorder.all(width: 1, color: Colors.black),
+        ),
+      ),
     );
   }
 }
