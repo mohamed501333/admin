@@ -55,4 +55,13 @@ class BlockReportsViewModel extends BaseViewModel {
         .toList()
         .length;
   }
+
+  List<BlockModel> sizes(BlockModel e, List<BlockModel> blocks) {
+    return blocks
+        .where(
+          (f) =>
+              e.color == f.color && e.density == f.density && e.type == f.type,
+        )
+        .toList();
+  }
 }

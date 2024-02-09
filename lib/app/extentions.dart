@@ -32,6 +32,11 @@ extension Dnl on DateTime {
     String formateeddate = DateFormat("yyyy/MM/dd").format(this);
     return formateeddate;
   }
+
+  String formatt2() {
+    String formateeddate = DateFormat('yyyy-MM-dd -hh:mm a').format(this);
+    return formateeddate;
+  }
 }
 
 extension MeineVer on double {
@@ -359,6 +364,24 @@ extension A1 on List<BlockModel> {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
         if (this[i].type == nonRepetitive[j].type &&
+            this[i].density == nonRepetitive[j].density) {
+          repeated = true;
+        }
+      }
+      if (!repeated) {
+        nonRepetitive.add(this[i]);
+      }
+    }
+    return nonRepetitive;
+  }
+
+  List<BlockModel> filter_filter_type_and_density_color() {
+    List<BlockModel> nonRepetitive = [];
+    for (var i = 0; i < length; i++) {
+      bool repeated = false;
+      for (var j = 0; j < nonRepetitive.length; j++) {
+        if (this[i].type == nonRepetitive[j].type &&
+            this[i].color == nonRepetitive[j].color &&
             this[i].density == nonRepetitive[j].density) {
           repeated = true;
         }
