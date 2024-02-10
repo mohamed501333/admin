@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:collection/collection.dart';
+import 'package:date_ranger/date_ranger.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
@@ -19,14 +19,21 @@ class BlocksSizesDetials extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
-        List<BlockModel> blocks = myType.blocks
+        List<BlockModel> blocks = myType
+            .filterBlocksBalanceBetweenTowDates2()
             .where((element) =>
                 element.actions.if_action_exist(
                     BlockAction.consume_block.getactionTitle) ==
                 false)
             .toList();
+
         return Scaffold(
           appBar: AppBar(actions: [
+            IconButton(
+                onPressed: () {
+                  context.gonext(context, const Datepker2());
+                },
+                icon: const Icon(Icons.date_range)),
             IconButton(
                 onPressed: () {
                   permission().then((value) async {
@@ -129,8 +136,9 @@ class BlocksSizesDetials extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.black,
-                          border: Border.all(color: Colors.white24, width: 3)),
+                        color: Colors.black,
+                        // border: Border.all(color: Colors.white24, width: 3)
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Text(
@@ -152,6 +160,36 @@ class BlocksSizesDetials extends StatelessWidget {
           ),
         ).permition(context,
             UserPermition.show_Reports_details_of_sizes_of_block_stock);
+      },
+    );
+  }
+}
+
+class Datepker2 extends StatelessWidget {
+  const Datepker2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<BlockFirebasecontroller>(
+      builder: (context, myType, child) {
+        return Scaffold(
+            appBar: AppBar(),
+            body: SizedBox(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: DateRanger(
+                    initialRange: myType.initialDateRange2,
+                    onRangeChanged: (range) {
+                      myType.initialDateRange = range;
+
+                      myType.filterBlocksBalanceBetweenTowDates2();
+                      myType.Refresh_the_UI();
+                    },
+                  ),
+                ),
+              ),
+            ));
       },
     );
   }

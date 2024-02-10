@@ -25,8 +25,11 @@ class PdfBlockReport3 {
         orientation: PageOrientation.natural,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
+        maxPages: 60,
+        margin: const EdgeInsets.symmetric(vertical: 15),
         build: (context) {
           return [
+            SizedBox(height: 5),
             Center(
                 child: Container(
               child: Text("تفاصيل مقاسات البلوكات ${DateTime.now().formatt2()}",

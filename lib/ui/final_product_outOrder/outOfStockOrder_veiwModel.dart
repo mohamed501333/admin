@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
+import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -100,8 +101,10 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             biscole: 0.0,
             notes: "",
             id: DateTime.now().millisecondsSinceEpoch,
-            number:
-                invoices.sortedBy<num>((element) => element.id).last.number + 1,
+            number: context.read<SettingController>().switch1 == false
+                ? invoices.sortedBy<num>((element) => element.id).last.number +
+                    1
+                : invoiceNum.text.to_int(),
             date: DateTime.now(),
             driverName: driverName.text,
             carNumber: carnumber.text.to_int(),

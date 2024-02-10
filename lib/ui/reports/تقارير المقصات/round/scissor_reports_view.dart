@@ -157,7 +157,7 @@ class _R_Reports_viewState extends State<R_Reports_view> {
                                     Text(
                                         "عدد ${vm2.totalofSingleSizeOfsingleScissor(e, context.read<final_prodcut_controller>().finalproducts.where((element) => element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle).formatt() == chosenDate && element.scissor - 3 == context.read<dropDowenContoller>().initioalFor_RScissorsReports).toList())}"),
                                     Text(
-                                        "  ${e.lenth.removeTrailingZeros} * ${e.width.removeTrailingZeros} * ${e.hight.removeTrailingZeros}"),
+                                        "  ${e.lenth.removeTrailingZeros} * ${e.width.removeTrailingZeros} * ${e.hight.removeTrailingZeros}  ${e.type}"),
                                   ],
                                 ))
                             .toList(),

@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
+import 'package:jason_company/models/moderls.dart';
 
 import 'package:jason_company/ui/not_final/not_final_viewModer.dart';
-import 'package:jason_company/ui/not_final/widgets.dart';
 import 'package:provider/provider.dart';
 
 class NotFinal extends StatelessWidget {
@@ -28,7 +29,7 @@ class NotFinal extends StatelessWidget {
       body: Column(
         children: [
           Item001(
-            type: " ارضيات",
+            type: "ارضيات",
           ),
           Item001(
             type: "جوانب ",
@@ -41,6 +42,9 @@ class NotFinal extends StatelessWidget {
           ),
           Item001(
             type: " هالك",
+          ),
+          Item001(
+            type: " بواقى الدرجه الاولى",
           ),
         ],
       ),
@@ -71,59 +75,68 @@ class Item001 extends StatelessWidget {
   NotFinalViewModer vm = NotFinalViewModer();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 13, left: 15, right: 15),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.teal,
-            Colors.teal.shade200,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(
-          color: Colors.black,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          Text(
-            type,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return Consumer<BlockFirebasecontroller>(
+      builder: (context, myType, child) {
+        List<NotFinalmodel> v =
+            myType.blocks.expand((e) => e.notfinals).toList();
+        List<NotFinalmodel> b = myType.blocks
+            .expand((e) => e.fractions)
+            .expand((e) => e.notfinals)
+            .toList();
+        List<NotFinalmodel> notfianls = v + b;
+        return Container(
+          margin: const EdgeInsets.only(top: 13, left: 15, right: 15),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.teal,
+                Colors.teal.shade200,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            border: Border.all(
+              color: Colors.black,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(10),
           ),
-          Form(
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        showAlertDialog(context, vm, 1, type);
-                      },
-                      icon: const Icon(
-                        Icons.remove_circle_outline,
-                        color: Colors.red,
-                      )),
-                  IconButton(
-                      onPressed: () {
-                        showAlertDialog(context, vm, 0, type);
-                      },
-                      icon: const Icon(Icons.add)),
-                  Consumer<NonFinalController>(
-                    builder: (context, myType, child) {
-                      return Text("${vm.data_for_type(context, type)} " "kg",
+          child: Column(
+            children: [
+              Text(
+                type,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Form(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      // IconButton(
+                      //     onPressed: () {
+                      //       showAlertDialog(context, vm, 1, type);
+                      //     },
+                      //     icon: const Icon(
+                      //       Icons.remove_circle_outline,
+                      //       color: Colors.red,
+                      //     )),
+                      // IconButton(
+                      //     onPressed: () {
+                      //       showAlertDialog(context, vm, 0, type);
+                      //     },
+                      //     icon: const Icon(Icons.add)),
+                      Text(
+                          "${vm.data_for_type(context, type, notfianls)} " "kg",
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff3e5fb8)));
-                    },
-                  )
-                ]),
-          )
-        ],
-      ),
+                              color: Color(0xff3e5fb8)))
+                    ]),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

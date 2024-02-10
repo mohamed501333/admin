@@ -88,8 +88,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
   // }
   c() {
     print(11);
-    for (var el in all.where((element) => element.color == "برتقالي ")) {
-      el.color = "برتقالى";
+    for (var el in all.where((element) => element.actions
+        .if_action_exist(BlockAction.consume_block.getactionTitle))) {
+      el.Hscissor = 15;
+      el.notfinals = [];
+      el.fractions = [];
       FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
     }
   }
@@ -258,8 +261,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
   var initialDateRange =
       DateTimeRange(start: DateTime(2024, 1, 1), end: DateTime.now());
-
-  filterdatesbbbbb() {
+  filterBlocksCreatedBetweenTowDates() {
     List<BlockModel> filterdBlocks = [];
     for (var date
         in getDaysInBeteween(initialDateRange.start, initialDateRange.end)) {
@@ -273,6 +275,33 @@ class BlockFirebasecontroller extends ChangeNotifier {
     }
     blocks.clear();
     blocks.addAll(filterdBlocks);
+  }
+
+  var initialDateRange2 =
+      DateTimeRange(start: DateTime(2024, 1, 1), end: DateTime.now());
+
+  List<BlockModel> filterBlocksBalanceBetweenTowDates2() {
+    List<BlockModel> filterdBlocks = [];
+    print(filterdBlocks.length);
+    List<BlockModel> b = [];
+    for (DateTime date
+        in getDaysInBeteween(initialDateRange.start, initialDateRange.end)) {
+      for (BlockModel block in blocks) {
+        DateTime blockCreated = block.actions
+            .get_Date_of_action(BlockAction.create_block.getactionTitle);
+        if (blockCreated.formatt() == date.formatt()) {
+          filterdBlocks.add(block);
+        }
+      }
+    }
+
+    print(filterdBlocks.length);
+    print(b.length);
+    b.clear();
+    b.addAll(filterdBlocks);
+    print(b.length);
+
+    return b;
   }
 
   edit_cell_size(dynamic oldvalue, int id, String cell, List<String> newvalue) {

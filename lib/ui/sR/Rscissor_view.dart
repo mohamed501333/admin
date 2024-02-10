@@ -55,9 +55,9 @@ class Rscissor extends StatelessWidget {
                             },
                             child: Container(
                               margin: const EdgeInsets.only(top: 10),
-                              width: 200,
+                              width: 180,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 30,
+                                horizontal: 12,
                                 vertical: 10,
                               ),
                               decoration: ShapeDecoration(
@@ -74,7 +74,7 @@ class Rscissor extends StatelessWidget {
                                   Text(
                                     "${e.wedth}*${e.lenth}*${e.hight}",
                                     style: const TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(

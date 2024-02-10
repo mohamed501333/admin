@@ -67,4 +67,6 @@ class SettingController extends ChangeNotifier {
   Refresh_Ui() {
     notifyListeners();
   }
+
+  bool switch1 = false;
 }

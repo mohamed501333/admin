@@ -404,7 +404,7 @@ class Datepker extends StatelessWidget {
                     onRangeChanged: (range) {
                       myType.initialDateRange = range;
 
-                      myType.filterdatesbbbbb();
+                      myType.filterBlocksCreatedBetweenTowDates();
                       myType.Refresh_the_UI();
                     },
                   ),

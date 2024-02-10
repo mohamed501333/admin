@@ -21,6 +21,7 @@ abstract class BaseViewModel {
   TextEditingController cuttingordernum = TextEditingController();
   TextEditingController wightcontroller = TextEditingController();
   TextEditingController carnumber = TextEditingController();
+  TextEditingController invoiceNum = TextEditingController();
   TextEditingController driverName = TextEditingController();
   TextEditingController whoLoad = TextEditingController();
   TextEditingController cummingFrom = TextEditingController();
@@ -54,5 +55,6 @@ abstract class BaseViewModel {
     whoLoad.clear();
     customerName.clear();
     customerSerial.clear();
+    invoiceNum.clear();
   }
 }

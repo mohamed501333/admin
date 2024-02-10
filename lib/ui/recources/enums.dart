@@ -389,6 +389,7 @@ enum UserPermition {
   fields_buttoms_consumeBlock,
   show_search_in_customers,
   show_cusotmer_name_in_cutting_order,
+  show_setting_in_out_order,
 
   incert_in_finalProdcut_imorted,
   incert_unregular_in_importedfinal_prodcut,
@@ -544,11 +545,15 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "عرض تقرير  المقصات الراسى");
       case UserPermition.show_Reports_R:
         return UserpermitionTittle(tittle: "عرض تقرير المقصات الدائرى");
+      case UserPermition.show_setting_in_out_order:
+        return UserpermitionTittle(tittle: "عرض الاعدادات فى صرف منتج تام");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_setting_in_out_order:
+        return "عرض الاعدادات فى صرف منتج تام";
       case UserPermition.show_Reports_H:
         return "عرض تقرير  المقصات الراسى";
       case UserPermition.show_Reports_R:

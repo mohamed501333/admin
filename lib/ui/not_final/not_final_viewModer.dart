@@ -39,14 +39,28 @@ class NotFinalViewModer extends BaseViewModel {
     }
   }
 
+  get(String v) {
+    switch (v) {
+      case "جوانب ":
+        return "aspects";
+      case "ارضيات":
+        return "floors";
+      case " هالك":
+        return "Halek";
+      case " درجة ثانيه":
+        return "secondDegree";
+      case " درجه ثانيه ممتازه":
+        return "ExcellentsecondDegree";
+    }
+  }
+
 //الحصول على البيانات
-  data_for_type(BuildContext context, String type) {
-    var a = context
-        .read<NonFinalController>()
-        .not_finals
-        .where((element) => element.type == type)
+  data_for_type(
+      BuildContext context, String type, List<NotFinalmodel> not_finals) {
+    var a = not_finals
+        .where((element) => element.type == get(type))
         .map((e) => e.wight);
-    return a.length < 1 ? a : a.reduce((a, b) => a + b).removeTrailingZeros;
+    return a.isEmpty ? a : a.reduce((a, b) => a + b).removeTrailingZeros;
   }
 
   delete(BuildContext context, int id) {

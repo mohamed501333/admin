@@ -7,6 +7,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmodel.dart';
@@ -241,6 +242,14 @@ class InvoiceM extends StatelessWidget {
             child: const Icon(Icons.check, color: Colors.white, size: 28),
           ),
           appBar: AppBar(
+            actions: [
+              IconButton(
+                      onPressed: () {
+                        showmyAlertDialogforss(context);
+                      },
+                      icon: const Icon(Icons.settings))
+                  .permition(context, UserPermition.show_setting_in_out_order)
+            ],
             title: const Text("تسجيل اذن "),
           ),
           body: Form(
@@ -318,6 +327,13 @@ class InvoiceM extends StatelessWidget {
                           hint: 'رقم العربه',
                           width: 120,
                           controller: vm.carnumber),
+                      context.read<SettingController>().switch1 == false
+                          ? const SizedBox()
+                          : CustomTextFormField(
+                              validator: Validation.validateothers,
+                              hint: 'رقم الاذن',
+                              width: 120,
+                              controller: vm.invoiceNum),
                     ],
                   ),
                 ),
@@ -401,4 +417,45 @@ class InvoiceM extends StatelessWidget {
       },
     );
   }
+}
+
+showmyAlertDialogforss(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 300,
+          child: AlertDialog(
+            title: const Text('settings'),
+            content: Column(children: [
+              Consumer<SettingController>(
+                builder: (context, myType, child) {
+                  return Row(
+                    children: [
+                      const Text("اضافة رقم الاذن يدوى"),
+                      Switch(
+                        value: myType.switch1,
+                        onChanged: (val) {
+                          myType.switch1 = val;
+                          myType.Refresh_Ui();
+                          context.read<final_prodcut_controller>().Refresh_Ui();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              )
+            ]),
+            actions: [
+              ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('ok')),
+            ],
+          ),
+        );
+      });
 }
