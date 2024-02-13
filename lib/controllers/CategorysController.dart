@@ -31,8 +31,6 @@ class Category_controller extends ChangeNotifier {
   int x = 0;
 
   addNewBlockCategory(BlockCategory blockcategory) async {
-    blockcategory.actions.add(CategoryAction.creat_new_block_category.add);
-
     try {
       await FirebaseDatabase.instance
           .ref("blockcategory/${blockcategory.id}")
@@ -42,12 +40,18 @@ class Category_controller extends ChangeNotifier {
   }
 
   deleteBlockCategory(BlockCategory blockcategory) {
-    blockcategory.actions.add(CategoryAction.archive_block_category.add);
+    blockcategory.actions.add(BlockCategoryAction.archive_block_category.add);
     try {
       FirebaseDatabase.instance
           .ref("blockcategory/${blockcategory.id}")
           .set(blockcategory.toJson());
       notifyListeners();
     } catch (e) {}
+  }
+
+  BlockCategory? initialFordropdowen;
+
+  Refresh_Ui() {
+    notifyListeners();
   }
 }

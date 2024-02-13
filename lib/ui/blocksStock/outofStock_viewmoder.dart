@@ -36,7 +36,10 @@ class BlocksStockViewModel extends BaseViewModel {
     scissorcontroller.clear();
     wightcontroller.clear();
     cummingFrom.clear();
+    blockdesription.clear();
     outTo.clear();
+    from.clear();
+    to.clear();
   }
 
   incertblock(BuildContext context) {
@@ -52,7 +55,7 @@ class BlocksStockViewModel extends BaseViewModel {
         //هنا اذا كان الخيار مفعل فى الاعدادات
         //صرف عند الاضافه
         OutTo: outTo.text.isEmpty ? "" : outTo.text,
-        cumingFrom: cummingFrom.text.isEmpty ? "المصنع" : cummingFrom.text,
+        cumingFrom: cummingFrom.text.isEmpty ? "الصبه" : cummingFrom.text,
         fractions: [],
         notfinals: [],
         id: DateTime.now().millisecondsSinceEpoch,
@@ -62,6 +65,29 @@ class BlocksStockViewModel extends BaseViewModel {
         type: typecontroller.text,
         serial: codecontroller.text,
         number: int.parse(blocknumbercontroller.text),
+        width: int.parse(widthcontroller.text),
+        lenth: int.parse(lenthcontroller.text),
+        hight: int.parse(hightncontroller.text),
+        wight: wightcontroller.text.to_double(),
+        Rcissor: 0,
+        notes: notes.text.isEmpty ? "" : notes.text));
+  }
+
+  incertblock2(BuildContext context, int num, BlockCategory blockcategory) {
+    context.read<BlockFirebasecontroller>().addblock(BlockModel(
+        discreption: blockcategory.description,
+        actions: [BlockAction.create_block.add],
+        OutTo: "",
+        cumingFrom: cummingFrom.text.isEmpty ? "الصبه" : cummingFrom.text,
+        fractions: [],
+        notfinals: [],
+        id: DateTime.now().microsecondsSinceEpoch + num,
+        Hscissor: 0,
+        color: blockcategory.color,
+        density: double.parse(blockcategory.density),
+        type: blockcategory.type,
+        serial: codecontroller.text,
+        number: num,
         width: int.parse(widthcontroller.text),
         lenth: int.parse(lenthcontroller.text),
         hight: int.parse(hightncontroller.text),

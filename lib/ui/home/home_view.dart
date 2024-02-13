@@ -4,6 +4,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/ui/Users_dashboard/users_dashbord.dart';
+import 'package:jason_company/ui/addCategoreys/blockCategory.dart';
 import 'package:jason_company/ui/commen/claculator.dart';
 import 'package:jason_company/ui/customers/customersView.dart';
 import 'package:jason_company/ui/cutting_order/cutting_order_view.dart';
@@ -206,6 +207,20 @@ class HomeView extends StatelessWidget {
                     IconsManager.itemIcon1,
                     ontap: () {},
                   ).permition(context, UserPermition.not_working),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Item(
+                    MediaQuery.of(context).size.width * .45,
+                    ColorManager.prussianBlue,
+                    " تسجيل الاصناف",
+                    IconsManager.itemIcon1,
+                    ontap: () {
+                      context.gonext(context, BlockCategoryView());
+                    },
+                  ).permition(context, UserPermition.show_add_new_category),
                 ],
               ),
               Row(

@@ -195,24 +195,14 @@ class buttoms extends StatelessWidget {
         ElevatedButton(
             onPressed: () {
               if (vm.validate()) {
-                BlockModel m = b
-                    .where((e) =>
-                        e.number ==
-                            vm
-                                .get_block_of_num_in_controller(b, context)
-                                .number &&
-                        e.serial ==
-                            vm
-                                .get_block_of_num_in_controller(b, context)
-                                .serial)
-                    .toList()[0];
-                double vloumeOfFractions;
-                double vloumeOfblock;
+                BlockModel m = vm.get_block_of_num_in_controller(b, context);
+                int vloumeOfFractions;
+                int vloumeOfblock;
 
                 if (vm.permanentFractons.isNotEmpty) {
-                  vloumeOfblock = m.width * m.lenth * m.hight / 1000000;
+                  vloumeOfblock = m.width * m.lenth * m.hight;
                   vloumeOfFractions = vm.permanentFractons
-                      .map((e) => e.wedth * e.hight * e.lenth / 1000000)
+                      .map((e) => e.wedth * e.hight * e.lenth)
                       .reduce((a, b) => a + b);
                   if (vloumeOfblock < vloumeOfFractions) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -220,7 +210,7 @@ class buttoms extends StatelessWidget {
                     vm.permanentFractons.clear();
                   } else {
                     if (vm.permanentFractons.isNotEmpty) {
-                      vm.add_fraction(context, b, scissor);
+                      vm.add_fraction(context, m, scissor);
                     }
                   }
                 }

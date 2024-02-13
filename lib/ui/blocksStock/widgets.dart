@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/CategorysController.dart';
+
+import 'package:provider/provider.dart';
 
 class HeaderOftable1 extends StatelessWidget {
   const HeaderOftable1({
@@ -95,6 +98,34 @@ class HeaderOftable1 extends StatelessWidget {
                   padding: const EdgeInsets.all(4), child: const Text('م')),
             ])
       ],
+    );
+  }
+}
+
+class DropDdowenFor_blockCategory extends StatelessWidget {
+  const DropDdowenFor_blockCategory({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Category_controller>(
+      builder: (context, myType, child) {
+        return DropdownButton(
+            value: myType.initialFordropdowen,
+            items: myType.blockCategory
+                .map((e) => e)
+                .toList()
+                .map((e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e.description.toString()),
+                    ))
+                .toList(),
+            onChanged: (v) {
+              if (v != null) {
+                context.read<Category_controller>().initialFordropdowen = v;
+                context.read<Category_controller>().Refresh_Ui();
+              }
+            });
+      },
     );
   }
 }

@@ -88,8 +88,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
   // }
   c() {
     // print(11);
-    // for (var el in all.where((element) => element.color == "رمادي")) {
-    //   el.color = "رمادى";
+    // for (var el in all.where((element) => element.type == "هارد ")) {
+    //   el.type = "هارد";
 
     //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
     // }

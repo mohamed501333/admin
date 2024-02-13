@@ -33,6 +33,8 @@ abstract class BaseViewModel {
   TextEditingController orderSerial = TextEditingController();
   TextEditingController datecontroller = TextEditingController();
   TextEditingController N = TextEditingController();
+  TextEditingController from = TextEditingController();
+  TextEditingController to = TextEditingController();
 
   clearfields() {
     customerName.clear();
@@ -56,5 +58,7 @@ abstract class BaseViewModel {
     customerName.clear();
     customerSerial.clear();
     invoiceNum.clear();
+    from.clear();
+    to.clear();
   }
 }

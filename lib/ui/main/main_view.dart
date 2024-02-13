@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/functions.dart';
+import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
@@ -45,12 +46,15 @@ class Mainview extends StatelessWidget {
         permitionss(context, UserPermition.can_get_data_of_invoice)
             ? context.read<Invoice_controller>().get_invice_data()
             : DoNothingAction();
-        // context.read<Invoice_controller>().rr();
+
         permitionss(context, UserPermition.can_get_data_of_customers)
             ? context.read<Customer_controller>().get_Customers_data()
             : DoNothingAction();
         permitionss(context, UserPermition.can_get_data_of_orders)
             ? context.read<OrderController>().get_Order_data()
+            : DoNothingAction();
+        permitionss(context, UserPermition.can_get_data_of_blocks)
+            ? context.read<Category_controller>().get_blockCategory_data()
             : DoNothingAction();
         permitionss(context, UserPermition.can_get_data_of_notfinals)
             ? context.read<NonFinalController>().getdataOfnotFinals()

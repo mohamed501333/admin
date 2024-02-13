@@ -1849,7 +1849,7 @@ class BlockCategory {
       density: map['density'] as String,
       color: map['color'] as String,
       actions: List<ActionModel>.from(
-        (map['actions'] as List<int>).map<ActionModel>(
+        (map['actions'] as List<dynamic>).map<ActionModel>(
           (x) => ActionModel.fromMap(x as Map<String, dynamic>),
         ),
       ),

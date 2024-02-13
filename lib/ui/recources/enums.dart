@@ -215,20 +215,20 @@ extension Xdf5 on InvoiceAction {
   }
 }
 
-enum CategoryAction {
+enum BlockCategoryAction {
   creat_new_block_category,
   archive_block_category,
 }
 
-extension ddsd on CategoryAction {
+extension ddsd on BlockCategoryAction {
   ActionModel get add {
     switch (this) {
-      case CategoryAction.creat_new_block_category:
+      case BlockCategoryAction.creat_new_block_category:
         return ActionModel(
             action: "creat_new_block_category",
             who: SringsManager.myemail,
             when: DateTime.now());
-      case CategoryAction.archive_block_category:
+      case BlockCategoryAction.archive_block_category:
         return ActionModel(
             action: "archive_block_category",
             who: SringsManager.myemail,
@@ -238,9 +238,9 @@ extension ddsd on CategoryAction {
 
   String get getTitle {
     switch (this) {
-      case CategoryAction.creat_new_block_category:
+      case BlockCategoryAction.creat_new_block_category:
         return "creat_new_block_category";
-      case CategoryAction.archive_block_category:
+      case BlockCategoryAction.archive_block_category:
         return "archive_block_category";
     }
   }
@@ -401,6 +401,7 @@ enum UserPermition {
   show_massaging,
   show_scissors,
   show_not_final_stock,
+  show_add_new_category,
 
   show_Reports_finalprodcut,
   show_Reports_final_prodcutscisors,
@@ -578,11 +579,15 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "عرض تقرير المقصات الدائرى");
       case UserPermition.show_setting_in_out_order:
         return UserpermitionTittle(tittle: "عرض الاعدادات فى صرف منتج تام");
+      case UserPermition.show_add_new_category:
+        return UserpermitionTittle(tittle: "عرض تسجيل صنف جديد");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_add_new_category:
+        return "عرض تسجيل صنف جديد";
       case UserPermition.show_setting_in_out_order:
         return "عرض الاعدادات فى صرف منتج تام";
       case UserPermition.show_Reports_H:

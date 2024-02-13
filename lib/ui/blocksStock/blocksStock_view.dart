@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/ui/commen/date.dart';
@@ -53,26 +54,27 @@ class BlocksStock extends StatelessWidget {
               // ).permition(context, UserPermition.incert_in_block_stock),
               Column(
                 children: [
+                  const DropDdowenFor_blockCategory(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       CustomTextFormField(
                         width: MediaQuery.of(context).size.width * .16,
                         hint: "من ",
-                        keybordtupe: TextInputType.name,
-                        controller: vm.typecontroller,
+                        keybordtupe: TextInputType.number,
+                        controller: vm.from,
                         validator: Validation.validateothers,
                       ),
                       CustomTextFormField(
                         width: MediaQuery.of(context).size.width * .16,
                         hint: "الى ",
-                        controller: vm.wightcontroller,
+                        controller: vm.to,
                         validator: Validation.validateothers,
                       ),
                       CustomTextFormField(
                         width: MediaQuery.of(context).size.width * .20,
-                        hint: "الارتفاع",
-                        controller: vm.hightncontroller,
+                        hint: "الطول ",
+                        controller: vm.lenthcontroller,
                         validator: Validation.validateothers,
                       ),
                       CustomTextFormField(
@@ -83,8 +85,8 @@ class BlocksStock extends StatelessWidget {
                       ),
                       CustomTextFormField(
                         width: MediaQuery.of(context).size.width * .20,
-                        hint: "الطول ",
-                        controller: vm.lenthcontroller,
+                        hint: "الارتفاع",
+                        controller: vm.hightncontroller,
                         validator: Validation.validateothers,
                       ),
                     ].reversed.toList(),
@@ -96,13 +98,13 @@ class BlocksStock extends StatelessWidget {
                       children: [
                         CustomTextFormField(
                           keybordtupe: TextInputType.name,
-                          width: MediaQuery.of(context).size.width * .25,
+                          width: MediaQuery.of(context).size.width * .35,
                           hint: "الكود ",
                           controller: vm.codecontroller,
                           validator: Validation.validateothers,
                         ),
                         CustomTextFormField(
-                          width: MediaQuery.of(context).size.width * .25,
+                          width: MediaQuery.of(context).size.width * .15,
                           hint: "الوزن ",
                           controller: vm.wightcontroller,
                           validator: Validation.validateothers,
@@ -116,12 +118,45 @@ class BlocksStock extends StatelessWidget {
                         CustomTextFormField(
                           keybordtupe: TextInputType.name,
                           width: MediaQuery.of(context).size.width * .25,
-                          hint: "وارد من",
+                          label: "وارد من",
+                          hint: "الصبه",
                           controller: vm.cummingFrom,
                         ),
                       ].reversed.toList(),
                     ),
-                  )
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        if (vm.formKey.currentState!.validate() &&
+                            context
+                                    .read<Category_controller>()
+                                    .initialFordropdowen !=
+                                null) {
+                          for (var i = vm.from.text.to_int();
+                              i < vm.to.text.to_int() + 1;
+                              i++) {
+                            vm.incertblock2(
+                                context,
+                                i,
+                                context
+                                    .read<Category_controller>()
+                                    .initialFordropdowen!);
+                          }
+
+                          vm.clearfields();
+                        }
+                      },
+                      child: const SizedBox(
+                        width: 90,
+                        height: 45,
+                        child: Center(
+                          child: Text(
+                            "اضافة",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      )),
                 ],
               ),
               TheTable(vm: vm),

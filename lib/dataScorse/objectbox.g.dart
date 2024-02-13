@@ -20,78 +20,78 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 5766817127886087310),
+      id: const IdUid(1, 5897114309018718687),
       name: 'ChipBlockModel',
-      lastPropertyId: const IdUid(14, 6933484263989904874),
+      lastPropertyId: const IdUid(14, 7440151733969983040),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 7047598725054373159),
+            id: const IdUid(1, 8652261340929001591),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 7494847655725877467),
+            id: const IdUid(2, 7166403057050211306),
             name: 'title',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 5373123020180861790),
+            id: const IdUid(3, 5290192274039054781),
             name: 'color',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 2619053772108324263),
+            id: const IdUid(4, 5481389749955560300),
             name: 'density',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 5425707442905255812),
+            id: const IdUid(5, 8686701636947416164),
             name: 'type',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(6, 857032885791670872),
+            id: const IdUid(6, 5775465157695708361),
             name: 'serial',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(7, 8369124864272671287),
+            id: const IdUid(7, 1396726497156614955),
             name: 'number',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(8, 4213282529751350916),
+            id: const IdUid(8, 7333189781553301374),
             name: 'width',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(9, 8830288111525140463),
+            id: const IdUid(9, 85198865087750188),
             name: 'lenth',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(10, 5747086196920148615),
+            id: const IdUid(10, 8566871497458278355),
             name: 'scissor',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(11, 8094156766797092793),
+            id: const IdUid(11, 5336668814485681515),
             name: 'hight',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(12, 4204673584453909539),
+            id: const IdUid(12, 4594392483323891183),
             name: 'wight',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(13, 5649748582041743292),
+            id: const IdUid(13, 1810771210649834682),
             name: 'notes',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(14, 6933484263989904874),
+            id: const IdUid(14, 7440151733969983040),
             name: 'description',
             type: 9,
             flags: 0)
@@ -99,28 +99,28 @@ final _entities = <ModelEntity>[
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(2, 4834809552106828592),
+      id: const IdUid(2, 5926800281081914680),
       name: 'ChipFraction',
-      lastPropertyId: const IdUid(4, 3612354499078491459),
+      lastPropertyId: const IdUid(4, 4359169785857654103),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 880670482980990046),
+            id: const IdUid(1, 6620026395739333625),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 7474492443085524871),
+            id: const IdUid(2, 362100210216810389),
             name: 'width',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 832437133360807654),
+            id: const IdUid(3, 8957293736951627554),
             name: 'lenth',
             type: 8,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 3612354499078491459),
+            id: const IdUid(4, 4359169785857654103),
             name: 'hight',
             type: 8,
             flags: 0)
@@ -156,7 +156,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(2, 4834809552106828592),
+      lastEntityId: const IdUid(2, 5926800281081914680),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),

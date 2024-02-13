@@ -150,4 +150,6 @@ class OrderController extends ChangeNotifier {
   Refrsh_ui() {
     notifyListeners();
   }
+
+  get_blockCategory_data() {}
 }

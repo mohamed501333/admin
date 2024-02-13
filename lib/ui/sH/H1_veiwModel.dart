@@ -100,7 +100,7 @@ class H1VeiwModel extends BaseViewModel {
   }
 
 //
-  add_fraction(BuildContext context, List<BlockModel> b, int scissor) {
+  add_fraction(BuildContext context, BlockModel b, int scissor) {
     if (permanentFractons.isNotEmpty) {
       context.read<BlockFirebasecontroller>().Add_fraction(
             notfinal: NotFinalmodel(
@@ -112,7 +112,7 @@ class H1VeiwModel extends BaseViewModel {
                 Hscissor: scissor,
                 actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]),
             Hscissor: scissor,
-            block: get_block_of_num_in_controller(b, context),
+            block: b,
             fractions: permanentFractons,
           );
 
