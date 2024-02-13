@@ -215,6 +215,37 @@ extension Xdf5 on InvoiceAction {
   }
 }
 
+enum CategoryAction {
+  creat_new_block_category,
+  archive_block_category,
+}
+
+extension ddsd on CategoryAction {
+  ActionModel get add {
+    switch (this) {
+      case CategoryAction.creat_new_block_category:
+        return ActionModel(
+            action: "creat_new_block_category",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case CategoryAction.archive_block_category:
+        return ActionModel(
+            action: "archive_block_category",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+    }
+  }
+
+  String get getTitle {
+    switch (this) {
+      case CategoryAction.creat_new_block_category:
+        return "creat_new_block_category";
+      case CategoryAction.archive_block_category:
+        return "archive_block_category";
+    }
+  }
+}
+
 enum NonFinalType {
   floors,
   aspects,

@@ -41,12 +41,89 @@ class BlocksStock extends StatelessWidget {
           key: vm.formKey,
           child: Column(
             children: [
-              Fields(vm: vm)
-                  .permition(context, UserPermition.incert_in_block_stock),
-              Chips(vm: vm)
-                  .permition(context, UserPermition.incert_in_block_stock),
-              Buttoms(vm: vm)
-                  .permition(context, UserPermition.incert_in_block_stock),
+              const SizedBox(
+                height: 12,
+              ),
+              // Column(
+              //   children: [
+              //     Fields(vm: vm),
+              //     Chips(vm: vm),
+              //     Buttoms(vm: vm),
+              //   ],
+              // ).permition(context, UserPermition.incert_in_block_stock),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomTextFormField(
+                        width: MediaQuery.of(context).size.width * .16,
+                        hint: "من ",
+                        keybordtupe: TextInputType.name,
+                        controller: vm.typecontroller,
+                        validator: Validation.validateothers,
+                      ),
+                      CustomTextFormField(
+                        width: MediaQuery.of(context).size.width * .16,
+                        hint: "الى ",
+                        controller: vm.wightcontroller,
+                        validator: Validation.validateothers,
+                      ),
+                      CustomTextFormField(
+                        width: MediaQuery.of(context).size.width * .20,
+                        hint: "الارتفاع",
+                        controller: vm.hightncontroller,
+                        validator: Validation.validateothers,
+                      ),
+                      CustomTextFormField(
+                        width: MediaQuery.of(context).size.width * .20,
+                        hint: "العرض",
+                        controller: vm.widthcontroller,
+                        validator: Validation.validateothers,
+                      ),
+                      CustomTextFormField(
+                        width: MediaQuery.of(context).size.width * .20,
+                        hint: "الطول ",
+                        controller: vm.lenthcontroller,
+                        validator: Validation.validateothers,
+                      ),
+                    ].reversed.toList(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomTextFormField(
+                          keybordtupe: TextInputType.name,
+                          width: MediaQuery.of(context).size.width * .25,
+                          hint: "الكود ",
+                          controller: vm.codecontroller,
+                          validator: Validation.validateothers,
+                        ),
+                        CustomTextFormField(
+                          width: MediaQuery.of(context).size.width * .25,
+                          hint: "الوزن ",
+                          controller: vm.wightcontroller,
+                          validator: Validation.validateothers,
+                        ),
+                        CustomTextFormField(
+                          keybordtupe: TextInputType.name,
+                          width: MediaQuery.of(context).size.width * .25,
+                          hint: " ملاحظات",
+                          controller: vm.notes,
+                        ),
+                        CustomTextFormField(
+                          keybordtupe: TextInputType.name,
+                          width: MediaQuery.of(context).size.width * .25,
+                          hint: "وارد من",
+                          controller: vm.cummingFrom,
+                        ),
+                      ].reversed.toList(),
+                    ),
+                  )
+                ],
+              ),
               TheTable(vm: vm),
             ],
           ),

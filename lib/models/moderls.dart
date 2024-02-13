@@ -1795,3 +1795,96 @@ class UserpermitionTittle {
   @override
   int get hashCode => tittle.hashCode;
 }
+
+class BlockCategory {
+  int id;
+  String description;
+  String type;
+  String density;
+  String color;
+  List<ActionModel> actions;
+  BlockCategory({
+    required this.id,
+    required this.description,
+    required this.type,
+    required this.density,
+    required this.color,
+    required this.actions,
+  });
+
+  BlockCategory copyWith({
+    int? id,
+    String? description,
+    String? type,
+    String? density,
+    String? color,
+    List<ActionModel>? actions,
+  }) {
+    return BlockCategory(
+      id: id ?? this.id,
+      description: description ?? this.description,
+      type: type ?? this.type,
+      density: density ?? this.density,
+      color: color ?? this.color,
+      actions: actions ?? this.actions,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'description': description,
+      'type': type,
+      'density': density,
+      'color': color,
+      'actions': actions.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory BlockCategory.fromMap(Map<String, dynamic> map) {
+    return BlockCategory(
+      id: map['id'] as int,
+      description: map['description'] as String,
+      type: map['type'] as String,
+      density: map['density'] as String,
+      color: map['color'] as String,
+      actions: List<ActionModel>.from(
+        (map['actions'] as List<int>).map<ActionModel>(
+          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory BlockCategory.fromJson(String source) =>
+      BlockCategory.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'BlockCategory(id: $id, description: $description, type: $type, density: $density, color: $color, actions: $actions)';
+  }
+
+  @override
+  bool operator ==(covariant BlockCategory other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.description == description &&
+        other.type == type &&
+        other.density == density &&
+        other.color == color &&
+        listEquals(other.actions, actions);
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        description.hashCode ^
+        type.hashCode ^
+        density.hashCode ^
+        color.hashCode ^
+        actions.hashCode;
+  }
+}
