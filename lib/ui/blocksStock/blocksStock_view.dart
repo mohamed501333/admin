@@ -8,7 +8,6 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
-import 'package:jason_company/ui/commen/date.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
@@ -34,135 +33,160 @@ class BlocksStock extends StatelessWidget {
                 onPressed: () {
                   context.gonext(context, Archived());
                 },
-                icon: const Icon(Icons.archive_sharp))
+                icon: const Icon(Icons.archive_sharp)),
+            IconButton(
+                onPressed: () {
+                  settingthedialog(context);
+                },
+                icon: const Icon(Icons.settings)),
           ],
           title: const Text("رصيد البلوكات"),
         ),
         body: Form(
-          key: vm.formKey,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 12,
-              ),
-              // Column(
-              //   children: [
-              //     Fields(vm: vm),
-              //     Chips(vm: vm),
-              //     Buttoms(vm: vm),
-              //   ],
-              // ).permition(context, UserPermition.incert_in_block_stock),
-              Column(
-                children: [
-                  const DropDdowenFor_blockCategory(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CustomTextFormField(
-                        width: MediaQuery.of(context).size.width * .16,
-                        hint: "من ",
-                        keybordtupe: TextInputType.number,
-                        controller: vm.from,
-                        validator: Validation.validateothers,
-                      ),
-                      CustomTextFormField(
-                        width: MediaQuery.of(context).size.width * .16,
-                        hint: "الى ",
-                        controller: vm.to,
-                        validator: Validation.validateothers,
-                      ),
-                      CustomTextFormField(
-                        width: MediaQuery.of(context).size.width * .20,
-                        hint: "الطول ",
-                        controller: vm.lenthcontroller,
-                        validator: Validation.validateothers,
-                      ),
-                      CustomTextFormField(
-                        width: MediaQuery.of(context).size.width * .20,
-                        hint: "العرض",
-                        controller: vm.widthcontroller,
-                        validator: Validation.validateothers,
-                      ),
-                      CustomTextFormField(
-                        width: MediaQuery.of(context).size.width * .20,
-                        hint: "الارتفاع",
-                        controller: vm.hightncontroller,
-                        validator: Validation.validateothers,
-                      ),
-                    ].reversed.toList(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        CustomTextFormField(
-                          keybordtupe: TextInputType.name,
-                          width: MediaQuery.of(context).size.width * .35,
-                          hint: "الكود ",
-                          controller: vm.codecontroller,
-                          validator: Validation.validateothers,
-                        ),
-                        CustomTextFormField(
-                          width: MediaQuery.of(context).size.width * .15,
-                          hint: "الوزن ",
-                          controller: vm.wightcontroller,
-                          validator: Validation.validateothers,
-                        ),
-                        CustomTextFormField(
-                          keybordtupe: TextInputType.name,
-                          width: MediaQuery.of(context).size.width * .25,
-                          hint: " ملاحظات",
-                          controller: vm.notes,
-                        ),
-                        CustomTextFormField(
-                          keybordtupe: TextInputType.name,
-                          width: MediaQuery.of(context).size.width * .25,
-                          label: "وارد من",
-                          hint: "الصبه",
-                          controller: vm.cummingFrom,
-                        ),
-                      ].reversed.toList(),
+            key: vm.formKey,
+            child: Consumer<SettingController>(
+              builder: (context, myType, child) {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 12,
                     ),
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        if (vm.formKey.currentState!.validate() &&
-                            context
-                                    .read<Category_controller>()
-                                    .initialFordropdowen !=
-                                null) {
-                          for (var i = vm.from.text.to_int();
-                              i < vm.to.text.to_int() + 1;
-                              i++) {
-                            vm.incertblock2(
-                                context,
-                                i,
-                                context
-                                    .read<Category_controller>()
-                                    .initialFordropdowen!);
-                          }
+                    myType.GroupvalueofRadio != 1
+                        ? const SizedBox()
+                        : Column(
+                            children: [
+                              Fields(vm: vm),
+                              Chips(vm: vm),
+                              Buttoms(vm: vm),
+                            ],
+                          ).permition(
+                            context, UserPermition.incert_in_block_stock),
+                    myType.GroupvalueofRadio != 2
+                        ? const SizedBox()
+                        : Column(
+                            children: [
+                              const DropDdowenFor_blockCategory(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  CustomTextFormField(
+                                    width:
+                                        MediaQuery.of(context).size.width * .16,
+                                    hint: "من ",
+                                    keybordtupe: TextInputType.number,
+                                    controller: vm.from,
+                                    validator: Validation.validateothers,
+                                  ),
+                                  CustomTextFormField(
+                                    width:
+                                        MediaQuery.of(context).size.width * .16,
+                                    hint: "الى ",
+                                    controller: vm.to,
+                                    validator: Validation.validateothers,
+                                  ),
+                                  CustomTextFormField(
+                                    width:
+                                        MediaQuery.of(context).size.width * .20,
+                                    hint: "الطول ",
+                                    controller: vm.lenthcontroller,
+                                    validator: Validation.validateothers,
+                                  ),
+                                  CustomTextFormField(
+                                    width:
+                                        MediaQuery.of(context).size.width * .20,
+                                    hint: "العرض",
+                                    controller: vm.widthcontroller,
+                                    validator: Validation.validateothers,
+                                  ),
+                                  CustomTextFormField(
+                                    width:
+                                        MediaQuery.of(context).size.width * .20,
+                                    hint: "الارتفاع",
+                                    controller: vm.hightncontroller,
+                                    validator: Validation.validateothers,
+                                  ),
+                                ].reversed.toList(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    CustomTextFormField(
+                                      keybordtupe: TextInputType.name,
+                                      width: MediaQuery.of(context).size.width *
+                                          .35,
+                                      hint: "الكود ",
+                                      controller: vm.codecontroller,
+                                      validator: Validation.validateothers,
+                                    ),
+                                    CustomTextFormField(
+                                      width: MediaQuery.of(context).size.width *
+                                          .15,
+                                      hint: "الوزن ",
+                                      controller: vm.wightcontroller,
+                                      validator: Validation.validateothers,
+                                    ),
+                                    CustomTextFormField(
+                                      keybordtupe: TextInputType.name,
+                                      width: MediaQuery.of(context).size.width *
+                                          .25,
+                                      hint: " ملاحظات",
+                                      controller: vm.notes,
+                                    ),
+                                    CustomTextFormField(
+                                      keybordtupe: TextInputType.name,
+                                      width: MediaQuery.of(context).size.width *
+                                          .25,
+                                      label: "وارد من",
+                                      hint: "الصبه",
+                                      controller: vm.cummingFrom,
+                                    ),
+                                  ].reversed.toList(),
+                                ),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    if (vm.formKey.currentState!.validate() &&
+                                        context
+                                                .read<Category_controller>()
+                                                .initialFordropdowen !=
+                                            null) {
+                                      for (var i = vm.from.text.to_int();
+                                          i < vm.to.text.to_int() + 1;
+                                          i++) {
+                                        vm.incertblock2(
+                                            context,
+                                            i,
+                                            context
+                                                .read<Category_controller>()
+                                                .initialFordropdowen!);
+                                      }
 
-                          vm.clearfields();
-                        }
-                      },
-                      child: const SizedBox(
-                        width: 90,
-                        height: 45,
-                        child: Center(
-                          child: Text(
-                            "اضافة",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                      vm.clearfields();
+                                    }
+                                  },
+                                  child: const SizedBox(
+                                    width: 90,
+                                    height: 45,
+                                    child: Center(
+                                      child: Text(
+                                        "اضافة",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  )),
+                            ],
                           ),
-                        ),
-                      )),
-                ],
-              ),
-              TheTable(vm: vm),
-            ],
-          ),
-        ),
+                    TheTable(vm: vm),
+                  ],
+                );
+              },
+            )),
       ),
     );
   }
@@ -181,7 +205,6 @@ class Buttoms extends StatelessWidget {
     return Row(
       children: [
         ChipsForBlocks(),
-        const pagination(),
         ElevatedButton(
             onPressed: () {
               if (vm.formKey.currentState!.validate()) {
@@ -429,7 +452,9 @@ class TheTable extends StatelessWidget {
                     children: blocks.search.reversed
                         .sortedBy<num>((element) => element.id)
                         .reversed
-                        .take(context.read<SettingController>().s)
+                        .take(context
+                            .read<SettingController>()
+                            .amountofshowinaddBlock)
                         .toList()
                         .reversed
                         .map((user) {
@@ -684,7 +709,9 @@ class ArchivedTheTable extends StatelessWidget {
                                     BlockAction.archive_block.getactionTitle)
                                 .day)
                             .reversed
-                            .take(context.read<SettingController>().s)
+                            .take(context
+                                .read<SettingController>()
+                                .amountofshowinaddBlock)
                             .toList()
                             .map((user) {
                               return TableRow(

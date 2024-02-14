@@ -58,7 +58,6 @@ class Setings extends StatelessWidget {
         body: Column(
       children: [
         // const Center(child: CustonSwitch()),
-        Center(child: CustonSwitch2()),
 
         // Container(
         //   padding: const EdgeInsets.all(5),
@@ -171,7 +170,7 @@ class CustonSwitch extends StatelessWidget {
 class CustonSwitch2 extends StatelessWidget {
   CustonSwitch2({
     super.key,
-    this.fontsize = 14,
+    this.fontsize = 13,
   });
   final double fontsize;
   BlocksStockViewModel vm = BlocksStockViewModel();
@@ -183,10 +182,19 @@ class CustonSwitch2 extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                "الاضافه الاوتماتيكيه عند الضغط على الاختصار فى رصيد البلوك",
-                style:
-                    TextStyle(fontSize: fontsize, fontWeight: FontWeight.bold),
+              Column(
+                children: [
+                  Text(
+                    "الاضافه الاوتماتيكيه عند الضغط ",
+                    style: TextStyle(
+                        fontSize: fontsize, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "على الاختصار فى رصيد البلوك",
+                    style: TextStyle(
+                        fontSize: fontsize, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
               Switch(
                   value: myType.valueOfRadio2,

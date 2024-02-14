@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
-import 'package:provider/provider.dart';
 
 class SettingController extends ChangeNotifier {
   int currentday = 0;
@@ -49,19 +47,6 @@ class SettingController extends ChangeNotifier {
     notifyListeners();
   }
 
-  int s = 5;
-  inrcreas_s(BuildContext context) {
-    s++;
-    notifyListeners();
-    context.read<BlockFirebasecontroller>().Refresh_the_UI();
-  }
-
-  decreas_s(BuildContext context) {
-    s--;
-    notifyListeners();
-    context.read<BlockFirebasecontroller>().Refresh_the_UI();
-  }
-
   bool switchValue_for_final = true;
 
   Refresh_Ui() {
@@ -69,4 +54,10 @@ class SettingController extends ChangeNotifier {
   }
 
   bool switch1 = false;
+
+//block setting
+
+  int amountofshowinaddBlock = 5;
+
+  int GroupvalueofRadio = 2;
 }

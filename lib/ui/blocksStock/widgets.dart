@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/CategorysController.dart';
+import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/controllers/setting_controller.dart';
+import 'package:jason_company/setings/Setings.dart';
 
 import 'package:provider/provider.dart';
 
@@ -128,4 +132,135 @@ class DropDdowenFor_blockCategory extends StatelessWidget {
       },
     );
   }
+}
+
+class CusotmRadio extends StatelessWidget {
+  const CusotmRadio({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          title: const Text(
+            'فردى ',
+          ),
+          leading: Radio(
+            value: 1,
+            groupValue: 1,
+            activeColor: const Color(0xFF6200EE),
+            onChanged: (c) {
+              print(c);
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text(
+            'من الى',
+          ),
+          leading: Radio(
+            value: 1,
+            groupValue: 2,
+            activeColor: const Color(0xFF6200EE),
+            onChanged: (c) {
+              print(c);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+settingthedialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController c = TextEditingController();
+
+        return Consumer<SettingController>(
+          builder: (context, myType, child) {
+            return AlertDialog(
+              title: const Text(' setting ?'),
+              content: SizedBox(
+                height: 350,
+                child: Column(children: [
+                  Center(child: CustonSwitch2()),
+                  const Divider(
+                    height: 30,
+                    thickness: 5,
+                    color: Colors.black,
+                  ),
+                  Column(
+                    children: [
+                      const Text("طريقةالادراج"),
+                      ListTile(
+                        title: const Text(
+                          'فردى ',
+                        ),
+                        leading: Radio(
+                          value: 1,
+                          groupValue: myType.GroupvalueofRadio,
+                          activeColor: const Color(0xFF6200EE),
+                          onChanged: (c) {
+                            myType.GroupvalueofRadio = c!;
+                            myType.Refresh_Ui();
+                            print(c);
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        title: const Text(
+                          'من الى',
+                        ),
+                        leading: Radio(
+                          value: 2,
+                          groupValue: myType.GroupvalueofRadio,
+                          activeColor: const Color(0xFF6200EE),
+                          onChanged: (c) {
+                            myType.GroupvalueofRadio = c!;
+                            myType.Refresh_Ui();
+                            print(c);
+                          },
+                        ),
+                      ),
+                      const Divider(
+                        height: 30,
+                        thickness: 5,
+                        color: Colors.black,
+                      ),
+                      Column(children: [
+                        const Text("كميه العرض"),
+                        SizedBox(
+                          width: 50,
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder()),
+                            controller: c,
+                          ),
+                        )
+                      ]),
+                    ],
+                  ),
+                ]),
+              ),
+              actions: [
+                ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                    onPressed: () {
+                      c.text.isNotEmpty
+                          ? myType.amountofshowinaddBlock = c.text.to_int()
+                          : DoNothingAction();
+                      context.read<BlockFirebasecontroller>().Refresh_the_UI();
+
+                      Navigator.pop(context);
+                    },
+                    child: const Text('تم')),
+              ],
+            );
+          },
+        );
+      });
 }
