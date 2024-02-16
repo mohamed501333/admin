@@ -19,13 +19,7 @@ class BlocksSizesDetials extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
-        List<BlockModel> blocks = myType
-            .filterBlocksBalanceBetweenTowDates2()
-            .where((element) =>
-                element.actions.if_action_exist(
-                    BlockAction.consume_block.getactionTitle) ==
-                false)
-            .toList();
+        List<BlockModel> blocks = myType.filterBlocksBalanceBetweenTowDates2();
 
         return Scaffold(
           appBar: AppBar(actions: [
@@ -135,7 +129,7 @@ class BlocksSizesDetials extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.black,
                         // border: Border.all(color: Colors.white24, width: 3)
                       ),

@@ -32,6 +32,10 @@ extension Dnl on DateTime {
     String formateeddate = DateFormat("yyyy/MM/dd").format(this);
     return formateeddate;
   }
+  String formatToInt() {
+    String formateeddate = DateFormat("yyyyMMdd").format(this);
+    return formateeddate;
+  }
 
   String formatt2() {
     String formateeddate = DateFormat('yyyy-MM-dd -hh:mm a').format(this);

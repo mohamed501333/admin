@@ -282,22 +282,46 @@ class BlockFirebasecontroller extends ChangeNotifier {
     List<BlockModel> filterdBlocks = [];
     print(filterdBlocks.length);
     List<BlockModel> b = [];
-    for (DateTime date
-        in getDaysInBeteween(initialDateRange.start, initialDateRange.end)) {
-      for (BlockModel block in blocks) {
-        DateTime blockCreated = block.actions
-            .get_Date_of_action(BlockAction.create_block.getactionTitle);
-        if (blockCreated.formatt() == date.formatt()) {
-          filterdBlocks.add(block);
-        }
-      }
-    }
+
+    List<BlockModel> f = blocks
+        .where((element) =>
+            // element.actions
+            //     .get_Date_of_action(BlockAction.create_block.getactionTitle)
+            //     .millisecondsSinceEpoch >=
+            // initialDateRange2.start.millisecondsSinceEpoch&&
+            element.actions
+                .get_Date_of_action(BlockAction.create_block.getactionTitle)
+                .formatToInt()
+                .to_int() <=
+            initialDateRange2.end.formatToInt().to_int())
+        .toList();
+
+    // for (DateTime date
+    //     in getDaysInBeteween(initialDateRange.start, initialDateRange.end)) {
+    //   for (BlockModel block in blocks) {
+    //     DateTime blockCreated = block.actions
+    //         .get_Date_of_action(BlockAction.create_block.getactionTitle);
+    //     if (blockCreated.formatt() == date.formatt()) {
+    //       filterdBlocks.add(block);
+    //       filterdBlocks.removeWhere((element) =>
+    //           element.actions.if_action_exist(
+    //                   BlockAction.consume_block.getactionTitle) ==
+    //               true &&
+    //           element.actions
+    //                   .get_Date_of_action(
+    //                       BlockAction.consume_block.getactionTitle)
+    //                   .formatt() ==
+    //               date.formatt());
+    //     }
+    //   }
+    // }
 
     print(filterdBlocks.length);
     print(b.length);
     b.clear();
     b.addAll(filterdBlocks);
     print(b.length);
+    print("test ${f.length}");
 
     return b;
   }
