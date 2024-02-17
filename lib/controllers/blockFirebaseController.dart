@@ -86,11 +86,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
   //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
   //   }
   // }
+
   c() {
     // print(11);
-    // for (var el in all.where((element) => element.type == "هارد ")) {
-    //   el.type = "هارد";
-
+    // for (var el in all.where((element) => element.type == "ميمورى ")) {
+    //   el.type = "ميمورى";
     //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
     // }
   }
@@ -275,55 +275,27 @@ class BlockFirebasecontroller extends ChangeNotifier {
     blocks.addAll(filterdBlocks);
   }
 
-  var initialDateRange2 =
-      DateTimeRange(start: DateTime(2024, 1, 1), end: DateTime.now());
+  String initialDateRange2 = DateTime.now().formatToInt();
 
   List<BlockModel> filterBlocksBalanceBetweenTowDates2() {
-    List<BlockModel> filterdBlocks = [];
-    print(filterdBlocks.length);
-    List<BlockModel> b = [];
-
     List<BlockModel> f = blocks
         .where((element) =>
-            // element.actions
-            //     .get_Date_of_action(BlockAction.create_block.getactionTitle)
-            //     .millisecondsSinceEpoch >=
-            // initialDateRange2.start.millisecondsSinceEpoch&&
             element.actions
                 .get_Date_of_action(BlockAction.create_block.getactionTitle)
                 .formatToInt()
                 .to_int() <=
-            initialDateRange2.end.formatToInt().to_int())
+            initialDateRange2.to_int())
         .toList();
-
-    // for (DateTime date
-    //     in getDaysInBeteween(initialDateRange.start, initialDateRange.end)) {
-    //   for (BlockModel block in blocks) {
-    //     DateTime blockCreated = block.actions
-    //         .get_Date_of_action(BlockAction.create_block.getactionTitle);
-    //     if (blockCreated.formatt() == date.formatt()) {
-    //       filterdBlocks.add(block);
-    //       filterdBlocks.removeWhere((element) =>
-    //           element.actions.if_action_exist(
-    //                   BlockAction.consume_block.getactionTitle) ==
-    //               true &&
-    //           element.actions
-    //                   .get_Date_of_action(
-    //                       BlockAction.consume_block.getactionTitle)
-    //                   .formatt() ==
-    //               date.formatt());
-    //     }
-    //   }
-    // }
-
-    print(filterdBlocks.length);
-    print(b.length);
-    b.clear();
-    b.addAll(filterdBlocks);
-    print(b.length);
-    print("test ${f.length}");
-
-    return b;
+    f.removeWhere((element) =>
+        element.actions
+                .if_action_exist(BlockAction.consume_block.getactionTitle) ==
+            true &&
+        element.actions
+                .get_Date_of_action(BlockAction.consume_block.getactionTitle)
+                .formatToInt()
+                .to_int() <=
+            initialDateRange2.to_int());
+    return f;
   }
 
   edit_cell_size(dynamic oldvalue, int id, String cell, List<String> newvalue) {
