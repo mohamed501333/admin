@@ -2,13 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/widgets.dart';
+import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/pdfForScissors.dart';
 import 'package:provider/provider.dart';
 
 class H_Reports_view extends StatefulWidget {
@@ -44,6 +47,19 @@ class _H_Reports_viewState extends State<H_Reports_view> {
         return Scaffold(
           appBar: AppBar(
             actions: [
+              IconButton(
+                  onPressed: () {
+                    permission().then((value) async {
+                      PdfBlockReport123.generate(
+                              context, myType.blocks, chosenDate)
+                          .then((value) => context.gonext(
+                              context,
+                              PDfpreview(
+                                v: value.save(),
+                              )));
+                    });
+                  },
+                  icon: const Icon(Icons.picture_as_pdf)),
               TextButton(
                   onPressed: () async {
                     DateTime? pickedDate = await showDatePicker(

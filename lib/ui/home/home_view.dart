@@ -5,6 +5,7 @@ import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/ui/Users_dashboard/users_dashbord.dart';
 import 'package:jason_company/ui/addCategoreys/blockCategory.dart';
+import 'package:jason_company/ui/chemical_stock/ChemicalStock_view.dart';
 import 'package:jason_company/ui/commen/claculator.dart';
 import 'package:jason_company/ui/customers/customersView.dart';
 import 'package:jason_company/ui/cutting_order/cutting_order_view.dart';
@@ -183,10 +184,12 @@ class HomeView extends StatelessWidget {
                   ).permition(context, UserPermition.not_working),
                   Item(
                     MediaQuery.of(context).size.width * .45,
-                    Color.fromARGB(255, 137, 180, 87),
+                    const Color.fromARGB(255, 137, 180, 87),
                     " الكيماويات",
                     IconsManager.itemIcon1,
-                    ontap: () {},
+                    ontap: () {
+                      context.gonext(context, Chemical_view());
+                    },
                   ).permition(context, UserPermition.not_working),
                 ],
               ),
