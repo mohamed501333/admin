@@ -215,6 +215,37 @@ extension Xdf5 on InvoiceAction {
   }
 }
 
+enum Chemical_Category {
+  creat_new_Chemical_category,
+  archive_Chemical_category,
+}
+
+extension CVF on Chemical_Category {
+  ActionModel get add {
+    switch (this) {
+      case Chemical_Category.creat_new_Chemical_category:
+        return ActionModel(
+            action: "creat_new_Chemical_category",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case Chemical_Category.archive_Chemical_category:
+        return ActionModel(
+            action: "archive_Chemical_category",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+    }
+  }
+
+  String get getTitle {
+    switch (this) {
+      case Chemical_Category.creat_new_Chemical_category:
+        return "creat_new_Chemical_category";
+      case Chemical_Category.archive_Chemical_category:
+        return "archive_Chemical_category";
+    }
+  }
+}
+
 enum BlockCategoryAction {
   creat_new_block_category,
   archive_block_category,
@@ -338,7 +369,7 @@ enum customerAction {
   archive_customer,
 }
 
-extension dfdf on customerAction {
+extension CCc on customerAction {
   ActionModel get add {
     switch (this) {
       case customerAction.create_new_customer:
@@ -433,6 +464,7 @@ enum UserPermition {
   show_scissors,
   show_not_final_stock,
   show_add_new_category,
+  show_Chemical_category,
 
   show_Reports_finalprodcut,
   show_Reports_final_prodcutscisors,
@@ -485,6 +517,8 @@ enum UserPermition {
   can_get_data_of_fractions,
   can_get_data_of_notfinals,
   can_get_data_of_chemicals,
+  can_get_data_of_chemical_category,
+
   not_working,
 }
 
@@ -615,11 +649,19 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "عرض تسجيل صنف جديد");
       case UserPermition.can_get_data_of_chemicals:
         return UserpermitionTittle(tittle: "can_get_data_of_chemicals");
+      case UserPermition.show_Chemical_category:
+        return UserpermitionTittle(tittle: "تكويد اصناف فى الكيماويات");
+      case UserPermition.can_get_data_of_chemical_category:
+        return UserpermitionTittle(tittle: "can_get_data_of_chemical_category");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_Chemical_category:
+        return "تكويد اصناف فى الكيماويات";
+      case UserPermition.can_get_data_of_chemical_category:
+        return "can_get_data_of_chemical_category";
       case UserPermition.can_get_data_of_chemicals:
         return "can_get_data_of_chemicals";
       case UserPermition.show_add_new_category:

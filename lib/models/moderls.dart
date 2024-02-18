@@ -2022,3 +2022,100 @@ class ChemicalsModel {
         actions.hashCode;
   }
 }
+
+class ChemicalCategory {
+  int id;
+
+  String family;
+
+  String item;
+
+  String unit;
+  double quantityForUnit;
+
+  List<ActionModel> actions;
+  ChemicalCategory({
+    required this.id,
+    required this.family,
+    required this.item,
+    required this.unit,
+    required this.quantityForUnit,
+    required this.actions,
+  });
+
+  ChemicalCategory copyWith({
+    int? id,
+    String? family,
+    String? item,
+    String? unit,
+    double? quantityForUnit,
+    List<ActionModel>? actions,
+  }) {
+    return ChemicalCategory(
+      id: id ?? this.id,
+      family: family ?? this.family,
+      item: item ?? this.item,
+      unit: unit ?? this.unit,
+      quantityForUnit: quantityForUnit ?? this.quantityForUnit,
+      actions: actions ?? this.actions,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'family': family,
+      'item': item,
+      'unit': unit,
+      'quantityForUnit': quantityForUnit,
+      'actions': actions.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory ChemicalCategory.fromMap(Map<String, dynamic> map) {
+    return ChemicalCategory(
+      id: map['id'] as int,
+      family: map['family'] as String,
+      item: map['item'] as String,
+      unit: map['unit'] as String,
+      quantityForUnit: map['quantityForUnit'] as double,
+      actions: List<ActionModel>.from(
+        (map['actions'] as List<dynamic>).map<ActionModel>(
+          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ChemicalCategory.fromJson(String source) =>
+      ChemicalCategory.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'ChemicalCategory(id: $id, family: $family, item: $item, unit: $unit, quantityForUnit: $quantityForUnit, actions: $actions)';
+  }
+
+  @override
+  bool operator ==(covariant ChemicalCategory other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.family == family &&
+        other.item == item &&
+        other.unit == unit &&
+        other.quantityForUnit == quantityForUnit &&
+        listEquals(other.actions, actions);
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        family.hashCode ^
+        item.hashCode ^
+        unit.hashCode ^
+        quantityForUnit.hashCode ^
+        actions.hashCode;
+  }
+}

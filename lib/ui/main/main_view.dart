@@ -57,6 +57,9 @@ class Mainview extends StatelessWidget {
         permitionss(context, UserPermition.can_get_data_of_blocks)
             ? context.read<Category_controller>().get_blockCategory_data()
             : DoNothingAction();
+        permitionss(context, UserPermition.can_get_data_of_chemical_category)
+            ? context.read<Category_controller>().get_ChemicalCategory_data()
+            : DoNothingAction();
         permitionss(context, UserPermition.can_get_data_of_notfinals)
             ? context.read<NonFinalController>().getdataOfnotFinals()
             : DoNothingAction();
