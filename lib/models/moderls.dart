@@ -1888,3 +1888,137 @@ class BlockCategory {
         actions.hashCode;
   }
 }
+
+class ChemicalsModel {
+  int id;
+  String family;
+  String name;
+  String unit;
+  double quantityForSingleUnit;
+  int supplyOrderNum;
+  int StockRequisitionNum;
+  double quantity;
+  String description;
+  String notes;
+  List<ActionModel> actions;
+  ChemicalsModel({
+    required this.id,
+    required this.family,
+    required this.name,
+    required this.unit,
+    required this.quantityForSingleUnit,
+    required this.supplyOrderNum,
+    required this.StockRequisitionNum,
+    required this.quantity,
+    required this.description,
+    required this.notes,
+    required this.actions,
+  });
+
+  ChemicalsModel copyWith({
+    int? id,
+    String? family,
+    String? name,
+    String? unit,
+    double? quantityForSingleUnit,
+    int? supplyOrderNum,
+    int? StockRequisitionNum,
+    double? quantity,
+    String? description,
+    String? notes,
+    List<ActionModel>? actions,
+  }) {
+    return ChemicalsModel(
+      id: id ?? this.id,
+      family: family ?? this.family,
+      name: name ?? this.name,
+      unit: unit ?? this.unit,
+      quantityForSingleUnit:
+          quantityForSingleUnit ?? this.quantityForSingleUnit,
+      supplyOrderNum: supplyOrderNum ?? this.supplyOrderNum,
+      StockRequisitionNum: StockRequisitionNum ?? this.StockRequisitionNum,
+      quantity: quantity ?? this.quantity,
+      description: description ?? this.description,
+      notes: notes ?? this.notes,
+      actions: actions ?? this.actions,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'family': family,
+      'name': name,
+      'unit': unit,
+      'quantityForSingleUnit': quantityForSingleUnit,
+      'supplyOrderNum': supplyOrderNum,
+      'StockRequisitionNum': StockRequisitionNum,
+      'quantity': quantity,
+      'description': description,
+      'notes': notes,
+      'actions': actions.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory ChemicalsModel.fromMap(Map<String, dynamic> map) {
+    return ChemicalsModel(
+      id: map['id'] as int,
+      family: map['family'] as String,
+      name: map['name'] as String,
+      unit: map['unit'] as String,
+      quantityForSingleUnit: map['quantityForSingleUnit'] as double,
+      supplyOrderNum: map['supplyOrderNum'] as int,
+      StockRequisitionNum: map['StockRequisitionNum'] as int,
+      quantity: map['quantity'] as double,
+      description: map['description'] as String,
+      notes: map['notes'] as String,
+      actions: List<ActionModel>.from(
+        (map['actions'] as List<int>).map<ActionModel>(
+          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ChemicalsModel.fromJson(String source) =>
+      ChemicalsModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'ChemicalsModel(id: $id, family: $family, name: $name, unit: $unit, quantityForSingleUnit: $quantityForSingleUnit, supplyOrderNum: $supplyOrderNum, StockRequisitionNum: $StockRequisitionNum, quantity: $quantity, description: $description, notes: $notes, actions: $actions)';
+  }
+
+  @override
+  bool operator ==(covariant ChemicalsModel other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.family == family &&
+        other.name == name &&
+        other.unit == unit &&
+        other.quantityForSingleUnit == quantityForSingleUnit &&
+        other.supplyOrderNum == supplyOrderNum &&
+        other.StockRequisitionNum == StockRequisitionNum &&
+        other.quantity == quantity &&
+        other.description == description &&
+        other.notes == notes &&
+        listEquals(other.actions, actions);
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        family.hashCode ^
+        name.hashCode ^
+        unit.hashCode ^
+        quantityForSingleUnit.hashCode ^
+        supplyOrderNum.hashCode ^
+        StockRequisitionNum.hashCode ^
+        quantity.hashCode ^
+        description.hashCode ^
+        notes.hashCode ^
+        actions.hashCode;
+  }
+}

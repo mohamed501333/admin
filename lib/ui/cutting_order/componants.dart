@@ -852,7 +852,7 @@ showmyAlertDialog(BuildContext context, OrderAction action, OrderModel item) {
                 },
                 child: const Text('No')),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.red),
+                // style: ElevatedButton.styleFrom(primary: Colors.red),
                 onPressed: () {
                   context.read<OrderController>().addAction(item, action);
                   Navigator.pop(context);

@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/controllers/CategorysController.dart';
+import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
@@ -93,6 +94,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => Category_controller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Chemicals_controller(),
           ),
         ],
         child: MaterialApp(

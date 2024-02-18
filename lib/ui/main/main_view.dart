@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/CategorysController.dart';
+import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
@@ -58,6 +59,9 @@ class Mainview extends StatelessWidget {
             : DoNothingAction();
         permitionss(context, UserPermition.can_get_data_of_notfinals)
             ? context.read<NonFinalController>().getdataOfnotFinals()
+            : DoNothingAction();
+        permitionss(context, UserPermition.can_get_data_of_chemicals)
+            ? context.read<Chemicals_controller>().get_Chemicals_data()
             : DoNothingAction();
 
         return Scaffold(

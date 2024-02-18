@@ -27,13 +27,13 @@ showAlertDialog(
           ),
           actions: [
             ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.green),
+                // style: ElevatedButton.styleFrom(primary: Colors.green),
                 onPressed: () {
                   Navigator.pop(context);
                 },
                 child: const Text('No')),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.red),
+                // style: ElevatedButton.styleFrom(primary: Colors.red),
                 onPressed: () {
                   switch (i) {
                     case 0:

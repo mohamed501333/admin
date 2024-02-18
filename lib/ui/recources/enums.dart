@@ -246,6 +246,37 @@ extension ddsd on BlockCategoryAction {
   }
 }
 
+enum ChemicalAction {
+  creat_new_ChemicalAction_item,
+  archive_ChemicalAction_item,
+}
+
+extension DSD on ChemicalAction {
+  ActionModel get add {
+    switch (this) {
+      case ChemicalAction.creat_new_ChemicalAction_item:
+        return ActionModel(
+            action: "creat_new_ChemicalAction_item",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case ChemicalAction.archive_ChemicalAction_item:
+        return ActionModel(
+            action: "archive_ChemicalAction_item",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+    }
+  }
+
+  String get getTitle {
+    switch (this) {
+      case ChemicalAction.creat_new_ChemicalAction_item:
+        return "creat_new_ChemicalAction_item";
+      case ChemicalAction.archive_ChemicalAction_item:
+        return "archive_ChemicalAction_item";
+    }
+  }
+}
+
 enum NonFinalType {
   floors,
   aspects,
@@ -453,6 +484,7 @@ enum UserPermition {
   can_get_data_of_orders,
   can_get_data_of_fractions,
   can_get_data_of_notfinals,
+  can_get_data_of_chemicals,
   not_working,
 }
 
@@ -581,11 +613,15 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "عرض الاعدادات فى صرف منتج تام");
       case UserPermition.show_add_new_category:
         return UserpermitionTittle(tittle: "عرض تسجيل صنف جديد");
+      case UserPermition.can_get_data_of_chemicals:
+        return UserpermitionTittle(tittle: "can_get_data_of_chemicals");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.can_get_data_of_chemicals:
+        return "can_get_data_of_chemicals";
       case UserPermition.show_add_new_category:
         return "عرض تسجيل صنف جديد";
       case UserPermition.show_setting_in_out_order:

@@ -183,7 +183,7 @@ class HomeView extends StatelessWidget {
                   ).permition(context, UserPermition.not_working),
                   Item(
                     MediaQuery.of(context).size.width * .45,
-                    ColorManager.arsenic,
+                    Color.fromARGB(255, 137, 180, 87),
                     " الكيماويات",
                     IconsManager.itemIcon1,
                     ontap: () {},

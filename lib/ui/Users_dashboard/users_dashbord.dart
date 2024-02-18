@@ -39,8 +39,8 @@ class UsersDashboard extends StatelessWidget {
                                   },
                                   child: const Text('No')),
                               ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.red),
+                                  // style: ElevatedButton.styleFrom(
+                                  //     primary: Colors.red),
                                   onPressed: () {
                                     myType.Add_new_user(useremail.text);
 

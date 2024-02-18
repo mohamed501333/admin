@@ -144,15 +144,11 @@ class Fields extends StatelessWidget {
                                 ),
                                 actions: [
                                   ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Colors.green),
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
                                       child: const Text('No')),
                                   ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Colors.red),
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
