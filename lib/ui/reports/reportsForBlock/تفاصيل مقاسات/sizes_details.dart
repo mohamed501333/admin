@@ -1,10 +1,10 @@
 // ignore_for_file: must_be_immutable
 import 'package:collection/collection.dart';
-import 'package:date_ranger/date_ranger.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -15,19 +15,37 @@ import 'package:provider/provider.dart';
 class BlocksSizesDetials extends StatelessWidget {
   BlocksSizesDetials({super.key});
   BlockReportsViewModel vm = BlockReportsViewModel();
+  String chosenDate = format.format(DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
         List<BlockModel> blocks = myType.filterBlocksBalanceBetweenTowDates2();
+        print(" chosen $chosenDate");
 
         return Scaffold(
           appBar: AppBar(actions: [
-            IconButton(
-                onPressed: () {
-                  context.gonext(context, const Datepker2());
+            TextButton(
+                onPressed: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101));
+
+                  if (pickedDate != null) {
+                    chosenDate = format.format(pickedDate);
+                    myType.initialDateRange2 = pickedDate.formatToInt();
+                    myType.filterBlocksBalanceBetweenTowDates2();
+                    myType.Refresh_the_UI();
+                  } else {}
                 },
-                icon: const Icon(Icons.date_range)),
+                child: Text(
+                  chosenDate,
+                  style: const TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                )),
             IconButton(
                 onPressed: () {
                   permission().then((value) async {
@@ -159,32 +177,40 @@ class BlocksSizesDetials extends StatelessWidget {
   }
 }
 
-class Datepker2 extends StatelessWidget {
-  const Datepker2({super.key});
+// class Datepker2 extends StatelessWidget {
+//   const Datepker2({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<BlockFirebasecontroller>(
-      builder: (context, myType, child) {
-        return Scaffold(
-            appBar: AppBar(),
-            body: SizedBox(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: DateRanger(
-                    initialRange: myType.initialDateRange2,
-                    onRangeChanged: (range) {
-                      myType.initialDateRange = range;
+//   @override
+//   Widget build(BuildContext context) {
+//     BlockFirebasecontroller mytype = context.read<BlockFirebasecontroller>();
+//     return ;
+//   }
+// }
+// class Datepker2 extends StatelessWidget {
+//   const Datepker2({super.key});
 
-                      myType.filterBlocksBalanceBetweenTowDates2();
-                      myType.Refresh_the_UI();
-                    },
-                  ),
-                ),
-              ),
-            ));
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Consumer<BlockFirebasecontroller>(
+//       builder: (context, myType, child) {
+//         return Scaffold(
+//             appBar: AppBar(),
+//             body: SizedBox(
+//               child: Center(
+//                 child: Padding(
+//                   padding: const EdgeInsets.all(24),
+//                   child: DateRanger(
+//                     initialRange: myType.initialDateRange2,
+//                     onRangeChanged: (range) {
+//                       myType.initialDateRange2 = range;
+//                       myType.filterBlocksBalanceBetweenTowDates2();
+//                       myType.Refresh_the_UI();
+//                     },
+//                   ),
+//                 ),
+//               ),
+//             ));
+//       },
+//     );
+//   }
+// }
