@@ -2,13 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
+import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/round/pdf.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/round/widgets.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/reports_viewmoder.dart';
 import 'package:provider/provider.dart';
@@ -50,6 +53,32 @@ class _R_Reports_viewState extends State<R_Reports_view> {
         return Scaffold(
           appBar: AppBar(
             actions: [
+              IconButton(
+                  onPressed: () {
+                    permission().then((value) async {
+                      PdfBlockReport123456.generate(
+                              context,
+                              myType.blocks,
+                              context
+                                  .read<final_prodcut_controller>()
+                                  .finalproducts
+                                  .where((element) =>
+                                      element.actions
+                                          .get_Date_of_action(finalProdcutAction
+                                              .incert_finalProduct_from_cutingUnit
+                                              .getactionTitle)
+                                          .formatt() ==
+                                      chosenDate)
+                                  .toList(),
+                              chosenDate)
+                          .then((value) => context.gonext(
+                              context,
+                              PDfpreview(
+                                v: value.save(),
+                              )));
+                    });
+                  },
+                  icon: const Icon(Icons.picture_as_pdf)),
               TextButton(
                   onPressed: () async {
                     DateTime? pickedDate = await showDatePicker(

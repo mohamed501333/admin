@@ -6,6 +6,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/main.dart';
+import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/inviceForFinalProdct.dart';
 import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -20,7 +21,6 @@ class InvicesView extends StatefulWidget {
 
 class _InvicesViewState extends State<InvicesView> {
   String chosenDate = format.format(DateTime.now());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,12 +51,14 @@ class _InvicesViewState extends State<InvicesView> {
       ),
       body: Consumer<Invoice_controller>(
         builder: (context, myType, child) {
+          List<Invoice> t = myType.invoices
+              .where((element) => format.format(element.date) == chosenDate)
+              .sortedBy<num>((element) => element.number)
+              .reversed
+              .toList();
           return SingleChildScrollView(
             child: Column(
-              children: myType.invoices
-                  .where((element) => format.format(element.date) == chosenDate)
-                  .sortedBy<num>((element) => element.number)
-                  .reversed
+              children: t
                   .map(
                     (e) => GestureDetector(
                       onTap: () {
@@ -74,8 +76,9 @@ class _InvicesViewState extends State<InvicesView> {
                         color: Colors.blue[100],
                         elevation: 5,
                         child: ListTile(
-                          leading: const CircleAvatar(
-                            child: Text(""),
+                          leading: CircleAvatar(
+                            child:
+                                Text("${t.reversed.toList().indexOf(e) + 1}"),
                           ),
                           title: Column(
                             children: [
