@@ -1900,6 +1900,8 @@ class ChemicalsModel {
   double quantity;
   String description;
   String notes;
+  String cumingFrom;
+  String outTo;
   List<ActionModel> actions;
   ChemicalsModel({
     required this.id,
@@ -1912,6 +1914,8 @@ class ChemicalsModel {
     required this.quantity,
     required this.description,
     required this.notes,
+    required this.cumingFrom,
+    required this.outTo,
     required this.actions,
   });
 
@@ -1926,6 +1930,8 @@ class ChemicalsModel {
     double? quantity,
     String? description,
     String? notes,
+    String? cumingFrom,
+    String? outTo,
     List<ActionModel>? actions,
   }) {
     return ChemicalsModel(
@@ -1940,6 +1946,8 @@ class ChemicalsModel {
       quantity: quantity ?? this.quantity,
       description: description ?? this.description,
       notes: notes ?? this.notes,
+      cumingFrom: cumingFrom ?? this.cumingFrom,
+      outTo: outTo ?? this.outTo,
       actions: actions ?? this.actions,
     );
   }
@@ -1956,6 +1964,8 @@ class ChemicalsModel {
       'quantity': quantity,
       'description': description,
       'notes': notes,
+      'cumingFrom': cumingFrom,
+      'outTo': outTo,
       'actions': actions.map((x) => x.toMap()).toList(),
     };
   }
@@ -1972,8 +1982,10 @@ class ChemicalsModel {
       quantity: map['quantity'] as double,
       description: map['description'] as String,
       notes: map['notes'] as String,
+      cumingFrom: map['cumingFrom'] as String,
+      outTo: map['outTo'] as String,
       actions: List<ActionModel>.from(
-        (map['actions'] as List<int>).map<ActionModel>(
+        (map['actions'] as List<dynamic>).map<ActionModel>(
           (x) => ActionModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -1987,7 +1999,7 @@ class ChemicalsModel {
 
   @override
   String toString() {
-    return 'ChemicalsModel(id: $id, family: $family, name: $name, unit: $unit, quantityForSingleUnit: $quantityForSingleUnit, supplyOrderNum: $supplyOrderNum, StockRequisitionNum: $StockRequisitionNum, quantity: $quantity, description: $description, notes: $notes, actions: $actions)';
+    return 'ChemicalsModel(id: $id, family: $family, name: $name, unit: $unit, quantityForSingleUnit: $quantityForSingleUnit, supplyOrderNum: $supplyOrderNum, StockRequisitionNum: $StockRequisitionNum, quantity: $quantity, description: $description, notes: $notes, cumingFrom: $cumingFrom, outTo: $outTo, actions: $actions)';
   }
 
   @override
@@ -2004,6 +2016,8 @@ class ChemicalsModel {
         other.quantity == quantity &&
         other.description == description &&
         other.notes == notes &&
+        other.cumingFrom == cumingFrom &&
+        other.outTo == outTo &&
         listEquals(other.actions, actions);
   }
 
@@ -2019,6 +2033,8 @@ class ChemicalsModel {
         quantity.hashCode ^
         description.hashCode ^
         notes.hashCode ^
+        cumingFrom.hashCode ^
+        outTo.hashCode ^
         actions.hashCode;
   }
 }
@@ -2031,6 +2047,8 @@ class ChemicalCategory {
   String item;
 
   String unit;
+  String cummingFrom;
+  String OutTo;
   double quantityForUnit;
 
   List<ActionModel> actions;
@@ -2039,6 +2057,8 @@ class ChemicalCategory {
     required this.family,
     required this.item,
     required this.unit,
+    required this.cummingFrom,
+    required this.OutTo,
     required this.quantityForUnit,
     required this.actions,
   });
@@ -2048,6 +2068,8 @@ class ChemicalCategory {
     String? family,
     String? item,
     String? unit,
+    String? cummingFrom,
+    String? OutTo,
     double? quantityForUnit,
     List<ActionModel>? actions,
   }) {
@@ -2056,6 +2078,8 @@ class ChemicalCategory {
       family: family ?? this.family,
       item: item ?? this.item,
       unit: unit ?? this.unit,
+      cummingFrom: cummingFrom ?? this.cummingFrom,
+      OutTo: OutTo ?? this.OutTo,
       quantityForUnit: quantityForUnit ?? this.quantityForUnit,
       actions: actions ?? this.actions,
     );
@@ -2067,6 +2091,8 @@ class ChemicalCategory {
       'family': family,
       'item': item,
       'unit': unit,
+      'cummingFrom': cummingFrom,
+      'OutTo': OutTo,
       'quantityForUnit': quantityForUnit,
       'actions': actions.map((x) => x.toMap()).toList(),
     };
@@ -2078,6 +2104,8 @@ class ChemicalCategory {
       family: map['family'] as String,
       item: map['item'] as String,
       unit: map['unit'] as String,
+      cummingFrom: map['cummingFrom'] as String,
+      OutTo: map['OutTo'] as String,
       quantityForUnit: map['quantityForUnit'] as double,
       actions: List<ActionModel>.from(
         (map['actions'] as List<dynamic>).map<ActionModel>(
@@ -2094,7 +2122,7 @@ class ChemicalCategory {
 
   @override
   String toString() {
-    return 'ChemicalCategory(id: $id, family: $family, item: $item, unit: $unit, quantityForUnit: $quantityForUnit, actions: $actions)';
+    return 'ChemicalCategory(id: $id, family: $family, item: $item, unit: $unit, cummingFrom: $cummingFrom, OutTo: $OutTo, quantityForUnit: $quantityForUnit, actions: $actions)';
   }
 
   @override
@@ -2105,6 +2133,8 @@ class ChemicalCategory {
         other.family == family &&
         other.item == item &&
         other.unit == unit &&
+        other.cummingFrom == cummingFrom &&
+        other.OutTo == OutTo &&
         other.quantityForUnit == quantityForUnit &&
         listEquals(other.actions, actions);
   }
@@ -2115,6 +2145,8 @@ class ChemicalCategory {
         family.hashCode ^
         item.hashCode ^
         unit.hashCode ^
+        cummingFrom.hashCode ^
+        OutTo.hashCode ^
         quantityForUnit.hashCode ^
         actions.hashCode;
   }

@@ -22,7 +22,9 @@ class Chemical_view extends StatelessWidget {
                 style: TextStyle(color: Color.fromARGB(255, 156, 0, 0)),
               )).permition(context, UserPermition.show_Chemical_category),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                context.gonext(context, Suplying());
+              },
               child: const Text(
                 "توريد",
                 style: TextStyle(color: Color.fromARGB(255, 156, 0, 0)),
