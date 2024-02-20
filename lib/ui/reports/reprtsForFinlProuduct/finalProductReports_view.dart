@@ -174,7 +174,7 @@ class FinalProductReportsview extends StatelessWidget {
               ],
             );
           },
-        )).permition(context, UserPermition.show_Reports_finalprodcut);
+        ));
   }
 }
 

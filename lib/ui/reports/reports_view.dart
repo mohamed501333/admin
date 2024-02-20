@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/functions.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/%D8%A7%D9%84%D9%85%D8%B5%D8%B1%D9%88%D9%81%20%D9%85%D9%82%D8%A7%D8%A8%D9%84%20%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%A7%D8%AC/Report10_view.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_reports_view.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/round/scissor_reports_view.dart';
@@ -19,56 +21,103 @@ import 'package:jason_company/ui/reports/reprtsForFinlProuduct/scissorsFInalProd
 class ReportsView extends StatelessWidget {
   ReportsView({super.key});
 
-  List<Reportmodel> r = [
-    Reportmodel(title: " يومية انتاج تام  ", route: FinalProductReportsview()),
-    Reportmodel(
-        title: " يومية انتاج تام لكل مقص   ", route: ScissorsFInalProducts()),
-    Reportmodel(
-        title: "اجماليات البلوكات      ", route: const BlockReportsView()),
-    Reportmodel(title: "يومية صرف بلوكات     ", route: DailyBlockReportsView()),
-    Reportmodel(
-        title: "  تفاصيل مخزن البلوكات     ", route: Block_detaild_view()),
-    Reportmodel(
-        title: "  تفاصيل مقاسات البلوكات     ", route: BlocksSizesDetials()),
-    Reportmodel(
-        title: "      تفاصيل مخزن المنتج التام     ",
-        route: details_of_finalProdcut()),
-    Reportmodel(
-        title: "      تفاصيل  اوامر الشغل     ",
-        route: CuttingOrderDetailsReports()),
-    Reportmodel(
-        title: " تقرير  صبات البلوكات     ", route: const BlockReport3()),
-    Reportmodel(
-        title: "  تقرير   المقصات  الراسى     ", route: const H_Reports_view()),
-    Reportmodel(
-        title: "  تقرير   المقصات  الدائرى     ",
-        route: const R_Reports_view()),
-    Reportmodel(
-        title: "تقرير مقارنة الانتاج بالمصروف      ", route: Report10View()),
-  ];
   @override
   Widget build(BuildContext context) {
+    List<Reportmodel> r = [
+      Reportmodel(
+        title: " يومية انتاج تام  ",
+        route: FinalProductReportsview(),
+        permition:
+            permitionss(context, UserPermition.show_Reports_finalprodcut),
+      ),
+      Reportmodel(
+        title: " يومية انتاج تام لكل مقص   ",
+        route: ScissorsFInalProducts(),
+        permition: permitionss(
+            context, UserPermition.show_Reports_final_prodcutscisors),
+      ),
+      Reportmodel(
+        title: "اجماليات البلوكات      ",
+        route: const BlockReportsView(),
+        permition:
+            permitionss(context, UserPermition.show_Reports_totals_of_blocks),
+      ),
+      Reportmodel(
+        title: "يومية صرف بلوكات     ",
+        route: DailyBlockReportsView(),
+        permition:
+            permitionss(context, UserPermition.show_Reports_consume_boock),
+      ),
+      Reportmodel(
+        title: "  تفاصيل مخزن البلوكات     ",
+        route: Block_detaild_view(),
+        permition: permitionss(
+            context, UserPermition.show_Reports_details_of_block_stock),
+      ),
+      Reportmodel(
+        title: "  تفاصيل مقاسات البلوكات     ",
+        route: BlocksSizesDetials(),
+        permition: permitionss(context,
+            UserPermition.show_Reports_details_of_sizes_of_block_stock),
+      ),
+      Reportmodel(
+        title: "      تفاصيل مخزن المنتج التام     ",
+        route: details_of_finalProdcut(),
+        permition: permitionss(
+            context, UserPermition.show_Reports_details_of_finalProdcut_stock),
+      ),
+      Reportmodel(
+        title: "      تفاصيل  اوامر الشغل     ",
+        route: CuttingOrderDetailsReports(),
+        permition: permitionss(
+            context, UserPermition.show_Reports_details_of_finalProdcut_stock),
+      ),
+      Reportmodel(
+        title: " تقرير  صبات البلوكات     ",
+        route: const BlockReport3(),
+        permition:
+            permitionss(context, UserPermition.show_Reports_every_serial),
+      ),
+      Reportmodel(
+        title: "  تقرير   المقصات  الراسى     ",
+        route: const H_Reports_view(),
+        permition: permitionss(context, UserPermition.show_Reports_H),
+      ),
+      Reportmodel(
+        title: "  تقرير   المقصات  الدائرى     ",
+        route: const R_Reports_view(),
+        permition: permitionss(context, UserPermition.show_Reports_R),
+      ),
+      Reportmodel(
+        title: "تقرير مقارنة الانتاج بالمصروف      ",
+        route: Report10View(),
+        permition: permitionss(context,
+            UserPermition.show_Reports_Comparison_Of_consumedAndResults),
+      ),
+    ];
     return SingleChildScrollView(
       child: Column(
           children: r
               .map(
-                (e) => GestureDetector(
-                  onTap: () => context.gonext(context, e.route),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          e.title,
-                          style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                (e) => e.permition == true
+                    ? GestureDetector(
+                        onTap: () => context.gonext(context, e.route),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                e.title,
+                                style: const TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              const Icon(Icons.arrow_back),
+                            ],
+                          ),
                         ),
-                        const Icon(Icons.arrow_back),
-                      ],
-                    ),
-                  ),
-                ),
+                      )
+                    : const SizedBox(),
               )
               .toList()),
     );
@@ -76,17 +125,19 @@ class ReportsView extends StatelessWidget {
 }
 
 // ignore: must_be_immutable
-class Reportmodel extends StatelessWidget {
+class Reportmodel extends Widget {
   String title;
   Widget route;
+  bool permition;
   Reportmodel({
     required this.title,
     required this.route,
+    required this.permition,
   });
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
+  Element createElement() {
+    // TODO: implement createElement
     throw UnimplementedError();
   }
 }

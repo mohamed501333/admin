@@ -1898,6 +1898,7 @@ class ChemicalsModel {
   int supplyOrderNum;
   int StockRequisitionNum;
   double quantity;
+  double Totalquantity;
   String description;
   String notes;
   String cumingFrom;
@@ -1912,6 +1913,7 @@ class ChemicalsModel {
     required this.supplyOrderNum,
     required this.StockRequisitionNum,
     required this.quantity,
+    required this.Totalquantity,
     required this.description,
     required this.notes,
     required this.cumingFrom,
@@ -1928,6 +1930,7 @@ class ChemicalsModel {
     int? supplyOrderNum,
     int? StockRequisitionNum,
     double? quantity,
+    double? Totalquantity,
     String? description,
     String? notes,
     String? cumingFrom,
@@ -1944,6 +1947,7 @@ class ChemicalsModel {
       supplyOrderNum: supplyOrderNum ?? this.supplyOrderNum,
       StockRequisitionNum: StockRequisitionNum ?? this.StockRequisitionNum,
       quantity: quantity ?? this.quantity,
+      Totalquantity: Totalquantity ?? this.Totalquantity,
       description: description ?? this.description,
       notes: notes ?? this.notes,
       cumingFrom: cumingFrom ?? this.cumingFrom,
@@ -1962,6 +1966,7 @@ class ChemicalsModel {
       'supplyOrderNum': supplyOrderNum,
       'StockRequisitionNum': StockRequisitionNum,
       'quantity': quantity,
+      'Totalquantity': Totalquantity,
       'description': description,
       'notes': notes,
       'cumingFrom': cumingFrom,
@@ -1980,6 +1985,7 @@ class ChemicalsModel {
       supplyOrderNum: map['supplyOrderNum'] as int,
       StockRequisitionNum: map['StockRequisitionNum'] as int,
       quantity: map['quantity'] as double,
+      Totalquantity: map['Totalquantity'] as double,
       description: map['description'] as String,
       notes: map['notes'] as String,
       cumingFrom: map['cumingFrom'] as String,
@@ -1999,7 +2005,7 @@ class ChemicalsModel {
 
   @override
   String toString() {
-    return 'ChemicalsModel(id: $id, family: $family, name: $name, unit: $unit, quantityForSingleUnit: $quantityForSingleUnit, supplyOrderNum: $supplyOrderNum, StockRequisitionNum: $StockRequisitionNum, quantity: $quantity, description: $description, notes: $notes, cumingFrom: $cumingFrom, outTo: $outTo, actions: $actions)';
+    return 'ChemicalsModel(id: $id, family: $family, name: $name, unit: $unit, quantityForSingleUnit: $quantityForSingleUnit, supplyOrderNum: $supplyOrderNum, StockRequisitionNum: $StockRequisitionNum, quantity: $quantity, Totalquantity: $Totalquantity, description: $description, notes: $notes, cumingFrom: $cumingFrom, outTo: $outTo, actions: $actions)';
   }
 
   @override
@@ -2014,6 +2020,7 @@ class ChemicalsModel {
         other.supplyOrderNum == supplyOrderNum &&
         other.StockRequisitionNum == StockRequisitionNum &&
         other.quantity == quantity &&
+        other.Totalquantity == Totalquantity &&
         other.description == description &&
         other.notes == notes &&
         other.cumingFrom == cumingFrom &&
@@ -2031,6 +2038,7 @@ class ChemicalsModel {
         supplyOrderNum.hashCode ^
         StockRequisitionNum.hashCode ^
         quantity.hashCode ^
+        Totalquantity.hashCode ^
         description.hashCode ^
         notes.hashCode ^
         cumingFrom.hashCode ^

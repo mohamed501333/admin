@@ -56,6 +56,15 @@ class Chemicals_controller extends ChangeNotifier {
   }
 
   String? selectedValueForSupplyer;
+  String? selectedValueForFamily;
+  String? selectedValueForUnit;
+  String? selectedValueForItem;
+  makeNull() {
+    selectedValueForSupplyer = null;
+    selectedValueForFamily = null;
+    selectedValueForUnit = null;
+    selectedValueForItem = null;
+  }
 
   //lllllllllllllllllllllllllllllllllllllllllllllllllllllll
 //lllllllllllllllllllllllllllllllllllllllllllllllllllllll

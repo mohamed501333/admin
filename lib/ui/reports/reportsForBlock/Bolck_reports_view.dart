@@ -141,7 +141,7 @@ class BlockReportsView extends StatelessWidget {
           ],
         ),
       ),
-    ).permition(context, UserPermition.show_Reports_totals_of_blocks);
+    );
   }
 }
 
@@ -209,6 +209,6 @@ class DailyBlockReportsView extends StatelessWidget {
           )
         ],
       ),
-    ).permition(context, UserPermition.show_Reports_consume_boock);
+    );
   }
 }

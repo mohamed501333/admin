@@ -146,7 +146,7 @@ class _H_Reports_viewState extends State<H_Reports_view> {
               ],
             ),
           ),
-        ).permition(context, UserPermition.show_Reports_H);
+        );
       },
     );
   }

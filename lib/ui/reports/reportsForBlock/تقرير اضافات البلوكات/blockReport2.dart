@@ -75,7 +75,7 @@ class BlockReport3 extends StatelessWidget {
                   ],
                 ),
               )
-            ])).permition(context, UserPermition.show_Reports_every_serial);
+            ]));
       },
     );
   }
