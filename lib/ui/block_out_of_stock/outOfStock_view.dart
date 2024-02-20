@@ -154,7 +154,8 @@ class Fieldss extends StatelessWidget {
             CustomTextFormField(
               keybordtupe: TextInputType.name,
               width: MediaQuery.of(context).size.width * .23,
-              hint: "صادر الى",
+              hint: "المصنع",
+              label: "صادر الى",
               controller: vm.outTo,
             ),
             const SizedBox(

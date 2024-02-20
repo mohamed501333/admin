@@ -32,9 +32,10 @@ extension Dnl on DateTime {
     String formateeddate = DateFormat("yyyy/MM/dd").format(this);
     return formateeddate;
   }
-  String formatToInt() {
+
+  int formatToInt() {
     String formateeddate = DateFormat("yyyyMMdd").format(this);
-    return formateeddate;
+    return formateeddate.to_int();
   }
 
   String formatt2() {
@@ -90,6 +91,21 @@ extension Toint on String {
 }
 
 extension Filter on List<FinalProductModel> {
+  List<FinalProductModel> filterFinalProductDateBetween(
+      DateTimeRange initialDateRange) {
+    return where((element) =>
+        element.actions
+                .get_Date_of_action(finalProdcutAction
+                    .incert_finalProduct_from_cutingUnit.getactionTitle)
+                .formatToInt() >=
+            initialDateRange.start.formatToInt() &&
+        element.actions
+                .get_Date_of_action(finalProdcutAction
+                    .incert_finalProduct_from_cutingUnit.getactionTitle)
+                .formatToInt() <=
+            initialDateRange.end.formatToInt()).toList();
+  }
+
   List<FinalProductModel> filteronfinalproductwithcsissor() {
     List<FinalProductModel> nonRepetitive = [];
     for (var i = 0; i < length; i++) {
@@ -317,6 +333,19 @@ extension C3 on List<ActionModel> {
 }
 
 extension A1 on List<BlockModel> {
+  List<BlockModel> filterConsumeDateBetween(DateTimeRange initialDateRange) {
+    return where((element) =>
+        element.OutTo == "المصنع" &&
+        element.actions
+                .get_Date_of_action(BlockAction.consume_block.getactionTitle)
+                .formatToInt() >=
+            initialDateRange.start.formatToInt() &&
+        element.actions
+                .get_Date_of_action(BlockAction.consume_block.getactionTitle)
+                .formatToInt() <=
+            initialDateRange.end.formatToInt()).toList();
+  }
+
   List<BlockModel> filterserials() {
     List<BlockModel> nonRepetitive = [];
 

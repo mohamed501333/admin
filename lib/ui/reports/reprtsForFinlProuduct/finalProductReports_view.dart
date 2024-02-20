@@ -339,6 +339,13 @@ class TheTable23 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
       builder: (context, finalproducts, child) {
+        List<FinalProductModel> f = finalproducts.finalproducts
+            .where((element) =>
+                format.format(element.actions.get_Date_of_action(
+                    finalProdcutAction
+                        .incert_finalProduct_from_cutingUnit.getactionTitle)) ==
+                chosenDate)
+            .toList();
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(
@@ -349,19 +356,7 @@ class TheTable23 extends StatelessWidget {
                 0: FlexColumnWidth(.3),
                 2: FlexColumnWidth(.3),
               },
-              children: finalproducts.finalproducts
-                  .where((element) =>
-                      format.format(element.actions.get_Date_of_action(
-                          finalProdcutAction.incert_finalProduct_from_cutingUnit
-                              .getactionTitle)) ==
-                      chosenDate)
-                  .where((element) =>
-                      element.actions.if_action_exist(finalProdcutAction
-                          .final_prodcut_DidQalityCheck.getactionTitle) ==
-                      true)
-                  .toList()
-                  .filter_type_density()
-                  .map((e) {
+              children: f.filter_type_density().map((e) {
                 x++;
 
                 return TableRow(
@@ -384,17 +379,8 @@ class TheTable23 extends StatelessWidget {
                       Container(
                           padding: const EdgeInsets.all(4),
                           child: Text(vm
-                              .total_finalprodut(
-                                  finalproducts.finalproducts
-                                      .where((element) =>
-                                          element.actions.if_action_exist(
-                                              finalProdcutAction
-                                                  .final_prodcut_DidQalityCheck
-                                                  .getactionTitle) ==
-                                          true)
-                                      .toList(),
-                                  e)
-                              .toStringAsFixed(4)
+                              .total_finalprodut(f, e)
+                              .toStringAsFixed(1)
                               .toString())),
                     ]);
               }).toList(),

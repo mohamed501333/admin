@@ -60,4 +60,7 @@ class SettingController extends ChangeNotifier {
   int amountofshowinaddBlock = 5;
 
   int GroupvalueofRadio = 2;
+
+  DateTime from = DateTime.now();
+  DateTime to = DateTime.now();
 }

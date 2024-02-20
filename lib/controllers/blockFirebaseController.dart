@@ -275,16 +275,15 @@ class BlockFirebasecontroller extends ChangeNotifier {
     blocks.addAll(filterdBlocks);
   }
 
-  String initialDateRange2 = DateTime.now().formatToInt();
+  int initialDateRange2 = DateTime.now().formatToInt();
 
   List<BlockModel> filterBlocksBalanceBetweenTowDates2() {
     List<BlockModel> f = blocks
         .where((element) =>
             element.actions
                 .get_Date_of_action(BlockAction.create_block.getactionTitle)
-                .formatToInt()
-                .to_int() <=
-            initialDateRange2.to_int())
+                .formatToInt() <=
+            initialDateRange2)
         .toList();
     f.removeWhere((element) =>
         element.actions
@@ -292,9 +291,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
             true &&
         element.actions
                 .get_Date_of_action(BlockAction.consume_block.getactionTitle)
-                .formatToInt()
-                .to_int() <=
-            initialDateRange2.to_int());
+                .formatToInt() <=
+            initialDateRange2);
     return f;
   }
 

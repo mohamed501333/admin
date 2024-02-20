@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/ui/reports/%D8%A7%D9%84%D9%85%D8%B5%D8%B1%D9%88%D9%81%20%D9%85%D9%82%D8%A7%D8%A8%D9%84%20%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%A7%D8%AC/Report10_view.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_reports_view.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/round/scissor_reports_view.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84/block%20reports%20details.com/block_details_view.dart';
@@ -42,6 +43,8 @@ class ReportsView extends StatelessWidget {
     Reportmodel(
         title: "  تقرير   المقصات  الدائرى     ",
         route: const R_Reports_view()),
+    Reportmodel(
+        title: "تقرير مقارنة الانتاج بالمصروف      ", route: Report10View()),
   ];
   @override
   Widget build(BuildContext context) {
@@ -72,11 +75,18 @@ class ReportsView extends StatelessWidget {
   }
 }
 
-class Reportmodel {
+// ignore: must_be_immutable
+class Reportmodel extends StatelessWidget {
   String title;
   Widget route;
   Reportmodel({
     required this.title,
     required this.route,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
 }

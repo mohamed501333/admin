@@ -17,9 +17,8 @@ class OutOfStockViewModel extends BaseViewModel {
         .where((e) => e.number == blockNum.to_int() && e.serial == blockSerial)
         .toList();
     if (bloc.isNotEmpty) {
-      context
-          .read<BlockFirebasecontroller>()
-          .consumeblock(bloc[0], outTo.text.isEmpty ? "المصنع" : outTo.text);
+      context.read<BlockFirebasecontroller>().consumeblock(
+          bloc[0], outTo.text.isEmpty ? "صالة الانتاج" : outTo.text);
       blocknumbercontroller.clear();
     }
   }
