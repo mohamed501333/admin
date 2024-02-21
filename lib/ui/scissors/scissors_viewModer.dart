@@ -14,8 +14,8 @@ class ScissorsViewModel {
     const H1Veiw(
       scissor: 3,
     ),
-    Rscissor(scissor: 1),
-    Rscissor(scissor: 2),
-    Rscissor(scissor: 3),
+    RVeiw2(scissor: 1),
+    RVeiw2(scissor: 2),
+    RVeiw2(scissor: 3),
   ];
 }

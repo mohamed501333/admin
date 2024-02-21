@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MainController extends ChangeNotifier {
-  int currentIndex = 3;
+  int currentIndex = 2;
 
   changecurrenIndexogbuttonNav(val) {
     currentIndex = val;

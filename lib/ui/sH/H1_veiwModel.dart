@@ -78,6 +78,7 @@ class H1VeiwModel extends BaseViewModel {
   addpermanentFractons(
       BuildContext context, List<BlockModel> b, int scissor, ChipFraction e) {
     permanentFractons.add(FractionModel(
+      blockId: get_block_of_num_in_controller(b, context).id,
       notes: "",
       worker: "",
       stage: 0,

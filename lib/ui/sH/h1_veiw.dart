@@ -45,6 +45,17 @@ class _H1VeiwState extends State<H1Veiw> {
           key: vm.formKey,
           child: Column(
             children: [
+              Container(
+                margin: const EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
+                decoration:
+                    BoxDecoration(border: Border.all(), color: Colors.grey),
+                child: Text(
+                  "      مقص راسى ( ${widget.scissor} )     ",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
               fields(vm: vm, b: blocks),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

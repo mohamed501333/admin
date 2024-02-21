@@ -1,6 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
@@ -10,7 +13,78 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
-import 'package:provider/provider.dart';
+
+class RVeiw2 extends StatelessWidget {
+  RVeiw2({
+    super.key,
+    required this.scissor,
+  });
+  final int scissor;
+  Rscissor_veiwModel vm = Rscissor_veiwModel();
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<BlockFirebasecontroller>(
+      builder: (context, myType, child) {
+        List<FractionModel> fractions = vm.getFractions(myType, scissor);
+        print("ssssssss${fractions.map((e) => e.stage).toSet().toList()}");
+        return Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  border: Border.all(),
+                  color: const Color.fromARGB(255, 175, 132, 132)),
+              child: Text(
+                "      مقص دائرى ( $scissor )     ",
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
+            Container(),
+            Row(
+              children: [
+                Container(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * .16,
+                  decoration: BoxDecoration(
+                      border: Border.all(),
+                      color: const Color.fromARGB(255, 170, 164, 164)),
+                  child: const Center(
+                      child: Text(
+                    "رقم الدور",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                ),
+                Container(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * .55,
+                  decoration: BoxDecoration(
+                      border: Border.all(),
+                      color: const Color.fromARGB(255, 170, 164, 164)),
+                  child: const Center(
+                      child: Text(" الوارد ",
+                          style: TextStyle(fontWeight: FontWeight.bold))),
+                ),
+                Container(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * .29,
+                  decoration: BoxDecoration(
+                      border: Border.all(),
+                      color: const Color.fromARGB(255, 170, 164, 164)),
+                  child: const Center(
+                      child: Text("دون التام",
+                          style: TextStyle(fontWeight: FontWeight.bold))),
+                ),
+              ].reversed.toList(),
+            )
+          ],
+        );
+      },
+    );
+  }
+}
 
 class Rscissor extends StatelessWidget {
   Rscissor({super.key, required this.scissor});

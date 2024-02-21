@@ -21,6 +21,7 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/recources/icons_manager.dart';
 import 'package:jason_company/ui/recources/strings_manager.dart';
 import 'package:jason_company/ui/final_product_stock/Stock_of_finalProduct_View.dart';
+import 'package:jason_company/ui/scissors/scissors_view.dart';
 import 'package:jason_company/ui/users_actions/users_actios.dart';
 import 'package:provider/provider.dart';
 
@@ -128,6 +129,20 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, InvicesView());
                     },
                   ).permition(context, UserPermition.show_finalprodcut_invoice),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Item(
+                    MediaQuery.of(context).size.width * .45,
+                    ColorManager.arsenic,
+                    " المقصات",
+                    Icons.cut,
+                    ontap: () {
+                      context.gonext(context, ScissorsView());
+                    },
+                  )..permition(context, UserPermition.show_scissors),
                 ],
               ),
               Row(

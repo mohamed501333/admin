@@ -418,6 +418,7 @@ class BlockModel2 {
 class FractionModel {
   int id;
   int blockmodelmum;
+  int blockId;
   String serial;
   int wedth;
   int lenth;
@@ -434,10 +435,10 @@ class FractionModel {
   String notes;
   List<NotFinalmodel> notfinals;
   List<ActionModel> actions;
-
   FractionModel({
     required this.id,
     required this.blockmodelmum,
+    required this.blockId,
     required this.serial,
     required this.wedth,
     required this.lenth,
@@ -459,6 +460,7 @@ class FractionModel {
   FractionModel copyWith({
     int? id,
     int? blockmodelmum,
+    int? blockId,
     String? serial,
     int? wedth,
     int? lenth,
@@ -479,6 +481,7 @@ class FractionModel {
     return FractionModel(
       id: id ?? this.id,
       blockmodelmum: blockmodelmum ?? this.blockmodelmum,
+      blockId: blockId ?? this.blockId,
       serial: serial ?? this.serial,
       wedth: wedth ?? this.wedth,
       lenth: lenth ?? this.lenth,
@@ -502,6 +505,7 @@ class FractionModel {
     return <String, dynamic>{
       'id': id,
       'blockmodelmum': blockmodelmum,
+      'blockId': blockId,
       'serial': serial,
       'wedth': wedth,
       'lenth': lenth,
@@ -525,6 +529,7 @@ class FractionModel {
     return FractionModel(
       id: map['id'] as int,
       blockmodelmum: map['blockmodelmum'] as int,
+      blockId: map['blockId'] as int,
       serial: map['serial'] as String,
       wedth: map['wedth'] as int,
       lenth: map['lenth'] as int,
@@ -559,7 +564,7 @@ class FractionModel {
 
   @override
   String toString() {
-    return 'FractionModel(id: $id, blockmodelmum: $blockmodelmum, serial: $serial, wedth: $wedth, lenth: $lenth, hight: $hight, density: $density, type: $type, Rscissor: $Rscissor, Hscissor: $Hscissor, Ascissor: $Ascissor, stage: $stage, color: $color, isfinished: $isfinished, worker: $worker, notes: $notes, notfinals: $notfinals, actions: $actions)';
+    return 'FractionModel(id: $id, blockmodelmum: $blockmodelmum, blockId: $blockId, serial: $serial, wedth: $wedth, lenth: $lenth, hight: $hight, density: $density, type: $type, Rscissor: $Rscissor, Hscissor: $Hscissor, Ascissor: $Ascissor, stage: $stage, color: $color, isfinished: $isfinished, worker: $worker, notes: $notes, notfinals: $notfinals, actions: $actions)';
   }
 
   @override
@@ -568,6 +573,7 @@ class FractionModel {
 
     return other.id == id &&
         other.blockmodelmum == blockmodelmum &&
+        other.blockId == blockId &&
         other.serial == serial &&
         other.wedth == wedth &&
         other.lenth == lenth &&
@@ -590,6 +596,7 @@ class FractionModel {
   int get hashCode {
     return id.hashCode ^
         blockmodelmum.hashCode ^
+        blockId.hashCode ^
         serial.hashCode ^
         wedth.hashCode ^
         lenth.hashCode ^

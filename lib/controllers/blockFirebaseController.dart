@@ -88,11 +88,12 @@ class BlockFirebasecontroller extends ChangeNotifier {
   // }
 
   c() {
-    // print(11);
-    // for (var el in all.where((element) => element.type == "ميمورى ")) {
-    //   el.type = "ميمورى";
-    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-    // }
+    print(11);
+    for (var el in all) {
+      el.notfinals = [];
+      el.fractions = [];
+      FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    }
   }
 
   void runFilter(String enteredKeyword) {

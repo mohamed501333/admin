@@ -41,10 +41,6 @@ class NavBar extends StatelessWidget {
               icon: Icon(Icons.sticky_note_2_outlined),
             ),
             BottomNavigationBarItem(
-              label: 'المقصات',
-              icon: Icon(Icons.content_cut_sharp),
-            ),
-            BottomNavigationBarItem(
               label: 'الرئسية',
               icon: Icon(Icons.home),
             ),
