@@ -335,7 +335,7 @@ extension C3 on List<ActionModel> {
 extension A1 on List<BlockModel> {
   List<BlockModel> filterConsumeDateBetween(DateTimeRange initialDateRange) {
     return where((element) =>
-        element.OutTo == "المصنع" &&
+        element.OutTo == "صالة الانتاج" &&
         element.actions
                 .get_Date_of_action(BlockAction.consume_block.getactionTitle)
                 .formatToInt() >=

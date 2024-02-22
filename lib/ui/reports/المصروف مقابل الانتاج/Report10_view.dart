@@ -23,9 +23,9 @@ class Report10View extends StatelessWidget {
             .blocks
             .filterConsumeDateBetween(
                 DateTimeRange(start: myType.from, end: myType.to));
-        print(myType.from);
-        print(myType.to);
-        print(blocks.length);
+        // print(myType.from);
+        // print(myType.to);
+        // print(blocks.length);
         List<FinalProductModel> finalproducts = context
             .read<final_prodcut_controller>()
             .finalproducts
