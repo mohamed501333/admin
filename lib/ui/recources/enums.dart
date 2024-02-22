@@ -486,6 +486,8 @@ enum UserPermition {
   show_search_in_customers,
   show_cusotmer_name_in_cutting_order,
   show_setting_in_out_order,
+  show_H,
+  show_R,
 
   incert_in_finalProdcut_imorted,
   incert_unregular_in_importedfinal_prodcut,
@@ -656,11 +658,19 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "can_get_data_of_chemical_category");
       case UserPermition.show_Reports_Comparison_Of_consumedAndResults:
         return UserpermitionTittle(tittle: "عرض تقرير مقارنة الانتاج بالمصروف");
+      case UserPermition.show_H:
+        return UserpermitionTittle(tittle: "عرض الراسى");
+      case UserPermition.show_R:
+        return UserpermitionTittle(tittle: "عرض الدائرى");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_H:
+        return "عرض الراسى";
+      case UserPermition.show_R:
+        return "عرض الدائرى";
       case UserPermition.show_Reports_Comparison_Of_consumedAndResults:
         return "عرض تقرير مقارنة الانتاج بالمصروف";
       case UserPermition.show_Chemical_category:

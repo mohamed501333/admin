@@ -1,16 +1,15 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/ui/sR/componants.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
 
@@ -27,7 +26,8 @@ class RVeiw2 extends StatelessWidget {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
         List<FractionModel> fractions = vm.getFractions(myType, scissor);
-        print("ssssssss${fractions.map((e) => e.stage).toSet().toList()}");
+        List<int> AllStages = fractions.map((e) => e.stage).toSet().toList();
+        int lastStage = AllStages.isEmpty ? 0 : AllStages.last;
         return Column(
           children: [
             Container(
@@ -42,46 +42,182 @@ class RVeiw2 extends StatelessWidget {
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
             ),
-            Container(),
+            const Header(),
+            Column(
+              children: AllStages.map((e) => Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width * .16,
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            color: const Color.fromARGB(255, 231, 223, 223)),
+                        child: Center(
+                            child: Text(
+                          "$e",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        )),
+                      ),
+                      Container(
+                        // height: 40,
+                        width: MediaQuery.of(context).size.width * .55,
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            color: const Color.fromARGB(255, 231, 223, 223)),
+                        child: Center(
+                            child: Column(
+                          children: [
+                            Column(
+                              children: fractions
+                                  .where((element) => element.stage == e)
+                                  .toList()
+                                  .filter_Fractios___()
+                                  .map((f) => Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                              "${f.color} ${f.type} ك${f.density.removeTrailingZeros}"),
+                                          Text(
+                                              "  ${f.lenth}*${f.wedth}*${f.hight} من "),
+                                          Text(
+                                              "${fractions.where((element) => element.stage == f.stage && element.color == f.color && element.type == f.type && element.wedth == f.wedth && element.lenth == f.lenth && element.hight == f.hight).length} "),
+                                        ],
+                                      ))
+                                  .toList(),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      showmyAlertDialog1414(
+                                          context, myType, scissor, e);
+                                    },
+                                    icon: const Icon(
+                                      Icons.add,
+                                      size: 30,
+                                      color: Colors.deepOrangeAccent,
+                                    ))
+                              ],
+                            )
+                          ],
+                        )),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * .29,
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            color: const Color.fromARGB(255, 231, 223, 223)),
+                        child: Center(
+                            child: Column(
+                          children: [
+                            Column(
+                              children: fractions
+                                  .where((element) => element.stage == e)
+                                  .expand((s) => s.notfinals)
+                                  .toList()
+                                  .filter_notfinals___()
+                                  .map((f) => Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(" كجم ${f.type}  "),
+                                          Text(
+                                              "${fractions.where((element) => element.stage == e).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).toStringAsFixed(2)} "),
+                                        ],
+                                      ))
+                                  .toList(),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      dialogOfAddNotFinalToBlock4544(
+                                          context,
+                                          fractions
+                                              .where((element) =>
+                                                  element.stage == e)
+                                              .toList());
+                                    },
+                                    icon: const Icon(
+                                      Icons.add,
+                                      size: 30,
+                                      color: Colors.deepOrangeAccent,
+                                    ))
+                              ],
+                            )
+                          ],
+                        )),
+                      ),
+                    ].reversed.toList(),
+                  )).toList(),
+            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width * .16,
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      color: const Color.fromARGB(255, 170, 164, 164)),
-                  child: const Center(
-                      child: Text(
-                    "رقم الدور",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-                ),
-                Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width * .55,
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      color: const Color.fromARGB(255, 170, 164, 164)),
-                  child: const Center(
-                      child: Text(" الوارد ",
-                          style: TextStyle(fontWeight: FontWeight.bold))),
-                ),
-                Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width * .29,
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      color: const Color.fromARGB(255, 170, 164, 164)),
-                  child: const Center(
-                      child: Text("دون التام",
-                          style: TextStyle(fontWeight: FontWeight.bold))),
-                ),
-              ].reversed.toList(),
+                IconButton(
+                    onPressed: () {
+                      showmyAlertDialog1414(
+                          context, myType, scissor, lastStage + 1);
+                    },
+                    icon: const Icon(
+                      Icons.add,
+                      size: 40,
+                      color: Colors.deepOrangeAccent,
+                    ))
+              ],
             )
           ],
         );
       },
+    ).permition(context, UserPermition.show_R);
+  }
+}
+
+class Header extends StatelessWidget {
+  const Header({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          height: 40,
+          width: MediaQuery.of(context).size.width * .16,
+          decoration: BoxDecoration(
+              border: Border.all(),
+              color: const Color.fromARGB(255, 170, 164, 164)),
+          child: const Center(
+              child: Text(
+            "رقم الدور",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )),
+        ),
+        Container(
+          height: 40,
+          width: MediaQuery.of(context).size.width * .55,
+          decoration: BoxDecoration(
+              border: Border.all(),
+              color: const Color.fromARGB(255, 170, 164, 164)),
+          child: const Center(
+              child: Text(" الوارد ",
+                  style: TextStyle(fontWeight: FontWeight.bold))),
+        ),
+        Container(
+          height: 40,
+          width: MediaQuery.of(context).size.width * .29,
+          decoration: BoxDecoration(
+              border: Border.all(),
+              color: const Color.fromARGB(255, 170, 164, 164)),
+          child: const Center(
+              child: Text("دون التام",
+                  style: TextStyle(fontWeight: FontWeight.bold))),
+        ),
+      ].reversed.toList(),
     );
   }
 }
@@ -95,127 +231,25 @@ class Rscissor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
-        return Form(
-          key: vm.formKey,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 250,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: vm
-                        .fractions_Not_Cut_On_RScissor(context, myType.blocks)
-                        .filter_Fractios___()
-                        .map(
-                          (e) => GestureDetector(
-                            onTap: () {
-                              if (vm.validate()) {
-                                for (var element in vm
-                                    .fractions_Not_Cut_On_RScissor(
-                                        context, myType.blocks)
-                                    .where((f) =>
-                                        f.wedth == e.wedth &&
-                                        f.hight == e.hight &&
-                                        f.lenth == e.lenth)
-                                    .take(vm.amountcontroller.text.to_int())) {
-                                  myType.add_on_R_scissor(
-                                      context: context,
-                                      fractiond: element,
-                                      scissor: scissor,
-                                      w: vm.wightcontroller.text.to_double() /
-                                          vm.amountcontroller.text.to_double());
-                                }
-                              }
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 10),
-                              width: 180,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 10,
-                              ),
-                              decoration: ShapeDecoration(
-                                color: const Color.fromARGB(255, 46, 158, 149),
-                                shape: StadiumBorder(
-                                  side: BorderSide(
-                                    width: 2,
-                                    color: Colors.green[200]!,
-                                  ),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "${e.wedth}*${e.lenth}*${e.hight}",
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(
-                                    width: 22,
-                                  ),
-                                  Text(
-                                    vm
-                                        .fractions_Not_Cut_On_RScissor(
-                                            context, myType.blocks)
-                                        .where((element) =>
-                                            element.wedth == e.wedth &&
-                                            element.lenth == e.lenth &&
-                                            element.hight == e.hight)
-                                        .toList()
-                                        .length
-                                        .toString(),
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 191, 7, 236),
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                ),
+        return Row(
+          children: [
+            SizedBox(
+              child: Column(
+                children: [
+                  const DropDdowen0023(),
+                  ElevatedButton(
+                      onPressed: () {
+                        context.gonext(
+                            context,
+                            ReportsFroH(
+                              scissor: scissor,
+                            ));
+                      },
+                      child: const Text("تقرير"))
+                ],
               ),
-              SizedBox(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextFormField(
-                        validator: Validation.validateothe,
-                        hint: "اعداد الفرد",
-                        width: 120,
-                        controller: vm.amountcontroller),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextFormField(
-                        validator: Validation.validateothe,
-                        hint: "وزن الهالك للدور",
-                        width: 120,
-                        controller: vm.wightcontroller),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const DropDdowen0023(),
-                    ElevatedButton(
-                        onPressed: () {
-                          context.gonext(
-                              context,
-                              ReportsFroH(
-                                scissor: scissor,
-                              ));
-                        },
-                        child: const Text("تقرير"))
-                  ],
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         );
       },
     );

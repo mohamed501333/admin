@@ -5,10 +5,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
-import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:provider/provider.dart';
 
 class BlockFirebasecontroller extends ChangeNotifier {
   get_blocks_data() {
@@ -88,12 +86,12 @@ class BlockFirebasecontroller extends ChangeNotifier {
   // }
 
   c() {
-    print(11);
-    for (var el in all) {
-      el.notfinals = [];
-      el.fractions = [];
-      FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-    }
+    // print(11);
+    // for (var el in all) {
+    //   el.notfinals = [];
+    //   el.fractions = [];
+    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    // }
   }
 
   void runFilter(String enteredKeyword) {
@@ -219,38 +217,23 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
+//zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   add_on_R_scissor(
       {required BuildContext context,
       required FractionModel fractiond,
-      required int scissor,
-      required double w}) {
+      required int lastStage,
+      required int scissor}) {
     BlockModel block = blocks
-        .where((element) =>
-            element.serial == fractiond.serial &&
-            element.number == fractiond.blockmodelmum)
+        .where((element) => element.id == fractiond.blockId)
         .toList()
         .first;
-    block.fractions
-        .where((element) => element.id == fractiond.id)
-        .first
-        .Rscissor = scissor;
-    block.fractions
-        .where((element) => element.id == fractiond.id)
-        .first
-        .notfinals
-        .add(NotFinalmodel(
-            id: DateTime.now().millisecondsSinceEpoch,
-            date: DateTime.now(),
-            wight: w.toDouble(),
-            type: context.read<ObjectBoxController>().gdet222(),
-            Rscissor: scissor,
-            Hscissor: 0,
-            actions: [NotFinalAction.create_Not_final_cumingFrom_R.add]));
-    block.fractions
-        .where((element) => element.id == fractiond.id)
-        .first
-        .actions
-        .add(FractionActon.cut_fraction_OnRscissor.add);
+    var f =
+        block.fractions.where((element) => element.id == fractiond.id).first;
+
+    f.Rscissor = scissor;
+
+    f.actions.add(FractionActon.cut_fraction_OnRscissor.add);
+    f.stage = lastStage;
 
     try {
       FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
@@ -258,6 +241,35 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
+  add_Not_final_ToFraction({
+    required FractionModel fractiond,
+    required String type,
+    required int Rscissord,
+    required double wight,
+  }) {
+    BlockModel block = blocks
+        .where((element) => element.id == fractiond.blockId)
+        .toList()
+        .first;
+
+    FractionModel fraction =
+        block.fractions.where((element) => element.id == fractiond.id).first;
+    fraction.notfinals.add(NotFinalmodel(
+        id: DateTime.now().millisecondsSinceEpoch,
+        date: DateTime.now(),
+        wight: wight,
+        type: type,
+        Rscissor: Rscissord,
+        Hscissor: 0,
+        actions: [NotFinalAction.create_Not_final_cumingFrom_R.add]));
+
+    try {
+      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      notifyListeners();
+    } catch (e) {}
+  }
+
+//zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   var initialDateRange =
       DateTimeRange(start: DateTime(2024, 1, 1), end: DateTime.now());
   filterBlocksCreatedBetweenTowDates() {

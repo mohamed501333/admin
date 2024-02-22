@@ -77,7 +77,7 @@ class _H1VeiwState extends State<H1Veiw> {
           ),
         );
       },
-    );
+    ).permition(context, UserPermition.show_R);
   }
 }
 

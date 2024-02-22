@@ -142,7 +142,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, ScissorsView());
                     },
-                  )..permition(context, UserPermition.show_scissors),
+                  ).permition(context, UserPermition.show_scissors),
                 ],
               ),
               Row(
