@@ -121,5 +121,8 @@ class Chemicals_controller extends ChangeNotifier {
   }
 
   List<String> selctedFamilys = [];
+  List<String> filterdedNames = [];
   List<String> selctedNames = [];
+
+  map(Function(dynamic e) param0) {}
 }

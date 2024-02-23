@@ -165,7 +165,7 @@ class _DatepickerState extends State<DatepickerFrom> {
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(2000),
-                  lastDate: DateTime(2101));
+                  lastDate: DateTime.now());
 
               if (pickedDate != null) {
                 setState(() {
@@ -180,10 +180,18 @@ class _DatepickerState extends State<DatepickerFrom> {
                   "من",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  vm2.from.formatt(),
-                  style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.teal),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Text(
+                    vm2.from.formatt(),
+                    style: const TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 97, 92, 92),
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             )),
@@ -228,10 +236,18 @@ class _DatepickerStatef extends State<DatepickerTo> {
                   "الى",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  vm2.to.formatt(),
-                  style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.teal),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Text(
+                    vm2.to.formatt(),
+                    style: const TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 97, 92, 92),
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             )),

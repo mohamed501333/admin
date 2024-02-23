@@ -92,15 +92,16 @@ extension Toint on String {
 }
 
 extension Fd on List<ChemicalsModel> {
-  List<ChemicalsModel> filterItemsPasedOnFamilys(BuildContext context) {
-    List<String> selctedFamilys =
-        context.read<Chemicals_controller>().selctedFamilys;
-
-    List<ChemicalsModel> items = context.read<Chemicals_controller>().Chemicals;
-
+  List<ChemicalsModel> filterItemsPasedOnFamilys(
+      BuildContext context, List<String> familys) {
     List<ChemicalsModel> l = [];
-    for (var v in selctedFamilys) {
-      l.addAll(items.where((element) => element.family == v).toList());
+    for (var f in familys) {
+      for (var i in this) {
+        if (i.family == f) {
+          print(i.name);
+          l.add(i);
+        }
+      }
     }
 
     return l;
