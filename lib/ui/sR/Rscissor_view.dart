@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 // ignore_for_file: must_be_immutable
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:jason_company/ui/sR/componants.dart';
 import 'package:provider/provider.dart';
 
@@ -26,153 +28,169 @@ class RVeiw2 extends StatelessWidget {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
         List<FractionModel> fractions = vm.getFractions(myType, scissor);
-        List<int> AllStages = fractions.map((e) => e.stage).toSet().toList();
+        List<int> AllStages = fractions
+            .map((e) => e.stage)
+            .toSet()
+            .sortedBy<num>((element) => element)
+            .reversed
+            .toList();
         int lastStage = AllStages.isEmpty ? 0 : AllStages.last;
-        return Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(5),
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  border: Border.all(),
-                  color: const Color.fromARGB(255, 175, 132, 132)),
-              child: Text(
-                "      مقص دائرى ( $scissor )     ",
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        // print("lase stage $lastStage");
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    border: Border.all(),
+                    color: const Color.fromARGB(255, 175, 132, 132)),
+                child: Text(
+                  "      مقص دائرى ( $scissor )     ",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
+                ),
               ),
-            ),
-            const Header(),
-            Column(
-              children: AllStages.map((e) => Row(
-                    children: [
-                      Container(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width * .16,
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            color: const Color.fromARGB(255, 231, 223, 223)),
-                        child: Center(
-                            child: Text(
-                          "$e",
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                      ),
-                      Container(
-                        // height: 40,
-                        width: MediaQuery.of(context).size.width * .55,
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            color: const Color.fromARGB(255, 231, 223, 223)),
-                        child: Center(
-                            child: Column(
-                          children: [
-                            Column(
-                              children: fractions
-                                  .where((element) => element.stage == e)
-                                  .toList()
-                                  .filter_Fractios___()
-                                  .map((f) => Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                              "${f.color} ${f.type} ك${f.density.removeTrailingZeros}"),
-                                          Text(
-                                              "  ${f.lenth}*${f.wedth}*${f.hight} من "),
-                                          Text(
-                                              "${fractions.where((element) => element.stage == f.stage && element.color == f.color && element.type == f.type && element.wedth == f.wedth && element.lenth == f.lenth && element.hight == f.hight).length} "),
-                                        ],
-                                      ))
-                                  .toList(),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+              const Header(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        showmyAlertDialog1414(
+                            context, myType, scissor, lastStage + 1);
+                      },
+                      icon: const Icon(
+                        Icons.add,
+                        size: 40,
+                        color: Colors.deepOrangeAccent,
+                      ))
+                ],
+              ),
+              Column(
+                children: AllStages.map((e) => Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(),
+                          color: const Color.fromARGB(255, 231, 223, 223)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .11,
+                            child: Center(
+                                child: Text(
+                              textAlign: TextAlign.center,
+                              "$e",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                          ),
+                          Container(
+                            // height: 40,
+                            width: MediaQuery.of(context).size.width * .59,
+                            decoration: const BoxDecoration(
+                                border:
+                                    Border.symmetric(vertical: BorderSide()),
+                                color: Color.fromARGB(255, 231, 223, 223)),
+                            child: Center(
+                                child: Column(
                               children: [
-                                IconButton(
-                                    onPressed: () {
-                                      showmyAlertDialog1414(
-                                          context, myType, scissor, e);
-                                    },
-                                    icon: const Icon(
-                                      Icons.add,
-                                      size: 30,
-                                      color: Colors.deepOrangeAccent,
-                                    ))
+                                Column(
+                                  children: fractions
+                                      .where((element) => element.stage == e)
+                                      .toList()
+                                      .filter_Fractios___()
+                                      .map((f) => Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                  "${f.color} ${f.type} ك${f.density.removeTrailingZeros}"),
+                                              Text(
+                                                  "  ${f.lenth}*${f.wedth}*${f.hight} من "),
+                                              Text(
+                                                  "${fractions.where((element) => element.stage == f.stage && element.color == f.color && element.type == f.type && element.wedth == f.wedth && element.lenth == f.lenth && element.hight == f.hight).length} "),
+                                            ],
+                                          ))
+                                      .toList(),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          showmyAlertDialog1414(
+                                              context, myType, scissor, e);
+                                        },
+                                        icon: const Icon(
+                                          Icons.add,
+                                          size: 30,
+                                          color: Colors.deepOrangeAccent,
+                                        ))
+                                  ],
+                                )
                               ],
-                            )
-                          ],
-                        )),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * .29,
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            color: const Color.fromARGB(255, 231, 223, 223)),
-                        child: Center(
-                            child: Column(
-                          children: [
-                            Column(
-                              children: fractions
-                                  .where((element) => element.stage == e)
-                                  .expand((s) => s.notfinals)
-                                  .toList()
-                                  .filter_notfinals___()
-                                  .map((f) => Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(" كجم ${f.type}  "),
-                                          Text(
-                                              "${fractions.where((element) => element.stage == e).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).toStringAsFixed(2)} "),
-                                        ],
-                                      ))
-                                  .toList(),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                            )),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .29,
+                            child: Center(
+                                child: Column(
                               children: [
-                                IconButton(
-                                    onPressed: () {
-                                      dialogOfAddNotFinalToBlock4544(
-                                          context,
-                                          fractions
-                                              .where((element) =>
-                                                  element.stage == e)
-                                              .toList());
-                                    },
-                                    icon: const Icon(
-                                      Icons.add,
-                                      size: 30,
-                                      color: Colors.deepOrangeAccent,
-                                    ))
+                                Column(
+                                  children: fractions
+                                      .where((element) => element.stage == e)
+                                      .expand((s) => s.notfinals)
+                                      .toList()
+                                      .filter_notfinals___()
+                                      .map((f) => Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .29,
+                                                child: Text(
+                                                  "${f.type} kg ${fractions.where((element) => element.stage == e).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).toStringAsFixed(2)}",
+                                                ),
+                                              ),
+                                            ],
+                                          ))
+                                      .toList(),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          dialogOfAddNotFinalToBlock4544(
+                                              context,
+                                              fractions
+                                                  .where((element) =>
+                                                      element.stage == e)
+                                                  .toList());
+                                        },
+                                        icon: const Icon(
+                                          Icons.add,
+                                          size: 30,
+                                          color: Colors.deepOrangeAccent,
+                                        ))
+                                  ],
+                                )
                               ],
-                            )
-                          ],
-                        )),
+                            )),
+                          ),
+                        ].reversed.toList(),
                       ),
-                    ].reversed.toList(),
-                  )).toList(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      showmyAlertDialog1414(
-                          context, myType, scissor, lastStage + 1);
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                      size: 40,
-                      color: Colors.deepOrangeAccent,
-                    ))
-              ],
-            )
-          ],
+                    )).toList(),
+              ),
+            ],
+          ),
         );
       },
-    ).permition(context, UserPermition.show_R);
+    );
   }
 }
 
@@ -186,20 +204,20 @@ class Header extends StatelessWidget {
     return Row(
       children: [
         Container(
+          width: MediaQuery.of(context).size.width * .11,
           height: 40,
-          width: MediaQuery.of(context).size.width * .16,
           decoration: BoxDecoration(
               border: Border.all(),
               color: const Color.fromARGB(255, 170, 164, 164)),
           child: const Center(
               child: Text(
-            "رقم الدور",
+            "الدور",
             style: TextStyle(fontWeight: FontWeight.bold),
           )),
         ),
         Container(
           height: 40,
-          width: MediaQuery.of(context).size.width * .55,
+          width: MediaQuery.of(context).size.width * .60,
           decoration: BoxDecoration(
               border: Border.all(),
               color: const Color.fromARGB(255, 170, 164, 164)),

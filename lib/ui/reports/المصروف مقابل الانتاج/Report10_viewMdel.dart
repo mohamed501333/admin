@@ -15,10 +15,11 @@ class Rscissor_viewmodel {
 
   double volOfResults(List<FinalProductModel> f, BlockModel e) {
     var i = f
-        .where((element) =>
-            element.density == e.density &&
-            element.type == e.type &&
-            element.color == e.color)
+        .where(
+            (element) => element.density == e.density && element.type == e.type
+            //  &&
+            // element.color == e.color
+            )
         .map((e) => e.amount * e.lenth * e.hight * e.width / 1000000);
     return i.isEmpty ? 0 : i.reduce((a, b) => a + b);
   }

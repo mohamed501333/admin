@@ -119,4 +119,7 @@ class Chemicals_controller extends ChangeNotifier {
       notifyListeners();
     } catch (e) {}
   }
+
+  List<String> selctedFamilys = [];
+  List<String> selctedNames = [];
 }

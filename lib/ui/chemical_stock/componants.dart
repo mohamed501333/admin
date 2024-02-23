@@ -3,9 +3,12 @@
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ChemicalsController.dart';
+import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/chemical_stock/ChemicalStock_viewModel.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class CreateChemicalCategory extends StatelessWidget {
@@ -467,7 +470,9 @@ class Suplying extends StatelessWidget {
                     myType.makeNull();
                     myType.Refresh_Ui();
                   },
-                  child: const Text("توريد"))
+                  child: const Text("توريد")),
+              const HeaderChemicaTableForSupplying(),
+              const ChemicaTableForSupplying(),
             ],
           ),
         );
@@ -1037,6 +1042,85 @@ class _DroStatevcv extends State<DropForItme> {
           }
         },
       ),
+    );
+  }
+}
+
+class ChemicaTableForSupplying extends StatelessWidget {
+  const ChemicaTableForSupplying({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    List<ChemicalsModel> Chemicals = context
+        .read<Chemicals_controller>()
+        .Chemicals
+        .where((element) =>
+            element.supplyOrderNum != 0 &&
+            element.actions
+                    .get_Date_of_action(
+                        ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                    .formatt() ==
+                DateTime.now().formatt())
+        .toList();
+    return Table(
+      columnWidths: const {
+        0: FlexColumnWidth(2),
+        1: FlexColumnWidth(1),
+        2: FlexColumnWidth(2),
+        3: FlexColumnWidth(2),
+        4: FlexColumnWidth(2),
+        5: FlexColumnWidth(2),
+        6: FlexColumnWidth(1),
+      },
+      border: TableBorder.all(width: 1, color: Colors.black),
+      children: Chemicals.map((e) => TableRow(
+          decoration: BoxDecoration(color: Colors.teal[50]
+              // : Colors.amber[50],
+              ),
+          children: [
+            Text(e.supplyOrderNum.toString()),
+            Text(e.cumingFrom.toString()),
+            Text(e.family.toString()),
+            Text(e.name.toString()),
+            Text(e.unit.toString()),
+            Text(e.quantity.toString()),
+            Text(e.Totalquantity.toString()),
+          ].reversed.toList())).toList(),
+    );
+  }
+}
+
+class HeaderChemicaTableForSupplying extends StatelessWidget {
+  const HeaderChemicaTableForSupplying({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Table(
+      columnWidths: const {
+        0: FlexColumnWidth(2),
+        1: FlexColumnWidth(1),
+        2: FlexColumnWidth(2),
+        3: FlexColumnWidth(2),
+        4: FlexColumnWidth(2),
+        5: FlexColumnWidth(2),
+        6: FlexColumnWidth(1),
+      },
+      border: TableBorder.all(width: 1, color: Colors.black),
+      children: [
+        TableRow(
+            decoration: BoxDecoration(color: Colors.teal[50]
+                // : Colors.amber[50],
+                ),
+            children: const [
+              Text("رقم التوريد"),
+              Text("المورد"),
+              Text("عائله"),
+              Text("صنف"),
+              Text("وحده"),
+              Text("عدد"),
+              Text("الكميه"),
+            ].reversed.toList())
+      ],
     );
   }
 }

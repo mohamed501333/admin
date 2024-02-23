@@ -486,8 +486,12 @@ enum UserPermition {
   show_search_in_customers,
   show_cusotmer_name_in_cutting_order,
   show_setting_in_out_order,
-  show_H,
-  show_R,
+  show_H1,
+  show_H2,
+  show_H3,
+  show_R1,
+  show_R2,
+  show_R3,
 
   incert_in_finalProdcut_imorted,
   incert_unregular_in_importedfinal_prodcut,
@@ -658,19 +662,35 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "can_get_data_of_chemical_category");
       case UserPermition.show_Reports_Comparison_Of_consumedAndResults:
         return UserpermitionTittle(tittle: "عرض تقرير مقارنة الانتاج بالمصروف");
-      case UserPermition.show_H:
-        return UserpermitionTittle(tittle: "عرض الراسى");
-      case UserPermition.show_R:
-        return UserpermitionTittle(tittle: "عرض الدائرى");
+      case UserPermition.show_H1:
+        return UserpermitionTittle(tittle: "H1");
+      case UserPermition.show_H2:
+        return UserpermitionTittle(tittle: "H2");
+      case UserPermition.show_H3:
+        return UserpermitionTittle(tittle: "H3");
+      case UserPermition.show_R1:
+        return UserpermitionTittle(tittle: "R1");
+      case UserPermition.show_R2:
+        return UserpermitionTittle(tittle: "R2");
+      case UserPermition.show_R3:
+        return UserpermitionTittle(tittle: "R3");
     }
   }
 
   String get getTitle {
     switch (this) {
-      case UserPermition.show_H:
-        return "عرض الراسى";
-      case UserPermition.show_R:
-        return "عرض الدائرى";
+      case UserPermition.show_H1:
+        return "H1";
+      case UserPermition.show_H2:
+        return "H2";
+      case UserPermition.show_H3:
+        return "H3";
+      case UserPermition.show_R1:
+        return "R1";
+      case UserPermition.show_R2:
+        return "R2";
+      case UserPermition.show_R3:
+        return "R3";
       case UserPermition.show_Reports_Comparison_Of_consumedAndResults:
         return "عرض تقرير مقارنة الانتاج بالمصروف";
       case UserPermition.show_Chemical_category:

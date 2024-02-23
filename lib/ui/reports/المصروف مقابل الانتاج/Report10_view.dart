@@ -32,8 +32,10 @@ class Report10View extends StatelessWidget {
             .filterFinalProductDateBetween(
                 DateTimeRange(start: myType.from, end: myType.to));
 
-        var aa = vm.TotalvolOfConsumed(blocks);
-        var bb = vm.TotalvolOfResults(finalproducts);
+        // var aa = vm.TotalvolOfConsumed(blocks);
+        // var bb = vm.TotalvolOfResults(finalproducts);
+        List<double> aa = [];
+        List<double> bb = [];
         return Scaffold(
           appBar: AppBar(
             title: const Text("مقارنة الانتاج بالمصروف"),
@@ -85,7 +87,9 @@ class Report10View extends StatelessWidget {
                           .filter_filter_type_and_density_color()
                           .map((e) {
                         var b = vm.volOfResults(finalproducts, e);
+                        bb.add(b);
                         var a = vm.volOfConsumed(blocks, e);
+                        aa.add(a);
                         return TableRow(
                             children: [
                           Center(
@@ -111,11 +115,21 @@ class Report10View extends StatelessWidget {
                             decoration: const BoxDecoration(color: Colors.grey),
                             children: [
                               const Center(child: Text("الاجمالى")),
-                              Center(child: Text("${aa.toStringAsFixed(1)} ")),
-                              Center(child: Text(bb.toStringAsFixed(1))),
                               Center(
-                                  child:
-                                      Text("${(aa - bb).toStringAsFixed(1)} ")),
+                                  child: Text(
+                                      "${aa.isEmpty ? 0 : aa.reduce((a, b) => a + b).toStringAsFixed(1)} ")),
+                              Center(
+                                  child: Text(
+                                      "${bb.isEmpty ? 0 : bb.reduce((a, b) => a + b).toStringAsFixed(1)} ")),
+                              Center(
+                                  child: Text(((aa.isEmpty
+                                          ? 0
+                                          : aa.reduce((a, b) => a + b) -
+                                              (bb.isEmpty
+                                                  ? 0
+                                                  : bb.reduce(
+                                                      (a, b) => a + b))))
+                                      .toStringAsFixed(1))),
                             ].reversed.toList()),
                       ],
                     ),

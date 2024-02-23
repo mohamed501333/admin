@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/functions.dart';
+import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -87,6 +88,22 @@ extension Toint on String {
 
   double to_double() {
     return double.parse(this);
+  }
+}
+
+extension Fd on List<ChemicalsModel> {
+  List<ChemicalsModel> filterItemsPasedOnFamilys(BuildContext context) {
+    List<String> selctedFamilys =
+        context.read<Chemicals_controller>().selctedFamilys;
+
+    List<ChemicalsModel> items = context.read<Chemicals_controller>().Chemicals;
+
+    List<ChemicalsModel> l = [];
+    for (var v in selctedFamilys) {
+      l.addAll(items.where((element) => element.family == v).toList());
+    }
+
+    return l;
   }
 }
 
