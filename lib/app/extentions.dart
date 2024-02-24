@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/functions.dart';
-import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';

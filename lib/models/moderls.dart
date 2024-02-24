@@ -214,207 +214,6 @@ class BlockModel {
   }
 }
 
-class BlockModel2 {
-  int id;
-  String color;
-  double density;
-  String type;
-  String serial;
-  int number;
-  int Rcissor;
-  int Hscissor;
-  int width;
-  int lenth;
-  int hight;
-  double wight;
-  String cumingFrom;
-  String OutTo;
-  String notes;
-
-  List<FractionModel> fractions;
-  List<ActionModel> actions;
-  List<NotFinalmodel> notfinals;
-
-  BlockModel2({
-    required this.id,
-    required this.color,
-    required this.density,
-    required this.type,
-    required this.serial,
-    required this.number,
-    required this.Rcissor,
-    required this.Hscissor,
-    required this.width,
-    required this.lenth,
-    required this.hight,
-    required this.wight,
-    required this.cumingFrom,
-    required this.OutTo,
-    required this.notes,
-    required this.fractions,
-    required this.actions,
-    required this.notfinals,
-  });
-
-  //  horizontalscissor
-
-  BlockModel2 copyWith({
-    int? id,
-    String? color,
-    double? density,
-    String? type,
-    String? serial,
-    int? number,
-    int? Rcissor,
-    int? Hscissor,
-    int? width,
-    int? lenth,
-    int? hight,
-    double? wight,
-    String? cumingFrom,
-    String? OutTo,
-    String? notes,
-    List<FractionModel>? fractions,
-    List<ActionModel>? actions,
-    List<NotFinalmodel>? notfinals,
-  }) {
-    return BlockModel2(
-      id: id ?? this.id,
-      color: color ?? this.color,
-      density: density ?? this.density,
-      type: type ?? this.type,
-      serial: serial ?? this.serial,
-      number: number ?? this.number,
-      Rcissor: Rcissor ?? this.Rcissor,
-      Hscissor: Hscissor ?? this.Hscissor,
-      width: width ?? this.width,
-      lenth: lenth ?? this.lenth,
-      hight: hight ?? this.hight,
-      wight: wight ?? this.wight,
-      cumingFrom: cumingFrom ?? this.cumingFrom,
-      OutTo: OutTo ?? this.OutTo,
-      notes: notes ?? this.notes,
-      fractions: fractions ?? this.fractions,
-      actions: actions ?? this.actions,
-      notfinals: notfinals ?? this.notfinals,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'color': color,
-      'density': density,
-      'type': type,
-      'serial': serial,
-      'number': number,
-      'Rcissor': Rcissor,
-      'Hscissor': Hscissor,
-      'width': width,
-      'lenth': lenth,
-      'hight': hight,
-      'wight': wight,
-      'cumingFrom': cumingFrom,
-      'OutTo': OutTo,
-      'notes': notes,
-      'fractions': fractions.map((x) => x.toMap()).toList(),
-      'actions': actions.map((x) => x.toMap()).toList(),
-      'notfinals': notfinals.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  factory BlockModel2.fromMap(Map<String, dynamic> map) {
-    return BlockModel2(
-      id: map['id'] as int,
-      color: map['color'] as String,
-      density: map['density'] as double,
-      type: map['type'] as String,
-      serial: map['serial'] as String,
-      number: map['number'] as int,
-      Rcissor: map['Rcissor'] as int,
-      Hscissor: map['Hscissor'] as int,
-      width: map['width'] as int,
-      lenth: map['lenth'] as int,
-      hight: map['hight'] as int,
-      wight: map['wight'] as double,
-      cumingFrom: map['cumingFrom'] as String,
-      OutTo: map['OutTo'] as String,
-      notes: map['notes'] as String,
-      fractions: List<FractionModel>.from(
-        (map['fractions'] as List<dynamic>).map<FractionModel>(
-          (x) => FractionModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      actions: List<ActionModel>.from(
-        (map['actions'] as List<dynamic>).map<ActionModel>(
-          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      notfinals: List<NotFinalmodel>.from(
-        (map['notfinals'] as List<dynamic>).map<NotFinalmodel>(
-          (x) => NotFinalmodel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory BlockModel2.fromJson(String source) =>
-      BlockModel2.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'BlockModel2(id: $id, color: $color, density: $density, type: $type, serial: $serial, number: $number, Rcissor: $Rcissor, Hscissor: $Hscissor, width: $width, lenth: $lenth, hight: $hight, wight: $wight, cumingFrom: $cumingFrom, OutTo: $OutTo, notes: $notes, fractions: $fractions, actions: $actions, notfinals: $notfinals)';
-  }
-
-  @override
-  bool operator ==(covariant BlockModel2 other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.color == color &&
-        other.density == density &&
-        other.type == type &&
-        other.serial == serial &&
-        other.number == number &&
-        other.Rcissor == Rcissor &&
-        other.Hscissor == Hscissor &&
-        other.width == width &&
-        other.lenth == lenth &&
-        other.hight == hight &&
-        other.wight == wight &&
-        other.cumingFrom == cumingFrom &&
-        other.OutTo == OutTo &&
-        other.notes == notes &&
-        listEquals(other.fractions, fractions) &&
-        listEquals(other.actions, actions) &&
-        listEquals(other.notfinals, notfinals);
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        color.hashCode ^
-        density.hashCode ^
-        type.hashCode ^
-        serial.hashCode ^
-        number.hashCode ^
-        Rcissor.hashCode ^
-        Hscissor.hashCode ^
-        width.hashCode ^
-        lenth.hashCode ^
-        hight.hashCode ^
-        wight.hashCode ^
-        cumingFrom.hashCode ^
-        OutTo.hashCode ^
-        notes.hashCode ^
-        fractions.hashCode ^
-        actions.hashCode ^
-        notfinals.hashCode;
-  }
-}
-
 class FractionModel {
   int id;
   int blockmodelmum;
@@ -617,7 +416,6 @@ class FractionModel {
 }
 
 class FinalProductModel {
-  int stageOfR;
   int id;
   String color;
   bool isfinal;
@@ -625,10 +423,14 @@ class FinalProductModel {
   String type;
   int amount;
   int scissor;
+  int stageOfR;
+
   int invoiceNum;
   double width;
   double lenth;
   double hight;
+  double volume;
+  double whight;
   double price;
   String customer;
   String worker;
@@ -636,9 +438,7 @@ class FinalProductModel {
   String notes;
   int cuting_order_number;
   List<ActionModel> actions;
-
   FinalProductModel({
-    required this.stageOfR,
     required this.id,
     required this.color,
     required this.isfinal,
@@ -646,10 +446,13 @@ class FinalProductModel {
     required this.type,
     required this.amount,
     required this.scissor,
+    required this.stageOfR,
     required this.invoiceNum,
     required this.width,
     required this.lenth,
     required this.hight,
+    required this.volume,
+    required this.whight,
     required this.price,
     required this.customer,
     required this.worker,
@@ -659,7 +462,6 @@ class FinalProductModel {
   });
 
   FinalProductModel copyWith({
-    int? stageOfR,
     int? id,
     String? color,
     bool? isfinal,
@@ -667,10 +469,13 @@ class FinalProductModel {
     String? type,
     int? amount,
     int? scissor,
+    int? stageOfR,
     int? invoiceNum,
     double? width,
     double? lenth,
     double? hight,
+    double? volume,
+    double? whight,
     double? price,
     String? customer,
     String? worker,
@@ -679,7 +484,6 @@ class FinalProductModel {
     List<ActionModel>? actions,
   }) {
     return FinalProductModel(
-      stageOfR: stageOfR ?? this.stageOfR,
       id: id ?? this.id,
       color: color ?? this.color,
       isfinal: isfinal ?? this.isfinal,
@@ -687,10 +491,13 @@ class FinalProductModel {
       type: type ?? this.type,
       amount: amount ?? this.amount,
       scissor: scissor ?? this.scissor,
+      stageOfR: stageOfR ?? this.stageOfR,
       invoiceNum: invoiceNum ?? this.invoiceNum,
       width: width ?? this.width,
       lenth: lenth ?? this.lenth,
       hight: hight ?? this.hight,
+      volume: volume ?? this.volume,
+      whight: whight ?? this.whight,
       price: price ?? this.price,
       customer: customer ?? this.customer,
       worker: worker ?? this.worker,
@@ -702,7 +509,6 @@ class FinalProductModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'stageOfR': stageOfR,
       'id': id,
       'color': color,
       'isfinal': isfinal,
@@ -710,10 +516,13 @@ class FinalProductModel {
       'type': type,
       'amount': amount,
       'scissor': scissor,
+      'stageOfR': stageOfR,
       'invoiceNum': invoiceNum,
       'width': width,
       'lenth': lenth,
       'hight': hight,
+      'volume': volume,
+      'whight': whight,
       'price': price,
       'customer': customer,
       'worker': worker,
@@ -725,7 +534,6 @@ class FinalProductModel {
 
   factory FinalProductModel.fromMap(Map<String, dynamic> map) {
     return FinalProductModel(
-      stageOfR: map['stageOfR'] as int,
       id: map['id'] as int,
       color: map['color'] as String,
       isfinal: map['isfinal'] as bool,
@@ -733,10 +541,13 @@ class FinalProductModel {
       type: map['type'] as String,
       amount: map['amount'] as int,
       scissor: map['scissor'] as int,
+      stageOfR: map['stageOfR'] as int,
       invoiceNum: map['invoiceNum'] as int,
       width: map['width'] as double,
       lenth: map['lenth'] as double,
       hight: map['hight'] as double,
+      volume: map['volume'] as double,
+      whight: map['whight'] as double,
       price: map['price'] as double,
       customer: map['customer'] as String,
       worker: map['worker'] as String,
@@ -757,25 +568,27 @@ class FinalProductModel {
 
   @override
   String toString() {
-    return 'FinalProductModel2(stageOfR: $stageOfR, id: $id, color: $color, isfinal: $isfinal, density: $density, type: $type, amount: $amount, scissor: $scissor, invoiceNum: $invoiceNum, width: $width, lenth: $lenth, hight: $hight, price: $price, customer: $customer, worker: $worker, notes: $notes, cuting_order_number: $cuting_order_number, actions: $actions)';
+    return 'FinalProductModel(id: $id, color: $color, isfinal: $isfinal, density: $density, type: $type, amount: $amount, scissor: $scissor, stageOfR: $stageOfR, invoiceNum: $invoiceNum, width: $width, lenth: $lenth, hight: $hight, volume: $volume, whight: $whight, price: $price, customer: $customer, worker: $worker, notes: $notes, cuting_order_number: $cuting_order_number, actions: $actions)';
   }
 
   @override
   bool operator ==(covariant FinalProductModel other) {
     if (identical(this, other)) return true;
 
-    return other.stageOfR == stageOfR &&
-        other.id == id &&
+    return other.id == id &&
         other.color == color &&
         other.isfinal == isfinal &&
         other.density == density &&
         other.type == type &&
         other.amount == amount &&
         other.scissor == scissor &&
+        other.stageOfR == stageOfR &&
         other.invoiceNum == invoiceNum &&
         other.width == width &&
         other.lenth == lenth &&
         other.hight == hight &&
+        other.volume == volume &&
+        other.whight == whight &&
         other.price == price &&
         other.customer == customer &&
         other.worker == worker &&
@@ -786,18 +599,20 @@ class FinalProductModel {
 
   @override
   int get hashCode {
-    return stageOfR.hashCode ^
-        id.hashCode ^
+    return id.hashCode ^
         color.hashCode ^
         isfinal.hashCode ^
         density.hashCode ^
         type.hashCode ^
         amount.hashCode ^
         scissor.hashCode ^
+        stageOfR.hashCode ^
         invoiceNum.hashCode ^
         width.hashCode ^
         lenth.hashCode ^
         hight.hashCode ^
+        volume.hashCode ^
+        whight.hashCode ^
         price.hashCode ^
         customer.hashCode ^
         worker.hashCode ^

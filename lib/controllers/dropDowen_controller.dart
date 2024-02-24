@@ -14,6 +14,7 @@ class dropDowenContoller extends ChangeNotifier {
     notifyListeners();
   }
 
+  TextEditingController N = TextEditingController();
   int? initioalFor_Scissors;
   List<int> scissors = [1, 2, 3, 4, 5, 6, 7];
   get_label(int e) {

@@ -33,6 +33,11 @@ class final_prodcut_controller extends ChangeNotifier {
                       .archive_final_prodcut.getactionTitle) ==
                   false &&
               element.isfinal == true));
+          all.addAll(initalData.where((element) =>
+              element.actions.if_action_exist(finalProdcutAction
+                      .archive_final_prodcut.getactionTitle) ==
+                  false &&
+              element.isfinal == true));
           //
           isfinal_false.addAll(initalData.where((element) =>
               element.actions.if_action_exist(finalProdcutAction
@@ -74,6 +79,7 @@ class final_prodcut_controller extends ChangeNotifier {
   // }
 
   List<FinalProductModel> finalproducts = [];
+  List<FinalProductModel> all = [];
   List<FinalProductModel> search = [];
   List<FinalProductModel> initalData = [];
   List<FinalProductModel> isfinal_false = [];
@@ -112,13 +118,10 @@ class final_prodcut_controller extends ChangeNotifier {
   }
 
   incert_finalProduct_from_cutingUnit(FinalProductModel user) {
-    user.actions
-        .add(finalProdcutAction.incert_finalProduct_from_cutingUnit.add);
     try {
       FirebaseDatabase.instance
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 

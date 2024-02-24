@@ -5,50 +5,75 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
-import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class FinalProductStockViewModel extends BaseViewModel {
+  OrderModel find(
+    List<OrderModel> orders,
+    OperationOrederItems item,
+  ) {
+    return orders
+        .where((element) => element.items.map((e) => e.id).contains(item.id))
+        .first;
+  }
+
   incert_finalProduct_from_cutingUnit(BuildContext context) {
-    OrderModel? order =
-        context.read<OrderController>().initionalForRadio_order_Serials;
-    OperationOrederItems? item =
-        context.read<OrderController>().initionalForRadio_order_sizes;
     int? scissor = context.read<dropDowenContoller>().initioalFor_Scissors;
 
-    if (order != null && item != null && scissor != null && validate()) {
+    OrderController my = context.read<OrderController>();
+    TextEditingController N = context.read<dropDowenContoller>().N;
+    if (my.order != null && my.item != null && scissor != null && validate()) {
+      double volume = my.item!.widti *
+          my.item!.lenth *
+          my.item!.hight *
+          int.parse(amountcontroller.text) /
+          1000000;
       context
           .read<final_prodcut_controller>()
           .incert_finalProduct_from_cutingUnit(FinalProductModel(
             invoiceNum: 0,
             price: 0.0,
             worker: "",
-            stageOfR: 0,
-            isfinal: context.read<SettingController>().switchValue_for_final,
+            stageOfR: N.text.to_int() + 1,
+            isfinal: true,
             notes: notes.text,
-            cuting_order_number: order.serial,
-            actions: [],
+            cuting_order_number: my.order!.serial,
+            actions: [
+              finalProdcutAction.incert_finalProduct_from_cutingUnit.add
+            ],
             id: DateTime.now().millisecondsSinceEpoch,
-            color: item.color,
-            density: item.density,
-            type: item.type,
+            color: my.item!.color,
+            density: my.item!.density,
+            type: my.item!.type,
             amount: int.parse(amountcontroller.text),
             scissor: scissor,
-            width: item.widti,
-            lenth: item.lenth,
-            hight: item.hight,
-            customer: order.customer,
+            width: my.item!.widti,
+            lenth: my.item!.lenth,
+            hight: my.item!.hight,
+            customer: my.order!.customer,
+            volume: my.item!.widti * my.item!.lenth * my.item!.hight / 1000000,
+            whight: volume * my.item!.density,
           ));
       amountcontroller.clear();
       notes.clear();
+      N.clear();
       context.read<dropDowenContoller>().initioalFor_Scissors = null;
+      my.order = null;
+      my.item = null;
+      my.Refrsh_ui();
       context.read<dropDowenContoller>().Refrsh_ui();
     }
   }
 
   add_unregular(BuildContext context) {
+    double volume = int.parse(amountcontroller.text) *
+        widthcontroller.text.to_double() *
+        lenthcontroller.text.to_double() *
+        hightncontroller.text.to_double() /
+        1000000;
     FinalProductModel user = FinalProductModel(
         invoiceNum: 0,
         price: 0.0,
@@ -58,7 +83,7 @@ class FinalProductStockViewModel extends BaseViewModel {
         isfinal: true,
         density: densitycontroller.text.to_double(),
         type: typecontroller.text,
-        amount: amountcontroller.text.to_int(),
+        amount: int.parse(amountcontroller.text),
         scissor: scissorcontroller.text.to_int(),
         width: widthcontroller.text.to_double(),
         lenth: lenthcontroller.text.to_double(),
@@ -67,7 +92,9 @@ class FinalProductStockViewModel extends BaseViewModel {
         worker: '',
         notes: "",
         cuting_order_number: 0,
-        actions: []);
+        actions: [],
+        volume: volume,
+        whight: volume * densitycontroller.text.to_double());
     if (formKey.currentState!.validate()) {
       context
           .read<final_prodcut_controller>()

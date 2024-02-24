@@ -72,7 +72,6 @@ class OrderController extends ChangeNotifier {
   }
 
   // chosen order serial
-  OrderModel? initionalForRadio_order_Serials;
 
   List<OrderModel> getOrdersForRadio_order_Serials() {
     return orders
@@ -92,19 +91,9 @@ class OrderController extends ChangeNotifier {
   }
 
 //chosen item
-  OperationOrederItems? initionalForRadio_order_sizes;
 
-  List<OperationOrederItems> getOrdersForRadio_order_sizes() {
-    if (initionalForRadio_order_Serials != null) {
-      return orders
-          .where((element) => element == initionalForRadio_order_Serials)
-          .first
-          .items;
-    } else {
-      return [];
-    }
-  }
-
+  OperationOrederItems? item;
+  OrderModel? order;
   edit_cell(dynamic oldvalue, int id, int id2, String cell, String newvalue) {
     OrderModel user = orders.where((element) => element.id == id).first;
 
