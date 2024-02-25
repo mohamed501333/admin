@@ -22,90 +22,94 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
           title: const Text(''),
           content: SizedBox(
             height: 400,
-            child: Column(children: [
-              CustomTextFormField(
-                  validator: Validation.validateothe,
-                  hint: "عدد",
-                  width: 60,
-                  controller: vm.amountcontroller),
-              const Text("من"),
-              SingleChildScrollView(
-                child: Column(
-                  children: fractions_Not_Cut_On_RScissor
-                      .filter_Fractios___()
-                      .map(
-                        (e) => GestureDetector(
-                          onTap: () {
-                            if (vm.amountcontroller.text.isNotEmpty) {
-                              for (var element in fractions_Not_Cut_On_RScissor
-                                  .where((f) =>
-                                      f.wedth == e.wedth &&
-                                      f.type == e.type &&
-                                      f.density == e.density &&
-                                      f.color == e.color &&
-                                      f.hight == e.hight &&
-                                      f.lenth == e.lenth)
-                                  .take(vm.amountcontroller.text.to_int())) {
-                                myType.add_on_R_scissor(
-                                  lastStage: lastStage,
-                                  context: context,
-                                  fractiond: element,
-                                  scissor: scissor,
-                                );
+            child: SingleChildScrollView(
+              child: Column(children: [
+                CustomTextFormField(
+                    validator: Validation.validateothe,
+                    hint: "عدد",
+                    width: 60,
+                    controller: vm.amountcontroller),
+                const Text("من"),
+                SingleChildScrollView(
+                  child: Column(
+                    children: fractions_Not_Cut_On_RScissor
+                        .filter_Fractios___()
+                        .map(
+                          (e) => GestureDetector(
+                            onTap: () {
+                              if (vm.amountcontroller.text.isNotEmpty) {
+                                for (var element
+                                    in fractions_Not_Cut_On_RScissor
+                                        .where((f) =>
+                                            f.wedth == e.wedth &&
+                                            f.type == e.type &&
+                                            f.density == e.density &&
+                                            f.color == e.color &&
+                                            f.hight == e.hight &&
+                                            f.lenth == e.lenth)
+                                        .take(vm.amountcontroller.text
+                                            .to_int())) {
+                                  myType.add_on_R_scissor(
+                                    lastStage: lastStage,
+                                    context: context,
+                                    fractiond: element,
+                                    scissor: scissor,
+                                  );
+                                }
                               }
-                            }
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            width: 180,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 10,
-                            ),
-                            decoration: ShapeDecoration(
-                              color: const Color.fromARGB(255, 46, 158, 149),
-                              shape: StadiumBorder(
-                                side: BorderSide(
-                                  width: 2,
-                                  color: Colors.green[200]!,
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              width: 180,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 10,
+                              ),
+                              decoration: ShapeDecoration(
+                                color: const Color.fromARGB(255, 46, 158, 149),
+                                shape: StadiumBorder(
+                                  side: BorderSide(
+                                    width: 2,
+                                    color: Colors.green[200]!,
+                                  ),
                                 ),
                               ),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "${e.wedth}*${e.lenth}*${e.hight} ${e.color} ${e.type} D${e.density.removeTrailingZeros}",
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  fractions_Not_Cut_On_RScissor
-                                      .where((element) =>
-                                          element.color == e.color &&
-                                          element.type == e.type &&
-                                          element.density == e.density &&
-                                          element.wedth == e.wedth &&
-                                          element.lenth == e.lenth &&
-                                          element.hight == e.hight)
-                                      .toList()
-                                      .length
-                                      .toString(),
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 191, 7, 236),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "${e.wedth}*${e.lenth}*${e.hight} ${e.color} ${e.type} D${e.density.removeTrailingZeros}",
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    fractions_Not_Cut_On_RScissor
+                                        .where((element) =>
+                                            element.color == e.color &&
+                                            element.type == e.type &&
+                                            element.density == e.density &&
+                                            element.wedth == e.wedth &&
+                                            element.lenth == e.lenth &&
+                                            element.hight == e.hight)
+                                        .toList()
+                                        .length
+                                        .toString(),
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 191, 7, 236),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              )
-            ]),
+                        )
+                        .toList(),
+                  ),
+                )
+              ]),
+            ),
           ),
           actions: [
             ElevatedButton(
