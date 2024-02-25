@@ -33,6 +33,11 @@ class final_prodcut_controller extends ChangeNotifier {
                       .archive_final_prodcut.getactionTitle) ==
                   false &&
               element.isfinal == true));
+          all.addAll(initalData.where((element) =>
+              element.actions.if_action_exist(finalProdcutAction
+                      .archive_final_prodcut.getactionTitle) ==
+                  false &&
+              element.isfinal == true));
           //
           isfinal_false.addAll(initalData.where((element) =>
               element.actions.if_action_exist(finalProdcutAction
@@ -48,15 +53,35 @@ class final_prodcut_controller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  // c() {
-  //   print("5555555");
-  //   for (var el in finalproducts.where((element) => element.amount < 0)) {
-  //     el.actions.removeWhere(
-  //         (element) => element.action == "recive_Done_Form_FinalProdcutStock");
+  c() {
+    // print("5555555");
+    // for (var el in initalData) {
+    //   el = FinalProductModel(
+    //       id: el.id,
+    //       color: el.color,
+    //       isfinal: el.isfinal,
+    //       density: el.density,
+    //       type: el.type,
+    //       amount: el.amount,
+    //       scissor: el.scissor,
+    //       stageOfR: el.stageOfR,
+    //       invoiceNum: el.invoiceNum,
+    //       width: el.width,
+    //       lenth: el.lenth,
+    //       hight: el.hight,
+    //       volume: el.width * el.hight * el.lenth * el.amount / 1000000,
+    //       whight:
+    //           el.density * el.width * el.hight * el.lenth * el.amount / 1000000,
+    //       price: el.price,
+    //       customer: el.customer,
+    //       worker: el.worker,
+    //       notes: el.notes,
+    //       cuting_order_number: el.cuting_order_number,
+    //       actions: el.actions);
 
-  //     FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(el.toJson());
-  //   }
-  // }
+    //   FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(el.toJson());
+    // }
+  }
 
   // cd() {
   //   print("5555555");
@@ -74,6 +99,7 @@ class final_prodcut_controller extends ChangeNotifier {
   // }
 
   List<FinalProductModel> finalproducts = [];
+  List<FinalProductModel> all = [];
   List<FinalProductModel> search = [];
   List<FinalProductModel> initalData = [];
   List<FinalProductModel> isfinal_false = [];
@@ -112,13 +138,10 @@ class final_prodcut_controller extends ChangeNotifier {
   }
 
   incert_finalProduct_from_cutingUnit(FinalProductModel user) {
-    user.actions
-        .add(finalProdcutAction.incert_finalProduct_from_cutingUnit.add);
     try {
       FirebaseDatabase.instance
           .ref("finalproducts/${user.id}")
           .set(user.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 

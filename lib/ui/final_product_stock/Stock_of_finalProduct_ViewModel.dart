@@ -41,9 +41,15 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
 
   //اضافة مقاس جديد عند عمل الجرد
   incertfinalProduct(BuildContext context) {
+    double voluem = int.parse(amountcontroller.text) *
+        double.parse(widthcontroller.text) *
+        double.parse(lenthcontroller.text) *
+        double.parse(hightncontroller.text);
     context
         .read<final_prodcut_controller>()
         .incert_finalProduct_from_Others(FinalProductModel(
+          volume: voluem,
+          whight: voluem * double.parse(densitycontroller.text),
           invoiceNum: 0,
           price: 0,
           worker: "",
@@ -75,10 +81,17 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
 //الخاصه بالاضافه الى هذا المقاس
   void addtocertinsize(
       BuildContext context, ItemModel itemData, GroupModel headerData) {
+    double voluem = int.parse(amountcontroller.text) *
+        double.parse(widthcontroller.text) *
+        double.parse(lenthcontroller.text) *
+        double.parse(hightncontroller.text);
+
     if (formKey.currentState!.validate() && itemData.total > 0) {
       context
           .read<final_prodcut_controller>()
           .incert_finalProduct_from_Others(FinalProductModel(
+            volume: voluem,
+            whight: voluem * itemData.density,
             invoiceNum: 0,
             price: 0.0,
             worker: "",

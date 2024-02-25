@@ -1,17 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: file_names, must_be_immutable, camel_case_types
 
-import 'package:flutter/cupertino.dart';
+import 'package:collection/collection.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
+
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
-import 'package:jason_company/controllers/setting_controller.dart';
+import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
+import 'package:jason_company/ui/cutting_order/cutting_ordera_viewModer.dart';
 import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmodel.dart';
-import 'package:jason_company/ui/recources/color_manager.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:provider/provider.dart';
 
 class HeaderOftable extends StatelessWidget {
   const HeaderOftable({
@@ -98,12 +103,12 @@ class Fields extends StatelessWidget {
       padding: const EdgeInsets.only(top: 15),
       child: Column(
         children: [
+          SearchForSize(),
           // ignore: prefer_const_constructors
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
+            children: [
               DropDdowenFor_scissors(),
-              DropDdowenForOrders_sizes(),
             ],
           ),
 
@@ -111,63 +116,21 @@ class Fields extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Consumer<SettingController>(
-                builder: (context, myType, child) {
-                  return TextButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('  ?'),
-                                content: SizedBox(
-                                  height: 200,
-                                  child: Column(children: [
-                                    CupertinoSwitch(
-                                      value: myType.switchValue_for_final,
-                                      onChanged: (value) {
-                                        myType.switchValue_for_final = value;
-                                        Navigator.pop(context);
-
-                                        myType.Refresh_Ui();
-                                      },
-                                    ),
-                                    const Text('  ملحوظه'),
-                                    const Text(
-                                        '   يتم الغاء تفغيل هذا الذر اذا كان    '),
-                                    const Text(
-                                        '     المنتج    مراتب البلصات      '),
-                                    const Text(
-                                        '           فهى تدخل فى مرحله اخرى '),
-                                    const Text('   اى انها غير تام  '),
-                                  ]),
-                                ),
-                                actions: [
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('No')),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'yes',
-                                      )),
-                                ],
-                              );
-                            });
-                      },
-                      child: Text(
-                          myType.switchValue_for_final ? "تام" : "غير تام"));
-                },
-              ),
               CustomTextFormField(
                 keybordtupe: TextInputType.name,
                 width: MediaQuery.of(context).size.width * .23,
                 hint: "ملاحظات ",
                 controller: vm.notes,
+              ),
+              Consumer<dropDowenContoller>(
+                builder: (context, myType, child) {
+                  return CustomTextFormField(
+                    width: MediaQuery.of(context).size.width * .23,
+                    hint: "رقم الدور ",
+                    controller: myType.N,
+                    validator: Validation.validateothers,
+                  );
+                },
               ),
               CustomTextFormField(
                 width: MediaQuery.of(context).size.width * .23,
@@ -175,7 +138,6 @@ class Fields extends StatelessWidget {
                 controller: vm.amountcontroller,
                 validator: Validation.validateothers,
               ),
-              const DropDdowenForOrders(),
             ],
           ),
         ],
@@ -184,95 +146,10 @@ class Fields extends StatelessWidget {
   }
 }
 
-class DropDdowenForOrders extends StatelessWidget {
-  const DropDdowenForOrders({
-    super.key,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<OrderController>(
-      builder: (context, Mytype, child) {
-        // Mytype.getBlocks(context, vm);
-        return Column(
-          children: [
-            const Text("اوامر التشغيل"),
-            DropdownButton(
-                value: Mytype.initionalForRadio_order_Serials,
-                items: Mytype.getOrdersForRadio_order_Serials()
-                    .where((element) =>
-                        element.actions.if_action_exist(
-                            OrderAction.order_colosed.getTitle) ==
-                        false)
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Text(e.serial.toString()),
-                        ))
-                    .toList(),
-                onChanged: (v) {
-                  if (v != null) {
-                    //اسناد قيمة الدروب لل كنترولر
-                    Mytype.initionalForRadio_order_sizes = null;
-
-                    Mytype.initionalForRadio_order_Serials = v;
-                    Mytype.Refrsh_ui();
-                  }
-                }),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class DropDdowenForOrders_sizes extends StatelessWidget {
-  const DropDdowenForOrders_sizes({
-    super.key,
-  });
-  // CuttingOrderViewModel vm = CuttingOrderViewModel();
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<OrderController>(
-      builder: (context, Mytype, child) {
-        // Mytype.getBlocks(context, vm);
-        return Column(
-          children: [
-            const Text("المقاسات"),
-            DropdownButton(
-                value: Mytype.initionalForRadio_order_sizes,
-                items: Mytype.getOrdersForRadio_order_sizes()
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Row(
-                            children: [
-                              Text(
-                                "${e.lenth.removeTrailingZeros}*${e.widti.removeTrailingZeros}*${e.hight.removeTrailingZeros}>>>",
-                              ),
-                              Text(
-                                "${e.color}>>ك${e.density.removeTrailingZeros}>>${e.type}",
-                                style:
-                                    const TextStyle(color: ColorManager.cobalt),
-                              ),
-                            ],
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (v) {
-                  if (v != null) {
-                    Mytype.initionalForRadio_order_sizes = v;
-                    Mytype.Refrsh_ui();
-                  }
-                }),
-          ],
-        );
-      },
-    );
-  }
-}
-
 class DropDdowenFor_scissors extends StatelessWidget {
-  const DropDdowenFor_scissors({super.key});
+  DropDdowenFor_scissors({super.key});
 
-  // CuttingOrderViewModel vm = CuttingOrderViewModel();
+  CuttingOrderViewModel vm = CuttingOrderViewModel();
   @override
   Widget build(BuildContext context) {
     return Consumer<dropDowenContoller>(
@@ -291,6 +168,22 @@ class DropDdowenFor_scissors extends StatelessWidget {
                 onChanged: (v) {
                   if (v != null) {
                     Mytype.initioalFor_Scissors = v;
+                    var x = context
+                        .read<final_prodcut_controller>()
+                        .all
+                        .where((element) =>
+                            element.actions
+                                    .get_Date_of_action(finalProdcutAction
+                                        .incert_finalProduct_from_cutingUnit
+                                        .getactionTitle)
+                                    .formatt() ==
+                                DateTime.now().formatt() &&
+                            element.scissor == Mytype.initioalFor_Scissors)
+                        .map((e) => e.stageOfR)
+                        .toSet()
+                        .toList()
+                        .sortedBy<num>((element) => element);
+                    Mytype.N.text = x.isEmpty ? "0" : x.last.toString();
                     Mytype.Refrsh_ui();
                   }
                 }),
@@ -521,5 +414,178 @@ class AddUnregular extends StatelessWidget {
                   ));
         },
         icon: const Icon(Icons.add));
+  }
+}
+
+class SearchForSize extends StatelessWidget {
+  SearchForSize({super.key});
+  FinalProductStockViewModel vm = FinalProductStockViewModel();
+  final TextEditingController textEditingController = TextEditingController();
+  CuttingOrderViewModel vm2 = CuttingOrderViewModel();
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<OrderController>(
+      builder: (context, myType, child) {
+        OrderController my = context.read<OrderController>();
+        List<OrderModel> orders = myType.orders
+            .where((v) =>
+                v.actions.if_action_exist(OrderAction.order_colosed.getTitle) ==
+                false)
+            .toList()
+            .sortedBy<num>((element) => element.serial)
+            .reversed
+            .toList();
+        return DropdownButtonHideUnderline(
+          child: DropdownButton2<OperationOrederItems>(
+            isExpanded: true,
+            hint: Text(
+              'اختر المقاس',
+              style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).hintColor,
+              ),
+            ),
+            items: orders
+                .expand((x) => x.items)
+                .map((item) => DropdownMenuItem(
+                      value: item,
+                      child: Row(
+                        children: [
+                          Text(
+                            " (${vm.find(orders, item).serial})>>${item.lenth.removeTrailingZeros}*${item.widti.removeTrailingZeros}*${item.hight.removeTrailingZeros} ${item.type} ${item.color}D ${item.density.removeTrailingZeros}  ",
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                          pp(vm: vm2, order: vm.find(orders, item), item: item)
+                        ],
+                      ),
+                    ))
+                .toList(),
+            value: my.item,
+            onChanged: (value) {
+              my.item = value;
+              my.order = vm.find(orders, value!);
+
+              myType.Refrsh_ui();
+            },
+            buttonStyleData: ButtonStyleData(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              height: 40,
+              width: MediaQuery.of(context).size.width,
+            ),
+            dropdownStyleData: DropdownStyleData(
+              maxHeight: MediaQuery.of(context).size.width,
+            ),
+            menuItemStyleData: const MenuItemStyleData(
+              height: 40,
+            ),
+            dropdownSearchData: DropdownSearchData(
+              searchController: textEditingController,
+              searchInnerWidgetHeight: 50,
+              searchInnerWidget: Container(
+                height: 50,
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  bottom: 4,
+                  right: 8,
+                  left: 8,
+                ),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  expands: true,
+                  maxLines: null,
+                  controller: textEditingController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                    hintText: ' .....ابحث عن مقاس',
+                    hintStyle: const TextStyle(fontSize: 12),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+              searchMatchFn: (item, searchValue) {
+                return item.value
+                    .toString()
+                    .toLowerCase()
+                    .contains(searchValue.toLowerCase());
+              },
+            ),
+            //This to clear the search value when you close the menu
+            onMenuStateChange: (isOpen) {
+              if (!isOpen) {
+                textEditingController.clear();
+              }
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class pp extends StatelessWidget {
+  pp({
+    super.key,
+    required this.vm,
+    required this.order,
+    required this.item,
+  });
+
+  final CuttingOrderViewModel vm;
+  final OrderModel order;
+  final OperationOrederItems item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<final_prodcut_controller>(
+      builder: (context, myType, child) {
+        double x = vm.petcentage_of_cutingOrder(context, order, item);
+        return Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 1),
+                      child: LinearPercentIndicator(
+                        width: 73.0,
+                        lineHeight: 15.0,
+                        percent: x / 100 > 1 ? 1 : x / 100,
+                        progressColor: x < 90 ? Colors.red : Colors.green,
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 1),
+                          child: Text(
+                            "${x.toStringAsFixed(1)} %",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Text(
+                "left: ${vm.Total_Notdone_of_cutting_order(context, order, item).toStringAsFixed(0)}")
+          ],
+        );
+      },
+    );
   }
 }

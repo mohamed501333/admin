@@ -4,6 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ChemicalsController.dart';
+import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/ui/chemical_stock/componants.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -124,42 +125,47 @@ class Chemical_view extends StatelessWidget {
             borderRadius: BorderRadius.circular(5)),
         child: Column(
           children: [
-            DropdownButtonHideUnderline(
-              child: DropdownButton2<String>(
-                isExpanded: true,
-                hint: const Center(
-                  child: Text(
-                    'نوع التقرير',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurpleAccent,
-                      fontSize: 18,
+            Consumer<dropDowenContoller>(
+              builder: (context, myType, child) {
+                return DropdownButtonHideUnderline(
+                  child: DropdownButton2<String>(
+                    isExpanded: true,
+                    hint: const Center(
+                      child: Text(
+                        'نوع التقرير',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepPurpleAccent,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    items: items
+                        .map((String item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ))
+                        .toList(),
+                    value: selectedValue,
+                    onChanged: (String? value) {
+                      selectedValue = value;
+                      myType.Refrsh_ui();
+                    },
+                    buttonStyleData: ButtonStyleData(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * .8,
+                    ),
+                    menuItemStyleData: const MenuItemStyleData(
+                      height: 40,
                     ),
                   ),
-                ),
-                items: items
-                    .map((String item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ))
-                    .toList(),
-                value: selectedValue,
-                onChanged: (String? value) {
-                  selectedValue = value;
-                },
-                buttonStyleData: ButtonStyleData(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * .8,
-                ),
-                menuItemStyleData: const MenuItemStyleData(
-                  height: 40,
-                ),
-              ),
+                );
+              },
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

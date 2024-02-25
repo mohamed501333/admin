@@ -1,19 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: must_be_immutable
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
+
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
+import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/cutting_order/componants.dart';
 import 'package:jason_company/ui/cutting_order/cuting_order_pdf.dart';
 import 'package:jason_company/ui/cutting_order/cutting_ordera_viewModer.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:provider/provider.dart';
 
 class CuttingOrderView extends StatelessWidget {
   const CuttingOrderView({super.key});
@@ -472,65 +475,9 @@ class HistoryForOrders extends StatelessWidget {
                                       )),
                                 ),
                                 //الانجاز
-                                Column(
-                                  children: order.items
-                                      .map(
-                                        (item) => Stack(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 4),
-                                              child: LinearPercentIndicator(
-                                                width: 68.0,
-                                                lineHeight: 15.0,
-                                                percent:
-                                                    vm.petcentage_of_cutingOrder(
-                                                                    context,
-                                                                    order,
-                                                                    item) /
-                                                                100 >
-                                                            1
-                                                        ? 1
-                                                        : vm.petcentage_of_cutingOrder(
-                                                                context,
-                                                                order,
-                                                                item) /
-                                                            100,
-                                                progressColor:
-                                                    vm.petcentage_of_cutingOrder(
-                                                                context,
-                                                                order,
-                                                                item) <
-                                                            50
-                                                        ? Colors.red
-                                                        : Colors.green,
-                                              ),
-                                            ),
-                                            Center(
-                                              child: Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 4),
-                                                  child: Text(
-                                                    "${vm.petcentage_of_cutingOrder(context, order, item).removeTrailingZeros} %",
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color:
-                                                          // order.items.indexOf(item) %
-                                                          //             2 ==
-                                                          //         0
-                                                          //     ? Colors.cyan
-                                                          //     :
-                                                          Colors.black,
-                                                    ),
-                                                  )),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                      .toList(),
+                                percentage(
+                                  vm: vm,
+                                  order: order,
                                 ),
                                 Column(
                                   children: order.items
@@ -664,6 +611,67 @@ class HistoryForOrders extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class percentage extends StatelessWidget {
+  const percentage({
+    Key? key,
+    required this.vm,
+    required this.order,
+  }) : super(key: key);
+
+  final CuttingOrderViewModel vm;
+  final OrderModel order;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: order.items
+          .map(
+            (item) => Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: LinearPercentIndicator(
+                    width: 68.0,
+                    lineHeight: 15.0,
+                    percent: vm.petcentage_of_cutingOrder(
+                                    context, order, item) /
+                                100 >
+                            1
+                        ? 1
+                        : vm.petcentage_of_cutingOrder(context, order, item) /
+                            100,
+                    progressColor:
+                        vm.petcentage_of_cutingOrder(context, order, item) < 50
+                            ? Colors.red
+                            : Colors.green,
+                  ),
+                ),
+                Center(
+                  child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Text(
+                        "${vm.petcentage_of_cutingOrder(context, order, item)..toStringAsFixed(1)} %",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              // order.items.indexOf(item) %
+                              //             2 ==
+                              //         0
+                              //     ? Colors.cyan
+                              //     :
+                              Colors.black,
+                        ),
+                      )),
+                ),
+              ],
+            ),
+          )
+          .toList(),
     );
   }
 }

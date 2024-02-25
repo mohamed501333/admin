@@ -97,6 +97,28 @@ class CuttingOrderViewModel extends BaseViewModel {
     return b == null ? 0.0 : b;
   }
 
+  num Total_Notdone_of_cutting_order(
+      BuildContext context, OrderModel order, OperationOrederItems item) {
+    var done = context
+        .read<final_prodcut_controller>()
+        .finalproducts
+        .where((e) =>
+            e.cuting_order_number == order.serial &&
+            e.lenth == item.lenth &&
+            e.width == item.widti &&
+            e.type == item.type &&
+            e.density == item.density &&
+            e.color == item.color &&
+            e.hight == item.hight)
+        .map((e) => e.amount);
+    var TotalDone;
+
+    if (done.isNotEmpty) {
+      TotalDone = done.reduce((a, b) => a + b).toDouble();
+    }
+    return TotalDone == null ? 0.0 : item.Qantity - TotalDone;
+  }
+
   List<BlockModel> filterd = [];
   String whatfilter = "";
 }

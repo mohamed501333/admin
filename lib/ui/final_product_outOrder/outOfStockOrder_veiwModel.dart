@@ -42,9 +42,15 @@ class outOfStockOrderveiwModel extends BaseViewModel {
     if (formKey.currentState!.validate() &&
         total > 0 &&
         total >= int.parse(amountcontroller.text)) {
+      double volume = item.width *
+          item.lenth *
+          item.hight *
+          int.parse(amountcontroller.text);
       context
           .read<final_prodcut_controller>()
           .finalProdcut_out_order(FinalProductModel(
+            volume: volume,
+            whight: volume * item.density,
             invoiceNum: 0,
             price: 0.0,
             worker: "",
