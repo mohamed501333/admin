@@ -31,11 +31,12 @@ class RVeiw2 extends StatelessWidget {
         List<int> AllStages = fractions
             .map((e) => e.stage)
             .toSet()
+            .toList()
             .sortedBy<num>((element) => element)
             .reversed
             .toList();
-        int lastStage = AllStages.isEmpty ? 0 : AllStages.last;
-        // print("lase stage $lastStage");
+        int lastStage = AllStages.isEmpty ? 0 : AllStages.first;
+        print("lase stage $lastStage");
         return SingleChildScrollView(
           child: Column(
             children: [
