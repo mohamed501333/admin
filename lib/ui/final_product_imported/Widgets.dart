@@ -179,6 +179,7 @@ class DropDdowenFor_scissors extends StatelessWidget {
             .toSet()
             .toList()
             .sortedBy<num>((element) => element);
+        print(x);
         return Column(
           children: [
             const Text("المقص"),
