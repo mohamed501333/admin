@@ -23,21 +23,28 @@ class Report2ForR extends StatefulWidget {
 
 class _Report2ForRState extends State<Report2ForR> {
   AllReportsViewModel vm = AllReportsViewModel();
+  String chosenDate = format.format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
-    String chosenDate = format.format(DateTime.now());
+    List<FinalProductModel> finalProdcuts1 =
+        finalprodcuts(1, context, chosenDate);
 
-    List<FinalProductModel> finalProdcuts = finalprodcuts(context, chosenDate);
+    List<FinalProductModel> finalProdcuts2 =
+        finalprodcuts(2, context, chosenDate);
+
+    List<FinalProductModel> finalProdcuts3 =
+        finalprodcuts(3, context, chosenDate);
 
     List<FractionModel> fractions1 = frac(context, 1, chosenDate);
-    List<int> allStages1 = allstage(fractions1, finalProdcuts);
+    List<int> allStages1 = allstage(fractions1, finalProdcuts1);
 
     List<FractionModel> fractions2 = frac(context, 2, chosenDate);
-    List<int> allStages2 = allstage(fractions2, finalProdcuts);
+    List<int> allStages2 = allstage(fractions2, finalProdcuts2);
 
     List<FractionModel> fractions3 = frac(context, 3, chosenDate);
-    List<int> allStages3 = allstage(fractions3, finalProdcuts);
+    List<int> allStages3 = allstage(fractions3, finalProdcuts3);
+    print(allStages2);
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +61,9 @@ class _Report2ForRState extends State<Report2ForR> {
                           fractions1,
                           fractions2,
                           fractions3,
-                          finalProdcuts,
+                          finalProdcuts1,
+                          finalProdcuts2,
+                          finalProdcuts3,
                           chosenDate)
                       .then((value) => context.gonext(
                           context,
@@ -100,19 +109,19 @@ class _Report2ForRState extends State<Report2ForR> {
                         vm: vm,
                         scissor: 1,
                         fractions: fractions1,
-                        finalProdcuts: finalProdcuts),
+                        finalProdcuts: finalProdcuts1),
                     Details(
                         allStages: allStages2,
                         vm: vm,
                         scissor: 2,
                         fractions: fractions2,
-                        finalProdcuts: finalProdcuts),
+                        finalProdcuts: finalProdcuts2),
                     Details(
                         allStages: allStages3,
                         vm: vm,
                         scissor: 3,
                         fractions: fractions3,
-                        finalProdcuts: finalProdcuts),
+                        finalProdcuts: finalProdcuts3),
                   ],
                 ),
               ),
@@ -148,17 +157,23 @@ class _Report2ForRState extends State<Report2ForR> {
   }
 
   List<FinalProductModel> finalprodcuts(
-      BuildContext context, String chosenDate) {
+      int scissor, BuildContext context, String chosenDate) {
     List<FinalProductModel> finalProdcuts = context
         .read<final_prodcut_controller>()
-        .finalproducts
+        .initalData
         .where((element) =>
+            element.actions.if_action_exist(
+                    finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+                false &&
+            element.stageOfR != 0 &&
+            element.scissor - 3 == scissor &&
             element.actions
-                .get_Date_of_action(finalProdcutAction
-                    .incert_finalProduct_from_cutingUnit.getactionTitle)
-                .formatt() ==
-            chosenDate)
+                    .get_Date_of_action(finalProdcutAction
+                        .incert_finalProduct_from_cutingUnit.getactionTitle)
+                    .formatt() ==
+                chosenDate)
         .toList();
+    print(finalProdcuts);
     return finalProdcuts;
   }
 }
@@ -413,7 +428,7 @@ class Details extends StatelessWidget {
                     padding: const EdgeInsets.all(4.0),
                     child: Center(
                       child: Text(
-                          " kg ${fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
+                          " kg ${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? 0 : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 17)),
                     ),

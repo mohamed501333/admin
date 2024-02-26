@@ -16,7 +16,9 @@ class Pdf2ForR {
       List<FractionModel> fractions1,
       List<FractionModel> fractions2,
       List<FractionModel> fractions3,
-      List<FinalProductModel> finalProdcuts,
+      List<FinalProductModel> finalProdcuts1,
+      List<FinalProductModel> finalProdcuts2,
+      List<FinalProductModel> finalProdcuts3,
       chosenDate) async {
     var data = await rootBundle.load("assets/fonts/HacenTunisia.ttf");
     var arabicFont = Font.ttf(data);
@@ -37,11 +39,11 @@ class Pdf2ForR {
           return [
             SizedBox(height: 10),
             newMethod(
-                c, allStages1, vm, 1, fractions1, finalProdcuts, chosenDate),
+                c, allStages1, vm, 1, fractions1, finalProdcuts1, chosenDate),
             newMethod(
-                c, allStages2, vm, 2, fractions2, finalProdcuts, chosenDate),
+                c, allStages2, vm, 2, fractions2, finalProdcuts2, chosenDate),
             newMethod(
-                c, allStages3, vm, 3, fractions3, finalProdcuts, chosenDate),
+                c, allStages3, vm, 3, fractions3, finalProdcuts3, chosenDate),
           ];
         },
       ),
@@ -194,145 +196,146 @@ newMethod(
                       ))
                   .toList(),
             ),
-          ])),
-          Center(
-              child: Container(
-                  decoration: const BoxDecoration(color: PdfColors.grey500),
-                  child: Text("اجمالى", style: const TextStyle(fontSize: 14)))),
-          Table(
-            border: TableBorder.all(width: 1, color: PdfColors.black),
-            columnWidths: const {
-              0: FlexColumnWidth(1.3),
-              1: FlexColumnWidth(3),
-              2: FlexColumnWidth(3),
-              3: FlexColumnWidth(.3),
-            },
-            children: [
-              TableRow(
-                  decoration: const BoxDecoration(color: PdfColors.amber),
+            Center(
+                child: Container(
+                    decoration: const BoxDecoration(color: PdfColors.grey500),
+                    child:
+                        Text("اجمالى", style: const TextStyle(fontSize: 14)))),
+            Table(
+              border: TableBorder.all(width: 1, color: PdfColors.black),
+              columnWidths: const {
+                0: FlexColumnWidth(1.3),
+                1: FlexColumnWidth(3),
+                2: FlexColumnWidth(3),
+                3: FlexColumnWidth(.3),
+              },
+              children: [
+                TableRow(
+                    decoration: const BoxDecoration(color: PdfColors.amber),
+                    children: [
+                      Center(child: Text("اجمالى دون التام")),
+                      Center(child: Text("اجمالى الناتج")),
+                      Center(child: Text("اجمالى الوارد")),
+                    ])
+              ],
+            ),
+            Table(
+              border: TableBorder.all(width: 1, color: PdfColors.black),
+              columnWidths: const {
+                0: FlexColumnWidth(1.3),
+                1: FlexColumnWidth(3),
+                2: FlexColumnWidth(3),
+                3: FlexColumnWidth(.3),
+              },
+              children: [
+                TableRow(
                   children: [
-                    Center(child: Text("اجمالى دون التام")),
-                    Center(child: Text("اجمالى الناتج")),
-                    Center(child: Text("اجمالى الوارد")),
-                  ])
-            ],
-          ),
-          Table(
-            border: TableBorder.all(width: 1, color: PdfColors.black),
-            columnWidths: const {
-              0: FlexColumnWidth(1.3),
-              1: FlexColumnWidth(3),
-              2: FlexColumnWidth(3),
-              3: FlexColumnWidth(.3),
-            },
-            children: [
-              TableRow(
-                children: [
-                  //الوارد
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: vm
-                        .getIncomingOnScissor(context, scissor, fractions)
-                        .map((e) => Padding(
-                              padding: const EdgeInsets.all(1.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    color: PdfColors.grey400,
-                                    child: Text(
-                                        "حجم${(e.total * e.voluem / 1000000).toStringAsFixed(1)}"),
-                                  ),
-                                  Text(e.descrioption),
-                                  Text("من"),
-                                  Text("${e.total}"),
-                                ].reversed.toList(),
-                              ),
-                            ))
-                        .toList(),
-                  ),
-
-                  // التام
-
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: vm
-                        .totalAndDescriptionOfFinalWithNoStage(
-                            context, finalProdcuts, scissor)
-                        .map((e) => Padding(
-                              padding: const EdgeInsets.all(1.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    color: PdfColors.grey400,
-                                    child: Text(
-                                        "حجم${(e.total * e.volume).toStringAsFixed(1)}"),
-                                  ),
-                                  Text(e.description),
-                                  Text("من"),
-                                  Text("${e.total}"),
-                                ].reversed.toList(),
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                  //دون التام
-                  Column(
-                    children: fractions
-                        .expand((s) => s.notfinals)
-                        .toList()
-                        .filter_notfinals___()
-                        .map((f) => Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  child: Text(
-                                    "${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
-                                  ),
+                    //الوارد
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: vm
+                          .getIncomingOnScissor(context, scissor, fractions)
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.all(1.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      color: PdfColors.grey400,
+                                      child: Text(
+                                          "حجم${(e.total * e.voluem / 1000000).toStringAsFixed(1)}"),
+                                    ),
+                                    Text(e.descrioption),
+                                    Text("من"),
+                                    Text("${e.total}"),
+                                  ].reversed.toList(),
                                 ),
-                              ].reversed.toList(),
-                            ))
-                        .toList(),
-                  )
-                ].reversed.toList(),
-              ),
-              TableRow(
-                  decoration: const BoxDecoration(color: PdfColors.grey),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                          "${vm.getIncomingOnScissor(context, scissor, fractions).map((e) => e.total * e.voluem / 1000000).isEmpty ? 0 : vm.getIncomingOnScissor(context, scissor, fractions).map((e) => e.total * e.voluem / 1000000).reduce((a, b) => a + b).removeTrailingZeros}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 17),
+                              ))
+                          .toList(),
+                    ),
+
+                    // التام
+
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: vm
+                          .totalAndDescriptionOfFinalWithNoStage(
+                              context, finalProdcuts, scissor)
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.all(1.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      color: PdfColors.grey400,
+                                      child: Text(
+                                          "حجم${(e.total * e.volume).toStringAsFixed(1)}"),
+                                    ),
+                                    Text(e.description),
+                                    Text("من"),
+                                    Text("${e.total}"),
+                                  ].reversed.toList(),
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                    //دون التام
+                    Column(
+                      children: fractions
+                          .expand((s) => s.notfinals)
+                          .toList()
+                          .filter_notfinals___()
+                          .map((f) => Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    child: Text(
+                                      "${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
+                                    ),
+                                  ),
+                                ].reversed.toList(),
+                              ))
+                          .toList(),
+                    )
+                  ].reversed.toList(),
+                ),
+                TableRow(
+                    decoration: const BoxDecoration(color: PdfColors.grey),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Center(
+                          child: Text(
+                            "${vm.getIncomingOnScissor(context, scissor, fractions).map((e) => e.total * e.voluem / 1000000).isEmpty ? 0 : vm.getIncomingOnScissor(context, scissor, fractions).map((e) => e.total * e.voluem / 1000000).reduce((a, b) => a + b).removeTrailingZeros}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                            "${vm.totalAndDescriptionOfFinalWithNoStage(context, finalProdcuts, scissor).map((e) => e.volume * e.total).isEmpty ? 0 : vm.totalAndDescriptionOfFinalWithNoStage(context, finalProdcuts, scissor).map((e) => e.volume * e.total).reduce((a, b) => a + b).removeTrailingZeros}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 17)),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Center(
+                          child: Text(
+                              "${vm.totalAndDescriptionOfFinalWithNoStage(context, finalProdcuts, scissor).map((e) => e.volume * e.total).isEmpty ? 0 : vm.totalAndDescriptionOfFinalWithNoStage(context, finalProdcuts, scissor).map((e) => e.volume * e.total).reduce((a, b) => a + b).removeTrailingZeros}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 17)),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Center(
-                        child: Text(
-                            " kg ${fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 17)),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Center(
+                          child: Text(
+                              " kg ${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? "0" : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 17)),
+                        ),
                       ),
-                    ),
-                  ].reversed.toList())
-            ],
-          ),
+                    ].reversed.toList())
+              ],
+            ),
+          ])),
         ],
       ));
 }

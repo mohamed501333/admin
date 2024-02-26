@@ -24,7 +24,6 @@ class FinalProductStockViewModel extends BaseViewModel {
     int? scissor = context.read<dropDowenContoller>().initioalFor_Scissors;
 
     OrderController my = context.read<OrderController>();
-    TextEditingController N = context.read<dropDowenContoller>().N;
     if (my.order != null && my.item != null && scissor != null && validate()) {
       double volume = my.item!.widti *
           my.item!.lenth *
@@ -37,7 +36,7 @@ class FinalProductStockViewModel extends BaseViewModel {
             invoiceNum: 0,
             price: 0.0,
             worker: "",
-            stageOfR: N.text.to_int() + 1,
+            stageOfR: N.text.to_int(),
             isfinal: true,
             notes: notes.text,
             cuting_order_number: my.order!.serial,
@@ -68,7 +67,7 @@ class FinalProductStockViewModel extends BaseViewModel {
     }
   }
 
-  add_unregular(BuildContext context) {
+  add_unregular(BuildContext context, bool isfinal) {
     double volume = int.parse(amountcontroller.text) *
         widthcontroller.text.to_double() *
         lenthcontroller.text.to_double() *
@@ -77,10 +76,10 @@ class FinalProductStockViewModel extends BaseViewModel {
     FinalProductModel user = FinalProductModel(
         invoiceNum: 0,
         price: 0.0,
-        stageOfR: 0,
+        stageOfR: N.text.to_int(),
         id: DateTime.now().millisecondsSinceEpoch,
         color: colercontroller.text,
-        isfinal: true,
+        isfinal: isfinal,
         density: densitycontroller.text.to_double(),
         type: typecontroller.text,
         amount: int.parse(amountcontroller.text),
@@ -92,7 +91,7 @@ class FinalProductStockViewModel extends BaseViewModel {
         worker: '',
         notes: "",
         cuting_order_number: 0,
-        actions: [],
+        actions: [finalProdcutAction.incert_finalProduct_from_cutingUnit.add],
         volume: volume,
         whight: volume * densitycontroller.text.to_double());
     if (formKey.currentState!.validate()) {

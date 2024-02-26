@@ -495,6 +495,7 @@ enum UserPermition {
 
   incert_in_finalProdcut_imorted,
   incert_unregular_in_importedfinal_prodcut,
+  incert_notFinal_in_importedfinal_prodcut,
   incert_in_block_stock,
   incert_in_final_prodcutStock,
   incert_in_cutting_order,
@@ -674,11 +675,16 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "R2");
       case UserPermition.show_R3:
         return UserpermitionTittle(tittle: "R3");
+      case UserPermition.incert_notFinal_in_importedfinal_prodcut:
+        return UserpermitionTittle(
+            tittle: "اضافة شغل غير تام فى وارد تام المقصات");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.incert_notFinal_in_importedfinal_prodcut:
+        return "اضافة شغل غير تام فى وارد تام المقصات";
       case UserPermition.show_H1:
         return "H1";
       case UserPermition.show_H2:

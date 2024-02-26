@@ -29,6 +29,8 @@ class _FinalProductViewState extends State<FinalProductView> {
       child: Scaffold(
         appBar: AppBar(
           actions: [
+            AddUnregular2().permition(context,
+                UserPermition.incert_notFinal_in_importedfinal_prodcut),
             TextButton(
                     onPressed: () async {
                       DateTime? pickedDate = await showDatePicker(
@@ -52,7 +54,7 @@ class _FinalProductViewState extends State<FinalProductView> {
                 .permition(
                     context, UserPermition.show_date_in_finalProduct_imported),
             AddUnregular().permition(context,
-                UserPermition.incert_unregular_in_importedfinal_prodcut)
+                UserPermition.incert_unregular_in_importedfinal_prodcut),
           ],
         ),
         body: Form(
@@ -92,7 +94,7 @@ class TheTable extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             reverse: true,
             child: SizedBox(
-              width: 1100,
+              width: 1150,
               child: ListView(
                 children: [
                   const HeaderOftable(),
@@ -102,14 +104,16 @@ class TheTable extends StatelessWidget {
                       1: FlexColumnWidth(3),
                       2: FlexColumnWidth(3),
                       3: FlexColumnWidth(3),
-                      4: FlexColumnWidth(1),
+                      4: FlexColumnWidth(2),
                       5: FlexColumnWidth(1),
-                      6: FlexColumnWidth(2),
+                      6: FlexColumnWidth(1),
                       7: FlexColumnWidth(1),
-                      8: FlexColumnWidth(1),
-                      9: FlexColumnWidth(2),
-                      10: FlexColumnWidth(.8),
-                      11: FlexColumnWidth(.7),
+                      8: FlexColumnWidth(2),
+                      9: FlexColumnWidth(1),
+                      10: FlexColumnWidth(1),
+                      11: FlexColumnWidth(2),
+                      12: FlexColumnWidth(.8),
+                      13: FlexColumnWidth(.7),
                     },
                     children: finalproducts.SumTheTOw()
                         .where((element) => element.actions.if_action_exist(
@@ -321,7 +325,11 @@ class TheTable extends StatelessWidget {
                                         ],
                                       )),
                                 ),
-
+                                //ملاحظات
+                                Container(
+                                    padding: const EdgeInsets.all(2),
+                                    child: Center(
+                                        child: Text(user.notes.toString()))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
@@ -329,24 +337,34 @@ class TheTable extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
+                                        child: Text(user.stageOfR.toString()))),
+
+                                Container(
+                                    padding: const EdgeInsets.all(2),
+                                    child: Center(
                                         child: Text(user.density.toString()))),
+
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(user.customer.toString()))),
+
                                 Container(
                                     padding: const EdgeInsets.all(1),
                                     child: Center(
                                         child: Text(user.type.toString()))),
+
                                 Container(
                                     padding: const EdgeInsets.all(0),
                                     child: Center(child: Text(user.color))),
+
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: Center(
                                       child: Text(
                                           "${user.hight.removeTrailingZeros}*${user.width.removeTrailingZeros}*${user.lenth.removeTrailingZeros}"),
                                     )),
+
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: Center(
@@ -357,6 +375,7 @@ class TheTable extends StatelessWidget {
                                                 255, 221, 2, 75)),
                                       ),
                                     )),
+
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: Center(child: Text("$x"))),
