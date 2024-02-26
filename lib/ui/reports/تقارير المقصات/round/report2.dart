@@ -209,8 +209,8 @@ class Details extends StatelessWidget {
           children: const [
             TableRow(decoration: BoxDecoration(color: Colors.amber), children: [
               Center(child: Text("دون التام")),
-              Center(child: Text("الناتج")),
-              Center(child: Text("الوارد")),
+              Center(child: Text("(افرخ)الناتج")),
+              Center(child: Text("(فرد)الوارد")),
               Center(child: Text("دور")),
             ])
           ],
@@ -314,8 +314,8 @@ class Details extends StatelessWidget {
           children: const [
             TableRow(decoration: BoxDecoration(color: Colors.amber), children: [
               Center(child: Text("اجمالى دون التام")),
-              Center(child: Text("اجمالى الناتج")),
-              Center(child: Text("اجمالى الوارد")),
+              Center(child: Text("(افرخ)اجمالى الناتج")),
+              Center(child: Text("(فرد)اجمالى الوارد")),
             ])
           ],
         ),

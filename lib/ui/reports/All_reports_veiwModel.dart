@@ -56,7 +56,7 @@ class AllReportsViewModel {
             total: vm2.totalofSingleSize(e, finalProduc),
             description:
                 "${e.lenth.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.hight.removeTrailingZeros} ${e.color} ${e.type} D${e.density.removeTrailingZeros}",
-            volume: e.hight * e.lenth * e.lenth / 1000000))
+            volume: e.hight * e.lenth * e.width / 1000000))
         .toList();
   }
 
