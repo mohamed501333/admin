@@ -36,7 +36,6 @@ class RVeiw2 extends StatelessWidget {
             .reversed
             .toList();
         int lastStage = AllStages.isEmpty ? 0 : AllStages.first;
-        print("lase stage $lastStage");
         return SingleChildScrollView(
           child: Column(
             children: [

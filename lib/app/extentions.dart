@@ -97,7 +97,6 @@ extension Fd on List<ChemicalsModel> {
     for (var f in familys) {
       for (var i in this) {
         if (i.family == f) {
-          print(i.name);
           l.add(i);
         }
       }

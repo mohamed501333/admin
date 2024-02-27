@@ -21,7 +21,6 @@ class BlocksSizesDetials extends StatelessWidget {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
         List<BlockModel> blocks = myType.filterBlocksBalanceBetweenTowDates2();
-        print(" chosen $chosenDate");
 
         return Scaffold(
           appBar: AppBar(actions: [

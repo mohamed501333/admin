@@ -24,7 +24,7 @@ class HReprotsView extends StatelessWidget {
                         children: [
                           Results(
                             scissor: e,
-                            blocks: [],
+                            blocks: const [],
                           ),
                           SizedBox(
                               width: 500,

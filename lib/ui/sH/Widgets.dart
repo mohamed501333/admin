@@ -1,23 +1,27 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
-
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 import 'package:jason_company/ui/sH/h1_veiw.dart';
-import 'package:provider/provider.dart';
 
 class ReportwForHView extends StatefulWidget {
-  ReportwForHView({super.key, required this.scissor});
+  const ReportwForHView({
+    Key? key,
+    required this.scissor,
+  }) : super(key: key);
   final int scissor;
 
   @override

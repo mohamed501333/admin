@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class ScissorsView extends StatelessWidget {
-  ScissorsView({super.key});
+  const ScissorsView({super.key});
   @override
   Widget build(BuildContext context) {
     List csissorsPages = [

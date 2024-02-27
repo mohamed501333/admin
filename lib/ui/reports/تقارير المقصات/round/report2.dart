@@ -15,7 +15,7 @@ import 'package:jason_company/ui/reports/All_reports_veiwModel.dart';
 import 'package:provider/provider.dart';
 
 class Report2ForR extends StatefulWidget {
-  Report2ForR({super.key});
+  const Report2ForR({super.key});
 
   @override
   State<Report2ForR> createState() => _Report2ForRState();
@@ -44,7 +44,6 @@ class _Report2ForRState extends State<Report2ForR> {
 
     List<FractionModel> fractions3 = frac(context, 3, chosenDate);
     List<int> allStages3 = allstage(fractions3, finalProdcuts3);
-    print(allStages2);
 
     return Scaffold(
       appBar: AppBar(
@@ -173,13 +172,12 @@ class _Report2ForRState extends State<Report2ForR> {
                     .formatt() ==
                 chosenDate)
         .toList();
-    print(finalProdcuts);
     return finalProdcuts;
   }
 }
 
 class Details extends StatelessWidget {
-  Details({
+  const Details({
     super.key,
     required this.allStages,
     required this.vm,

@@ -209,7 +209,6 @@ class details_of_finalProdcut extends StatelessWidget {
                       (BuildContext context, DataGridRow row, int rowIndex) {
                     return GestureDetector(
                         onTap: () {
-                          print(row.getCells().first.value);
                           mytype.deletefinalProudut(mytype.finalproducts
                               .where((element) =>
                                   element.id == row.getCells().first.value)
@@ -468,12 +467,9 @@ class EmployeeDataSource2233 extends DataGridSource {
         },
         onSubmitted: (String value) {
           // print(u);
-          print(value);
-          print(column.columnName);
           if (column.columnName == "size") {
             String i = value;
             List<String> b = i.replaceAll("*", " ").split(" ");
-            print(b);
             context
                 .read<final_prodcut_controller>()
                 .edit_cell_size(u.id, column.columnName, b);

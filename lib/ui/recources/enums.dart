@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, constant_identifier_names
+// ignore_for_file: camel_case_types, constant_identifier_names, camel_case_extensions
 
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/strings_manager.dart';

@@ -14,7 +14,6 @@ class UpdatesController extends ChangeNotifier {
         if (event.snapshot.value != null) {
           int map = event.snapshot.value as int;
           updates = map;
-          print(map);
         }
 
         updates != 0 ? notifyListeners() : DoNothingAction();

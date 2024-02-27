@@ -20,7 +20,7 @@ import 'package:jason_company/ui/reports/reprtsForFinlProuduct/scissorsFInalProd
 
 // ignore: must_be_immutable
 class ReportsView extends StatelessWidget {
-  ReportsView({super.key});
+  const ReportsView({super.key});
 
   @override
   Widget build(BuildContext context) {

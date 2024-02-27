@@ -194,10 +194,7 @@ class TheTable0001 extends StatelessWidget {
         blocks.runFilter(vm.blocknumbercontroller.text);
         List<BlockModel> b = blocks.blocks.reversed
             .toList()
-            .where((element) =>
-                format.format(element.actions.get_Date_of_action(
-                    BlockAction.consume_block.getactionTitle)) ==
-                chosenDate)
+            .where((element) => newMethod(element))
             .sortedBy<DateTime>((element) => element.actions
                 .get_Date_of_action(BlockAction.consume_block.getactionTitle))
             .where((element) =>
@@ -424,6 +421,12 @@ class TheTable0001 extends StatelessWidget {
         );
       },
     );
+  }
+
+  bool newMethod(BlockModel element) {
+    return format.format(element.actions
+            .get_Date_of_action(BlockAction.consume_block.getactionTitle)) ==
+        chosenDate;
   }
 }
 

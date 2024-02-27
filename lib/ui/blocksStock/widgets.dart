@@ -149,9 +149,7 @@ class CusotmRadio extends StatelessWidget {
             value: 1,
             groupValue: 1,
             activeColor: const Color(0xFF6200EE),
-            onChanged: (c) {
-              print(c);
-            },
+            onChanged: (c) {},
           ),
         ),
         ListTile(
@@ -162,9 +160,7 @@ class CusotmRadio extends StatelessWidget {
             value: 1,
             groupValue: 2,
             activeColor: const Color(0xFF6200EE),
-            onChanged: (c) {
-              print(c);
-            },
+            onChanged: (c) {},
           ),
         ),
       ],
@@ -205,7 +201,6 @@ settingthedialog(BuildContext context) {
                           onChanged: (c) {
                             myType.GroupvalueofRadio = c!;
                             myType.Refresh_Ui();
-                            print(c);
                           },
                         ),
                       ),
@@ -220,7 +215,6 @@ settingthedialog(BuildContext context) {
                           onChanged: (c) {
                             myType.GroupvalueofRadio = c!;
                             myType.Refresh_Ui();
-                            print(c);
                           },
                         ),
                       ),

@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, file_names, non_constant_identifier_names
 
 import 'package:jason_company/models/moderls.dart';
 

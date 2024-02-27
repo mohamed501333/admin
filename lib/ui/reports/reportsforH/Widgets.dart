@@ -153,10 +153,10 @@ class EmployeeDataSourcee extends DataGridSource {
 //جدول النواتج
 class Results extends StatelessWidget {
   const Results({
-    Key? key,
+    super.key,
     required this.scissor,
     required this.blocks,
-  }) : super(key: key);
+  });
   final int scissor;
   final List<BlockModel> blocks;
   @override
@@ -215,10 +215,10 @@ class HeaderOftable22 extends StatelessWidget {
 
 class TheTable23 extends StatelessWidget {
   TheTable23({
-    Key? key,
+    super.key,
     required this.scissor,
     required this.blocks,
-  }) : super(key: key);
+  });
   final int scissor;
   final List<BlockModel> blocks;
   HReportsViewModel vm = HReportsViewModel();

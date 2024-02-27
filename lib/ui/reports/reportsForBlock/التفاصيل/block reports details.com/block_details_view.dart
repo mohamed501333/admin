@@ -192,7 +192,6 @@ class Block_detaild_view extends StatelessWidget {
                       (BuildContext context, DataGridRow row, int rowIndex) {
                     return GestureDetector(
                         onTap: () {
-                          print(row.getCells().first.value);
                           blocks.deleteblock(blocks.blocks
                               .where((element) =>
                                   element.id == row.getCells().first.value)
@@ -332,15 +331,9 @@ class EmployeeDataSource22 extends DataGridSource {
           }
         },
         onSubmitted: (String value) {
-          // print(u);
-          print(dataGridRow.getCells()[0].value);
-          print(dataGridRow.getCells()[1].value);
-          print(oldValue);
-          print(column.columnName);
           if (column.columnName == "size") {
             String i = value;
             List<String> b = i.replaceAll("*", " ").split(" ");
-            print(b);
             context
                 .read<BlockFirebasecontroller>()
                 .edit_cell_size(oldValue, u.id, column.columnName, b);
