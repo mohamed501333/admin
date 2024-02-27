@@ -162,24 +162,6 @@ class DropDdowenFor_scissors extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<dropDowenContoller>(
       builder: (context, Mytype, child) {
-        List<int> x = context
-            .read<final_prodcut_controller>()
-            .initalData
-            .where((element) =>
-                element.actions.if_action_exist(finalProdcutAction
-                        .archive_final_prodcut.getactionTitle) ==
-                    false &&
-                element.actions
-                        .get_Date_of_action(finalProdcutAction
-                            .incert_finalProduct_from_cutingUnit.getactionTitle)
-                        .formatt() ==
-                    DateTime.now().formatt() &&
-                element.scissor == Mytype.initioalFor_Scissors)
-            .map((e) => e.stageOfR)
-            .toSet()
-            .toList()
-            .sortedBy<num>((element) => element);
-        print(x);
         return Column(
           children: [
             const Text("المقص"),
@@ -193,12 +175,27 @@ class DropDdowenFor_scissors extends StatelessWidget {
                     .toList(),
                 onChanged: (v) {
                   if (v != null) {
-                    print(44);
                     Mytype.initioalFor_Scissors = v;
-
+                    List<int> x = context
+                        .read<final_prodcut_controller>()
+                        .initalData
+                        .where((element) =>
+                            element.actions.if_action_exist(finalProdcutAction
+                                    .archive_final_prodcut.getactionTitle) ==
+                                false &&
+                            element.actions
+                                    .get_Date_of_action(finalProdcutAction
+                                        .incert_finalProduct_from_cutingUnit
+                                        .getactionTitle)
+                                    .formatt() ==
+                                DateTime.now().formatt() &&
+                            element.scissor == Mytype.initioalFor_Scissors)
+                        .map((e) => e.stageOfR)
+                        .toSet()
+                        .toList()
+                        .sortedBy<num>((element) => element);
                     Mytype.N.text = x.isEmpty ? "1" : (x.last + 1).toString();
                     Mytype.Refrsh_ui();
-                    print(55);
                   }
                 }),
           ],

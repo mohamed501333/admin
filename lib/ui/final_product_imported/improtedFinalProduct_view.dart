@@ -133,9 +133,11 @@ class TheTable extends StatelessWidget {
                           x++;
                           return TableRow(
                               decoration: BoxDecoration(
-                                color: x % 2 == 0
-                                    ? Colors.teal[50]
-                                    : Colors.amber[50],
+                                color: user.isfinal == false
+                                    ? const Color.fromARGB(255, 139, 3, 24)
+                                    : x % 2 == 0
+                                        ? Colors.teal[50]
+                                        : Colors.amber[50],
                               ),
                               children: [
                                 //المسح
@@ -166,6 +168,7 @@ class TheTable extends StatelessWidget {
                                                     .final_prodcut_DidQalityCheck
                                                     .getactionTitle) ==
                                                 true &&
+                                            user.isfinal == true &&
                                             permitionss(
                                                 context,
                                                 UserPermition
@@ -330,10 +333,12 @@ class TheTable extends StatelessWidget {
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(user.notes.toString()))),
+
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(user.scissor.toString()))),
+
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(

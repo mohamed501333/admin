@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class SringsManager {
   static const String itemTitle1 = " منصرف من مخزن البلوك";
-  static const String itemTitle2 = "انتاج الدائرى";
+  static const String itemTitle2 = " وارد المقصات";
   static const String itemTitle3 = "التقارير";
   static const String itemTitle4 = "المخازن";
   static const String itemTitle5 = "مخزن دون التام";
