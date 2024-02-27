@@ -11,10 +11,19 @@ import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%81%D8%A7%D8%B
 import 'package:jason_company/ui/reports/reportsForBlock/Bolck_reports_viewModel.dart';
 import 'package:provider/provider.dart';
 
-class BlocksSizesDetials extends StatelessWidget {
+class BlocksSizesDetials extends StatefulWidget {
   BlocksSizesDetials({super.key});
+
+  @override
+  State<BlocksSizesDetials> createState() => _BlocksSizesDetialsState();
+}
+
+class _BlocksSizesDetialsState extends State<BlocksSizesDetials> {
   BlockReportsViewModel vm = BlockReportsViewModel();
+
   String chosenDate = format.format(DateTime.now());
+
+  bool? showVolume = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,45 +32,90 @@ class BlocksSizesDetials extends StatelessWidget {
         List<BlockModel> blocks = myType.filterBlocksBalanceBetweenTowDates2();
 
         return Scaffold(
-          appBar: AppBar(actions: [
-            TextButton(
-                onPressed: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101));
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text(' setting ?'),
+                            content: SizedBox(
+                              height: 350,
+                              child: Column(children: [
+                                const Divider(
+                                  height: 30,
+                                  thickness: 5,
+                                  color: Colors.black,
+                                ),
+                                CheckboxListTile(
+                                  title: const Text("عرض الحجم"),
+                                  value: showVolume,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      showVolume = newValue;
+                                      Navigator.pop(context);
+                                    });
+                                  },
+                                  controlAffinity: ListTileControlAffinity
+                                      .leading, //  <-- leading Checkbox
+                                )
+                              ]),
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('تم')),
+                            ],
+                          );
+                        });
+                  },
+                  icon: const Icon(Icons.settings)),
+              TextButton(
+                  onPressed: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101));
 
-                  if (pickedDate != null) {
-                    chosenDate = format.format(pickedDate);
-                    myType.initialDateRange2 = pickedDate.formatToInt();
-                    myType.filterBlocksBalanceBetweenTowDates2();
-                    myType.Refresh_the_UI();
-                  } else {}
-                },
-                child: Text(
-                  chosenDate,
-                  style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                )),
-            IconButton(
-                onPressed: () {
-                  permission().then((value) async {
-                    PdfBlockReport3.generate(context, blocks)
-                        .then((value) => context.gonext(
-                            context,
-                            PDfpreview(
-                              v: value.save(),
-                            )));
-                  });
-                },
-                icon: const Icon(Icons.picture_as_pdf)),
-          ], title: const Text("تفاصيل مقاسات مخزن البلوكات")),
+                    if (pickedDate != null) {
+                      chosenDate = format.format(pickedDate);
+                      myType.initialDateRange2 = pickedDate.formatToInt();
+                      myType.filterBlocksBalanceBetweenTowDates2();
+                      myType.Refresh_the_UI();
+                    } else {}
+                  },
+                  child: Text(
+                    chosenDate,
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  )),
+              IconButton(
+                  onPressed: () {
+                    permission().then((value) async {
+                      PdfBlockReport3.generate(context, blocks, showVolume)
+                          .then((value) => context.gonext(
+                              context,
+                              PDfpreview(
+                                v: value.save(),
+                              )));
+                    });
+                  },
+                  icon: const Icon(Icons.picture_as_pdf)),
+            ],
+          ),
           body: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const Text("تفاصيل مقاسات مخزن البلوكات"),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,6 +137,30 @@ class BlocksSizesDetials extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
+                                        showVolume == false
+                                            ? const SizedBox()
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsets.all(2.0),
+                                                child: Container(
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors.black,
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            2.0),
+                                                    child: Text(
+                                                      "volume: ${vm.sizes(e, blocks).isEmpty ? 0 : vm.sizes(e, blocks).map((e) => e.lenth * e.width * e.hight / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 10,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
                                         Text(
                                           vm.sizes(e, blocks).length.toString(),
                                           style: const TextStyle(
@@ -147,7 +225,6 @@ class BlocksSizesDetials extends StatelessWidget {
                     child: Container(
                       decoration: const BoxDecoration(
                         color: Colors.black,
-                        // border: Border.all(color: Colors.white24, width: 3)
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
@@ -162,6 +239,28 @@ class BlocksSizesDetials extends StatelessWidget {
                     ),
                   ),
                 ),
+                showVolume == false
+                    ? const SizedBox()
+                    : Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.black,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                "grand volume : ${blocks.isEmpty ? 0 : blocks.map((e) => e.lenth * e.width * e.hight / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                 const SizedBox(
                   height: 20,
                 )
@@ -173,41 +272,3 @@ class BlocksSizesDetials extends StatelessWidget {
     );
   }
 }
-
-// class Datepker2 extends StatelessWidget {
-//   const Datepker2({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     BlockFirebasecontroller mytype = context.read<BlockFirebasecontroller>();
-//     return ;
-//   }
-// }
-// class Datepker2 extends StatelessWidget {
-//   const Datepker2({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<BlockFirebasecontroller>(
-//       builder: (context, myType, child) {
-//         return Scaffold(
-//             appBar: AppBar(),
-//             body: SizedBox(
-//               child: Center(
-//                 child: Padding(
-//                   padding: const EdgeInsets.all(24),
-//                   child: DateRanger(
-//                     initialRange: myType.initialDateRange2,
-//                     onRangeChanged: (range) {
-//                       myType.initialDateRange2 = range;
-//                       myType.filterBlocksBalanceBetweenTowDates2();
-//                       myType.Refresh_the_UI();
-//                     },
-//                   ),
-//                 ),
-//               ),
-//             ));
-//       },
-//     );
-//   }
-// }

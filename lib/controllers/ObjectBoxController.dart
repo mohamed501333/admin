@@ -67,7 +67,14 @@ class ObjectBoxController extends ChangeNotifier {
   }
 
   getBlocks(BuildContext context) {
-    List<BlockModel> x = context.read<BlockFirebasecontroller>().blocks;
+    List<BlockModel> x = context
+        .read<BlockFirebasecontroller>()
+        .blocks
+        .where((element) =>
+            element.actions
+                .if_action_exist(BlockAction.consume_block.getactionTitle) ==
+            false)
+        .toList();
 
     initialcolor != null
         ? x = context

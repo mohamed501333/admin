@@ -8,7 +8,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
 class PdfBlockReport3 {
-  static Future<Document> generate(c, List<BlockModel> blocks) async {
+  static Future<Document> generate(
+      c, List<BlockModel> blocks, bool? showvolume) async {
     var data = await rootBundle.load("assets/fonts/HacenTunisia.ttf");
 
     var arabicFont = Font.ttf(data);
@@ -39,8 +40,8 @@ class PdfBlockReport3 {
                   )),
             )),
             SizedBox(height: 5),
-            content(blocks),
-            grandtotal(blocks),
+            content(blocks, showvolume),
+            grandtotal(blocks, showvolume),
           ];
         },
       ),
@@ -49,7 +50,7 @@ class PdfBlockReport3 {
   }
 }
 
-content(List<BlockModel> blocks) {
+content(List<BlockModel> blocks, bool? showVolume) {
   BlockReportsViewModel vm = BlockReportsViewModel();
 
   return Center(
@@ -71,6 +72,26 @@ content(List<BlockModel> blocks) {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          showVolume == false
+                              ? SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      color: PdfColors.black,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Text(
+                                        "volume: ${vm.sizes(e, blocks).isEmpty ? 0 : vm.sizes(e, blocks).map((e) => e.lenth * e.width * e.hight / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
+                                        style: const TextStyle(
+                                          color: PdfColors.white,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                           Text(
                             "ك${e.density.removeTrailingZeros}  ${e.type}  ${e.color}",
                             style: const TextStyle(fontSize: 12),
@@ -121,22 +142,46 @@ content(List<BlockModel> blocks) {
   ));
 }
 
-Center grandtotal(List<BlockModel> blocks) {
-  return Center(
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            color: PdfColors.black,
-            border: Border.all(color: PdfColors.white, width: 3)),
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Text(
-            "      grand total :  ${blocks.length} ",
-            style: const TextStyle(color: PdfColors.white, fontSize: 18),
+Column grandtotal(List<BlockModel> blocks, showVolume) {
+  return Column(children: [
+    showVolume == false
+        ? SizedBox()
+        : Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: PdfColors.black,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    "grand volume : ${blocks.isEmpty ? 0 : blocks.map((e) => e.lenth * e.width * e.hight / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
+                    style: const TextStyle(
+                      color: PdfColors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+    Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+              color: PdfColors.black,
+              border: Border.all(color: PdfColors.white, width: 3)),
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              "      grand total :  ${blocks.length} ",
+              style: const TextStyle(color: PdfColors.white, fontSize: 18),
+            ),
           ),
         ),
       ),
-    ),
-  );
+    )
+  ]);
 }

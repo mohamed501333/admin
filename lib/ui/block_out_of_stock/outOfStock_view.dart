@@ -194,7 +194,10 @@ class TheTable0001 extends StatelessWidget {
         blocks.runFilter(vm.blocknumbercontroller.text);
         List<BlockModel> b = blocks.blocks.reversed
             .toList()
-            .where((element) => newMethod(element))
+            .where((element) =>
+                format.format(element.actions.get_Date_of_action(
+                    BlockAction.consume_block.getactionTitle)) ==
+                chosenDate)
             .sortedBy<DateTime>((element) => element.actions
                 .get_Date_of_action(BlockAction.consume_block.getactionTitle))
             .where((element) =>
@@ -422,12 +425,6 @@ class TheTable0001 extends StatelessWidget {
       },
     );
   }
-
-  bool newMethod(BlockModel element) {
-    return format.format(element.actions
-            .get_Date_of_action(BlockAction.consume_block.getactionTitle)) ==
-        chosenDate;
-  }
 }
 
 class HeaderOftable001 extends StatelessWidget {
@@ -580,6 +577,11 @@ class DropDdowen_forCode extends StatelessWidget {
         return DropdownButton(
             value: context.read<ObjectBoxController>().serial,
             items: mytype.blocks
+                .where((element) =>
+                    element.actions.if_action_exist(
+                        BlockAction.consume_block.getactionTitle) ==
+                    false)
+                .toList()
                 .filterserials()
                 .map((e) => e.serial)
                 .toList()

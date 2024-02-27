@@ -36,7 +36,7 @@ class FinalProductStockViewModel extends BaseViewModel {
             invoiceNum: 0,
             price: 0.0,
             worker: "",
-            stageOfR: N.text.to_int(),
+            stageOfR: context.read<dropDowenContoller>().N.text.to_int(),
             isfinal: true,
             notes: notes.text,
             cuting_order_number: my.order!.serial,
