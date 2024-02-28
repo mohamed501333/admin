@@ -6,6 +6,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
+import 'package:jason_company/ui/chemical_stock/comonantForOuting.dart';
 import 'package:jason_company/ui/chemical_stock/componants.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/%D8%A7%D9%84%D9%85%D8%B5%D8%B1%D9%88%D9%81%20%D9%85%D9%82%D8%A7%D8%A8%D9%84%20%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%A7%D8%AC/Report10_viewMdel.dart';

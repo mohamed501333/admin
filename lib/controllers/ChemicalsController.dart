@@ -19,7 +19,13 @@ class Chemicals_controller extends ChangeNotifier {
           Map<Object?, Object?> map =
               event.snapshot.value as Map<Object?, Object?>;
           for (var item in map.values.toList()) {
-            Chemicals.add(ChemicalsModel.fromJson(item.toString()));
+            if (ChemicalsModel.fromJson(item.toString())
+                    .actions
+                    .if_action_exist(
+                        ChemicalAction.archive_ChemicalAction_item.getTitle) ==
+                false) {
+              Chemicals.add(ChemicalsModel.fromJson(item.toString()));
+            }
           }
         }
         print("get data of Chemicals");
@@ -30,9 +36,7 @@ class Chemicals_controller extends ChangeNotifier {
 
   List<ChemicalsModel> Chemicals = [];
 
-  addNewChemicals(ChemicalsModel Chemical) async {
-    Chemical.actions.add(ChemicalAction.creat_new_ChemicalAction_item.add);
-
+  addOrDeleteNewChemicals(ChemicalsModel Chemical) async {
     try {
       await FirebaseDatabase.instance
           .ref("Chemicals/${Chemical.id}")
@@ -123,6 +127,4 @@ class Chemicals_controller extends ChangeNotifier {
   List<String> selctedFamilys = [];
   List<String> filterdedNames = [];
   List<String> selctedNames = [];
-
-  map(Function(dynamic e) param0) {}
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ChemicalsController.dart';
@@ -21,9 +23,13 @@ class ChemicalStockViewModel extends BaseViewModel {
     Chemicals_controller mytype = context.read<Chemicals_controller>();
 
     double quantityForUnit = mytype.ChemicalCategorys.where(
-            (element) => element.unit == "${mytype.selectedValueForUnit}")
-        .first
-        .quantityForUnit;
+                (element) => element.unit == "${mytype.selectedValueForUnit}")
+            .isEmpty
+        ? 0
+        : mytype.ChemicalCategorys.where(
+                (element) => element.unit == "${mytype.selectedValueForUnit}")
+            .first
+            .quantityForUnit;
 
     ChemicalsModel r = ChemicalsModel(
         id: DateTime.now().microsecondsSinceEpoch,
@@ -47,7 +53,14 @@ class ChemicalStockViewModel extends BaseViewModel {
         mytype.selectedValueForUnit != null &&
         quantity.text.isNotEmpty) {}
 
-    mytype.addNewChemicals(r);
+    mytype.addOrDeleteNewChemicals(r);
+  }
+
+  DeleteChemical(BuildContext context, ChemicalsModel e) {
+    Chemicals_controller mytype = context.read<Chemicals_controller>();
+    e.actions.add(ChemicalAction.archive_ChemicalAction_item.add);
+
+    mytype.addOrDeleteNewChemicals(e);
   }
 
   addUnit(BuildContext context) {
