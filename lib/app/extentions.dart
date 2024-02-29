@@ -111,7 +111,7 @@ extension Fd on List<ChemicalsModel> {
     List<ChemicalsModel> s = [];
 
     if (selctedFamilys.isEmpty) {
-      s = f;
+      s.addAll(f);
     }
 
     if (selctedNames.isNotEmpty) {

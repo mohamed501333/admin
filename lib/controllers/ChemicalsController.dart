@@ -64,12 +64,6 @@ class Chemicals_controller extends ChangeNotifier {
   String? selectedValueForFamily;
   String? selectedValueForUnit;
   String? selectedValueForItem;
-  makeNull() {
-    selectedValueForSupplyer = null;
-    selectedValueForFamily = null;
-    selectedValueForUnit = null;
-    selectedValueForItem = null;
-  }
 
   //lllllllllllllllllllllllllllllllllllllllllllllllllllllll
 //lllllllllllllllllllllllllllllllllllllllllllllllllllllll
@@ -128,4 +122,12 @@ class Chemicals_controller extends ChangeNotifier {
   List<String> selctedFamilys = [];
   List<String> filterdedNames = [];
   List<String> selctedNames = [];
+  makeNull() {
+    selectedValueForSupplyer = null;
+    selectedValueForFamily = null;
+    selectedValueForUnit = null;
+    selectedValueForItem = null;
+    selctedFamilys.clear();
+    selctedNames.clear();
+  }
 }
