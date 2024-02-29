@@ -279,6 +279,7 @@ extension ddsd on BlockCategoryAction {
 
 enum ChemicalAction {
   creat_new_ChemicalAction_item,
+  creat_Out_ChemicalAction_item,
   archive_ChemicalAction_item,
 }
 
@@ -295,6 +296,11 @@ extension DSD on ChemicalAction {
             action: "archive_ChemicalAction_item",
             who: SringsManager.myemail,
             when: DateTime.now());
+      case ChemicalAction.creat_Out_ChemicalAction_item:
+        return ActionModel(
+            action: "creat_Out_ChemicalAction_item",
+            who: SringsManager.myemail,
+            when: DateTime.now());
     }
   }
 
@@ -304,6 +310,8 @@ extension DSD on ChemicalAction {
         return "creat_new_ChemicalAction_item";
       case ChemicalAction.archive_ChemicalAction_item:
         return "archive_ChemicalAction_item";
+      case ChemicalAction.creat_Out_ChemicalAction_item:
+        return "creat_Out_ChemicalAction_item";
     }
   }
 }

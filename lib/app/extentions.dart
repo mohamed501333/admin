@@ -104,6 +104,47 @@ extension Fd on List<ChemicalsModel> {
 
     return l;
   }
+
+  List<ChemicalsModel> filterFamilyOrName(
+      List<String> selctedNames, List<String> selctedFamilys) {
+    List<ChemicalsModel> f = this;
+    List<ChemicalsModel> s = [];
+
+    if (selctedFamilys.isEmpty) {
+      s = f;
+    }
+
+    if (selctedNames.isNotEmpty) {
+      for (var g in selctedNames) {
+        s.addAll(f.where((element) => element.name == g).toList());
+      }
+    }
+
+    if (selctedFamilys.isNotEmpty) {
+      for (var g in selctedFamilys) {
+        s.addAll(f.where((element) => element.family == g).toList());
+        print(g);
+      }
+    }
+    return s;
+  }
+
+  List<ChemicalsModel> FilterChemicals() {
+    List<ChemicalsModel> nonRepetitive = [];
+    for (var i = 0; i < length; i++) {
+      bool repeated = false;
+      for (var j = 0; j < nonRepetitive.length; j++) {
+        if (this[i].family == nonRepetitive[j].family &&
+            this[i].name == nonRepetitive[j].name) {
+          repeated = true;
+        }
+      }
+      if (!repeated) {
+        nonRepetitive.add(this[i]);
+      }
+    }
+    return nonRepetitive;
+  }
 }
 
 extension Filter on List<FinalProductModel> {

@@ -706,6 +706,7 @@ class ChemicaTableForSupplying extends StatelessWidget {
         .read<Chemicals_controller>()
         .Chemicals
         .where((element) =>
+            element.Totalquantity > 0 &&
             element.supplyOrderNum != 0 &&
             element.actions
                     .get_Date_of_action(

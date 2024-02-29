@@ -60,6 +60,7 @@ class Chemicals_controller extends ChangeNotifier {
   }
 
   String? selectedValueForSupplyer;
+  String? selectedValueForcustomer;
   String? selectedValueForFamily;
   String? selectedValueForUnit;
   String? selectedValueForItem;

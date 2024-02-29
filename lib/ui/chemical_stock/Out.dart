@@ -20,11 +20,11 @@ class Outing extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Chemicals_controller>(
       builder: (context, myType, child) {
-        vm.supplyingNum.text = myType.Chemicals.isNotEmpty
+        vm.OutingNum.text = myType.Chemicals.isNotEmpty
             ? (myType.Chemicals.sortedBy<num>(
-                            (element) => element.supplyOrderNum)
+                            (element) => element.StockRequisitionNum)
                         .last
-                        .supplyOrderNum +
+                        .StockRequisitionNum +
                     1)
                 .toString()
             : 1.toString();
@@ -38,11 +38,9 @@ class Outing extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  DropForSupplyer(
+                  DropForCustomer(
                     items: myType.ChemicalCategorys.where(
-                            (e) => e.cummingFrom.isNotEmpty)
-                        .map((e) => e.cummingFrom)
-                        .toList(),
+                        (e) => e.OutTo.isNotEmpty).map((e) => e.OutTo).toList(),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
@@ -50,7 +48,7 @@ class Outing extends StatelessWidget {
                       child: CustomTextFormField(
                           hint: "رقم الصرف",
                           width: MediaQuery.of(context).size.width * .27,
-                          controller: vm.supplyingNum),
+                          controller: vm.OutingNum),
                     ),
                   ),
                 ],
@@ -115,7 +113,7 @@ class Outing extends StatelessWidget {
               ),
               ElevatedButton(
                   onPressed: () {
-                    vm.addNewChemical(context);
+                    vm.OutNewChemical(context);
                     myType.makeNull();
                     myType.Refresh_Ui();
                   },
@@ -130,15 +128,15 @@ class Outing extends StatelessWidget {
 }
 
 // hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-class DropForSupplyer extends StatefulWidget {
-  const DropForSupplyer({super.key, required this.items});
+class DropForCustomer extends StatefulWidget {
+  const DropForCustomer({super.key, required this.items});
   final List<String> items;
 
   @override
-  State<DropForSupplyer> createState() => _DroState();
+  State<DropForCustomer> createState() => _DroStatepp();
 }
 
-class _DroState extends State<DropForSupplyer> {
+class _DroStatepp extends State<DropForCustomer> {
   String? selectedValue;
 
   final TextEditingController textEditingController = TextEditingController();
@@ -146,21 +144,23 @@ class _DroState extends State<DropForSupplyer> {
   @override
   Widget build(BuildContext context) {
     String? selectedValue =
-        context.read<Chemicals_controller>().selectedValueForSupplyer;
+        context.read<Chemicals_controller>().selectedValueForcustomer;
     widget.items.isEmpty
-        ? context.read<Chemicals_controller>().selectedValueForSupplyer = null
+        ? context.read<Chemicals_controller>().selectedValueForcustomer = null
         : DoNothingAction();
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         isExpanded: true,
         hint: Text(
-          selectedValue == null ? 'اخترالمورد' : selectedValue.toString(),
+          selectedValue == null ? 'اختر العميل' : selectedValue.toString(),
           style: TextStyle(
             fontSize: 14,
             color: Theme.of(context).hintColor,
           ),
         ),
         items: widget.items
+            .toSet()
+            .toList()
             .map((item) => DropdownMenuItem(
                   value: item,
                   child: Text(
@@ -174,7 +174,7 @@ class _DroState extends State<DropForSupplyer> {
         value: selectedValue,
         onChanged: (value) {
           setState(() {
-            context.read<Chemicals_controller>().selectedValueForSupplyer =
+            context.read<Chemicals_controller>().selectedValueForcustomer =
                 value;
           });
         },
@@ -210,7 +210,7 @@ class _DroState extends State<DropForSupplyer> {
                   horizontal: 10,
                   vertical: 8,
                 ),
-                hintText: '  ... البحث عن مورد',
+                hintText: '  ... البحث عن عميل',
                 hintStyle: const TextStyle(fontSize: 12),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -706,10 +706,10 @@ class ChemicaTableForSupplying extends StatelessWidget {
         .read<Chemicals_controller>()
         .Chemicals
         .where((element) =>
-            element.supplyOrderNum != 0 &&
+            element.StockRequisitionNum != 0 &&
             element.actions
                     .get_Date_of_action(
-                        ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                        ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
                     .formatt() ==
                 DateTime.now().formatt())
         .toList();
@@ -740,8 +740,8 @@ class ChemicaTableForSupplying extends StatelessWidget {
                         // : Colors.amber[50],
                         ),
                     children: [
-                      Center(child: Text(e.supplyOrderNum.toString())),
-                      Center(child: Text(e.cumingFrom.toString())),
+                      Center(child: Text(e.StockRequisitionNum.toString())),
+                      Center(child: Text(e.outTo.toString())),
                       Center(child: Text(e.family.toString())),
                       Center(child: Text(e.name.toString())),
                       Center(child: Text(e.unit.toString())),
@@ -791,8 +791,8 @@ class HeaderChemicaTableForSupplying extends StatelessWidget {
                   Color.fromARGB(122, 26, 163, 140),
             ),
             children: const [
-              Center(child: Text("رقم التوريد")),
-              Center(child: Text("المورد")),
+              Center(child: Text("رقم الصرف")),
+              Center(child: Text("العميل")),
               Center(child: Text("عائله")),
               Center(child: Text("صنف")),
               Center(child: Text("وحده")),
