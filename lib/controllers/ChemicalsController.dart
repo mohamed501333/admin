@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters, camel_case_types, empty_catches
 
+import 'package:collection/collection.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -57,6 +58,14 @@ class Chemicals_controller extends ChangeNotifier {
 
   Refresh_Ui() {
     notifyListeners();
+  }
+
+  firstDateOfData() {
+    return Chemicals.where((e) => e.actions.if_action_exist(
+            ChemicalAction.creat_new_ChemicalAction_item.getTitle))
+        .map((e) => e.actions.get_Date_of_action(
+            ChemicalAction.creat_new_ChemicalAction_item.getTitle))
+        .min;
   }
 
   String? selectedValueForSupplyer;

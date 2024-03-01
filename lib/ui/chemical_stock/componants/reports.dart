@@ -10,18 +10,13 @@ import 'package:jason_company/ui/chemical_stock/ChemicalStock_viewModel.dart';
 class R_FOR_onlyAvilableQuantity extends StatelessWidget {
   R_FOR_onlyAvilableQuantity({
     super.key,
-    required this.selctedFamilys,
-    required this.selctedNames,
   });
   ChemicalStockViewModel vm = ChemicalStockViewModel();
-  final List<String> selctedFamilys;
-  final List<String> selctedNames;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Chemicals_controller>(
       builder: (context, myType, child) {
-        print(selctedFamilys);
-
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -50,8 +45,8 @@ class R_FOR_onlyAvilableQuantity extends StatelessWidget {
               ),
               Column(
                 children: vm
-                    .getDataForReport(context, selctedNames.toList(),
-                        selctedFamilys, myType.Chemicals)
+                    .getDataForReport(context, myType.selctedNames,
+                        myType.selctedFamilys, myType.Chemicals)
                     .map((e) => Table(
                           columnWidths: const {
                             0: FlexColumnWidth(3),

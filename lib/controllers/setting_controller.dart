@@ -63,4 +63,7 @@ class SettingController extends ChangeNotifier {
 
   DateTime from = DateTime.now();
   DateTime to = DateTime.now();
+
+  DateTime from2 = DateTime.now();
+  DateTime to2 = DateTime.now();
 }
