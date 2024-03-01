@@ -161,4 +161,6 @@ class dropDowenContoller extends ChangeNotifier {
   List<double> filterdensity() {
     return blocks.map((e) => e.density.toDouble()).toSet().toList();
   }
+
+  String? selectedreport;
 }

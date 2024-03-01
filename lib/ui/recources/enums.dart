@@ -506,6 +506,7 @@ enum UserPermition {
   incert_notFinal_in_importedfinal_prodcut,
   incert_in_block_stock,
   incert_in_final_prodcutStock,
+  incert_in_final_prodcutStock_From_Excel,
   incert_in_cutting_order,
   incert_in_customers,
 
@@ -686,11 +687,16 @@ extension QQ on UserPermition {
       case UserPermition.incert_notFinal_in_importedfinal_prodcut:
         return UserpermitionTittle(
             tittle: "اضافة شغل غير تام فى وارد تام المقصات");
+      case UserPermition.incert_in_final_prodcutStock_From_Excel:
+        return UserpermitionTittle(
+            tittle: "اضافه الى رصيد منتج تام من خلال ملف اكسل");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.incert_in_final_prodcutStock_From_Excel:
+        return "اضافه الى رصيد منتج تام من خلال ملف اكسل";
       case UserPermition.incert_notFinal_in_importedfinal_prodcut:
         return "اضافة شغل غير تام فى وارد تام المقصات";
       case UserPermition.show_H1:

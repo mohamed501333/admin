@@ -21,12 +21,19 @@ class BoxOFReport extends StatelessWidget {
       "تقرير الكميه الموشكة على الانتهاء"
     ];
     //value of report type
-    String? selectedValue;
 
     return Container(
-      height: MediaQuery.of(context).size.height * .35,
+      height: MediaQuery.of(context).size.height * .25,
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              Color.fromARGB(255, 204, 241, 252),
+              Color.fromARGB(255, 202, 243, 239),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
           border: Border.all(width: 2, color: Colors.teal),
           borderRadius: BorderRadius.circular(5)),
       child: Column(
@@ -57,9 +64,9 @@ class BoxOFReport extends StatelessWidget {
                             ),
                           ))
                       .toList(),
-                  value: selectedValue,
+                  value: myType.selectedreport,
                   onChanged: (String? value) {
-                    selectedValue = value;
+                    myType.selectedreport = value;
                     myType.Refrsh_ui();
                   },
                   buttonStyleData: ButtonStyleData(
@@ -352,53 +359,56 @@ class BoxOFReport extends StatelessWidget {
             ].reversed.toList(),
           ),
           //التاريخ
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              DatepickerTo2(),
-              DatepickerFrom2(),
+              const DatepickerTo2(),
+              context.read<dropDowenContoller>().selectedreport ==
+                      'تقرير الكمية المتوفره فقط'
+                  ? const SizedBox()
+                  : const DatepickerFrom2(),
             ],
           ),
           //عرض
-          Padding(
-            padding: const EdgeInsets.only(top: 9),
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                width: MediaQuery.of(context).size.width * .8,
-                height: 60,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.teal,
-                      Colors.teal.shade200,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(5, 5),
-                      blurRadius: 10,
-                    )
-                  ],
-                ),
-                child: const Center(
-                  child: Text(
-                    'عرض',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 9),
+          //   child: GestureDetector(
+          //     onTap: () {},
+          //     child: Container(
+          //       width: MediaQuery.of(context).size.width * .8,
+          //       height: 60,
+          //       decoration: BoxDecoration(
+          //         gradient: LinearGradient(
+          //           colors: [
+          //             Colors.teal,
+          //             Colors.teal.shade200,
+          //           ],
+          //           begin: Alignment.topLeft,
+          //           end: Alignment.bottomRight,
+          //         ),
+          //         borderRadius: BorderRadius.circular(20),
+          //         boxShadow: const [
+          //           BoxShadow(
+          //             color: Colors.black12,
+          //             offset: Offset(5, 5),
+          //             blurRadius: 10,
+          //           )
+          //         ],
+          //       ),
+          //       child: const Center(
+          //         child: Text(
+          //           'عرض',
+          //           style: TextStyle(
+          //             color: Colors.white,
+          //             fontSize: 30,
+          //             fontWeight: FontWeight.w500,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -510,7 +520,9 @@ class DatepickerFrom2 extends StatelessWidget {
                   DateTime? pickedDate = await showDatePicker(
                       context: context,
                       initialDate: myType.from2,
-                      firstDate: myType.from2,
+                      firstDate: context
+                          .read<Chemicals_controller>()
+                          .firstDateOfData(),
                       lastDate: DateTime.now());
 
                   if (pickedDate != null) {
@@ -548,58 +560,54 @@ class DatepickerFrom2 extends StatelessWidget {
   }
 }
 
-class DatepickerTo2 extends StatefulWidget {
+class DatepickerTo2 extends StatelessWidget {
   const DatepickerTo2({super.key});
 
   @override
-  State<DatepickerTo2> createState() => _DatepickerStatef();
-}
-
-class _DatepickerStatef extends State<DatepickerTo2> {
-  @override
   Widget build(BuildContext context) {
-    var vm2 = context.read<SettingController>();
+    return Consumer<SettingController>(
+      builder: (context, myType, child) {
+        return Column(
+          children: [
+            TextButton(
+                onPressed: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: context.read<SettingController>().from2,
+                      lastDate: DateTime(2101));
 
-    return Column(
-      children: [
-        TextButton(
-            onPressed: () async {
-              DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: context.read<SettingController>().from2,
-                  lastDate: DateTime(2101));
-
-              if (pickedDate != null) {
-                setState(() {
-                  context.read<SettingController>().to2 = pickedDate;
-                  context.read<SettingController>().Refresh_Ui();
-                  context.read<Chemicals_controller>().Refresh_Ui();
-                });
-              } else {}
-            },
-            child: Column(
-              children: [
-                const Text(
-                  "الى",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.teal),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Text(
-                    vm2.to2.formatt(),
-                    style: const TextStyle(
-                        fontSize: 15,
-                        color: Color.fromARGB(255, 97, 92, 92),
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            )),
-      ],
+                  if (pickedDate != null) {
+                    myType.to2 = pickedDate;
+                    myType.Refresh_Ui();
+                    context.read<Chemicals_controller>().Refresh_Ui();
+                  } else {}
+                },
+                child: Column(
+                  children: [
+                    const Text(
+                      "الى",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.teal),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Text(
+                        myType.to2.formatt(),
+                        style: const TextStyle(
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 97, 92, 92),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                )),
+          ],
+        );
+      },
     );
   }
 }

@@ -91,6 +91,44 @@ extension Toint on String {
 }
 
 extension Fd on List<ChemicalsModel> {
+  List<ChemicalsModel> FilterDateBetween_balance(DateTime end) {
+    return where((element) =>
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                .formatToInt() <=
+            end.formatToInt() &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+                .formatToInt() <=
+            end.formatToInt()).toList();
+  }
+
+  List<ChemicalsModel> dfffffffff(DateTimeRange initialDateRange) {
+    return where((element) =>
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                .formatToInt() >=
+            initialDateRange.start.formatToInt() &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+                .formatToInt() >=
+            initialDateRange.start.formatToInt() &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                .formatToInt() <=
+            initialDateRange.end.formatToInt() &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+                .formatToInt() <=
+            initialDateRange.end.formatToInt()).toList();
+  }
+
   List<ChemicalsModel> filterItemsPasedOnFamilys(
       BuildContext context, List<String> familys) {
     List<ChemicalsModel> l = [];

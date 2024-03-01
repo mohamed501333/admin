@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/ui/chemical_stock/componants/IN.dart';
 import 'package:jason_company/ui/chemical_stock/componants/Out.dart';
 import 'package:jason_company/ui/chemical_stock/componants/boxOfReport.dart';
@@ -9,6 +10,7 @@ import 'package:jason_company/ui/chemical_stock/componants/componants.dart';
 import 'package:jason_company/ui/chemical_stock/componants/reports.dart';
 
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:provider/provider.dart';
 
 class Chemical_view extends StatelessWidget {
   const Chemical_view({super.key});
@@ -44,8 +46,17 @@ class Chemical_view extends StatelessWidget {
               ))
         ],
       ),
-      body: Column(
-        children: [BoxOFReport(), R_FOR_onlyAvilableQuantity()],
+      body: Consumer<dropDowenContoller>(
+        builder: (context, myType, child) {
+          return Column(
+            children: [
+              BoxOFReport(),
+              myType.selectedreport == 'تقرير الكمية المتوفره فقط'
+                  ? R_FOR_onlyAvilableQuantity()
+                  : const SizedBox()
+            ],
+          );
+        },
       ),
     );
   }

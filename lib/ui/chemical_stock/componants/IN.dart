@@ -6,6 +6,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ChemicalsController.dart';
+import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/chemical_stock/ChemicalStock_viewModel.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
@@ -696,9 +697,17 @@ class _DroStatevcv extends State<DropForItme> {
 }
 
 //جدول عرض فى الموردين
-class ChemicaTableForSupplying extends StatelessWidget {
-  ChemicaTableForSupplying({super.key});
+class ChemicaTableForSupplying extends StatefulWidget {
+  const ChemicaTableForSupplying({super.key});
+
+  @override
+  State<ChemicaTableForSupplying> createState() =>
+      _ChemicaTableForSupplyingState();
+}
+
+class _ChemicaTableForSupplyingState extends State<ChemicaTableForSupplying> {
   ChemicalStockViewModel vm = ChemicalStockViewModel();
+  String chosenDate = format.format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -712,7 +721,7 @@ class ChemicaTableForSupplying extends StatelessWidget {
                     .get_Date_of_action(
                         ChemicalAction.creat_new_ChemicalAction_item.getTitle)
                     .formatt() ==
-                DateTime.now().formatt())
+                chosenDate)
         .toList();
     return Expanded(
       child: SingleChildScrollView(
@@ -722,6 +731,31 @@ class ChemicaTableForSupplying extends StatelessWidget {
           width: 800,
           child: ListView(
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101));
+
+                        if (pickedDate != null) {
+                          setState(() {
+                            String formattedDate = format.format(pickedDate);
+                            chosenDate = formattedDate;
+                          });
+                        } else {}
+                      },
+                      child: Text(
+                        chosenDate,
+                        style: const TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      )),
+                ],
+              ),
               const HeaderChemicaTableForSupplying(),
               Table(
                 columnWidths: const {

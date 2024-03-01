@@ -2,6 +2,8 @@
 // ignore_for_file: camel_case_types, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/controllers/ChemicalsController.dart';
@@ -45,8 +47,12 @@ class R_FOR_onlyAvilableQuantity extends StatelessWidget {
               ),
               Column(
                 children: vm
-                    .getDataForReport(context, myType.selctedNames,
-                        myType.selctedFamilys, myType.Chemicals)
+                    .getDataForReport(
+                        context,
+                        myType.selctedNames,
+                        myType.selctedFamilys,
+                        myType.Chemicals.FilterDateBetween_balance(
+                            context.read<SettingController>().to2))
                     .map((e) => Table(
                           columnWidths: const {
                             0: FlexColumnWidth(3),

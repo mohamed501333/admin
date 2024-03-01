@@ -140,9 +140,16 @@ class HomeView extends StatelessWidget {
                     " المقصات",
                     Icons.cut,
                     ontap: () {
-                      context.gonext(context, ScissorsView());
+                      context.gonext(context, const ScissorsView());
                     },
                   ).permition(context, UserPermition.show_scissors),
+                  Item(
+                    MediaQuery.of(context).size.width * .45,
+                    Color.fromARGB(255, 47, 105, 42),
+                    " المشتروات",
+                    Icons.cut,
+                    ontap: () {},
+                  ),
                 ],
               ),
               Row(

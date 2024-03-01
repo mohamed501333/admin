@@ -3,6 +3,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/fromExcel.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
@@ -41,12 +42,15 @@ class FinalProductStockView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             actions: [
+              IconButton(
+                  onPressed: () => context.gonext(context, const bulkUpload()),
+                  icon: const Icon(Icons.explicit_outlined)),
               AddToStock().permition(
                   context, UserPermition.incert_in_final_prodcutStock),
               IconButton(
                   onPressed: () =>
                       context.gonext(context, HistoryOfAdingToStock()),
-                  icon: const Icon(Icons.history))
+                  icon: const Icon(Icons.history)),
             ],
             title: const Center(child: Text("رصيد منتج تام الصنع")),
           ),
