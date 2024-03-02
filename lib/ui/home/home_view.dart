@@ -145,11 +145,11 @@ class HomeView extends StatelessWidget {
                   ).permition(context, UserPermition.show_scissors),
                   Item(
                     MediaQuery.of(context).size.width * .45,
-                    Color.fromARGB(255, 47, 105, 42),
+                    const Color.fromARGB(255, 47, 105, 42),
                     " المشتروات",
                     Icons.cut,
                     ontap: () {},
-                  ),
+                  ).permition(context, UserPermition.show_purches),
                 ],
               ),
               Row(

@@ -14,5 +14,7 @@ class SringsManager {
   static const String itemTitle12 = "اضافه الى البلوكات";
   static const String itemTitle13 = " الاله الحسابه";
   static String myemail =
+      FirebaseAuth.instance.currentUser!.displayName ?? "unknowen";
+  static String myemail2 =
       FirebaseAuth.instance.currentUser!.email ?? "unknowen";
 }

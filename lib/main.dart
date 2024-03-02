@@ -121,7 +121,7 @@ class MyApp extends StatelessWidget {
     //    هذا المتغير اجعله ثابت على الجهاز او من الانترنت
     bool x = c.watch<UpdatesController>().updates == 0;
     //اطرح هنا التاريخ
-    if (DateTime.now().compareTo(DateTime(2024, 5, 5)) >= 0) {
+    if (DateTime.now().compareTo(DateTime(2024, 6, 6)) >= 0) {
       x = false;
     }
 

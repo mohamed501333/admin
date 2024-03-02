@@ -470,6 +470,7 @@ enum UserPermition {
   show_customers,
   show_massaging,
   show_scissors,
+  show_purches,
   show_not_final_stock,
   show_add_new_category,
   show_Chemical_category,
@@ -690,11 +691,15 @@ extension QQ on UserPermition {
       case UserPermition.incert_in_final_prodcutStock_From_Excel:
         return UserpermitionTittle(
             tittle: "اضافه الى رصيد منتج تام من خلال ملف اكسل");
+      case UserPermition.show_purches:
+        return UserpermitionTittle(tittle: "عرض المشتروات");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_purches:
+        return "عرض المشتروات";
       case UserPermition.incert_in_final_prodcutStock_From_Excel:
         return "اضافه الى رصيد منتج تام من خلال ملف اكسل";
       case UserPermition.incert_notFinal_in_importedfinal_prodcut:

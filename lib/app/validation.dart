@@ -128,15 +128,6 @@ class Validation {
       return "فارغ";
     }
 
-    if (value.isEmpty) {
-      return 'لا تترك هذا الحقل فارغ';
-    } else {
-      try {
-        double.parse(value);
-      } catch (e) {
-        return "ادخل قيمه صحيحه";
-      }
-    }
     return null;
   }
 }
