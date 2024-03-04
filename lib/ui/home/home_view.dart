@@ -16,6 +16,7 @@ import 'package:jason_company/ui/blocksStock/blocksStock_view.dart';
 import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiw.dart';
 import 'package:jason_company/ui/block_out_of_stock/outOfStock_view.dart';
 import 'package:jason_company/ui/not_final/not_final_view.dart';
+import 'package:jason_company/ui/purching/purching_view.dart';
 import 'package:jason_company/ui/recources/color_manager.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/recources/icons_manager.dart';
@@ -146,9 +147,11 @@ class HomeView extends StatelessWidget {
                   Item(
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 47, 105, 42),
-                    " المشتروات",
+                    " المشتريات",
                     Icons.cut,
-                    ontap: () {},
+                    ontap: () {
+                      context.gonext(context, PurchingView());
+                    },
                   ).permition(context, UserPermition.show_purches),
                 ],
               ),
