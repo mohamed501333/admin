@@ -248,12 +248,12 @@ class BoxOFReport extends StatelessWidget {
                           child: StatefulBuilder(
                             builder: (context, menuSetState) {
                               final isSelected =
-                                  myType.selctedNames.contains(item);
+                                  myType.filterdedNames.contains(item);
                               return InkWell(
                                 onTap: () {
                                   isSelected
-                                      ? myType.selctedNames.remove(item)
-                                      : myType.selctedNames.add(item);
+                                      ? myType.filterdedNames.remove(item)
+                                      : myType.filterdedNames.add(item);
                                   //This rebuilds the StatefulWidget to update the button's text
                                   myType.Refresh_Ui();
                                   //This rebuilds the dropdownMenu Widget to update the check mark

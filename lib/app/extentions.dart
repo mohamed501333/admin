@@ -234,7 +234,6 @@ extension Filter on List<FinalProductModel> {
             this[i].lenth == nonRepetitive[j].lenth &&
             this[i].color == nonRepetitive[j].color &&
             this[i].type == nonRepetitive[j].type &&
-            this[i].customer == nonRepetitive[j].customer &&
             this[i].density == nonRepetitive[j].density) {
           repeated = true;
         }

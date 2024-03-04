@@ -219,4 +219,10 @@ class final_prodcut_controller extends ChangeNotifier {
   Refresh_Ui() {
     notifyListeners();
   }
+
+  List<String> selctedcolors = [];
+  List<String> selctedtybes = [];
+  List<String> selctedDensities = [];
+//   List<String> filterdedNames = [];
+//   List<String> selctedNames = [];
 }
