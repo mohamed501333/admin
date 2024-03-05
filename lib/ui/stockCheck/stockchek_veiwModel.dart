@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, camel_case_types, non_constant_identifier_names
+import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:provider/provider.dart';
 
 class Stockcheck_veiwModel {
   int get_total(List<FinalProductModel> finalproducts, FinalProductModel e) {
@@ -16,10 +19,18 @@ class Stockcheck_veiwModel {
         .reduce((a, b) => a + b);
   }
 
-  List<FinalProdcutBalanceModel> finalprodctBalance(
-      List<FinalProductModel> finalproducts) {
+
+  
+
+  List<FinalProdcutBalanceModel> finalprodctBalance(List<FinalProductModel> finalproducts,BuildContext context) {
+   var l= context.read<final_prodcut_controller>();
     return finalproducts
         .filteronfinalproduct()
+        .filterItemsPasedOnDensites(context, l.selctedDensities )
+                .filterItemsPasedOntypes(context, l.selctedtybes )
+                        .filterItemsPasedOncolors(context,l.selctedcolors )
+
+
         .where((e) => get_total(finalproducts, e) > 0)
         .map((g) => FinalProdcutBalanceModel(
             color: g.color,

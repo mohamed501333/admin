@@ -186,6 +186,59 @@ extension Fd on List<ChemicalsModel> {
 }
 
 extension Filter on List<FinalProductModel> {
+
+
+  List<FinalProductModel> filterItemsPasedOnDensites(
+      BuildContext context, List<String> densities) {
+    List<FinalProductModel> l = [];
+    if (densities.isNotEmpty) {
+      for (var f in densities) {
+      for (var i in this) {
+        if (i.density.toString() == f) {
+          l.add(i);
+        }
+      }
+    }
+return l;
+  }else{return this;}
+  }
+
+  List<FinalProductModel> filterItemsPasedOncolors(
+      BuildContext context, List<String> colors) {
+    List<FinalProductModel> l = [];
+  if (colors.isNotEmpty) {
+      for (var f in colors) {
+      for (var i in this) {
+        if (i.color.toString() == f) {
+          l.add(i);
+        }
+      }
+    }
+return l;
+  }else{return this;}
+    
+  }
+
+  List<FinalProductModel> filterItemsPasedOntypes(
+      BuildContext context, List<String> types) {
+    List<FinalProductModel> l = [];
+  if (types.isNotEmpty) {
+      for (var f in types) {
+      for (var i in this) {
+        if (i.type.toString() == f) {
+          l.add(i);
+        }
+      }
+    }
+return l;
+  }else{return this;}
+  }
+
+
+
+
+
+
   List<FinalProductModel> filterFinalProductDateBetween(
       DateTimeRange initialDateRange) {
     return where((element) =>

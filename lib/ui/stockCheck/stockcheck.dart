@@ -3,6 +3,7 @@
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
 import 'package:provider/provider.dart';
@@ -10,21 +11,22 @@ import 'package:provider/provider.dart';
 class Stockcheck extends StatelessWidget {
   Stockcheck({super.key});
   TextEditingController textEditingController = TextEditingController();
+    TextStyle style= const TextStyle(fontSize: 18,fontWeight: FontWeight.bold);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Consumer<final_prodcut_controller>(
         builder: (context, myType, child) {
+
           Stockcheck_veiwModel vm = Stockcheck_veiwModel();
-          List<FinalProdcutBalanceModel> f =
-              vm.finalprodctBalance(myType.finalproducts);
-          for (var e in f) {
-            print("${e.color}${e.density}${e.type}${e.quantity}");
-          }
+          List<FinalProdcutBalanceModel> f =vm.finalprodctBalance(myType.finalproducts,context);
+ 
           return Column(
             children: [
-              Row(
+
+        Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   DropdownButton2<String>(
@@ -52,6 +54,7 @@ class Stockcheck extends StatelessWidget {
                                   isSelected
                                       ? myType.selctedcolors.remove(item)
                                       : myType.selctedcolors.add(item);
+
 
                                   //This rebuilds the StatefulWidget to update the button's text
                                   myType.Refresh_Ui();
@@ -158,6 +161,7 @@ class Stockcheck extends StatelessWidget {
                           return item.value.toString().contains(searchValue);
                         },
                       )),
+             
                   DropdownButton2<String>(
                       isExpanded: true,
                       hint: Center(
@@ -169,7 +173,7 @@ class Stockcheck extends StatelessWidget {
                           ),
                         ),
                       ),
-                      items: myType.finalproducts
+                      items: f
                           .map((e) => e.type)
                           .toSet()
                           .toList()
@@ -227,8 +231,7 @@ class Stockcheck extends StatelessWidget {
                           : myType.selctedtybes.last,
                       onChanged: (value) {},
                       selectedItemBuilder: (context) {
-                        return myType.finalproducts
-                            .map((e) => e.color)
+                        return f
                             .toSet()
                             .toList()
                             .map(
@@ -297,6 +300,8 @@ class Stockcheck extends StatelessWidget {
                           return item.value.toString().contains(searchValue);
                         },
                       )),
+                 
+                 
                   DropdownButton2<String>(
                       isExpanded: true,
                       hint: Center(
@@ -308,7 +313,7 @@ class Stockcheck extends StatelessWidget {
                           ),
                         ),
                       ),
-                      items: myType.finalproducts
+                      items: f
                           .map((e) => e.density.toString())
                           .toSet()
                           .toList()
@@ -367,7 +372,7 @@ class Stockcheck extends StatelessWidget {
                           : myType.selctedDensities.last,
                       onChanged: (value) {},
                       selectedItemBuilder: (context) {
-                        return myType.finalproducts
+                        return f
                             .map((e) => e.density)
                             .toSet()
                             .toList()
@@ -439,6 +444,61 @@ class Stockcheck extends StatelessWidget {
                       )),
                 ],
               ),
+          
+        Center(
+              child: IntrinsicHeight(child: Row(children: [
+              
+                Container(
+                  width: MediaQuery.of(context).size.width*.35,
+                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("المقاس",style: style,),),),
+                Container(
+                  width: MediaQuery.of(context).size.width*.20,
+                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("الرصيد",style: style),),),
+                Container(
+                  width: MediaQuery.of(context).size.width*.15,
+                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("الواقع",style: style),),),
+                Container(
+                  width: MediaQuery.of(context).size.width*.15,
+                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("العجز",style: style),),),
+                Container(
+                  width: MediaQuery.of(context).size.width*.15,
+                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("الزياده",style: style),),),
+              
+              
+              
+              ].reversed.toList(),)),
+            ),
+      
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: f.map((e) =>   Center(
+                  child: IntrinsicHeight(child: Row(children: [
+                  
+                    Container(
+                      width: MediaQuery.of(context).size.width*.35,
+                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("${e.L.removeTrailingZeros}*${e.L.removeTrailingZeros}*${e.L.removeTrailingZeros}",style: style,),),),
+                    Container(
+                      width: MediaQuery.of(context).size.width*.20,
+                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text(e.quantity.toString(),style: style),),),
+                    Container(
+                      width: MediaQuery.of(context).size.width*.15,
+                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("الواقع",style: style),),),
+                    Container(
+                      width: MediaQuery.of(context).size.width*.15,
+                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("العجز",style: style),),),
+                    Container(
+                      width: MediaQuery.of(context).size.width*.15,
+                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("الزياده",style: style),),),
+                  
+                  
+                  
+                  ].reversed.toList(),)),
+                )).toList(),
+            ),
+          ),
+        )
+          
             ],
           );
         },
