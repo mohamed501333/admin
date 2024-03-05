@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class Stockcheck extends StatelessWidget {
   Stockcheck({super.key});
   TextEditingController textEditingController = TextEditingController();
-    TextStyle style= const TextStyle(fontSize: 18,fontWeight: FontWeight.bold);
+  TextStyle style = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +19,13 @@ class Stockcheck extends StatelessWidget {
       appBar: AppBar(),
       body: Consumer<final_prodcut_controller>(
         builder: (context, myType, child) {
-
           Stockcheck_veiwModel vm = Stockcheck_veiwModel();
-          List<FinalProdcutBalanceModel> f =vm.finalprodctBalance(myType.finalproducts,context);
- 
+          List<FinalProdcutBalanceModel> f =
+              vm.finalprodctBalance(myType.finalproducts, context);
+
           return Column(
             children: [
-
-        Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   DropdownButton2<String>(
@@ -54,7 +53,6 @@ class Stockcheck extends StatelessWidget {
                                   isSelected
                                       ? myType.selctedcolors.remove(item)
                                       : myType.selctedcolors.add(item);
-
 
                                   //This rebuilds the StatefulWidget to update the button's text
                                   myType.Refresh_Ui();
@@ -161,7 +159,6 @@ class Stockcheck extends StatelessWidget {
                           return item.value.toString().contains(searchValue);
                         },
                       )),
-             
                   DropdownButton2<String>(
                       isExpanded: true,
                       hint: Center(
@@ -173,11 +170,7 @@ class Stockcheck extends StatelessWidget {
                           ),
                         ),
                       ),
-                      items: f
-                          .map((e) => e.type)
-                          .toSet()
-                          .toList()
-                          .map((item) {
+                      items: f.map((e) => e.type).toSet().toList().map((item) {
                         return DropdownMenuItem(
                           value: item,
                           //disable default onTap to avoid closing menu when selecting an item
@@ -231,10 +224,7 @@ class Stockcheck extends StatelessWidget {
                           : myType.selctedtybes.last,
                       onChanged: (value) {},
                       selectedItemBuilder: (context) {
-                        return f
-                            .toSet()
-                            .toList()
-                            .map(
+                        return f.toSet().toList().map(
                           (item) {
                             return Container(
                               alignment: AlignmentDirectional.center,
@@ -300,8 +290,6 @@ class Stockcheck extends StatelessWidget {
                           return item.value.toString().contains(searchValue);
                         },
                       )),
-                 
-                 
                   DropdownButton2<String>(
                       isExpanded: true,
                       hint: Center(
@@ -372,11 +360,7 @@ class Stockcheck extends StatelessWidget {
                           : myType.selctedDensities.last,
                       onChanged: (value) {},
                       selectedItemBuilder: (context) {
-                        return f
-                            .map((e) => e.density)
-                            .toSet()
-                            .toList()
-                            .map(
+                        return f.map((e) => e.density).toSet().toList().map(
                           (item) {
                             return Container(
                               alignment: AlignmentDirectional.center,
@@ -444,61 +428,120 @@ class Stockcheck extends StatelessWidget {
                       )),
                 ],
               ),
-          
-        Center(
-              child: IntrinsicHeight(child: Row(children: [
-              
-                Container(
-                  width: MediaQuery.of(context).size.width*.35,
-                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("المقاس",style: style,),),),
-                Container(
-                  width: MediaQuery.of(context).size.width*.20,
-                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("الرصيد",style: style),),),
-                Container(
-                  width: MediaQuery.of(context).size.width*.15,
-                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("الواقع",style: style),),),
-                Container(
-                  width: MediaQuery.of(context).size.width*.15,
-                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("العجز",style: style),),),
-                Container(
-                  width: MediaQuery.of(context).size.width*.15,
-                  decoration:  BoxDecoration(color: Colors.blueGrey,border: Border.all()),child:  Center(child: Text("الزياده",style: style),),),
-              
-              
-              
-              ].reversed.toList(),)),
-            ),
-      
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: f.map((e) =>   Center(
-                  child: IntrinsicHeight(child: Row(children: [
-                  
+              Center(
+                child: IntrinsicHeight(
+                    child: Row(
+                  children: [
                     Container(
-                      width: MediaQuery.of(context).size.width*.35,
-                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("${e.L.removeTrailingZeros}*${e.L.removeTrailingZeros}*${e.L.removeTrailingZeros}",style: style,),),),
+                      width: MediaQuery.of(context).size.width * .35,
+                      decoration: BoxDecoration(
+                          color: Colors.blueGrey, border: Border.all()),
+                      child: Center(
+                        child: Text(
+                          "المقاس",
+                          style: style,
+                        ),
+                      ),
+                    ),
                     Container(
-                      width: MediaQuery.of(context).size.width*.20,
-                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text(e.quantity.toString(),style: style),),),
+                      width: MediaQuery.of(context).size.width * .20,
+                      decoration: BoxDecoration(
+                          color: Colors.blueGrey, border: Border.all()),
+                      child: Center(
+                        child: Text("الرصيد", style: style),
+                      ),
+                    ),
                     Container(
-                      width: MediaQuery.of(context).size.width*.15,
-                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("الواقع",style: style),),),
+                      width: MediaQuery.of(context).size.width * .15,
+                      decoration: BoxDecoration(
+                          color: Colors.blueGrey, border: Border.all()),
+                      child: Center(
+                        child: Text("الواقع", style: style),
+                      ),
+                    ),
                     Container(
-                      width: MediaQuery.of(context).size.width*.15,
-                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("العجز",style: style),),),
+                      width: MediaQuery.of(context).size.width * .15,
+                      decoration: BoxDecoration(
+                          color: Colors.blueGrey, border: Border.all()),
+                      child: Center(
+                        child: Text("العجز", style: style),
+                      ),
+                    ),
                     Container(
-                      width: MediaQuery.of(context).size.width*.15,
-                      decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("الزياده",style: style),),),
-                  
-                  
-                  
-                  ].reversed.toList(),)),
-                )).toList(),
-            ),
-          ),
-        )
-          
+                      width: MediaQuery.of(context).size.width * .15,
+                      decoration: BoxDecoration(
+                          color: Colors.blueGrey, border: Border.all()),
+                      child: Center(
+                        child: Text("الزياده", style: style),
+                      ),
+                    ),
+                  ].reversed.toList(),
+                )),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: f
+                        .map((e) => Center(
+                              child: IntrinsicHeight(
+                                  child: Row(
+                                children: [
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * .35,
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Center(
+                                      child: Text(
+                                        "${e.L.removeTrailingZeros}*${e.W.removeTrailingZeros}*${e.H.removeTrailingZeros}",
+                                        style: style,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * .20,
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Center(
+                                      child: Text(e.quantity.toString(),
+                                          style: style),
+                                    ),
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * .15,
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Center(
+                                      child: Text("الواقع", style: style),
+                                    ),
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * .15,
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Center(
+                                      child: Text("العجز", style: style),
+                                    ),
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * .15,
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Center(
+                                      child: Text("الزياده", style: style),
+                                    ),
+                                  ),
+                                ].reversed.toList(),
+                              )),
+                            ))
+                        .toList(),
+                  ),
+                ),
+              )
             ],
           );
         },

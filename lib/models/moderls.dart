@@ -1983,12 +1983,12 @@ class ChemicalCategory {
 }
 
 class PurcheItem {
- final int item_Id;
- final int purcheOrder_Id;
- final double quantity;
-final  String Unit;
- final String item;
- final String note;
+  int item_Id;
+  int purcheOrder_Id;
+  double quantity;
+  String Unit;
+  String item;
+  String note;
  
 final   List<ActionModel> actions;
   PurcheItem({

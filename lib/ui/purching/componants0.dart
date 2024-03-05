@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -7,7 +9,7 @@ import 'package:jason_company/ui/purching/componants.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 class singnuturePad extends StatelessWidget {
-   singnuturePad({
+  singnuturePad({
     super.key,
   });
 
@@ -20,8 +22,8 @@ class singnuturePad extends StatelessWidget {
         Container(
           height: MediaQuery.of(context).size.height * .6,
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              border: Border.all(width: 3), color: Colors.white),
+          decoration:
+              BoxDecoration(border: Border.all(width: 3), color: Colors.white),
           child: SfSignaturePad(
             strokeColor: Colors.black,
             minimumStrokeWidth: 10,
@@ -37,8 +39,8 @@ class singnuturePad extends StatelessWidget {
             onPressed: () async {
               keysingaturepad.currentState
                   ?.toImage()
-                  .then((value) =>
-                      value.toByteData(format: ImageByteFormat.png))
+                  .then(
+                      (value) => value.toByteData(format: ImageByteFormat.png))
                   .then((value) => value!.buffer.asUint8List())
                   .then((value) => generate(value))
                   .then((value) => context.gonext(

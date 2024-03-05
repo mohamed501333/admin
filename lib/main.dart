@@ -13,6 +13,7 @@ import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/fractinsFirebaseController.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
+import 'package:jason_company/controllers/purchesController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/controllers/zupdate.dart';
@@ -97,6 +98,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => Chemicals_controller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => PurchesController(),
           ),
         ],
         child: MaterialApp(

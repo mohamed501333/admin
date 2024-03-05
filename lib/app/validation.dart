@@ -113,6 +113,29 @@ class Validation {
     return null;
   }
 
+  static String? validateOOOOOO(String? value) {
+    if (value!.isEmpty) {
+      return "فارغ";
+    }
+    if (value == "") {
+      return "فارغ";
+    }
+    if (value == 0.0) {
+      return "فارغ";
+    }
+    if (value == 0) {
+      return "فارغ";
+    }
+    if (value == "0") {
+      return "فارغ";
+    }
+    if (value == "0.0") {
+      return "فارغ";
+    }
+
+    return null;
+  }
+
   static amou(ItemModel itemData, outOfStockOrderveiwModel vm) {
     return (String? value) {
       var condition = itemData.total > 0;
@@ -128,6 +151,15 @@ class Validation {
       return "فارغ";
     }
 
+    if (value.isEmpty) {
+      return 'لا تترك هذا الحقل فارغ';
+    } else {
+      try {
+        double.parse(value);
+      } catch (e) {
+        return "ادخل قيمه صحيحه";
+      }
+    }
     return null;
   }
 }

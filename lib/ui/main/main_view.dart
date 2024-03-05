@@ -55,6 +55,9 @@ class Mainview extends StatelessWidget {
         permitionss(context, UserPermition.can_get_data_of_orders)
             ? context.read<OrderController>().get_Order_data()
             : DoNothingAction();
+        permitionss(context, UserPermition.can_get_data_of_Purches)
+            ? context.read<OrderController>().getDataOfPurches()
+            : DoNothingAction();
         permitionss(context, UserPermition.can_get_data_of_blocks)
             ? context.read<Category_controller>().get_blockCategory_data()
             : DoNothingAction();

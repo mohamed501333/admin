@@ -36,6 +36,12 @@ abstract class BaseViewModel {
   TextEditingController from = TextEditingController();
   TextEditingController to = TextEditingController();
 
+  TextEditingController unit = TextEditingController();
+  TextEditingController item = TextEditingController();
+  TextEditingController quantity = TextEditingController();
+  TextEditingController administrationRequstTheOrder = TextEditingController();
+  TextEditingController purcheOrderRequester = TextEditingController();
+
   clearfields() {
     customerName.clear();
     orderSerial.clear();

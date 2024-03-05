@@ -141,4 +141,6 @@ class OrderController extends ChangeNotifier {
   }
 
   get_blockCategory_data() {}
+
+  getDataOfPurches() {}
 }

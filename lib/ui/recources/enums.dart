@@ -528,6 +528,7 @@ enum UserPermition {
 
   show_users_actions,
   can_get_data_of_blocks,
+  can_get_data_of_Purches,
   can_get_data_of_final_prodcut,
   can_get_data_of_invoice,
   can_get_data_of_customers,
@@ -693,11 +694,15 @@ extension QQ on UserPermition {
             tittle: "اضافه الى رصيد منتج تام من خلال ملف اكسل");
       case UserPermition.show_purches:
         return UserpermitionTittle(tittle: "عرض المشتروات");
+      case UserPermition.can_get_data_of_Purches:
+        return UserpermitionTittle(tittle: "can_get_data_of_Purches");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.can_get_data_of_Purches:
+        return "can_get_data_of_Purches";
       case UserPermition.show_purches:
         return "عرض المشتروات";
       case UserPermition.incert_in_final_prodcutStock_From_Excel:
