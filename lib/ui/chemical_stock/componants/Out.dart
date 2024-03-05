@@ -283,7 +283,7 @@ class _DroStatee extends State<DropForFamily> {
             ),
           ],
         ),
-        items: widget.items
+        items: widget.items.toSet().toList()
             .map((item) => DropdownMenuItem(
                   value: item,
                   child: Text(item,
@@ -432,7 +432,7 @@ class _DroStatev extends State<DropForunit> {
             ),
           ],
         ),
-        items: widget.items
+        items: widget.items.toSet().toList()
             .map((item) => DropdownMenuItem(
                   value: item,
                   child: Text(

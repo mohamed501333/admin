@@ -1,53 +1,53 @@
-import 'dart:ui';
+
+// ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/services/pdfprevei.dart';
-import 'package:jason_company/ui/purching/componants.dart';
-import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
+
 
 class PurchingView extends StatelessWidget {
   PurchingView({super.key});
-  final keysingaturepad = GlobalKey<SfSignaturePadState>();
+  TextStyle style= const TextStyle(fontSize: 18,fontWeight: FontWeight.bold);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * .6,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                border: Border.all(width: 3), color: Colors.white),
-            child: SfSignaturePad(
-              strokeColor: Colors.black,
-              minimumStrokeWidth: 10,
-              key: keysingaturepad,
-            ),
-          ),
-          ElevatedButton(
-              onPressed: () {
-                keysingaturepad.currentState!.clear();
-              },
-              child: const Text("clear")),
-          ElevatedButton(
-              onPressed: () async {
-                keysingaturepad.currentState
-                    ?.toImage()
-                    .then((value) =>
-                        value.toByteData(format: ImageByteFormat.png))
-                    .then((value) => value!.buffer.asUint8List())
-                    .then((value) => generate(value))
-                    .then((value) => context.gonext(
-                        context,
-                        PDfpreview(
-                          v: value.save(),
-                        )));
-              },
-              child: const Text("Done"))
-        ],
-      ),
+      body: Column(children: [
+                 const Center(child: Text("تسجيل طلب شراء جديد",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),) ,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+
+              IconButton(onPressed: (){
+                
+              }, icon: const Icon(Icons.add,color: Colors.amber,)),
+
+              const Padding(
+                padding: EdgeInsets.only(right: 12),
+                child: Text(":الاداره الطالبه",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              )
+            ],
+          )
+,
+           Column(children: [
+            Center(
+              child: IntrinsicHeight(child: SizedBox(
+                width: 800,
+                child: Row(children: [
+                
+                  Container(decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("م",style: style,),),),
+                  Container(decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("الكميه",style: style),),),
+                  Container(decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("الوحده",style: style),),),
+                  Container(decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("الصنف",style: style),),),
+                  Container(decoration:  BoxDecoration(border: Border.all()),child:  Center(child: Text("ملاحظات",style: style),),),
+                
+                
+                
+                ].reversed.toList(),),
+              )),
+            )
+           ],)
+      ],),
     );
   }
 }
+

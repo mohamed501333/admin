@@ -595,7 +595,7 @@ class _DroStatevcv extends State<DropForItme> {
             ),
           ],
         ),
-        items: widget.items
+        items: widget.items.toSet().toList()
             .map((item) => DropdownMenuItem(
                   value: item,
                   child: Text(item,

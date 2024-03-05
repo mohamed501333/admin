@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names, camel_case_types
 
 import 'dart:convert';
 
@@ -1979,5 +1979,247 @@ class ChemicalCategory {
         OutTo.hashCode ^
         quantityForUnit.hashCode ^
         actions.hashCode;
+  }
+}
+
+class PurcheItem {
+ final int item_Id;
+ final int purcheOrder_Id;
+ final double quantity;
+final  String Unit;
+ final String item;
+ final String note;
+ 
+final   List<ActionModel> actions;
+  PurcheItem({
+    required this.item_Id,
+    required this.purcheOrder_Id,
+    required this.quantity,
+    required this.Unit,
+    required this.item,
+    required this.note,
+    required this.actions,
+  });
+
+
+ 
+
+
+  PurcheItem copyWith({
+    int? item_Id,
+    int? purcheOrder_Id,
+    double? quantity,
+    String? Unit,
+    String? item,
+    String? note,
+    List<ActionModel>? actions,
+  }) {
+    return PurcheItem(
+      item_Id: item_Id ?? this.item_Id,
+      purcheOrder_Id: purcheOrder_Id ?? this.purcheOrder_Id,
+      quantity: quantity ?? this.quantity,
+      Unit: Unit ?? this.Unit,
+      item: item ?? this.item,
+      note: note ?? this.note,
+      actions: actions ?? this.actions,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'item_Id': item_Id,
+      'purcheOrder_Id': purcheOrder_Id,
+      'quantity': quantity,
+      'Unit': Unit,
+      'item': item,
+      'note': note,
+      'actions': actions.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory PurcheItem.fromMap(Map<String, dynamic> map) {
+    return PurcheItem(
+      item_Id: map['item_Id'] as int,
+      purcheOrder_Id: map['purcheOrder_Id'] as int,
+      quantity: map['quantity'] as double,
+      Unit: map['Unit'] as String,
+      item: map['item'] as String,
+      note: map['note'] as String,
+      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PurcheItem.fromJson(String source) => PurcheItem.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'PurcheItem(item_Id: $item_Id, purcheOrder_Id: $purcheOrder_Id, quantity: $quantity, Unit: $Unit, item: $item, note: $note, actions: $actions)';
+  }
+
+  @override
+  bool operator ==(covariant PurcheItem other) {
+    if (identical(this, other)) return true;
+  
+    return 
+      other.item_Id == item_Id &&
+      other.purcheOrder_Id == purcheOrder_Id &&
+      other.quantity == quantity &&
+      other.Unit == Unit &&
+      other.item == item &&
+      other.note == note &&
+      listEquals(other.actions, actions);
+  }
+
+  @override
+  int get hashCode {
+    return item_Id.hashCode ^
+      purcheOrder_Id.hashCode ^
+      quantity.hashCode ^
+      Unit.hashCode ^
+      item.hashCode ^
+      note.hashCode ^
+      actions.hashCode;
+  }
+}
+
+class PurcheOrder {
+ final int Id;
+ final int serial;
+  final String Adminstrationrequested;
+ final DateTime  dueDate;
+  final String fl;
+  final List<int> financeManagerSingiture;
+   
+ final String  gl; 
+final  List<int>  generalManagerSigniture; 
+   final String requester;
+  final List<ActionModel> actions;
+  final List<PurcheItem> items;
+ final String status;
+  PurcheOrder({
+    required this.Id,
+    required this.serial,
+    required this.Adminstrationrequested,
+    required this.dueDate,
+    required this.fl,
+    required this.financeManagerSingiture,
+    required this.gl,
+    required this.generalManagerSigniture,
+    required this.requester,
+    required this.actions,
+    required this.items,
+    required this.status,
+  });
+
+ 
+
+  PurcheOrder copyWith({
+    int? Id,
+    int? serial,
+    String? Adminstrationrequested,
+    DateTime? dueDate,
+    String? fl,
+    List<int>? financeManagerSingiture,
+    String? gl,
+    List<int>? generalManagerSigniture,
+    String? requester,
+    List<ActionModel>? actions,
+    List<PurcheItem>? items,
+    String? status,
+  }) {
+    return PurcheOrder(
+      Id: Id ?? this.Id,
+      serial: serial ?? this.serial,
+      Adminstrationrequested: Adminstrationrequested ?? this.Adminstrationrequested,
+      dueDate: dueDate ?? this.dueDate,
+      fl: fl ?? this.fl,
+      financeManagerSingiture: financeManagerSingiture ?? this.financeManagerSingiture,
+      gl: gl ?? this.gl,
+      generalManagerSigniture: generalManagerSigniture ?? this.generalManagerSigniture,
+      requester: requester ?? this.requester,
+      actions: actions ?? this.actions,
+      items: items ?? this.items,
+      status: status ?? this.status,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'Id': Id,
+      'serial': serial,
+      'Adminstrationrequested': Adminstrationrequested,
+      'dueDate': dueDate.millisecondsSinceEpoch,
+      'fl': fl,
+      'financeManagerSingiture': financeManagerSingiture,
+      'gl': gl,
+      'generalManagerSigniture': generalManagerSigniture,
+      'requester': requester,
+      'actions': actions.map((x) => x.toMap()).toList(),
+      'items': items.map((x) => x.toMap()).toList(),
+      'status': status,
+    };
+  }
+
+  factory PurcheOrder.fromMap(Map<String, dynamic> map) {
+    return PurcheOrder(
+      Id: map['Id'] as int,
+      serial: map['serial'] as int,
+      Adminstrationrequested: map['Adminstrationrequested'] as String,
+      dueDate: DateTime.fromMillisecondsSinceEpoch(map['dueDate'] as int),
+      fl: map['fl'] as String,
+      financeManagerSingiture: List<int>.from((map['financeManagerSingiture'] as List<int>)),
+      gl: map['gl'] as String,
+      generalManagerSigniture: List<int>.from((map['generalManagerSigniture'] as List<int>)),
+      requester: map['requester'] as String,
+      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
+      items: List<PurcheItem>.from((map['items'] as List<dynamic>).map<PurcheItem>((x) => PurcheItem.fromMap(x as Map<String,dynamic>),),),
+      status: map['status'] as String,
+       );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PurcheOrder.fromJson(String source) => PurcheOrder.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'PurcheOrder(Id: $Id, serial: $serial, Adminstrationrequested: $Adminstrationrequested, dueDate: $dueDate, fl: $fl, financeManagerSingiture: $financeManagerSingiture, gl: $gl, generalManagerSigniture: $generalManagerSigniture, requester: $requester, actions: $actions, items: $items, status: $status)';
+  }
+
+  @override
+  bool operator ==(covariant PurcheOrder other) {
+    if (identical(this, other)) return true;
+  
+    return 
+      other.Id == Id &&
+      other.serial == serial &&
+      other.Adminstrationrequested == Adminstrationrequested &&
+      other.dueDate == dueDate &&
+      other.fl == fl &&
+      listEquals(other.financeManagerSingiture, financeManagerSingiture) &&
+      other.gl == gl &&
+      listEquals(other.generalManagerSigniture, generalManagerSigniture) &&
+      other.requester == requester &&
+      listEquals(other.actions, actions) &&
+      listEquals(other.items, items) &&
+      other.status == status;
+  }
+
+  @override
+  int get hashCode {
+    return Id.hashCode ^
+      serial.hashCode ^
+      Adminstrationrequested.hashCode ^
+      dueDate.hashCode ^
+      fl.hashCode ^
+      financeManagerSingiture.hashCode ^
+      gl.hashCode ^
+      generalManagerSigniture.hashCode ^
+      requester.hashCode ^
+      actions.hashCode ^
+      items.hashCode ^
+      status.hashCode;
   }
 }
