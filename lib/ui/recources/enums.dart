@@ -215,6 +215,37 @@ extension Xdf5 on InvoiceAction {
   }
 }
 
+enum PurcheAction {
+  creat_new_Purche,
+  archive_Purche,
+}
+
+extension Fdf on PurcheAction {
+  ActionModel get add {
+    switch (this) {
+      case PurcheAction.creat_new_Purche:
+        return ActionModel(
+            action: "creat_new_Purche",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case PurcheAction.archive_Purche:
+        return ActionModel(
+            action: "archive_Purche",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+    }
+  }
+
+  String get getTitle {
+    switch (this) {
+      case PurcheAction.creat_new_Purche:
+        return "creat_new_Purche";
+      case PurcheAction.archive_Purche:
+        return "archive_Purche";
+    }
+  }
+}
+
 enum Chemical_Category {
   creat_new_Chemical_category,
   archive_Chemical_category,
