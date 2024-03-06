@@ -15,13 +15,16 @@ class PurchingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         appBar: AppBar(),
         body: Consumer<PurchesController>(
           builder: (context, myType, child) {
             return Form(
               key: vm.formKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                
                   const Center(
                     child: Text(
                       "تسجيل طلب شراء جديد",
@@ -29,15 +32,25 @@ class PurchingView extends StatelessWidget {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.add,
-                            color: Colors.amber,
-                          )),
+                       Container(
+                        height: 40,
+                                      width: MediaQuery.of(context).size.width *
+                                          .30,
+                                      decoration:
+                                          BoxDecoration(border: Border.all()),
+                                      child: Center(
+                                        child: TextFormField(
+                                          onChanged: (value) {
+                                            vm.administrationRequstTheOrder.text=value;
+                                          },
+                                          validator: Validation.validateOOOOOO,
+                                        ),
+                                      ),
+                                    ),
                       const Padding(
                         padding: EdgeInsets.only(right: 12),
                         child: Text(
@@ -48,7 +61,9 @@ class PurchingView extends StatelessWidget {
                       )
                     ],
                   ),
+               
                   Header(style: style),
+                 
                   Expanded(
                       child: SingleChildScrollView(
                     child: Column(
@@ -125,7 +140,6 @@ class PurchingView extends StatelessWidget {
                                           onChanged: (value) {
                                             e.note = value;
                                           },
-                                          validator: Validation.validateOOOOOO,
                                           initialValue: e.note.toString(),
                                         ),
                                       ),
@@ -136,28 +150,38 @@ class PurchingView extends StatelessWidget {
                           .toList(),
                     ),
                   )),
-                  IconButton(
-                      onPressed: () {
-                        for (var e in vm.permanentWidget) {
-                          print(e.item);
-                        }
-                        print(vm.permanentWidget);
-                        vm.formKey.currentState!.validate();
-                        vm.permanentWidget.add(PurcheItem(
-                            item_Id: 0,
-                            purcheOrder_Id: 0,
-                            quantity: 0,
-                            Unit: "",
-                            item: "",
-                            note: "",
-                            actions: []));
-                        myType.Refrech_UI();
-                      },
-                      icon: const Icon(
-                        size: 40,
-                        Icons.add,
-                        color: Colors.red,
-                      )),
+                
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                                      
+                            if ( vm.formKey.currentState!.validate()) {
+                                 vm.permanentWidget.add(PurcheItem(
+                                item_Id: 0,
+                                purcheOrder_Id: 0,
+                                quantity: 0,
+                                Unit: "",
+                                item: "",
+                                note: "",
+                                actions: []));
+                            myType.Refrech_UI();
+                            }
+                         
+                          },
+                          icon: const Icon(
+                            size: 40,
+                            Icons.add,
+                            color: Colors.red,
+                          )),
+                   
+                   
+                    ElevatedButton(onPressed: (){}, child: const Text('تسجيل'))
+                   
+                    ],
+                  ),
+          
                 ],
               ),
             );
