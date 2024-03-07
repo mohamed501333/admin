@@ -1989,8 +1989,9 @@ class PurcheItem {
   String Unit;
   String item;
   String note;
- 
-final   List<ActionModel> actions;
+  double price;
+
+  final List<ActionModel> actions;
   PurcheItem({
     required this.item_Id,
     required this.purcheOrder_Id,
@@ -1998,12 +1999,9 @@ final   List<ActionModel> actions;
     required this.Unit,
     required this.item,
     required this.note,
+    required this.price,
     required this.actions,
   });
-
-
- 
-
 
   PurcheItem copyWith({
     int? item_Id,
@@ -2012,6 +2010,7 @@ final   List<ActionModel> actions;
     String? Unit,
     String? item,
     String? note,
+    double? price,
     List<ActionModel>? actions,
   }) {
     return PurcheItem(
@@ -2021,6 +2020,7 @@ final   List<ActionModel> actions;
       Unit: Unit ?? this.Unit,
       item: item ?? this.item,
       note: note ?? this.note,
+      price: price ?? this.price,
       actions: actions ?? this.actions,
     );
   }
@@ -2033,6 +2033,7 @@ final   List<ActionModel> actions;
       'Unit': Unit,
       'item': item,
       'note': note,
+      'price': price,
       'actions': actions.map((x) => x.toMap()).toList(),
     };
   }
@@ -2045,59 +2046,66 @@ final   List<ActionModel> actions;
       Unit: map['Unit'] as String,
       item: map['item'] as String,
       note: map['note'] as String,
-      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
+      price: map['price'] as double,
+      actions: List<ActionModel>.from(
+        (map['actions'] as List<dynamic>).map<ActionModel>(
+          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PurcheItem.fromJson(String source) => PurcheItem.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PurcheItem.fromJson(String source) =>
+      PurcheItem.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PurcheItem(item_Id: $item_Id, purcheOrder_Id: $purcheOrder_Id, quantity: $quantity, Unit: $Unit, item: $item, note: $note, actions: $actions)';
+    return 'PurcheItem(item_Id: $item_Id, purcheOrder_Id: $purcheOrder_Id, quantity: $quantity, Unit: $Unit, item: $item, note: $note, price: $price, actions: $actions)';
   }
 
   @override
   bool operator ==(covariant PurcheItem other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.item_Id == item_Id &&
-      other.purcheOrder_Id == purcheOrder_Id &&
-      other.quantity == quantity &&
-      other.Unit == Unit &&
-      other.item == item &&
-      other.note == note &&
-      listEquals(other.actions, actions);
+
+    return other.item_Id == item_Id &&
+        other.purcheOrder_Id == purcheOrder_Id &&
+        other.quantity == quantity &&
+        other.Unit == Unit &&
+        other.item == item &&
+        other.note == note &&
+        other.price == price &&
+        listEquals(other.actions, actions);
   }
 
   @override
   int get hashCode {
     return item_Id.hashCode ^
-      purcheOrder_Id.hashCode ^
-      quantity.hashCode ^
-      Unit.hashCode ^
-      item.hashCode ^
-      note.hashCode ^
-      actions.hashCode;
+        purcheOrder_Id.hashCode ^
+        quantity.hashCode ^
+        Unit.hashCode ^
+        item.hashCode ^
+        note.hashCode ^
+        price.hashCode ^
+        actions.hashCode;
   }
 }
 
 class PurcheOrder {
- final int Id;
- final int serial;
+  final int Id;
+  final int serial;
   final String Adminstrationrequested;
- final DateTime  dueDate;
+  final DateTime dueDate;
   final String fl;
   final List<int> financeManagerSingiture;
-   
- final String  gl; 
-final  List<int>  generalManagerSigniture; 
-   final String requester;
+
+  final String gl;
+  final List<int> generalManagerSigniture;
+  final String requester;
   final List<ActionModel> actions;
   final List<PurcheItem> items;
- final String status;
+  final String status;
   PurcheOrder({
     required this.Id,
     required this.serial,
@@ -2112,8 +2120,6 @@ final  List<int>  generalManagerSigniture;
     required this.items,
     required this.status,
   });
-
- 
 
   PurcheOrder copyWith({
     int? Id,
@@ -2132,12 +2138,15 @@ final  List<int>  generalManagerSigniture;
     return PurcheOrder(
       Id: Id ?? this.Id,
       serial: serial ?? this.serial,
-      Adminstrationrequested: Adminstrationrequested ?? this.Adminstrationrequested,
+      Adminstrationrequested:
+          Adminstrationrequested ?? this.Adminstrationrequested,
       dueDate: dueDate ?? this.dueDate,
       fl: fl ?? this.fl,
-      financeManagerSingiture: financeManagerSingiture ?? this.financeManagerSingiture,
+      financeManagerSingiture:
+          financeManagerSingiture ?? this.financeManagerSingiture,
       gl: gl ?? this.gl,
-      generalManagerSigniture: generalManagerSigniture ?? this.generalManagerSigniture,
+      generalManagerSigniture:
+          generalManagerSigniture ?? this.generalManagerSigniture,
       requester: requester ?? this.requester,
       actions: actions ?? this.actions,
       items: items ?? this.items,
@@ -2169,19 +2178,30 @@ final  List<int>  generalManagerSigniture;
       Adminstrationrequested: map['Adminstrationrequested'] as String,
       dueDate: DateTime.fromMillisecondsSinceEpoch(map['dueDate'] as int),
       fl: map['fl'] as String,
-      financeManagerSingiture: List<int>.from((map['financeManagerSingiture'] as List<int>)),
+      financeManagerSingiture:
+          List<int>.from((map['financeManagerSingiture'] as List<int>)),
       gl: map['gl'] as String,
-      generalManagerSigniture: List<int>.from((map['generalManagerSigniture'] as List<int>)),
+      generalManagerSigniture:
+          List<int>.from((map['generalManagerSigniture'] as List<int>)),
       requester: map['requester'] as String,
-      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
-      items: List<PurcheItem>.from((map['items'] as List<dynamic>).map<PurcheItem>((x) => PurcheItem.fromMap(x as Map<String,dynamic>),),),
+      actions: List<ActionModel>.from(
+        (map['actions'] as List<dynamic>).map<ActionModel>(
+          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      items: List<PurcheItem>.from(
+        (map['items'] as List<dynamic>).map<PurcheItem>(
+          (x) => PurcheItem.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
       status: map['status'] as String,
-       );
+    );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PurcheOrder.fromJson(String source) => PurcheOrder.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PurcheOrder.fromJson(String source) =>
+      PurcheOrder.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -2191,35 +2211,34 @@ final  List<int>  generalManagerSigniture;
   @override
   bool operator ==(covariant PurcheOrder other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.Id == Id &&
-      other.serial == serial &&
-      other.Adminstrationrequested == Adminstrationrequested &&
-      other.dueDate == dueDate &&
-      other.fl == fl &&
-      listEquals(other.financeManagerSingiture, financeManagerSingiture) &&
-      other.gl == gl &&
-      listEquals(other.generalManagerSigniture, generalManagerSigniture) &&
-      other.requester == requester &&
-      listEquals(other.actions, actions) &&
-      listEquals(other.items, items) &&
-      other.status == status;
+
+    return other.Id == Id &&
+        other.serial == serial &&
+        other.Adminstrationrequested == Adminstrationrequested &&
+        other.dueDate == dueDate &&
+        other.fl == fl &&
+        listEquals(other.financeManagerSingiture, financeManagerSingiture) &&
+        other.gl == gl &&
+        listEquals(other.generalManagerSigniture, generalManagerSigniture) &&
+        other.requester == requester &&
+        listEquals(other.actions, actions) &&
+        listEquals(other.items, items) &&
+        other.status == status;
   }
 
   @override
   int get hashCode {
     return Id.hashCode ^
-      serial.hashCode ^
-      Adminstrationrequested.hashCode ^
-      dueDate.hashCode ^
-      fl.hashCode ^
-      financeManagerSingiture.hashCode ^
-      gl.hashCode ^
-      generalManagerSigniture.hashCode ^
-      requester.hashCode ^
-      actions.hashCode ^
-      items.hashCode ^
-      status.hashCode;
+        serial.hashCode ^
+        Adminstrationrequested.hashCode ^
+        dueDate.hashCode ^
+        fl.hashCode ^
+        financeManagerSingiture.hashCode ^
+        gl.hashCode ^
+        generalManagerSigniture.hashCode ^
+        requester.hashCode ^
+        actions.hashCode ^
+        items.hashCode ^
+        status.hashCode;
   }
 }

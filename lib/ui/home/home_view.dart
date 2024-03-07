@@ -151,7 +151,7 @@ class HomeView extends StatelessWidget {
                     " المشتريات",
                     Icons.cut,
                     ontap: () {
-                      context.gonext(context, PurchingView());
+                      context.gonext(context, PurchVeiw());
                     },
                   ).permition(context, UserPermition.show_purches),
                 ],
