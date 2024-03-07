@@ -64,7 +64,7 @@ class PurchingView extends StatelessWidget {
                
                   Header(style: style),
                  
-                  Expanded(
+                  Expanded(   
                       child: SingleChildScrollView(
                     child: Column(
                       children: vm.permanentWidget
