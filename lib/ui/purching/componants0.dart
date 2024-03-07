@@ -62,7 +62,6 @@ class singnuturePad extends StatelessWidget {
 
 class NewPurch extends StatelessWidget {
   NewPurch({super.key});
-  TextStyle style = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   PurchesViewMolel vm = PurchesViewMolel();
   @override
   Widget build(BuildContext context) {
@@ -134,7 +133,7 @@ class NewPurch extends StatelessWidget {
                       )
                     ],
                   ),
-                  Header(style: style),
+                  Header(),
                   Expanded(
                       child: SingleChildScrollView(
                     child: Column(
@@ -148,10 +147,9 @@ class NewPurch extends StatelessWidget {
                                           .10,
                                       decoration:
                                           BoxDecoration(border: Border.all()),
-                                      child: Center(
+                                      child: const Center(
                                         child: Text(
                                           "م",
-                                          style: style,
                                         ),
                                       ),
                                     ),
@@ -235,6 +233,7 @@ class NewPurch extends StatelessWidget {
                                   Unit: "",
                                   item: "",
                                   note: "",
+                                  receiver: "",
                                   price: 0.0,
                                   actions: []));
                               myType.Refrech_UI();
@@ -248,6 +247,7 @@ class NewPurch extends StatelessWidget {
                       ElevatedButton(
                           onPressed: () {
                             vm.addnewPurcheItem(context);
+                             myType.Refrech_UI();
                           },
                           child: const Text('تسجيل'))
                     ],
@@ -261,12 +261,11 @@ class NewPurch extends StatelessWidget {
 }
 
 class Header extends StatelessWidget {
-  const Header({
+   Header({
     super.key,
-    required this.style,
   });
 
-  final TextStyle style;
+  TextStyle style = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {

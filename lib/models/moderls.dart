@@ -1989,6 +1989,7 @@ class PurcheItem {
   String Unit;
   String item;
   String note;
+  String receiver;
   double price;
 
   final List<ActionModel> actions;
@@ -1999,9 +2000,12 @@ class PurcheItem {
     required this.Unit,
     required this.item,
     required this.note,
+    required this.receiver,
     required this.price,
     required this.actions,
   });
+
+
 
   PurcheItem copyWith({
     int? item_Id,
@@ -2010,6 +2014,7 @@ class PurcheItem {
     String? Unit,
     String? item,
     String? note,
+    String? receiver,
     double? price,
     List<ActionModel>? actions,
   }) {
@@ -2020,6 +2025,7 @@ class PurcheItem {
       Unit: Unit ?? this.Unit,
       item: item ?? this.item,
       note: note ?? this.note,
+      receiver: receiver ?? this.receiver,
       price: price ?? this.price,
       actions: actions ?? this.actions,
     );
@@ -2033,6 +2039,7 @@ class PurcheItem {
       'Unit': Unit,
       'item': item,
       'note': note,
+      'receiver': receiver,
       'price': price,
       'actions': actions.map((x) => x.toMap()).toList(),
     };
@@ -2046,49 +2053,48 @@ class PurcheItem {
       Unit: map['Unit'] as String,
       item: map['item'] as String,
       note: map['note'] as String,
+      receiver: map['receiver'] as String,
       price: map['price'] as double,
-      actions: List<ActionModel>.from(
-        (map['actions'] as List<dynamic>).map<ActionModel>(
-          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PurcheItem.fromJson(String source) =>
-      PurcheItem.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PurcheItem.fromJson(String source) => PurcheItem.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PurcheItem(item_Id: $item_Id, purcheOrder_Id: $purcheOrder_Id, quantity: $quantity, Unit: $Unit, item: $item, note: $note, price: $price, actions: $actions)';
+    return 'PurcheItem(item_Id: $item_Id, purcheOrder_Id: $purcheOrder_Id, quantity: $quantity, Unit: $Unit, item: $item, note: $note, receiver: $receiver, price: $price, actions: $actions)';
   }
 
   @override
   bool operator ==(covariant PurcheItem other) {
     if (identical(this, other)) return true;
-
-    return other.item_Id == item_Id &&
-        other.purcheOrder_Id == purcheOrder_Id &&
-        other.quantity == quantity &&
-        other.Unit == Unit &&
-        other.item == item &&
-        other.note == note &&
-        other.price == price &&
-        listEquals(other.actions, actions);
+  
+    return 
+      other.item_Id == item_Id &&
+      other.purcheOrder_Id == purcheOrder_Id &&
+      other.quantity == quantity &&
+      other.Unit == Unit &&
+      other.item == item &&
+      other.note == note &&
+      other.receiver == receiver &&
+      other.price == price &&
+      listEquals(other.actions, actions);
   }
 
   @override
   int get hashCode {
     return item_Id.hashCode ^
-        purcheOrder_Id.hashCode ^
-        quantity.hashCode ^
-        Unit.hashCode ^
-        item.hashCode ^
-        note.hashCode ^
-        price.hashCode ^
-        actions.hashCode;
+      purcheOrder_Id.hashCode ^
+      quantity.hashCode ^
+      Unit.hashCode ^
+      item.hashCode ^
+      note.hashCode ^
+      receiver.hashCode ^
+      price.hashCode ^
+      actions.hashCode;
   }
 }
 
@@ -2098,10 +2104,10 @@ class PurcheOrder {
   final String Adminstrationrequested;
   final DateTime dueDate;
   final String fl;
-  final List<int> financeManagerSingiture;
+  final List<dynamic> financeManagerSingiture;
 
   final String gl;
-  final List<int> generalManagerSigniture;
+  final List<dynamic> generalManagerSigniture;
   final String requester;
   final List<ActionModel> actions;
   final List<PurcheItem> items;
@@ -2127,9 +2133,9 @@ class PurcheOrder {
     String? Adminstrationrequested,
     DateTime? dueDate,
     String? fl,
-    List<int>? financeManagerSingiture,
+    List<dynamic>? financeManagerSingiture,
     String? gl,
-    List<int>? generalManagerSigniture,
+    List<dynamic>? generalManagerSigniture,
     String? requester,
     List<ActionModel>? actions,
     List<PurcheItem>? items,
@@ -2179,10 +2185,10 @@ class PurcheOrder {
       dueDate: DateTime.fromMillisecondsSinceEpoch(map['dueDate'] as int),
       fl: map['fl'] as String,
       financeManagerSingiture:
-          List<int>.from((map['financeManagerSingiture'] as List<int>)),
+          List<dynamic>.from((map['financeManagerSingiture'] as List<dynamic>)),
       gl: map['gl'] as String,
       generalManagerSigniture:
-          List<int>.from((map['generalManagerSigniture'] as List<int>)),
+          List<dynamic>.from((map['generalManagerSigniture'] as List<dynamic>)),
       requester: map['requester'] as String,
       actions: List<ActionModel>.from(
         (map['actions'] as List<dynamic>).map<ActionModel>(

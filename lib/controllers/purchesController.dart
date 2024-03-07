@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/models/moderls.dart';
 
 class PurchesController extends ChangeNotifier {
-  getDataOfPurches() {
+  getDataOfPurchesrr() {
     try {
       FirebaseDatabase.instance
           .ref("Purche")
@@ -24,6 +24,7 @@ class PurchesController extends ChangeNotifier {
         }
 
         notifyListeners();
+        print(purchesOrders);
       });
     } catch (e) {}
   }

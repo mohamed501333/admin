@@ -9,6 +9,7 @@ import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/fractinsFirebaseController.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
+import 'package:jason_company/controllers/purchesController.dart';
 import 'package:jason_company/controllers/scissors_controller.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/ui/main/componants/nav_bar.dart';
@@ -56,7 +57,7 @@ class Mainview extends StatelessWidget {
             ? context.read<OrderController>().get_Order_data()
             : DoNothingAction();
         permitionss(context, UserPermition.can_get_data_of_Purches)
-            ? context.read<OrderController>().getDataOfPurches()
+            ? context.read<PurchesController>().getDataOfPurchesrr()
             : DoNothingAction();
         permitionss(context, UserPermition.can_get_data_of_blocks)
             ? context.read<Category_controller>().get_blockCategory_data()
