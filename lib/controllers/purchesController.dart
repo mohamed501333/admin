@@ -33,6 +33,22 @@ class PurchesController extends ChangeNotifier {
   List<PurcheOrder> initalData = [];
 
   Add_purche_item(PurcheOrder purcheOrder) async {
+    for (var element in purcheOrder.items) {
+      element.purcheOrder_Id = purcheOrder.Id;
+    }
+    try {
+      FirebaseDatabase.instance
+          .ref("Purche/${purcheOrder.Id}")
+          .set(purcheOrder.toJson());
+    } catch (e) {}
+  }
+
+  Add_purche_item_offer(PurcheItem p, PurcheItemOffers f) async {
+    PurcheOrder purcheOrder =
+        purchesOrders.firstWhere((element) => element.Id == p.purcheOrder_Id);
+    PurcheItem l = purcheOrder.items.firstWhere((h) => h.item_Id == p.item_Id);
+    l.offers.add(f);
+
     try {
       FirebaseDatabase.instance
           .ref("Purche/${purcheOrder.Id}")

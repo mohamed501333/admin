@@ -218,6 +218,10 @@ extension Xdf5 on InvoiceAction {
 enum PurcheAction {
   creat_new_Purche,
   archive_Purche,
+  create_new_purcheItem,
+  add_purche_offer,
+  archive_purche_offer,
+  offer_chosen,
 }
 
 extension Fdf on PurcheAction {
@@ -233,11 +237,41 @@ extension Fdf on PurcheAction {
             action: "archive_Purche",
             who: SringsManager.myemail,
             when: DateTime.now());
+      case PurcheAction.create_new_purcheItem:
+        return ActionModel(
+            action: "create_new_purcheItem",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+
+      case PurcheAction.archive_purche_offer:
+        return ActionModel(
+            action: "archive_purche_offer",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case PurcheAction.offer_chosen:
+        return ActionModel(
+            action: "offer_chosen",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case PurcheAction.add_purche_offer:
+        return ActionModel(
+            action: "add_purche_offerm",
+            who: SringsManager.myemail,
+            when: DateTime.now());
     }
   }
 
   String get getTitle {
     switch (this) {
+      case PurcheAction.add_purche_offer:
+        return "add_purche_offer";
+      case PurcheAction.create_new_purcheItem:
+        return "create_new_purcheItem";
+      case PurcheAction.archive_purche_offer:
+        return "archive_purche_offer";
+      case PurcheAction.offer_chosen:
+        return "offer_chosen";
+
       case PurcheAction.creat_new_Purche:
         return "creat_new_Purche";
       case PurcheAction.archive_Purche:
@@ -488,6 +522,8 @@ extension FF on OrderAction {
     }
   }
 }
+
+//صلاحيات المستخدمين
 
 enum UserPermition {
   show_all,

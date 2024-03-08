@@ -26,9 +26,9 @@ class PurchesViewMolel extends BaseViewModel {
           Adminstrationrequested: administrationRequstTheOrder.text,
           dueDate: DateTime.now(),
           fl: "",
-          financeManagerSingiture:<int> [],
+          financeManagerSingiture: <int>[],
           gl: "",
-          generalManagerSigniture:<int> [],
+          generalManagerSigniture: <int>[],
           requester: purcheOrderRequester.text,
           actions: [PurcheAction.creat_new_Purche.add],
           items: permanentWidget,
@@ -38,7 +38,6 @@ class PurchesViewMolel extends BaseViewModel {
       permanentWidget.clear();
       administrationRequstTheOrder.clear();
       purcheOrderRequester.clear();
-      
     }
   }
 }

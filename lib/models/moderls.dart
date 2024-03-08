@@ -1990,9 +1990,10 @@ class PurcheItem {
   String item;
   String note;
   String receiver;
-  double price;
+  double lastPrice;
 
   final List<ActionModel> actions;
+  final List<PurcheItemOffers> offers;
   PurcheItem({
     required this.item_Id,
     required this.purcheOrder_Id,
@@ -2001,11 +2002,10 @@ class PurcheItem {
     required this.item,
     required this.note,
     required this.receiver,
-    required this.price,
+    required this.lastPrice,
     required this.actions,
+    required this.offers,
   });
-
-
 
   PurcheItem copyWith({
     int? item_Id,
@@ -2015,8 +2015,9 @@ class PurcheItem {
     String? item,
     String? note,
     String? receiver,
-    double? price,
+    double? lastPrice,
     List<ActionModel>? actions,
+    List<PurcheItemOffers>? offers,
   }) {
     return PurcheItem(
       item_Id: item_Id ?? this.item_Id,
@@ -2026,8 +2027,9 @@ class PurcheItem {
       item: item ?? this.item,
       note: note ?? this.note,
       receiver: receiver ?? this.receiver,
-      price: price ?? this.price,
+      lastPrice: lastPrice ?? this.lastPrice,
       actions: actions ?? this.actions,
+      offers: offers ?? this.offers,
     );
   }
 
@@ -2040,8 +2042,9 @@ class PurcheItem {
       'item': item,
       'note': note,
       'receiver': receiver,
-      'price': price,
+      'lastPrice': lastPrice,
       'actions': actions.map((x) => x.toMap()).toList(),
+      'offers': offers.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -2054,47 +2057,151 @@ class PurcheItem {
       item: map['item'] as String,
       note: map['note'] as String,
       receiver: map['receiver'] as String,
-      price: map['price'] as double,
-      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
+      lastPrice: map['lastPrice'] as double,
+      actions: List<ActionModel>.from(
+        (map['actions'] as List<dynamic>).map<ActionModel>(
+          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      offers: List<PurcheItemOffers>.from(
+        (map['offers'] as List<dynamic>).map<PurcheItemOffers>(
+          (x) => PurcheItemOffers.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PurcheItem.fromJson(String source) => PurcheItem.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PurcheItem.fromJson(String source) =>
+      PurcheItem.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PurcheItem(item_Id: $item_Id, purcheOrder_Id: $purcheOrder_Id, quantity: $quantity, Unit: $Unit, item: $item, note: $note, receiver: $receiver, price: $price, actions: $actions)';
+    return 'PurcheItem(item_Id: $item_Id, purcheOrder_Id: $purcheOrder_Id, quantity: $quantity, Unit: $Unit, item: $item, note: $note, receiver: $receiver, lastPrice: $lastPrice, actions: $actions, offers: $offers)';
   }
 
   @override
   bool operator ==(covariant PurcheItem other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.item_Id == item_Id &&
-      other.purcheOrder_Id == purcheOrder_Id &&
-      other.quantity == quantity &&
-      other.Unit == Unit &&
-      other.item == item &&
-      other.note == note &&
-      other.receiver == receiver &&
-      other.price == price &&
-      listEquals(other.actions, actions);
+
+    return other.item_Id == item_Id &&
+        other.purcheOrder_Id == purcheOrder_Id &&
+        other.quantity == quantity &&
+        other.Unit == Unit &&
+        other.item == item &&
+        other.note == note &&
+        other.receiver == receiver &&
+        other.lastPrice == lastPrice &&
+        listEquals(other.actions, actions) &&
+        listEquals(other.offers, offers);
   }
 
   @override
   int get hashCode {
     return item_Id.hashCode ^
-      purcheOrder_Id.hashCode ^
-      quantity.hashCode ^
-      Unit.hashCode ^
-      item.hashCode ^
-      note.hashCode ^
-      receiver.hashCode ^
-      price.hashCode ^
-      actions.hashCode;
+        purcheOrder_Id.hashCode ^
+        quantity.hashCode ^
+        Unit.hashCode ^
+        item.hashCode ^
+        note.hashCode ^
+        receiver.hashCode ^
+        lastPrice.hashCode ^
+        actions.hashCode ^
+        offers.hashCode;
+  }
+}
+
+class PurcheItemOffers {
+  int PurcheItemOffers_Id;
+  int item_Id;
+  int purcheOrder_Id;
+  String syplyer;
+  double price;
+  final List<ActionModel> actions;
+  PurcheItemOffers({
+    required this.PurcheItemOffers_Id,
+    required this.item_Id,
+    required this.purcheOrder_Id,
+    required this.syplyer,
+    required this.price,
+    required this.actions,
+  });
+
+  PurcheItemOffers copyWith({
+    int? PurcheItemOffers_Id,
+    int? item_Id,
+    int? purcheOrder_Id,
+    String? syplyer,
+    double? price,
+    List<ActionModel>? actions,
+  }) {
+    return PurcheItemOffers(
+      PurcheItemOffers_Id: PurcheItemOffers_Id ?? this.PurcheItemOffers_Id,
+      item_Id: item_Id ?? this.item_Id,
+      purcheOrder_Id: purcheOrder_Id ?? this.purcheOrder_Id,
+      syplyer: syplyer ?? this.syplyer,
+      price: price ?? this.price,
+      actions: actions ?? this.actions,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'PurcheItemOffers_Id': PurcheItemOffers_Id,
+      'item_Id': item_Id,
+      'purcheOrder_Id': purcheOrder_Id,
+      'syplyer': syplyer,
+      'price': price,
+      'actions': actions.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory PurcheItemOffers.fromMap(Map<String, dynamic> map) {
+    return PurcheItemOffers(
+      PurcheItemOffers_Id: map['PurcheItemOffers_Id'] as int,
+      item_Id: map['item_Id'] as int,
+      purcheOrder_Id: map['purcheOrder_Id'] as int,
+      syplyer: map['syplyer'] as String,
+      price: map['price'] as double,
+      actions: List<ActionModel>.from(
+        (map['actions'] as List<dynamic>).map<ActionModel>(
+          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PurcheItemOffers.fromJson(String source) =>
+      PurcheItemOffers.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'PurcheItemOffers(PurcheItemOffers_Id: $PurcheItemOffers_Id, item_Id: $item_Id, purcheOrder_Id: $purcheOrder_Id, syplyer: $syplyer, price: $price, actions: $actions)';
+  }
+
+  @override
+  bool operator ==(covariant PurcheItemOffers other) {
+    if (identical(this, other)) return true;
+
+    return other.PurcheItemOffers_Id == PurcheItemOffers_Id &&
+        other.item_Id == item_Id &&
+        other.purcheOrder_Id == purcheOrder_Id &&
+        other.syplyer == syplyer &&
+        other.price == price &&
+        listEquals(other.actions, actions);
+  }
+
+  @override
+  int get hashCode {
+    return PurcheItemOffers_Id.hashCode ^
+        item_Id.hashCode ^
+        purcheOrder_Id.hashCode ^
+        syplyer.hashCode ^
+        price.hashCode ^
+        actions.hashCode;
   }
 }
 

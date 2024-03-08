@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,20 +36,18 @@ class PurchVeiw extends StatelessWidget {
               ))
         ],
       ),
-      body:  Consumer<PurchesController>(
+      body: Consumer<PurchesController>(
         builder: (context, myType, child) {
           return SingleChildScrollView(
-            child: Column(children: 
-            myType.purchesOrders.map((e) => Card1(e:  e)).toList(),),
+            child: Column(
+              children: myType.purchesOrders.map((e) => Card1(e: e)).toList(),
+            ),
           );
         },
       ),
     );
   }
 }
-
-
-
 
 class Card1 extends StatelessWidget {
   final PurcheOrder e;
@@ -66,7 +64,6 @@ class Card1 extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: Column(
           children: <Widget>[
-      
             ScrollOnExpand(
               scrollOnExpand: true,
               scrollOnCollapse: false,
@@ -76,44 +73,65 @@ class Card1 extends StatelessWidget {
                   tapBodyToCollapse: true,
                 ),
                 header: Container(
-                    color: const Color.fromARGB(255, 138, 89, 71),
-                    child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Expanded(
-                                flex: 1,
-                                child: Icon(
-                                  Icons.add_shopping_cart_rounded,
-                                  color: Colors.white,
-                                )),
-                            Expanded(flex: 1, child: Container()),
-                             Expanded(
-                              flex: 4,
-                              child: Text(
-                                "  طلب شراء ( ${e.serial} )      الحاله (قيد الموافقه)" ,
-                                style: const TextStyle(color: Color.fromARGB(255, 73, 223, 35),fontWeight: FontWeight.bold,fontSize: 22),
-                              ),
+                  color: const Color.fromARGB(255, 138, 89, 71),
+                  child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                              flex: 2,
+                              child: IconButton(
+                                  icon: const Icon(
+                                    size: 40,
+                                    Icons.contact_support_sharp,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    context.gonext(context, Details(e: e));
+                                  })),
+                          Expanded(
+                            flex: 4,
+                            child: Text(
+                              "  طلب شراء ( ${e.serial} )      الحاله (قيد الموافقه)",
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 73, 223, 35),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22),
                             ),
-                          ],
-                        )),
-                  ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: IconButton(
+                                icon: const Icon(
+                                  size: 40,
+                                  Icons.picture_as_pdf,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  print("dfdfdfdf");
+                                }),
+                          ),
+                        ],
+                      )),
+                ),
                 collapsed: Container(),
                 expanded: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-
-                     Text("الادراه الطالبه: ${e.Adminstrationrequested}"),
-                     Text(" اسم الطالب: ${e.requester}"),
-                      ...e.items.map((e) =>  Data(),)
-             
-
+                    Text("الادراه الطالبه: ${e.Adminstrationrequested}"),
+                    Text(" اسم الطالب: ${e.requester}"),
+                    ...e.items.map(
+                      (d) => Data(
+                        e: d,
+                      ),
+                    )
                   ],
                 ),
                 builder: (_, collapsed, expanded) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                     child: Expandable(
                       collapsed: collapsed,
                       expanded: expanded,
@@ -130,14 +148,12 @@ class Card1 extends StatelessWidget {
   }
 }
 
-
-
-
 class Data extends StatelessWidget {
-   Data({
-    super.key,
-  });
-
+  Data({
+    Key? key,
+    required this.e,
+  }) : super(key: key);
+  final PurcheItem e;
   TextStyle style = const TextStyle(fontSize: 14, fontWeight: FontWeight.bold);
 
   @override
@@ -147,7 +163,7 @@ class Data extends StatelessWidget {
           child: Row(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * .6,
+            width: MediaQuery.of(context).size.width * .1,
             decoration: BoxDecoration(border: Border.all()),
             child: Center(
               child: Text(
@@ -157,31 +173,31 @@ class Data extends StatelessWidget {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width * .8,
+            width: MediaQuery.of(context).size.width * .1,
             decoration: BoxDecoration(border: Border.all()),
             child: Center(
-              child: Text("الكميه", style: style),
+              child: Text("${e.quantity}", style: style),
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width * .16,
+            width: MediaQuery.of(context).size.width * .2,
             decoration: BoxDecoration(border: Border.all()),
             child: Center(
-              child: Text("الوحده", style: style),
+              child: Text(e.Unit, style: style),
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width * .29,
+            width: MediaQuery.of(context).size.width * .25,
             decoration: BoxDecoration(border: Border.all()),
             child: Center(
-              child: Text("الصنف", style: style),
+              child: Text(e.item, style: style),
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width * .21,
+            width: MediaQuery.of(context).size.width * .22,
             decoration: BoxDecoration(border: Border.all()),
             child: Center(
-              child: Text("ملاحظات", style: style),
+              child: Text(e.note, style: style),
             ),
           ),
         ].reversed.toList(),
@@ -189,4 +205,3 @@ class Data extends StatelessWidget {
     );
   }
 }
-
