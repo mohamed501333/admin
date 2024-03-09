@@ -526,21 +526,61 @@ extension FF on OrderAction {
 //صلاحيات المستخدمين
 
 enum UserPermition {
+
+
   show_all,
+  can_get_data_of_blocks,
   show_block_incetion,
+  show_date_in_block_stock,
+  incert_in_block_stock,
+
+
   show_blockconsume,
+  fields_buttoms_consumeBlock,
+  show_date_in_block_out_of_stock,
+  delete_in_consume_block,
+
+  can_get_data_of_orders,
   show_cutting_orders,
+  show_cusotmer_name_in_cutting_order,
+  incert_in_cutting_order,
+  can_aprove_from_controll,
+  can_aprove_from_calculation,
+  can_print_in_cutting_order,
+  can_close_in_cutting_order,
+  delete_in_cutting_order,
+
+  can_get_data_of_final_prodcut,
   show_finalProdcut_stock,
   show_finalprodcut_importedFormcuttingUint,
+  incert_in_finalProdcut_imorted,
+  incert_unregular_in_importedfinal_prodcut,
+  incert_notFinal_in_importedfinal_prodcut,
+  incert_in_final_prodcutStock,
+  incert_in_final_prodcutStock_From_Excel,
+  delete_in_imported_finalprodcut,
+  show_date_in_finalProduct_imported,
+  can_aprove_from_quality,
+  can_aprove_from_recive_from_final_prodcut,
+
+  can_get_data_of_invoice,
   show_finalprodcut_invoice,
   show_finalprodcut_invoicemaking,
-  show_customers,
+  show_setting_in_out_order,
+  show_date_in_invoices,
+
   show_massaging,
   show_scissors,
   show_purches,
   show_not_final_stock,
   show_add_new_category,
   show_Chemical_category,
+
+  can_get_data_of_customers,
+  show_customers,
+  incert_in_customers,
+  show_search_in_customers,
+
 
   show_Reports_finalprodcut,
   show_Reports_final_prodcutscisors,
@@ -554,14 +594,7 @@ enum UserPermition {
   show_Reports_R,
   show_Reports_Comparison_Of_consumedAndResults,
 
-  show_date_in_block_out_of_stock,
-  show_date_in_block_stock,
-  show_date_in_finalProduct_imported,
-  show_date_in_invoices,
-  fields_buttoms_consumeBlock,
-  show_search_in_customers,
-  show_cusotmer_name_in_cutting_order,
-  show_setting_in_out_order,
+  
   show_H1,
   show_H2,
   show_H3,
@@ -569,37 +602,13 @@ enum UserPermition {
   show_R2,
   show_R3,
 
-  incert_in_finalProdcut_imorted,
-  incert_unregular_in_importedfinal_prodcut,
-  incert_notFinal_in_importedfinal_prodcut,
-  incert_in_block_stock,
-  incert_in_final_prodcutStock,
-  incert_in_final_prodcutStock_From_Excel,
-  incert_in_cutting_order,
-  incert_in_customers,
-
-  delete_in_cutting_order,
-  delete_in_consume_block,
-  delete_in_imported_finalprodcut,
+ 
   delete_in_finalprodcut_details,
-
-  can_print_in_cutting_order,
-
-  can_close_in_cutting_order,
-  can_aprove_from_controll,
-  can_aprove_from_calculation,
-  can_aprove_from_quality,
-  can_aprove_from_recive_from_final_prodcut,
   allow_edit_in_details_finalProdcut,
   allow_edit_in_details_blocks,
 
   show_users_actions,
-  can_get_data_of_blocks,
   can_get_data_of_Purches,
-  can_get_data_of_final_prodcut,
-  can_get_data_of_invoice,
-  can_get_data_of_customers,
-  can_get_data_of_orders,
   can_get_data_of_fractions,
   can_get_data_of_notfinals,
   can_get_data_of_chemicals,

@@ -70,7 +70,7 @@ class UsersDashboard extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: CheckboxListTile(
-                                  activeColor: Colors.green,
+                                  activeColor: Colors.blue,
                                   checkColor: Colors.white,
                                   autofocus: false,
                                   onChanged: (v) {
@@ -94,7 +94,7 @@ class UsersDashboard extends StatelessWidget {
                                       }
                                     }
                                   },
-                                  title: Text(g.getTitle),
+                                  title: Text(g.getTitle,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                                   value: myType.users
                                           .where((element) =>
                                               element.uidemail ==
