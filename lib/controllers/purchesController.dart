@@ -3,6 +3,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 
 class PurchesController extends ChangeNotifier {
   getDataOfPurchesrr() {
@@ -23,9 +24,10 @@ class PurchesController extends ChangeNotifier {
           purchesOrders.addAll(initalData);
         }
 
-        notifyListeners();
-        print(purchesOrders);
-      });
+     notifyListeners();
+        print(purchesOrders); });
+      
+        
     } catch (e) {}
   }
 
@@ -55,6 +57,46 @@ class PurchesController extends ChangeNotifier {
           .set(purcheOrder.toJson());
     } catch (e) {}
   }
+
+
+
+
+  chose_offer(PurcheItemOffers f) async {
+    PurcheOrder purcheOrder =purchesOrders.firstWhere((element) => element.Id == f.purcheOrder_Id);
+
+    PurcheItem l = purcheOrder.items.firstWhere((h) => h.item_Id == f.item_Id);
+
+              PurcheItemOffers m=   l.offers.firstWhere((r) => r.PurcheItemOffers_Id==f.PurcheItemOffers_Id);
+      m.actions.add(PurcheAction.offer_chosen.add);
+
+
+
+    try {
+      FirebaseDatabase.instance
+          .ref("Purche/${purcheOrder.Id}")
+          .set(purcheOrder.toJson());
+    } catch (e) {}
+  }
+  remove_offer(PurcheItemOffers f) async {
+    PurcheOrder purcheOrder =purchesOrders.firstWhere((element) => element.Id == f.purcheOrder_Id);
+
+    PurcheItem l = purcheOrder.items.firstWhere((h) => h.item_Id == f.item_Id);
+
+              PurcheItemOffers m=   l.offers.firstWhere((r) => r.PurcheItemOffers_Id==f.PurcheItemOffers_Id);
+      m.actions.removeWhere((element) => element.action=="offer_chosen");
+
+
+
+    try {
+      FirebaseDatabase.instance
+          .ref("Purche/${purcheOrder.Id}")
+          .set(purcheOrder.toJson());
+    } catch (e) {}
+  }
+
+
+
+
 
   Refrech_UI() {
     notifyListeners();

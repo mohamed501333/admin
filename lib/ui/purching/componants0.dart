@@ -4,7 +4,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
@@ -12,9 +11,9 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/purchesController.dart';
 import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/purching/Purches_veiwModel.dart';
-import 'package:jason_company/ui/purching/pdf.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 
 class singnuturePad extends StatelessWidget {
   singnuturePad({
@@ -45,17 +44,17 @@ class singnuturePad extends StatelessWidget {
             child: const Text("clear")),
         ElevatedButton(
             onPressed: () async {
-              keysingaturepad.currentState
-                  ?.toImage()
-                  .then(
-                      (value) => value.toByteData(format: ImageByteFormat.png))
-                  .then((value) => value!.buffer.asUint8List())
-                  .then((value) => generate(value))
-                  .then((value) => context.gonext(
-                      context,
-                      PDfpreview(
-                        v: value.save(),
-                      )));
+              // keysingaturepad.currentState
+              //     ?.toImage()
+              //     .then(
+              //         (value) => value.toByteData(format: ImageByteFormat.png))
+              //     .then((value) => value!.buffer.asUint8List())
+              //     .then((value) => generate(value))
+              //     .then((value) => context.gonext(
+              //         context,
+              //         PDfpreview(
+              //           v: value.save(),
+              //         )));
             },
             child: const Text("Done"))
       ],
@@ -324,47 +323,28 @@ class Header extends StatelessWidget {
 class Details extends StatelessWidget {
   Details({
     Key? key,
-    required this.e,
+    required this.serial,
   }) : super(key: key);
-  final PurcheOrder e;
+  final int serial;
+      TextEditingController supplyer = TextEditingController();
+    TextEditingController price = TextEditingController();
+      TextStyle style = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SingleChildScrollView(
+      body: Consumer<PurchesController>(
+        builder: (context, myType, child) {
+
+          return SingleChildScrollView(
         child: Column(
-          children: [
-            ...e.items.map((t) => GG(
-                  e: t,
-                  i: e.items.indexOf(t) + 1,
-                ))
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class GG extends StatelessWidget {
-  GG({
-    Key? key,
-    required this.e,
-    required this.i,
-  }) : super(key: key);
-
-  TextStyle style = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
-  final PurcheItem e;
-  final int i;
-  @override
-  Widget build(BuildContext context) {
-    TextEditingController supplyer = TextEditingController();
-    TextEditingController price = TextEditingController();
-    return Consumer<PurchesController>(
-      builder: (context, myType, child) {
-        return Column(
+          children: myType.purchesOrders.firstWhere((element) => element.serial==serial).items.map((r) =>
+            Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            
             IntrinsicHeight(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -372,7 +352,7 @@ class GG extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * .10,
                     decoration:
-                        BoxDecoration(border: Border.all(), color: Colors.grey),
+                        BoxDecoration(border: Border.all(), color: const Color.fromARGB(255, 39, 240, 106)),
                     child: Center(
                       child: Text(
                         "م",
@@ -383,7 +363,7 @@ class GG extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * .12,
                     decoration:
-                        BoxDecoration(border: Border.all(), color: Colors.grey),
+                        BoxDecoration(border: Border.all(), color: const Color.fromARGB(255, 39, 240, 106)),
                     child: Center(
                       child: Text("الكميه", style: style),
                     ),
@@ -391,7 +371,7 @@ class GG extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * .16,
                     decoration:
-                        BoxDecoration(border: Border.all(), color: Colors.grey),
+                        BoxDecoration(border: Border.all(), color: const Color.fromARGB(255, 39, 240, 106)),
                     child: Center(
                       child: Text("الوحده", style: style),
                     ),
@@ -399,7 +379,7 @@ class GG extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * .29,
                     decoration:
-                        BoxDecoration(border: Border.all(), color: Colors.grey),
+                        BoxDecoration(border: Border.all(), color: const Color.fromARGB(255, 39, 240, 106)),
                     child: Center(
                       child: Text("الصنف", style: style),
                     ),
@@ -407,7 +387,7 @@ class GG extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width * .21,
                     decoration:
-                        BoxDecoration(border: Border.all(), color: Colors.grey),
+                        BoxDecoration(border: Border.all(), color: const Color.fromARGB(255, 39, 240, 106)),
                     child: Center(
                       child: Text("ملاحظات", style: style),
                     ),
@@ -415,6 +395,7 @@ class GG extends StatelessWidget {
                 ].reversed.toList(),
               ),
             ),
+          
             IntrinsicHeight(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -424,7 +405,7 @@ class GG extends StatelessWidget {
                     decoration: BoxDecoration(border: Border.all()),
                     child: Center(
                       child: Text(
-                        i.toString(),
+                        "${myType.purchesOrders.firstWhere((element) => element.serial==serial).items.indexOf(r)+1}",
                         style: style,
                       ),
                     ),
@@ -433,33 +414,34 @@ class GG extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * .12,
                     decoration: BoxDecoration(border: Border.all()),
                     child: Center(
-                      child: Text(e.quantity.toString(), style: style),
+                      child: Text(r.quantity.toString(), style: style),
                     ),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * .16,
                     decoration: BoxDecoration(border: Border.all()),
                     child: Center(
-                      child: Text(e.Unit, style: style),
+                      child: Text(r.Unit, style: style),
                     ),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * .29,
                     decoration: BoxDecoration(border: Border.all()),
                     child: Center(
-                      child: Text(e.item, style: style),
+                      child: Text(r.item, style: style),
                     ),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * .21,
                     decoration: BoxDecoration(border: Border.all()),
                     child: Center(
-                      child: Text(e.note, style: style),
+                      child: Text(r.note, style: style),
                     ),
                   ),
                 ].reversed.toList(),
               ),
             ),
+         
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -497,14 +479,14 @@ class GG extends StatelessWidget {
                                             context
                                                 .read<PurchesController>()
                                                 .Add_purche_item_offer(
-                                                    e,
+                                                    r,
                                                     PurcheItemOffers(
                                                         PurcheItemOffers_Id:
                                                             DateTime.now()
                                                                 .millisecondsSinceEpoch,
-                                                        item_Id: e.item_Id,
+                                                        item_Id: r.item_Id,
                                                         purcheOrder_Id:
-                                                            e.purcheOrder_Id,
+                                                            r.purcheOrder_Id,
                                                         syplyer: supplyer.text,
                                                         price: price.text
                                                             .to_double(),
@@ -513,9 +495,7 @@ class GG extends StatelessWidget {
                                             supplyer.clear();
                                             Navigator.pop(context);
                                           }
-                                          context
-                                              .read<PurchesController>()
-                                              .Refrech_UI();
+                                 
                                         },
                                         child: const Text("تم"))
                                   ],
@@ -532,14 +512,14 @@ class GG extends StatelessWidget {
                 ],
               ),
             ),
+           //المورد و السعر و الاختيار
             SizedBox(
-              width: 200,
+              width: MediaQuery.of(context).size.width*.95,
               child: Column(
                 children: [
                   Table(
                     border: TableBorder.all(),
-                    children: e.offers
-                        .map((o) => TableRow(
+                    children:[TableRow(
                             decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 202, 201, 201)),
                             children: [
@@ -549,30 +529,85 @@ class GG extends StatelessWidget {
                                   style: style,
                                 ),
                               ),
-                              Center(child: Text("السعر للكميه", style: style))
-                            ].reversed.toList()))
-                        .toList(),
+                              Center(child: Text("السعر للكميه", style: style)),
+                              Center(child: Text(" اختيار", style: style)),
+                            ].reversed.toList())],
                   ),
-                  Table(
+                Consumer<PurchesController>(
+                  builder: (context, myType, child) {
+                    return   Table(
                     border: TableBorder.all(),
-                    children: e.offers
+                    children: r.offers
                         .map((o) => TableRow(
-                            decoration: BoxDecoration(),
+                            decoration: const BoxDecoration(),
                             children: [
-                              Text(
-                                o.syplyer,
-                                style: style,
+                              Center(
+                                child: Text(
+                                  o.syplyer,
+                                  style: style,
+                                ),
                               ),
-                              Text(o.price.toString(), style: style)
+
+                              Center(child: Text(o.price.toString(), style: style)),
+
+                              Column(
+                                children: [
+                                  Checkbox(value: o.actions.if_action_exist(PurcheAction.offer_chosen.getTitle), onChanged: (value){
+                                      o.actions.if_action_exist(PurcheAction.offer_chosen.getTitle)?
+                                    context.read<PurchesController>().remove_offer(o):
+                                    context.read<PurchesController>().chose_offer(o);
+                                   
+                                  }),
+                             
+                               o.actions.if_action_exist(PurcheAction.offer_chosen.getTitle)? Text(o.actions.get_purche_Who_Of(PurcheAction.offer_chosen))     :const SizedBox()
+                               
+                               
+                                ],
+                              )
                             ].reversed.toList()))
                         .toList(),
-                  ),
+                  );
+                  },
+                ),
                 ],
               ),
-            )
+            ),
+        
+
+                 // التوقيعات
+              Padding(
+                padding: const EdgeInsets.only(top: 33),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                  Column(
+                    children: [
+                      const Text("المدير الادارى",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+
+                      IconButton(onPressed: (){
+
+                      }, icon: const Icon(size: 50,Icons.close,color: Colors.red)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      const Text("المدير المالى",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                      IconButton(onPressed: (){}, icon: const Icon(size: 50,Icons.close,color: Colors.red,)),
+                    ],
+                  ),
+                ],),
+              )
           ],
-        );
-      },
+        )
+     
+          ).toList()
+          ,
+        ),
+      );
+        },
+      ),
     );
   }
 }
+
+

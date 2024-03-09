@@ -33,15 +33,13 @@ class Users_controller extends ChangeNotifier {
   List<Users> users = [];
   List<Users> initalData = [];
 
-  Add_User_permition(UserPermition permition, String email) {
-    if (users.where((element) => element.uidemail == email).isNotEmpty) {
-      Users user = users.where((element) => element.uidemail == email).first;
-
+  Add_User_permition(UserPermition permition,  Users user) {
+  
       user.permitions.add(permition.add);
       try {
         FirebaseDatabase.instance.ref("myusers/${user.id}").set(user.toJson());
       } catch (e) {}
-    }
+    
   }
 
   Add_new_user(String email) {
@@ -69,9 +67,8 @@ class Users_controller extends ChangeNotifier {
       FirebaseDatabase.instance.ref("myusers/${user.id}").set(user.toJson());
     } catch (e) {}
   }
-
+//user uid chosen
   String? initialforradioqq;
-  UserPermition? initialforracc;
 
   Refrsh_ui() {
     notifyListeners();

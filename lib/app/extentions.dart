@@ -453,6 +453,9 @@ extension C3 on List<ActionModel> {
   String get_order_Who_Of(OrderAction action) {
     return where((element) => element.action == action.getTitle).first.who;
   }
+  String get_purche_Who_Of(PurcheAction action) {
+    return where((element) => element.action == action.getTitle).first.who;
+  }
 
   String get_block_Who_Of(BlockAction action) {
     return where((element) => element.action == action.getactionTitle)

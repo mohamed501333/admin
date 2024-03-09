@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
-Future<Document> generate(Uint8List iconImage) async {
+Future<Document> generateForPurche(Uint8List iconImage) async {
   var data = await rootBundle.load("assets/fonts/HacenTunisia.ttf");
   final logo = (await rootBundle.load('assets/icon.png')).buffer.asUint8List();
   var arabicFont = Font.ttf(data);

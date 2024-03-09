@@ -1,6 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
+import 'dart:typed_data';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:jason_company/app/functions.dart';
+import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/purching/pdf.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
@@ -55,6 +61,8 @@ class Card1 extends StatelessWidget {
     Key? key,
     required this.e,
   }) : super(key: key);
+  
+  @override
   Widget build(BuildContext context) {
     return ExpandableNotifier(
         child: Padding(
@@ -88,7 +96,7 @@ class Card1 extends StatelessWidget {
                                     color: Colors.white,
                                   ),
                                   onPressed: () {
-                                    context.gonext(context, Details(e: e));
+                                    context.gonext(context, Details(serial:e.serial ,));
                                   })),
                           Expanded(
                             flex: 4,
@@ -108,8 +116,17 @@ class Card1 extends StatelessWidget {
                                   Icons.picture_as_pdf,
                                   color: Colors.white,
                                 ),
-                                onPressed: () {
-                                  print("dfdfdfdf");
+                                onPressed: () async {
+var iconImage =
+        (await rootBundle.load('assets/icon.png')).buffer.asUint8List();
+                            permission().then((value) async {
+                          generateForPurche(Uint8List.fromList(iconImage))
+                              .then((value) => context.gonext(
+                                  context,
+                                  PDfpreview(
+                                    v: value.save(),
+                                  )));
+                        });
                                 }),
                           ),
                         ],
@@ -119,8 +136,8 @@ class Card1 extends StatelessWidget {
                 expanded: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text("الادراه الطالبه: ${e.Adminstrationrequested}"),
-                    Text(" اسم الطالب: ${e.requester}"),
+                    Text("الادراه الطالبه: ${e.Adminstrationrequested}",style: const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                    Text(" اسم الطالب: ${e.requester}",style: const TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                     ...e.items.map(
                       (d) => Data(
                         e: d,
