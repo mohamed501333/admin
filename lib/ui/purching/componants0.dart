@@ -339,7 +339,7 @@ class Details extends StatelessWidget {
 
           return SingleChildScrollView(
         child: Column(
-          children: myType.purchesOrders.firstWhere((element) => element.serial==serial).items.map((r) =>
+          children:[... myType.purchesOrders.firstWhere((element) => element.serial==serial).items.map((r) =>
             Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -514,7 +514,7 @@ class Details extends StatelessWidget {
             ),
            //المورد و السعر و الاختيار
             SizedBox(
-              width: MediaQuery.of(context).size.width*.95,
+              width: MediaQuery.of(context).size.width*.88,
               child: Column(
                 children: [
                   Table(
@@ -573,8 +573,8 @@ class Details extends StatelessWidget {
               ),
             ),
         
-
-                 // التوقيعات
+        ],)),
+                    // التوقيعات
               Padding(
                 padding: const EdgeInsets.only(top: 33),
                 child: Row(
@@ -582,25 +582,74 @@ class Details extends StatelessWidget {
                   children: [
                   Column(
                     children: [
-                      const Text("المدير الادارى",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-
+                      const Text("مدير المصنع",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_generalm))     :const SizedBox(),
                       IconButton(onPressed: (){
-
-                      }, icon: const Icon(size: 50,Icons.close,color: Colors.red)),
+                      PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
+                      p .actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
+                        DoNothingAction():myType.aprove_on_purchOrder_form_GeneralManager(p);
+                      }, icon: 
+                      myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
+                      
+                      const Icon(size: 50,
+                      Icons.check
+                      ,color: Colors.green):
+                      const Icon(size: 50,
+                      Icons.close
+                      ,color: Colors.red)
+                      
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      const Text("مدير المشتروات",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_PurcheM.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_PurcheM))     :const SizedBox(),
+                      IconButton(onPressed: (){
+                      PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
+                      p .actions.if_action_exist(PurcheAction.Purche_approved_PurcheM.getTitle)?
+                        DoNothingAction():myType.aprove_on_purchOrder_form_PurcheManager(p);
+                      }, icon: 
+                      myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_PurcheM.getTitle)?
+                      
+                      const Icon(size: 50,
+                      Icons.check
+                      ,color: Colors.green):
+                      const Icon(size: 50,
+                      Icons.close
+                      ,color: Colors.red)
+                      
+                      ),
                     ],
                   ),
                   Column(
                     children: [
                       const Text("المدير المالى",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                      IconButton(onPressed: (){}, icon: const Icon(size: 50,Icons.close,color: Colors.red,)),
+myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_Financem.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_Financem))     :const SizedBox(),
+                      IconButton(onPressed: (){
+                      PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
+                      p .actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
+                        DoNothingAction():myType.aprove_on_purchOrder_form_finance(p);
+                      }, icon: 
+                      myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_Financem.getTitle)?
+                      
+                      const Icon(size: 50,
+                      Icons.check
+                      ,color: Colors.green):
+                      const Icon(size: 50,
+                      Icons.close
+                      ,color: Colors.red)
+                      
+                      ),
                     ],
                   ),
+               
                 ],),
               )
-          ],
-        )
-     
-          ).toList()
+         
+          
+          
+          ]
           ,
         ),
       );

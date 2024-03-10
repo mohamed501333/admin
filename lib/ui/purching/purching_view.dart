@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/purching/pdf.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
@@ -100,12 +101,30 @@ class Card1 extends StatelessWidget {
                                   })),
                           Expanded(
                             flex: 4,
-                            child: Text(
-                              "  طلب شراء ( ${e.serial} )      الحاله (قيد الموافقه)",
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 73, 223, 35),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22),
+                            child: Column(
+                              children: [
+                            e.actions.if_action_exist(PurcheAction.Purche_approved_Financem.getTitle)&&e.actions.if_action_exist(PurcheAction.Purche_approved_Financem.getTitle)&&e.actions.if_action_exist(PurcheAction.Purche_approved_Financem.getTitle)?  
+                              const Text(
+                                  "(تم الموافقه)",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 73, 223, 35),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22),
+                                ): const Text(
+                                  "(قيد المراجعه)",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 73, 223, 35),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22),
+                                ),
+                                Text(
+                                  "  طلب شراء ( ${e.serial} )   ",
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 73, 223, 35),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22),
+                                ),
+                              ].reversed.toList(),
                             ),
                           ),
                           Expanded(

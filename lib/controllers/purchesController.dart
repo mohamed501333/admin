@@ -34,6 +34,10 @@ class PurchesController extends ChangeNotifier {
   List<PurcheOrder> purchesOrders = [];
   List<PurcheOrder> initalData = [];
 
+
+
+
+
   Add_purche_item(PurcheOrder purcheOrder) async {
     for (var element in purcheOrder.items) {
       element.purcheOrder_Id = purcheOrder.Id;
@@ -44,6 +48,35 @@ class PurchesController extends ChangeNotifier {
           .set(purcheOrder.toJson());
     } catch (e) {}
   }
+  aprove_on_purchOrder_form_finance(PurcheOrder purcheOrder) async {
+     purcheOrder.actions.add(PurcheAction.Purche_approved_Financem.add);
+    try {
+      FirebaseDatabase.instance
+          .ref("Purche/${purcheOrder.Id}")
+          .set(purcheOrder.toJson());
+    } catch (e) {}
+  }
+  aprove_on_purchOrder_form_GeneralManager(PurcheOrder purcheOrder) async {
+     purcheOrder.actions.add(PurcheAction.Purche_approved_generalm.add);
+    try {
+      FirebaseDatabase.instance
+          .ref("Purche/${purcheOrder.Id}")
+          .set(purcheOrder.toJson());
+    } catch (e) {}
+  }
+  aprove_on_purchOrder_form_PurcheManager(PurcheOrder purcheOrder) async {
+     purcheOrder.actions.add(PurcheAction.Purche_approved_PurcheM.add);
+    try {
+      FirebaseDatabase.instance
+          .ref("Purche/${purcheOrder.Id}")
+          .set(purcheOrder.toJson());
+    } catch (e) {}
+  }
+
+
+
+
+
 
   Add_purche_item_offer(PurcheItem p, PurcheItemOffers f) async {
     PurcheOrder purcheOrder =

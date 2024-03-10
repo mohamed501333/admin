@@ -222,6 +222,9 @@ enum PurcheAction {
   add_purche_offer,
   archive_purche_offer,
   offer_chosen,
+  Purche_approved_Financem,
+  Purche_approved_generalm,
+  Purche_approved_PurcheM,
 }
 
 extension Fdf on PurcheAction {
@@ -258,6 +261,21 @@ extension Fdf on PurcheAction {
             action: "add_purche_offerm",
             who: SringsManager.myemail,
             when: DateTime.now());
+      case PurcheAction.Purche_approved_Financem:
+          return ActionModel(
+            action: "Purche_approved_Financem",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case PurcheAction.Purche_approved_generalm:
+          return ActionModel(
+            action: "Purche_approved_generalm",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case PurcheAction.Purche_approved_PurcheM:
+           return ActionModel(
+            action: "Purche_approved_PurcheM",
+            who: SringsManager.myemail,
+            when: DateTime.now());
     }
   }
 
@@ -276,7 +294,12 @@ extension Fdf on PurcheAction {
         return "creat_new_Purche";
       case PurcheAction.archive_Purche:
         return "archive_Purche";
-    }
+      case PurcheAction.Purche_approved_Financem:
+          return "Purche_approved_Financem";
+      case PurcheAction.Purche_approved_generalm:
+          return "Purche_approved_generalm";
+      case PurcheAction.Purche_approved_PurcheM:
+   return "Purche_approved_PurcheM";    }
   }
 }
 
