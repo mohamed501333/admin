@@ -4,6 +4,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/functions.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
@@ -504,7 +505,7 @@ class Details extends StatelessWidget {
                       icon: const Icon(
                         Icons.add,
                         color: Colors.deepOrange,
-                      )),
+                      )).permition(context, UserPermition.can_put_offer_in_purche),
                   Text(
                     "عروض الاسعار",
                     style: style,
@@ -553,9 +554,11 @@ class Details extends StatelessWidget {
                               Column(
                                 children: [
                                   Checkbox(value: o.actions.if_action_exist(PurcheAction.offer_chosen.getTitle), onChanged: (value){
-                                      o.actions.if_action_exist(PurcheAction.offer_chosen.getTitle)?
+                                     if (permitionss(context, UserPermition.can_chose_from_offerPurches)) {
+                                         o.actions.if_action_exist(PurcheAction.offer_chosen.getTitle)?
                                     context.read<PurchesController>().remove_offer(o):
                                     context.read<PurchesController>().chose_offer(o);
+                                     }
                                    
                                   }),
                              
@@ -585,9 +588,11 @@ class Details extends StatelessWidget {
                       const Text("مدير المصنع",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
 myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_generalm))     :const SizedBox(),
                       IconButton(onPressed: (){
-                      PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
+                    if (permitionss(context, UserPermition.can_approve_from_generalManager)) {
+                        PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
                       p .actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
                         DoNothingAction():myType.aprove_on_purchOrder_form_GeneralManager(p);
+                    }
                       }, icon: 
                       myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
                       
@@ -606,9 +611,11 @@ myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_
                       const Text("مدير المشتروات",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
 myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_PurcheM.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_PurcheM))     :const SizedBox(),
                       IconButton(onPressed: (){
-                      PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
+                   if (permitionss(context, UserPermition.can_approve_from_purchingManager)) {
+                        PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
                       p .actions.if_action_exist(PurcheAction.Purche_approved_PurcheM.getTitle)?
                         DoNothingAction():myType.aprove_on_purchOrder_form_PurcheManager(p);
+                   }
                       }, icon: 
                       myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_PurcheM.getTitle)?
                       
@@ -627,9 +634,11 @@ myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_
                       const Text("المدير المالى",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
 myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_Financem.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_Financem))     :const SizedBox(),
                       IconButton(onPressed: (){
-                      PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
+                            if (permitionss(context, UserPermition.can_approve_from_financeManager)) {
+                                    PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
                       p .actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
                         DoNothingAction():myType.aprove_on_purchOrder_form_finance(p);
+                            }
                       }, icon: 
                       myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_Financem.getTitle)?
                       

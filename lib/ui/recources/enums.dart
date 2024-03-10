@@ -594,7 +594,6 @@ enum UserPermition {
 
   show_massaging,
   show_scissors,
-  show_purches,
   show_not_final_stock,
   show_add_new_category,
   show_Chemical_category,
@@ -603,6 +602,21 @@ enum UserPermition {
   show_customers,
   incert_in_customers,
   show_search_in_customers,
+
+
+can_get_data_of_purches,
+Show_purches_module,
+can_print_in_purche,
+sho_details_in_purchItem,
+can_make_new_purch_order,
+can_put_offer_in_purche,
+can_chose_from_offerPurches,
+can_approve_from_purchingManager,
+can_approve_from_financeManager,
+can_approve_from_generalManager,
+
+
+
 
 
   show_Reports_finalprodcut,
@@ -631,7 +645,6 @@ enum UserPermition {
   allow_edit_in_details_blocks,
 
   show_users_actions,
-  can_get_data_of_Purches,
   can_get_data_of_fractions,
   can_get_data_of_notfinals,
   can_get_data_of_chemicals,
@@ -791,19 +804,92 @@ extension QQ on UserPermition {
       case UserPermition.incert_in_final_prodcutStock_From_Excel:
         return UserpermitionTittle(
             tittle: "اضافه الى رصيد منتج تام من خلال ملف اكسل");
-      case UserPermition.show_purches:
-        return UserpermitionTittle(tittle: "عرض المشتروات");
-      case UserPermition.can_get_data_of_Purches:
+   
+ 
+      case UserPermition.can_get_data_of_purches:
         return UserpermitionTittle(tittle: "can_get_data_of_Purches");
+
+      case UserPermition.Show_purches_module:
+        return UserpermitionTittle(tittle: "اظهار موديول المشتريات");
+
+      case UserPermition.can_print_in_purche:
+        return UserpermitionTittle(tittle: "طباعة طلب الشراء");
+
+      case UserPermition.sho_details_in_purchItem:
+        return UserpermitionTittle(tittle: "عرض التفاصيل فى طلب الشراء");
+
+      case UserPermition.can_make_new_purch_order:
+        return UserpermitionTittle(tittle: "امكانية عمل طلب شراء جديد");
+
+      case UserPermition.can_put_offer_in_purche:
+        return UserpermitionTittle(tittle: "امكانية اظافة عروض فى طلب الشراء");
+
+      case UserPermition.can_chose_from_offerPurches:
+        return UserpermitionTittle(tittle: "امكانية الاختيار من العروض فى طلب الشراء");
+
+      case UserPermition.can_approve_from_purchingManager:
+        return UserpermitionTittle(tittle: "موافقة مدير المشتريات");
+
+      case UserPermition.can_approve_from_financeManager:
+        return UserpermitionTittle(tittle: "موافقة مدير الماليه");
+      case UserPermition.can_approve_from_generalManager:
+        return UserpermitionTittle(tittle: "موافقة المدير العام");
     }
   }
 
   String get getTitle {
     switch (this) {
-      case UserPermition.can_get_data_of_Purches:
+   
+    
+      case UserPermition.can_get_data_of_purches:
         return "can_get_data_of_Purches";
-      case UserPermition.show_purches:
-        return "عرض المشتروات";
+      case UserPermition.Show_purches_module:
+        return "اظهار موديول المشتريات";
+      case UserPermition.can_print_in_purche:
+        return "طباعة طلب الشراء";
+      case UserPermition.sho_details_in_purchItem:
+        return "عرض التفاصيل فى طلب الشراء";
+      case UserPermition.can_make_new_purch_order:
+        return "امكانية عمل طلب شراء جديد";
+      case UserPermition.can_put_offer_in_purche:
+        return "امكانية اظافة عروض فى طلب الشراء";
+      case UserPermition.can_chose_from_offerPurches:
+        return "امكانية الاختيار من العروض فى طلب الشراء";
+      case UserPermition.can_approve_from_purchingManager:
+        return "موافقة مدير المشتريات";
+      case UserPermition.can_approve_from_financeManager:
+        return "موافقة مدير الماليه";
+      case UserPermition.can_approve_from_generalManager:
+        return  "موافقة المدير العام";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       case UserPermition.incert_in_final_prodcutStock_From_Excel:
         return "اضافه الى رصيد منتج تام من خلال ملف اكسل";
       case UserPermition.incert_notFinal_in_importedfinal_prodcut:

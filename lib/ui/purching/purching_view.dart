@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'dart:typed_data';
 
+import 'package:collection/collection.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,14 +41,14 @@ class PurchVeiw extends StatelessWidget {
                       color: Colors.amber,
                       fontWeight: FontWeight.bold),
                 )),
-              ))
+              )).permition(context, UserPermition.can_make_new_purch_order)
         ],
       ),
       body: Consumer<PurchesController>(
         builder: (context, myType, child) {
           return SingleChildScrollView(
             child: Column(
-              children: myType.purchesOrders.map((e) => Card1(e: e)).toList(),
+              children: myType.purchesOrders.sortedBy<num>((element) => element.serial).map((e) => Card1(e: e)).toList(),
             ),
           );
         },
@@ -88,6 +89,7 @@ class Card1 extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+
                           Expanded(
                               flex: 2,
                               child: IconButton(
@@ -98,7 +100,10 @@ class Card1 extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     context.gonext(context, Details(serial:e.serial ,));
-                                  })),
+                                  })).permition(context, UserPermition.sho_details_in_purchItem),
+
+
+
                           Expanded(
                             flex: 4,
                             child: Column(
@@ -136,18 +141,17 @@ class Card1 extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                                 onPressed: () async {
-var iconImage =
-        (await rootBundle.load('assets/icon.png')).buffer.asUint8List();
-                            permission().then((value) async {
-                          generateForPurche(Uint8List.fromList(iconImage))
-                              .then((value) => context.gonext(
+                                  var iconImage =(await rootBundle.load('assets/icon.png')).buffer.asUint8List();
+                                     permission().then((value) async {
+                                     generateForPurche(Uint8List.fromList(iconImage))
+                                   .then((value) => context.gonext(
                                   context,
                                   PDfpreview(
                                     v: value.save(),
                                   )));
-                        });
+                                      });
                                 }),
-                          ),
+                          ).permition(context, UserPermition.can_print_in_purche),
                         ],
                       )),
                 ),

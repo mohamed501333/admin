@@ -153,7 +153,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, PurchVeiw());
                     },
-                  ).permition(context, UserPermition.show_purches),
+                  ).permition(context, UserPermition.Show_purches_module),
                 ],
               ),
               Row(

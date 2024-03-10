@@ -6,11 +6,9 @@ import 'package:jason_company/ui/main/main_view.dart';
 
 class MyloginPage extends StatefulWidget {
   const MyloginPage({super.key});
-
   @override
   State<MyloginPage> createState() => _MyStatefulWidgetState();
 }
-
 class _MyStatefulWidgetState extends State<MyloginPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
