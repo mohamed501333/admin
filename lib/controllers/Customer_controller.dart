@@ -47,7 +47,8 @@ class Customer_controller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  int? initialForRaido;
+  String? initialForRaido;
+  // String? initialForcustomer;
   Refrsh_ui() {
     notifyListeners();
   }

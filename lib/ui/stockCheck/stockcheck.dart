@@ -28,6 +28,8 @@ class Stockcheck extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+
+                  
                   DropdownButton2<String>(
                       isExpanded: true,
                       hint: Center(
@@ -159,6 +161,8 @@ class Stockcheck extends StatelessWidget {
                           return item.value.toString().contains(searchValue);
                         },
                       )),
+             
+             
                   DropdownButton2<String>(
                       isExpanded: true,
                       hint: Center(

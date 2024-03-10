@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:collection/collection.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -36,6 +37,8 @@ class Fields001 extends StatelessWidget {
           height: 210,
           child: Column(
             children: [
+                                DropForCustomers(),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -48,7 +51,7 @@ class Fields001 extends StatelessWidget {
                   DropDdowenForDensity(),
                   DropDdowenForcolor(),
                   DropDdowenFortype(),
-                  DropDdowenForcustomers()
+                  // DropDdowenForcustomers()
                 ],
               ),
               const SizedBox(height: 15),
@@ -865,41 +868,114 @@ showmyAlertDialog(BuildContext context, OrderAction action, OrderModel item) {
       });
 }
 
-class DropDdowenForcustomers extends StatelessWidget {
-  DropDdowenForcustomers({
-    super.key,
-  });
-  CuttingOrderViewModel vm = CuttingOrderViewModel();
+
+
+
+
+
+class DropForCustomers extends StatelessWidget {
+   DropForCustomers({super.key});
+  final TextEditingController textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+ 
     return Consumer<Customer_controller>(
-      builder: (context, Mytype, child) {
-        return Column(
-          children: [
-            const Text("العميل"),
-            DropdownButton(
-                value: Mytype.initialForRaido,
-                items: Mytype.customers
-                    .map((e) => e.serial)
-                    .toList()
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Text(e.toString()),
-                        ))
-                    .toList(),
-                onChanged: (v) {
-                  if (v != null) {
-                    Mytype.initialForRaido = v;
-
-                    Mytype.Refrsh_ui();
-                  }
-                }),
-          ],
-        );
-      },
+      builder: (context, myType, child) {
+            String? selectedValue =
+        context.read<Customer_controller>().initialForRaido;
+        return DropdownButtonHideUnderline(
+      child: DropdownButton2<String>(
+        isExpanded: true,
+        hint: Text(
+          selectedValue == null ? 'اختر العميل' : selectedValue.toString(),
+          style: TextStyle(
+            fontSize: 14,
+            color: Theme.of(context).hintColor,
+          ),
+        ),
+        items: myType.customers.sortedBy<num>((element) => element.serial)
+            .map((item) => DropdownMenuItem(
+                  value: item.name.toString(),
+                  child: Text(
+                    "${item.name}-${item.serial}"
+                    ,
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ))
+            .toList(),
+        value: selectedValue,
+        onChanged: (value) {
+            context.read<Customer_controller>().initialForRaido =
+                value;
+                myType.Refrsh_ui();
+        },
+        buttonStyleData: const ButtonStyleData(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          height: 40,
+          width: 200,
+        ),
+        dropdownStyleData: const DropdownStyleData(
+          maxHeight: 200,
+        ),
+        menuItemStyleData: const MenuItemStyleData(
+          height: 40,
+        ),
+        dropdownSearchData: DropdownSearchData(
+          searchController: textEditingController,
+          searchInnerWidgetHeight: 50,
+          searchInnerWidget: Container(
+            height: 50,
+            padding: const EdgeInsets.only(
+              top: 8,
+              bottom: 4,
+              right: 8,
+              left: 8,
+            ),
+            child: TextFormField(
+              expands: true,
+              maxLines: null,
+              controller: textEditingController,
+              decoration: InputDecoration(
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 8,
+                ),
+                hintText: '  ... البحث عن عميل',
+                hintStyle: const TextStyle(fontSize: 12),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ),
+          searchMatchFn: (item, searchValue) {
+            return item.value.toString().contains(searchValue);
+          },
+        ),
+        //This to clear the search value when you close the menu
+        onMenuStateChange: (isOpen) {
+          if (!isOpen) {
+            textEditingController.clear();
+          }
+        },
+      ),
+    ); },
     );
+             
+             
   }
 }
+
+
+
+
+
+
+
 
 class DropDdowenFortype extends StatelessWidget {
   DropDdowenFortype({
