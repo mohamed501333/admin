@@ -25,8 +25,8 @@ class CuttingOrderViewModel extends BaseViewModel {
           datecreated: DateTime.now(),
           id: DateTime.now().millisecondsSinceEpoch,
           serial: context.read<OrderController>().orders.length + 1,
-          customer:
-              context.read<Customer_controller>().initialForRaido!.toString(),
+          customer:context.read<Customer_controller>().customers.firstWhere((element) => element.name==context.read<Customer_controller>().initialForRaido).serial.toString()
+              ,
           actions: [],
           items: temp);
       context.read<OrderController>().add_order(order);

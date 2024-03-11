@@ -649,7 +649,12 @@ class SearchForSize extends StatelessWidget {
         List<OrderModel> orders = myType.orders
             .where((v) =>
                 v.actions.if_action_exist(OrderAction.order_colosed.getTitle) ==
-                false)
+                false&&
+                v.actions.if_action_exist(OrderAction.order_aproved_from_calculation.getTitle) ==
+                true&&
+                v.actions.if_action_exist(OrderAction.order_aproved_from_control.getTitle) ==
+                true
+                )
             .toList()
             .sortedBy<num>((element) => element.serial)
             .reversed

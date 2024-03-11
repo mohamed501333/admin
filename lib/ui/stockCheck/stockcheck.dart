@@ -456,29 +456,14 @@ class Stockcheck extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * .15,
+                      width: MediaQuery.of(context).size.width * .4,
                       decoration: BoxDecoration(
                           color: Colors.blueGrey, border: Border.all()),
                       child: Center(
-                        child: Text("الواقع", style: style),
+                        child: Text("اخر جرد", style: style),
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * .15,
-                      decoration: BoxDecoration(
-                          color: Colors.blueGrey, border: Border.all()),
-                      child: Center(
-                        child: Text("العجز", style: style),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * .15,
-                      decoration: BoxDecoration(
-                          color: Colors.blueGrey, border: Border.all()),
-                      child: Center(
-                        child: Text("الزياده", style: style),
-                      ),
-                    ),
+               
                   ].reversed.toList(),
                 )),
               ),
@@ -514,31 +499,19 @@ class Stockcheck extends StatelessWidget {
                                   ),
                                   Container(
                                     width:
-                                        MediaQuery.of(context).size.width * .15,
+                                        MediaQuery.of(context).size.width * .4,
                                     decoration:
                                         BoxDecoration(border: Border.all()),
                                     child: Center(
-                                      child: Text("الواقع", style: style),
+                                      child: Column(
+                                        children: [
+                                          IconButton(onPressed: (){}, icon: const Icon(color: Colors.red,Icons.add)),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * .15,
-                                    decoration:
-                                        BoxDecoration(border: Border.all()),
-                                    child: Center(
-                                      child: Text("العجز", style: style),
-                                    ),
-                                  ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * .15,
-                                    decoration:
-                                        BoxDecoration(border: Border.all()),
-                                    child: Center(
-                                      child: Text("الزياده", style: style),
-                                    ),
-                                  ),
+                            
+                               
                                 ].reversed.toList(),
                               )),
                             ))

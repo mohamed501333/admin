@@ -34,24 +34,18 @@ class Fields001 extends StatelessWidget {
       child: Form(
         key: vm.formKey,
         child: SizedBox(
-          height: 210,
+          height: 450,
           child: Column(
             children: [
-                                DropForCustomers(),
+                     DropForCustomers(),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CustomTextFormField(
-                    keybordtupe: TextInputType.name,
-                    width: MediaQuery.of(context).size.width * .19,
-                    hint: "ملحوظه",
-                    controller: vm.notes,
-                  ),
+           
                   DropDdowenForDensity(),
                   DropDdowenForcolor(),
                   DropDdowenFortype(),
-                  // DropDdowenForcustomers()
                 ],
               ),
               const SizedBox(height: 15),
@@ -122,6 +116,14 @@ class Fields001 extends StatelessWidget {
                   )
                 ],
               ),
+           
+           const SizedBox(height: 20,),
+                  CustomTextFormField(
+                    keybordtupe: TextInputType.name,
+                    width: MediaQuery.of(context).size.width * .5,
+                    hint: "ملحوظه",
+                    controller: vm.notes,
+                  ),
             ],
           ),
         ),
@@ -255,7 +257,7 @@ class TheTable001 extends StatelessWidget {
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              width: 1300,
+              width: 1450,
               child: ListView(
                 children: [
                   const HeaderOftable001(),
@@ -267,13 +269,15 @@ class TheTable001 extends StatelessWidget {
                       3: FlexColumnWidth(3),
                       4: FlexColumnWidth(3),
                       5: FlexColumnWidth(3),
-                      6: FlexColumnWidth(1),
+                      6: FlexColumnWidth(2),
                       7: FlexColumnWidth(1.5),
-                      8: FlexColumnWidth(1.3),
-                      9: FlexColumnWidth(1.5),
-                      10: FlexColumnWidth(5),
-                      11: FlexColumnWidth(1),
-                      12: FlexColumnWidth(1.2),
+                      8: FlexColumnWidth(1.5),
+                      9: FlexColumnWidth(1),
+                      10: FlexColumnWidth(1.3),
+                      11: FlexColumnWidth(1.5),
+                      12: FlexColumnWidth(5),
+                      13: FlexColumnWidth(1),
+                      14: FlexColumnWidth(1.2),
                     },
                     children: orders.orders
                         .where((element) =>
@@ -487,6 +491,17 @@ class TheTable001 extends StatelessWidget {
                                         ],
                                       )),
                                 ),
+                                //تاريخ التسليم
+                                Center(
+                                  child: Container(
+                                      padding: const EdgeInsets.only(bottom: 3),
+                                      child: Text(order.dateTOOrder.formatt(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                ),
                                 //العميل
                                 Center(
                                   child: Container(
@@ -541,7 +556,33 @@ class TheTable001 extends StatelessWidget {
                                       )
                                       .toList(),
                                 ),
-                                //اجمالى عدد
+                                // المتبقى                      
+                                Column(
+                                  children: order.items
+                                      .map(
+                                        (item) => Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(width: .4)),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text((item.Qantity- vm.Total_done_of_cutting_order(
+                                                          context, order, item)).removeTrailingZeros
+                                                 , style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                      )
+                                      .toList(),
+                                ),
+                                //الانتاج
                                 Column(
                                   children: order.items
                                       .map(
@@ -711,7 +752,7 @@ class TheTable001 extends StatelessWidget {
                                       )
                                       .toList(),
                                 ),
-
+                                //التسلسل
                                 Center(
                                   child: Container(
                                       padding: const EdgeInsets.symmetric(
@@ -724,6 +765,8 @@ class TheTable001 extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       )),
                                 ),
+                              
+                              
                               ]);
                         })
                         .toList()
@@ -750,19 +793,21 @@ class HeaderOftable001 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Table(
       columnWidths: const {
-        0: FlexColumnWidth(1),
-        1: FlexColumnWidth(1),
-        2: FlexColumnWidth(3),
-        3: FlexColumnWidth(3),
-        4: FlexColumnWidth(3),
-        5: FlexColumnWidth(3),
-        6: FlexColumnWidth(1),
-        7: FlexColumnWidth(1.5),
-        8: FlexColumnWidth(1.3),
-        9: FlexColumnWidth(1.5),
-        10: FlexColumnWidth(5),
-        11: FlexColumnWidth(1),
-        12: FlexColumnWidth(1.2),
+       0: FlexColumnWidth(1),
+                      1: FlexColumnWidth(1),
+                      2: FlexColumnWidth(3),
+                      3: FlexColumnWidth(3),
+                      4: FlexColumnWidth(3),
+                      5: FlexColumnWidth(3),
+                      6: FlexColumnWidth(2),
+                      7: FlexColumnWidth(1.5),
+                      8: FlexColumnWidth(1.5),
+                      9: FlexColumnWidth(1),
+                      10: FlexColumnWidth(1.3),
+                      11: FlexColumnWidth(1.5),
+                      12: FlexColumnWidth(5),
+                      13: FlexColumnWidth(1),
+                      14: FlexColumnWidth(1.2),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -798,6 +843,8 @@ class HeaderOftable001 extends StatelessWidget {
                     child: const Text("sales approval")),
               ),
               Container(
+                  padding: const EdgeInsets.all(5), child: const Text("تاريخ التسليم")),
+              Container(
                   padding: const EdgeInsets.all(5), child: const Text("عميل")),
               Center(
                 child: Container(
@@ -808,7 +855,15 @@ class HeaderOftable001 extends StatelessWidget {
                 child: Container(
                     padding: const EdgeInsets.all(5),
                     child: const Text(
-                      "اجمالى عدد",
+                      "المتبقى",
+                      style: TextStyle(fontSize: 11),
+                    )),
+              ),
+              Center(
+                child: Container(
+                    padding: const EdgeInsets.all(5),
+                    child: const Text(
+                      "انتاج",
                       style: TextStyle(fontSize: 11),
                     )),
               ),
@@ -867,6 +922,7 @@ showmyAlertDialog(BuildContext context, OrderAction action, OrderModel item) {
         );
       });
 }
+
 
 
 
@@ -969,13 +1025,6 @@ class DropForCustomers extends StatelessWidget {
              
   }
 }
-
-
-
-
-
-
-
 
 class DropDdowenFortype extends StatelessWidget {
   DropDdowenFortype({

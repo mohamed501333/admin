@@ -1,12 +1,12 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, camel_case_types
 // ignore_for_file: must_be_immutable
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
@@ -28,6 +28,26 @@ class CuttingOrderView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('اوامر التشغيل'),
         actions: [
+            TextButton(
+              onPressed: () {
+                context.gonext(context, AddNewCuttingOrder());
+              },
+              child: Container(
+                width: 66,
+                decoration: const BoxDecoration(
+                    color: Colors.brown,
+                    borderRadius: BorderRadius.all(Radius.circular(11))),
+                child: const Center(
+                    child: Text(
+                  "جديد",
+                  style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.amber,
+                      fontWeight: FontWeight.bold),
+                )),
+              )).permition(context, UserPermition.incert_in_cutting_order),
+       
+      
           IconButton(
               onPressed: () {
                 context.gonext(context, HistoryPage());
@@ -37,25 +57,10 @@ class CuttingOrderView extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Fields001(vm: vm),
-              RowScroll(vm: vm),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Buttoms001(
-                    vm: vm,
-                  ),
-                  Buttoms003(vm: vm),
-                  Buttoms002(vm: vm),
-                ],
-              ),
-            ],
-          ).permition(context, UserPermition.incert_in_cutting_order),
+       
+
+
+
           TheTable001(
             vm: vm,
           )
@@ -155,25 +160,27 @@ class HistoryForOrders extends StatelessWidget {
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              width: 1300,
+              width: 1450,
               child: ListView(
                 children: [
-                  const HeaderOftable00122(),
+                  const HeaderOftable001(),
                   Table(
                     columnWidths: const {
-                      0: FlexColumnWidth(1),
-                      1: FlexColumnWidth(3),
+               0: FlexColumnWidth(1),
+                      1: FlexColumnWidth(1),
                       2: FlexColumnWidth(3),
                       3: FlexColumnWidth(3),
                       4: FlexColumnWidth(3),
                       5: FlexColumnWidth(3),
                       6: FlexColumnWidth(2),
-                      7: FlexColumnWidth(1),
+                      7: FlexColumnWidth(1.5),
                       8: FlexColumnWidth(1.5),
-                      9: FlexColumnWidth(1.5),
-                      10: FlexColumnWidth(4),
-                      11: FlexColumnWidth(1),
-                      12: FlexColumnWidth(1.2),
+                      9: FlexColumnWidth(1),
+                      10: FlexColumnWidth(1.3),
+                      11: FlexColumnWidth(1.5),
+                      12: FlexColumnWidth(5),
+                      13: FlexColumnWidth(1),
+                      14: FlexColumnWidth(1.2),
                     },
                     children: orders.orders
                         .where((element) =>
@@ -190,7 +197,7 @@ class HistoryForOrders extends StatelessWidget {
                                     : Colors.amber[50],
                               ),
                               children: [
-                                //ايقونة الطباعه
+                        //طباعة امر الشغل
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
@@ -209,94 +216,28 @@ class HistoryForOrders extends StatelessWidget {
                                           Icons.print,
                                           color:
                                               Color.fromARGB(255, 108, 207, 83),
-                                        ))),
+                                        ))).permition(context,
+                                    UserPermition.can_print_in_cutting_order),
+                                //اغلاق امر الشغل
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
                                         onTap: () {
-                                          order.actions.if_action_exist(
-                                                      OrderAction.order_colosed
-                                                          .getTitle) ==
-                                                  false
-                                              ? showmyAlertDialog(
-                                                  context,
-                                                  OrderAction.order_colosed,
-                                                  order)
-                                              : DoNothingAction();
+                                          showmyAlertDialog(context,
+                                              OrderAction.order_colosed, order);
                                         },
-                                        child: Column(
-                                          children: [
-                                            const Icon(
-                                              Icons.delete,
-                                              color: Colors.red,
-                                            ),
-                                            Container(
-                                                padding:
-                                                    const EdgeInsets.all(2),
-                                                child: Column(
-                                                  children: [
-                                                    Icon(order.actions.if_action_exist(
-                                                                OrderAction
-                                                                    .order_colosed
-                                                                    .getTitle) ==
-                                                            true
-                                                        ? Icons.check
-                                                        : Icons.close),
-                                                    order.actions.if_action_exist(
-                                                                OrderAction
-                                                                    .order_colosed
-                                                                    .getTitle) ==
-                                                            true
-                                                        ? Text(DateFormat(
-                                                                'dd-MM-yy/hh:mm a')
-                                                            .format(order
-                                                                .actions
-                                                                .get_Date_of_action(
-                                                                    OrderAction
-                                                                        .order_colosed
-                                                                        .getTitle))
-                                                            .toString()
-                                                            .toString()
-                                                            .toString())
-                                                        : const SizedBox(),
-
-                                                    //اليوزر اذا تم القص
-                                                    order.actions.if_action_exist(
-                                                                OrderAction
-                                                                    .order_colosed
-                                                                    .getTitle) ==
-                                                            true
-                                                        ? Text(order.actions
-                                                            .get_order_Who_Of(
-                                                                OrderAction
-                                                                    .order_colosed))
-                                                        : const SizedBox(),
-                                                  ],
-                                                ))
-                                          ],
-                                        ))),
-
-                                //ملاحظات
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                      padding: const EdgeInsets.all(2),
-                                      child: Text(order.notes)),
+                                        child: const Icon(
+                                          Icons.delete,
+                                          color: Color.fromARGB(255, 255, 255, 255),
+                                        ))).permition(context,
+                                    UserPermition.can_close_in_cutting_order),
+                                Center(
+                                  child: Text(order.notes),
                                 ),
-                                //الكنترول
+                                //موافقة الكنترول
                                 GestureDetector(
                                   onTap: () {
-                                    if (order.actions.if_action_exist(
-                                            OrderAction
-                                                .order_aproved_from_control
-                                                .getTitle) ==
-                                        false) {
-                                      showmyAlertDialog(
-                                          context,
-                                          OrderAction
-                                              .order_aproved_from_control,
-                                          order);
-                                    }
+                     
                                   },
                                   child: Container(
                                       padding: const EdgeInsets.all(2),
@@ -324,8 +265,6 @@ class HistoryForOrders extends StatelessWidget {
                                                   .toString()
                                                   .toString())
                                               : const SizedBox(),
-
-                                          //اليوزر اذا تم القص
                                           order.actions.if_action_exist(OrderAction
                                                       .order_aproved_from_control
                                                       .getTitle) ==
@@ -337,21 +276,10 @@ class HistoryForOrders extends StatelessWidget {
                                         ],
                                       )),
                                 ),
-
                                 //موافقة الحسابات
                                 GestureDetector(
                                   onTap: () {
-                                    if (order.actions.if_action_exist(
-                                            OrderAction
-                                                .order_aproved_from_calculation
-                                                .getTitle) ==
-                                        false) {
-                                      showmyAlertDialog(
-                                          context,
-                                          OrderAction
-                                              .order_aproved_from_calculation,
-                                          order);
-                                    }
+                      
                                   },
                                   child: Container(
                                       padding: const EdgeInsets.all(2),
@@ -379,8 +307,6 @@ class HistoryForOrders extends StatelessWidget {
                                                   .toString()
                                                   .toString())
                                               : const SizedBox(),
-
-                                          //اليوزر اذا تم القص
                                           order.actions.if_action_exist(OrderAction
                                                       .order_aproved_from_calculation
                                                       .getTitle) ==
@@ -431,129 +357,177 @@ class HistoryForOrders extends StatelessWidget {
                                         ],
                                       )),
                                 ),
-
-                                //اجمالى 3
-
-                                Column(
-                                  children: order.items
-                                      .map(
-                                        (item) => Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 4),
-                                            child: Text(
-                                                ' ${[
-                                                  item.Qantity *
-                                                      item.lenth *
-                                                      item.hight *
-                                                      item.widti /
-                                                      1000000
-                                                ].first.removeTrailingZeros}  m3 ',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: order.items.indexOf(
-                                                                  item) %
-                                                              2 ==
-                                                          0
-                                                      ? Colors.cyan
-                                                      : Colors.black,
-                                                ))),
-                                      )
-                                      .toList(),
-                                ),
-
-                                //العميل
+                                //تاريخ التسليم
                                 Center(
                                   child: Container(
                                       padding: const EdgeInsets.only(bottom: 3),
-                                      child: Text(
-                                        order.customer.toString(),
+                                      child: Text(order.dateTOOrder.formatt(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold),
                                       )),
                                 ),
-                                //الانجاز
-                                percentage(
-                                  vm: vm,
-                                  order: order,
+                                //العميل
+                                Center(
+                                  child: Container(
+                                      padding: const EdgeInsets.only(bottom: 3),
+                                      child: Text(
+                                        permitionss(
+                                                context,
+                                                UserPermition
+                                                    .show_cusotmer_name_in_cutting_order)
+                                            ? context
+                                                .read<Customer_controller>()
+                                                .customers
+                                                .where((element) =>
+                                                    element.serial ==
+                                                    order.customer.to_int())
+                                                .first
+                                                .name
+                                            : order.customer.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      )),
                                 ),
+                                //الكميه
                                 Column(
                                   children: order.items
                                       .map(
                                         (item) => Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(width: .4)),
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 4),
-                                            child: Text(
-                                              "${vm.petcentage_of_cutingOrder(context, order, item).removeTrailingZeros} %",
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    order.items.indexOf(item) %
-                                                                2 ==
-                                                            0
-                                                        ? Colors.cyan
-                                                        : Colors.black,
-                                              ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                    ' ${[
+                                                      item.Qantity *
+                                                          item.lenth *
+                                                          item.hight *
+                                                          item.widti /
+                                                          1000000
+                                                    ].first.removeTrailingZeros}  m3 ',
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
+                                                    )),
+                                              ],
                                             )),
                                       )
                                       .toList(),
                                 ),
-                                //النوع
-
-                                //الكثافه
-
-                                //المقاس
+                                // المتبقى                      
                                 Column(
                                   children: order.items
                                       .map(
-                                        (item) => Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 8),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                        (item) => Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(width: .4)),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text((item.Qantity- vm.Total_done_of_cutting_order(
+                                                          context, order, item)).removeTrailingZeros
+                                                 , style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                      )
+                                      .toList(),
+                                ),
+                                //الانتاج
+                                Column(
+                                  children: order.items
+                                      .map(
+                                        (item) => Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(width: .4)),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  vm.Total_done_of_cutting_order(
+                                                          context, order, item)
+                                                      .removeTrailingZeros,
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                      )
+                                      .toList(),
+                                ),
+                                //النسبه المويه الانجاز
+                                Column(
+                                  children: order.items
+                                      .map(
+                                        (item) => Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(width: .4)),
+                                          child: Stack(
                                             children: [
-                                              Text(
-                                                item.type.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: order.items.indexOf(
-                                                                  item) %
-                                                              2 ==
-                                                          0
-                                                      ? Colors.cyan
-                                                      : Colors.black,
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 4),
+                                                child: LinearPercentIndicator(
+                                                  width: 67.0,
+                                                  lineHeight: 15.0,
+                                                  percent:
+                                                      vm.petcentage_of_cutingOrder(
+                                                                      context,
+                                                                      order,
+                                                                      item) /
+                                                                  100 >
+                                                              1
+                                                          ? 1
+                                                          : vm.petcentage_of_cutingOrder(
+                                                                  context,
+                                                                  order,
+                                                                  item) /
+                                                              100,
+                                                  progressColor:
+                                                      vm.petcentage_of_cutingOrder(
+                                                                  context,
+                                                                  order,
+                                                                  item) <
+                                                              99
+                                                          ? Colors.red
+                                                          : Colors.green,
                                                 ),
                                               ),
-                                              Text(
-                                                " <<${item.density.removeTrailingZeros}ك<< ",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: order.items.indexOf(
-                                                                  item) %
-                                                              2 ==
-                                                          0
-                                                      ? Colors.cyan
-                                                      : Colors.black,
-                                                ),
-                                              ),
-                                              Text(
-                                                "${item.hight.removeTrailingZeros}*${item.widti.removeTrailingZeros}*${item.lenth.removeTrailingZeros}",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: order.items.indexOf(
-                                                                  item) %
-                                                              2 ==
-                                                          0
-                                                      ? Colors.cyan
-                                                      : Colors.black,
-                                                ),
+                                              Center(
+                                                child: Container(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(vertical: 4),
+                                                    child: Text(
+                                                      "${vm.petcentage_of_cutingOrder(context, order, item).removeTrailingZeros} %",
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
+                                                    )),
                                               ),
                                             ],
                                           ),
@@ -562,30 +536,89 @@ class HistoryForOrders extends StatelessWidget {
                                       .toList(),
                                 ),
 
+                                Column(
+                                  children: order.items
+                                      .map(
+                                        (item) => Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(width: .4)),
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(right: 8),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  " ${item.color}<<",
+                                                  style: const TextStyle(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  item.type.toString(),
+                                                  style: const TextStyle(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  " <<${item.density.removeTrailingZeros}ك<< ",
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "${item.hight.removeTrailingZeros}*${item.widti.removeTrailingZeros}*${item.lenth.removeTrailingZeros}",
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
                                 //الكميه
                                 Column(
                                   children: order.items
                                       .map(
                                         (item) => Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 4),
-                                            child: Text(
-                                              item.Qantity.toString(),
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    order.items.indexOf(item) %
-                                                                2 ==
-                                                            0
-                                                        ? Colors.cyan
-                                                        : Colors.black,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(width: .4)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 4),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    item.Qantity.toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             )),
                                       )
                                       .toList(),
                                 ),
-                                //رقم
+                                //التسلسل
                                 Center(
                                   child: Container(
                                       padding: const EdgeInsets.symmetric(
@@ -598,6 +631,7 @@ class HistoryForOrders extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       )),
                                 ),
+                                
                               ]);
                         })
                         .toList()
@@ -759,6 +793,38 @@ class HeaderOftable00122 extends StatelessWidget {
                   padding: const EdgeInsets.all(4), child: const Text('تسلسل')),
             ])
       ],
+    );
+  }
+}
+
+class AddNewCuttingOrder extends StatelessWidget {
+   AddNewCuttingOrder({super.key});
+    CuttingOrderViewModel vm = CuttingOrderViewModel();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body:    Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Fields001(vm: vm),
+              
+              RowScroll(vm: vm),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Buttoms001(
+                    vm: vm,
+                  ),
+                  Buttoms003(vm: vm),
+                  Buttoms002(vm: vm),
+                ],
+              ),
+            ],
+          ),
     );
   }
 }
