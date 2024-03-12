@@ -18,6 +18,7 @@ import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/controllers/zupdate.dart';
 import 'package:jason_company/setings/login.dart';
+import 'package:jason_company/ui/cutting_order/notification.dart';
 import 'package:provider/provider.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/main_controller.dart';
@@ -42,11 +43,13 @@ void main() async {
   FirebaseDatabase.instance.setPersistenceEnabled(true);
   FirebaseDatabase.instance.ref();
   database = await Database.create();
+  FirebaseApi().initNoticfication();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +108,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          navigatorKey:navigatorKey ,
           theme: ThemeData(useMaterial3: false),
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',

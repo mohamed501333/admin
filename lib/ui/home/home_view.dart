@@ -245,13 +245,23 @@ class HomeView extends StatelessWidget {
                 children: [
                   Item(
                     MediaQuery.of(context).size.width * .45,
-                    ColorManager.prussianBlue,
+                    const Color.fromARGB(255, 26, 99, 70),
                     " تسجيل الاصناف",
                     IconsManager.itemIcon1,
                     ontap: () {
                       context.gonext(context, BlockCategoryView());
                     },
                   ).permition(context, UserPermition.show_add_new_category),
+                  Item(
+                    MediaQuery.of(context).size.width * .45,
+                    const Color.fromARGB(255, 99, 26, 73),
+                    "ادارة العهد",
+                    IconsManager.itemIcon1,
+                    ontap: () async {
+                      
+             
+                    },
+                  ).permition(context, UserPermition.show_Ohda_management),
                 ],
               ),
               Row(

@@ -596,6 +596,7 @@ enum UserPermition {
   show_scissors,
   show_not_final_stock,
   show_add_new_category,
+  show_Ohda_management,
   show_Chemical_category,
 
   can_get_data_of_customers,
@@ -834,12 +835,16 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "موافقة مدير الماليه");
       case UserPermition.can_approve_from_generalManager:
         return UserpermitionTittle(tittle: "موافقة المدير العام");
-    }
+      case UserPermition.show_Ohda_management:
+   return UserpermitionTittle(tittle: "موديول ادارة العهد");    }
   }
 
   String get getTitle {
     switch (this) {
    
+    
+      case UserPermition.show_Ohda_management:
+        return "موديول ادارة العهد";
     
       case UserPermition.can_get_data_of_purches:
         return "can_get_data_of_Purches";

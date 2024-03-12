@@ -11,12 +11,13 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
 import 'package:provider/provider.dart';
 
+
 class CuttingOrderViewModel extends BaseViewModel {
   String date(DateTime d) {
     return DateFormat("yyyy-MM-dd").format(d);
   }
 
-  addOrder(BuildContext context) {
+  addOrder(BuildContext context) async {
     if (temp.isNotEmpty) {
       OrderModel order = OrderModel(
           notes: notes.text,
@@ -33,6 +34,7 @@ class CuttingOrderViewModel extends BaseViewModel {
       context.read<ObjectBoxController>().get();
       clearfields();
       temp.clear();
+
     }
   }
 

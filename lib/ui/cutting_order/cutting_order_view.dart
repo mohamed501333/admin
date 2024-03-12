@@ -20,6 +20,7 @@ import 'package:jason_company/ui/recources/enums.dart';
 
 class CuttingOrderView extends StatelessWidget {
   const CuttingOrderView({super.key});
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {

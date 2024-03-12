@@ -25,7 +25,7 @@ class PurchesController extends ChangeNotifier {
         }
 
      notifyListeners();
-        print(purchesOrders); });
+   });
       
         
     } catch (e) {}
