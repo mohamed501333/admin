@@ -127,7 +127,7 @@ class BlocksStockViewModel extends BaseViewModel {
   double wight_of_fractions(BlockModel block) {
     return block.fractions.isNotEmpty
         ? block.fractions
-            .map((e) => e.wedth * e.lenth * e.hight * e.density / 1000000)
+            .map((e) => e.item.W * e.item.L * e.item.L * e.item.density / 1000000)
             .reduce((a, b) => a + b)
             .removeTrailingZeros
             .to_double()

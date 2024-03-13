@@ -74,21 +74,20 @@ table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
                   .get_Date_of_action(
                       FractionActon.cut_fraction_OnRscissor.getTitle)
                   .formatt() ==
-              chosenDate &&
-          element.Rscissor == s - 3)
+              chosenDate)
       .toList();
 //notfinals
 
-  List<NotFinalmodel> notfinals =
-      fractions.expand((element) => element.notfinals).toList();
+  // List<NotFinalmodel> notfinals =
+  //     fractions.expand((element) => element.notfinals).toList();
 
 //حجم الفرد
   scissor_viewmodel vm = scissor_viewmodel();
   var totafractionvolume =
-      fractions.map((e) => e.lenth * e.wedth * e.hight / 1000000).isEmpty
+      fractions.map((e) => e.item.L * e.item.W * e.item.H / 1000000).isEmpty
           ? 0
           : fractions
-              .map((e) => e.lenth * e.wedth * e.hight / 1000000)
+              .map((e) => e.item.L * e.item.W * e.item.H / 1000000)
               .reduce((value, element) => value + element)
               .toStringAsFixed(1)
               .to_double();
@@ -160,7 +159,7 @@ table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
         decoration: BoxDecoration(border: Border.all()),
         child: Center(
             child: Text(
-                " ${fractions.map((e) => e.lenth * e.wedth * e.hight / 1000000).isEmpty ? 0 : fractions.map((e) => e.density * e.lenth * e.wedth * e.hight / 1000000).reduce((value, element) => value + element).toStringAsFixed(1)} kg")),
+                " ${fractions.map((e) => e.item.L * e.item.W * e.item.H / 1000000).isEmpty ? 0 : fractions.map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000).reduce((value, element) => value + element).toStringAsFixed(1)} kg")),
       ),
     ]),
     Row(children: [
@@ -190,8 +189,10 @@ table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
         width: 50,
         decoration: BoxDecoration(border: Border.all()),
         child: Center(
-            child: Text(
-                "${fractions.map((e) => e.lenth * e.wedth * e.hight / 1000000).isEmpty ? 0 : fractions.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg")),
+            child: Text(""
+                
+                // ${fractions.map((e) => e.item.L * e.item.W * e.item.H / 1000000).isEmpty ? 0 : fractions.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg
+                )),
       ),
     ]),
     Row(children: [
@@ -226,28 +227,30 @@ table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
                 "${(100 - (100 * totalResultsVolume / totafractionvolume).toStringAsFixed(1).to_double()).toStringAsFixed(1)} %")),
       ),
     ]),
-    Column(
-        children: notfinals
-            .filter_notfinals___()
-            .map((e) => Container(
-                    child: Row(children: [
-                  Container(
-                      height: 14,
-                      width: 80,
-                      decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(
-                          child: Text("${vm.get(e.type)}",
-                              style: const TextStyle(fontSize: 10)))),
-                  Container(
-                      height: 14,
-                      width: 50,
-                      decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(
-                          child: Text(
-                              "${notfinals.isEmpty ? 0 : vm.total_amount_for_notfinals(e, notfinals).toStringAsFixed(1)} kg",
-                              style: const TextStyle(fontSize: 10)))),
-                ])))
-            .toList()),
+    // Column(
+    //     children: notfinals
+    //         .filter_notfinals___()
+    //         .map((e) => Container(
+    //                 child: Row(children: [
+    //               Container(
+    //                   height: 14,
+    //                   width: 80,
+    //                   decoration: BoxDecoration(border: Border.all(width: 1)),
+    //                   child: Center(
+    //                       child: Text("${vm.get(e.type)}",
+    //                           style: const TextStyle(fontSize: 10)))),
+    //               Container(
+    //                   height: 14,
+    //                   width: 50,
+    //                   decoration: BoxDecoration(border: Border.all(width: 1)),
+    //                   child: Center(
+    //                       child: Text(
+    //                           "${notfinals.isEmpty ? 0 : vm.total_amount_for_notfinals(e, notfinals).toStringAsFixed(1)} kg",
+    //                           style: const TextStyle(fontSize: 10)))),
+    //             ])))
+    //         .toList()),
+   
+   
     table2(finalproducts, s)
   ]);
 }

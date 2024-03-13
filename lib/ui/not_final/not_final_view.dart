@@ -79,11 +79,7 @@ class Item001 extends StatelessWidget {
       builder: (context, myType, child) {
         List<NotFinalmodel> v =
             myType.blocks.expand((e) => e.notfinals).toList();
-        List<NotFinalmodel> b = myType.blocks
-            .expand((e) => e.fractions)
-            .expand((e) => e.notfinals)
-            .toList();
-        List<NotFinalmodel> notfianls = v + b;
+
         return Container(
           margin: const EdgeInsets.only(top: 13, left: 15, right: 15),
           decoration: BoxDecoration(
@@ -108,7 +104,7 @@ class Item001 extends StatelessWidget {
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              Form(
+              const Form(
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -126,8 +122,8 @@ class Item001 extends StatelessWidget {
                       //     },
                       //     icon: const Icon(Icons.add)),
                       Text(
-                          "${vm.data_for_type(context, type, notfianls)} " "kg",
-                          style: const TextStyle(
+                          "" "kg",
+                          style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Color(0xff3e5fb8)))

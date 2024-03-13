@@ -12,7 +12,7 @@ class Rscissor_veiwModel extends BaseViewModel {
       BlockFirebasecontroller myType, int scissor) {
     return myType.blocks
         .expand((e) => e.fractions.where((element) =>
-            element.Rscissor == scissor &&
+            // element.Rscissor == scissor &&
             element.actions
                     .get_Date_of_action(
                         FractionActon.cut_fraction_OnRscissor.getTitle)
@@ -26,7 +26,7 @@ class Rscissor_veiwModel extends BaseViewModel {
     return blocks
         .map((e) => e.fractions)
         .expand((element) => element)
-        .where((element) => element.Rscissor == 0 && element.Ascissor == 0)
+        // .where((element) => element.Rscissor == 0 && element.Ascissor == 0)
         .toList();
   }
 }

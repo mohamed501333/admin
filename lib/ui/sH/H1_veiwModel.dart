@@ -77,27 +77,27 @@ class H1VeiwModel extends BaseViewModel {
 
   addpermanentFractons(
       BuildContext context, List<BlockModel> b, int scissor, ChipFraction e) {
-    permanentFractons.add(FractionModel(
-      blockId: get_block_of_num_in_controller(b, context).id,
-      notes: "",
-      worker: "",
-      stage: 0,
-      actions: [FractionActon.creat_fraction.add],
-      notfinals: [],
-      isfinished: false,
-      Rscissor: 0,
-      Ascissor: 0,
-      id: DateTime.now().microsecondsSinceEpoch,
-      blockmodelmum: get_block_of_num_in_controller(b, context).number,
-      wedth: e.width.removeTrailingZeros.to_int(),
-      lenth: e.lenth.removeTrailingZeros.to_int(),
-      hight: e.hight.removeTrailingZeros.to_int(),
-      density: get_block_of_num_in_controller(b, context).density,
-      type: get_block_of_num_in_controller(b, context).type,
-      serial: get_block_of_num_in_controller(b, context).serial,
-      Hscissor: scissor,
-      color: get_block_of_num_in_controller(b, context).color,
-    ));
+    // permanentFractons.add(FractionModel(
+    //   blockId: get_block_of_num_in_controller(b, context).id,
+    //   notes: "",
+    //   worker: "",
+    //   stage: 0,
+    //   actions: [FractionActon.creat_fraction.add],
+    //   notfinals: [],
+    //   isfinished: false,
+    //   Rscissor: 0,
+    //   Ascissor: 0,
+    //   id: DateTime.now().microsecondsSinceEpoch,
+    //   blockmodelmum: get_block_of_num_in_controller(b, context).number,
+    //   wedth: e.width.removeTrailingZeros.to_int(),
+    //   lenth: e.lenth.removeTrailingZeros.to_int(),
+    //   hight: e.hight.removeTrailingZeros.to_int(),
+    //   density: get_block_of_num_in_controller(b, context).density,
+    //   type: get_block_of_num_in_controller(b, context).type,
+    //   serial: get_block_of_num_in_controller(b, context).serial,
+    //   Hscissor: scissor,
+    //   color: get_block_of_num_in_controller(b, context).color,
+    // ));
   }
 
 //

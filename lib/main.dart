@@ -10,7 +10,6 @@ import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
-import 'package:jason_company/controllers/fractinsFirebaseController.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
 import 'package:jason_company/controllers/purchesController.dart';
@@ -75,9 +74,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => final_prodcut_controller(),
           ),
-          ChangeNotifierProvider(
-            create: (context) => FractionFirebaseController(),
-          ),
+      
           ChangeNotifierProvider(
             create: (context) => UpdatesController(),
           ),

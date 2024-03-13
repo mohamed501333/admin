@@ -41,12 +41,12 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
                                 for (var element
                                     in fractions_Not_Cut_On_RScissor
                                         .where((f) =>
-                                            f.wedth == e.wedth &&
-                                            f.type == e.type &&
-                                            f.density == e.density &&
-                                            f.color == e.color &&
-                                            f.hight == e.hight &&
-                                            f.lenth == e.lenth)
+                                            f.item.W == e.item.W &&
+                                            f.item.type == e.item.type &&
+                                            f.item.density == e.item.density &&
+                                            f.item.color == e.item.color &&
+                                            f.item.H == e.item.H &&
+                                            f.item.L == e.item.L)
                                         .take(vm.amountcontroller.text
                                             .to_int())) {
                                   myType.add_on_R_scissor(
@@ -78,7 +78,7 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
                               child: Row(
                                 children: [
                                   Text(
-                                    "${e.wedth}*${e.lenth}*${e.hight} ${e.color} ${e.type} D${e.density.removeTrailingZeros}",
+                                    "${e.item.W}*${e.item.L}*${e.item.H} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
                                     style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
@@ -86,12 +86,12 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
                                   Text(
                                     fractions_Not_Cut_On_RScissor
                                         .where((element) =>
-                                            element.color == e.color &&
-                                            element.type == e.type &&
-                                            element.density == e.density &&
-                                            element.wedth == e.wedth &&
-                                            element.lenth == e.lenth &&
-                                            element.hight == e.hight)
+                                            element.item.color == e.item.color &&
+                                            element.item.type == e.item.type &&
+                                            element.item.density == e.item.density &&
+                                            element.item.W == e.item.W &&
+                                            element.item.L == e.item.L &&
+                                            element.item.H == e.item.H)
                                         .toList()
                                         .length
                                         .toString(),
@@ -152,18 +152,18 @@ dialogOfAddNotFinalToBlock4544(
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
-                  for (var e in fractions) {
-                    context
-                        .read<BlockFirebasecontroller>()
-                        .add_Not_final_ToFraction(
-                            fractiond: e,
-                            type: context.read<ObjectBoxController>().initial2,
-                            Rscissord: e.Rscissor,
-                            wight: vm.wightcontroller.text.to_double() /
-                                fractions.length);
-                  }
+                  // for (var e in fractions) {
+                  //   context
+                  //       .read<BlockFirebasecontroller>()
+                  //       .add_Not_final_ToFraction(
+                  //           fractiond: e,
+                  //           type: context.read<ObjectBoxController>().initial2,
+                  //           Rscissord: e.Rscissor,
+                  //           wight: vm.wightcontroller.text.to_double() /
+                  //               fractions.length);
+                  // }
 
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                 },
                 child: const Text('تم')),
           ],

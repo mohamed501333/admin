@@ -222,51 +222,24 @@ class BlockFirebasecontroller extends ChangeNotifier {
       required FractionModel fractiond,
       required int lastStage,
       required int scissor}) {
-    BlockModel block = blocks
-        .where((element) => element.id == fractiond.blockId)
-        .toList()
-        .first;
-    var f =
-        block.fractions.where((element) => element.id == fractiond.id).first;
+    // BlockModel block = blocks
+    //     .where((element) => element.id == fractiond.block_ID)
+    //     .toList()
+    //     .first;
+    // var f =
+    //     block.fractions.where((element) => element.fraction_ID == fractiond.fraction_ID).first;
 
-    f.Rscissor = scissor;
+    // f.s = scissor;
 
-    f.actions.add(FractionActon.cut_fraction_OnRscissor.add);
-    f.stage = lastStage;
+    // f.actions.add(FractionActon.cut_fraction_OnRscissor.add);
+    // f.stage = lastStage;
 
-    try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
-      notifyListeners();
-    } catch (e) {}
+    // try {
+    //   FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+    //   notifyListeners();
+    // } catch (e) {}
   }
 
-  add_Not_final_ToFraction({
-    required FractionModel fractiond,
-    required String type,
-    required int Rscissord,
-    required double wight,
-  }) {
-    BlockModel block = blocks
-        .where((element) => element.id == fractiond.blockId)
-        .toList()
-        .first;
-
-    FractionModel fraction =
-        block.fractions.where((element) => element.id == fractiond.id).first;
-    fraction.notfinals.add(NotFinalmodel(
-        id: DateTime.now().millisecondsSinceEpoch,
-        date: DateTime.now(),
-        wight: wight,
-        type: type,
-        Rscissor: Rscissord,
-        Hscissor: 0,
-        actions: [NotFinalAction.create_Not_final_cumingFrom_R.add]));
-
-    try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
-      notifyListeners();
-    } catch (e) {}
-  }
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   var initialDateRange =

@@ -125,9 +125,9 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                     title: Column(
                       children: [
                         Text(
-                            " ${totalblocks.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : totalblocks.map((e) => e.fractions).expand((element) => element.map((e) => e.lenth * e.wedth * e.hight / 1000000)).reduce((a, b) => a + b).toStringAsFixed(2)} :  اجمالى النواتج  م3"),
+                            " ${totalblocks.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : totalblocks.map((e) => e.fractions).expand((element) => element.map((e) => e.item.L * e.item.W * e.item.H / 1000000)).reduce((a, b) => a + b).toStringAsFixed(2)} :  اجمالى النواتج  م3"),
                         Text(
-                            " ${totalblocks.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : totalblocks.map((e) => e.fractions).expand((element) => element.map((e) => e.density * e.lenth * e.wedth * e.hight / 1000000)).reduce((a, b) => a + b).toStringAsFixed(2)} :  اجمالى النواتج  كج"),
+                            " ${totalblocks.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : totalblocks.map((e) => e.fractions).expand((element) => element.map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)).reduce((a, b) => a + b).toStringAsFixed(2)} :  اجمالى النواتج  كج"),
                       ],
                     ),
                     children: fractions
@@ -136,8 +136,8 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                               children: [
                                 Text(
                                     " ${vm.total_amount_for_single_siz__fractions(e, fractions)}  <=عدد"),
-                                Text(" ${e.color} ${e.type} ك${e.density}"),
-                                Text(" ${e.lenth}*${e.wedth}*${e.hight}"),
+                                Text(" ${e.item.color} ${e.item.type} ك${e.item.density}"),
+                                Text(" ${e.item.L}*${e.item.W}*${e.item.H}"),
                               ],
                             ))
                         .toList(),

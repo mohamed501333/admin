@@ -384,8 +384,7 @@ extension Filterfgddf on List<FractionModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].blockmodelmum == nonRepetitive[j].blockmodelmum &&
-            this[i].serial == nonRepetitive[j].serial) {
+        if (this[i].block_ID == nonRepetitive[j].block_ID ) {
           repeated = true;
         }
       }
@@ -401,12 +400,12 @@ extension Filterfgddf on List<FractionModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].lenth == nonRepetitive[j].lenth &&
-            this[i].hight == nonRepetitive[j].hight &&
-            this[i].color == nonRepetitive[j].color &&
-            this[i].type == nonRepetitive[j].type &&
-            this[i].density == nonRepetitive[j].density &&
-            this[i].wedth == nonRepetitive[j].wedth) {
+        if (this[i].item.L == nonRepetitive[j].item.L &&
+            this[i].item.H == nonRepetitive[j].item.H &&
+            this[i].item.color == nonRepetitive[j].item.color &&
+            this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.density == nonRepetitive[j].item.density &&
+            this[i].item.W == nonRepetitive[j].item.W) {
           repeated = true;
         }
       }

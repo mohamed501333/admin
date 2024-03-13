@@ -237,7 +237,6 @@ class TheTable23 extends StatelessWidget {
           },
           children: blocks
               .expand((e) => e.fractions)
-              .where((element) => element.Hscissor == scissor)
               .toList()
               .filter_Fractios___()
               .map((e) {
@@ -261,7 +260,7 @@ class TheTable23 extends StatelessWidget {
                   Container(
                       padding: const EdgeInsets.all(4),
                       child: Text(
-                        "${e.hight}*${e.wedth}*${e.lenth}",
+                        "${e..item.H}*${e..item.L}*${e.item.W}",
                         style: const TextStyle(
                             color: Color.fromARGB(255, 221, 2, 75)),
                       )),

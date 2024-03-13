@@ -38,16 +38,16 @@ class _UsersActionsState extends State<UsersActions> {
         .map((e) => e.actions)
         .expand((element) => element)
         .toList();
-    List<ActionModel> c = context
-        .read<BlockFirebasecontroller>()
-        .all
-        .map((e) => e.fractions)
-        .expand((element) => element)
-        .map((e) => e.notfinals)
-        .expand((element) => element)
-        .map((e) => e.actions)
-        .expand((element) => element)
-        .toList();
+    // List<ActionModel> c = context
+    //     .read<BlockFirebasecontroller>()
+    //     .all
+    //     .map((e) => e.fractions)
+    //     .expand((element) => element)
+    //     .map((e) => e.notfinals)
+    //     .expand((element) => element)
+    //     .map((e) => e.actions)
+    //     .expand((element) => element)
+    //     .toList();
     List<ActionModel> d = context
         .read<BlockFirebasecontroller>()
         .all
@@ -91,7 +91,7 @@ class _UsersActionsState extends State<UsersActions> {
         .toList()
         .expand((element) => element)
         .toList();
-    List<ActionModel> all = a + b + c + d + f + e + g + h + j;
+    List<ActionModel> all = a + b  + d + f + e + g + h + j;
 
     return Scaffold(
       appBar: AppBar(

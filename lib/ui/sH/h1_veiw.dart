@@ -112,7 +112,7 @@ class Results extends StatelessWidget {
                                 border: Border.all(
                                     color: ColorManager.blueGrey, width: 3)),
                             child: Text(
-                              "${e.hight}*${e.wedth}*${e.lenth}",
+                              "${e.item.H}*${e.item.W}*${e.item.L}",
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             )),
@@ -207,13 +207,13 @@ class buttoms extends StatelessWidget {
             onPressed: () {
               if (vm.validate()) {
                 BlockModel m = vm.get_block_of_num_in_controller(b, context);
-                int vloumeOfFractions;
+                double vloumeOfFractions;
                 int vloumeOfblock;
 
                 if (vm.permanentFractons.isNotEmpty) {
                   vloumeOfblock = m.width * m.lenth * m.hight;
                   vloumeOfFractions = vm.permanentFractons
-                      .map((e) => e.wedth * e.hight * e.lenth)
+                      .map((e) => e.item.W * e.item.H * e.item.L)
                       .reduce((a, b) => a + b);
                   if (vloumeOfblock < vloumeOfFractions) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

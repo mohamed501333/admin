@@ -15,10 +15,10 @@ class AllReportsViewModel {
         .toList()
         .filter_Fractios___()
         .map((e) => NumAndDescrioption(
-              voluem: e.lenth * e.wedth * e.hight,
+              voluem: e.item.W * e.item.L * e.item.H,
               total: total_amount_for_single_siz__fractions(e, fractions),
               descrioption:
-                  "${e.lenth}*${e.wedth}*${e.hight} ${e.color} ${e.type} D${e.density.removeTrailingZeros}",
+                  "${e.item.W}*${e.item.L}*${e.item.H} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
             ))
         .toList();
   }
@@ -28,12 +28,12 @@ class AllReportsViewModel {
     return fractions
         .where(
           (f) =>
-              e.color == f.color &&
-              e.density == f.density &&
-              e.hight == f.hight &&
-              e.wedth == f.wedth &&
-              e.lenth == f.lenth &&
-              e.type == f.type,
+              e.item.color == f.item.color &&
+              e.item.density == f.item.density &&
+              e.item.H == f.item.H &&
+              e.item.W == f.item.W &&
+              e.item.L == f.item.L &&
+              e.item.type == f.item.type,
         )
         .toList()
         .length;
@@ -100,7 +100,7 @@ class All {
 
 class NumAndDescrioption {
   final int total;
-  int voluem;
+  double voluem;
 
   final String descrioption;
 

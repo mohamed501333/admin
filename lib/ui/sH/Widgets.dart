@@ -344,7 +344,7 @@ class TheTable0001 extends StatelessWidget {
                                         (e) => Container(
                                             padding: const EdgeInsets.all(2),
                                             child: Text(
-                                                "${e.lenth}*${e.wedth}*${e.hight}")),
+                                                "${e.item.L}*${e.item.W}*${e.item.H}")),
                                       )
                                       .toList(),
                                 ),

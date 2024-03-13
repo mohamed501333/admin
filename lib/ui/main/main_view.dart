@@ -6,7 +6,6 @@ import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
-import 'package:jason_company/controllers/fractinsFirebaseController.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
 import 'package:jason_company/controllers/purchesController.dart';
@@ -40,9 +39,7 @@ class Mainview extends StatelessWidget {
             ? context.read<BlockFirebasecontroller>().get_blocks_data()
             : DoNothingAction();
         context.read<BlockFirebasecontroller>().c();
-        permitionss(context, UserPermition.can_get_data_of_fractions)
-            ? context.read<FractionFirebaseController>().get_Fractions_data()
-            : DoNothingAction();
+ 
         permitionss(context, UserPermition.can_get_data_of_notfinals)
             ? context.read<NonFinalController>().getdataOfnotFinals()
             : DoNothingAction();

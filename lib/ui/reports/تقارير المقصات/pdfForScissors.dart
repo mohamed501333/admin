@@ -92,7 +92,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
           : a
               .map((e) => e.fractions)
               .expand((element) =>
-                  element.map((e) => e.lenth * e.wedth * e.hight / 1000000))
+                  element.map((e) => e.item.L * e.item.W * e.item.H / 1000000))
               .reduce((a, b) => a + b)
               .toStringAsFixed(1)
               .to_double();
@@ -169,7 +169,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
         decoration: BoxDecoration(border: Border.all()),
         child: Center(
             child: Text(
-                "${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.fractions).expand((element) => element.map((e) => e.density * e.lenth * e.wedth * e.hight / 1000000)).reduce((a, b) => a + b).toStringAsFixed(2)} kg ")),
+                "${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.fractions).expand((element) => element.map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)).reduce((a, b) => a + b).toStringAsFixed(2)} kg ")),
       ),
     ]),
     Row(children: [
@@ -287,9 +287,9 @@ table2(List<FractionModel> fractions) {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                            Text(" ${e.lenth}*${e.wedth}*${e.hight}"),
+                            Text(" ${e.item.L}*${e.item.W}*${e.item.H}"),
                             Text(
-                                " ${e.color} ${e.type} ك${e.density.removeTrailingZeros}   "),
+                                " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
                           ]))),
                   Container(
                       padding: const EdgeInsets.all(0),
