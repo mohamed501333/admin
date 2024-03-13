@@ -1,9 +1,57 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names, camel_case_types
 
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:objectbox/objectbox.dart';
+
+// class Itme{
+//   double L;
+//   double W;
+//   double H;
+//   double density;
+//   double volume;
+//   double wight;
+//   String color;
+//   double price;
+// }
+
+// class Stage{
+//   int stageNum;
+//   int scissor;
+//   String worker;
+//   String note;
+//   List<NotFinalmodel> notfinals
+// }
+
+// class NotFinal {
+//   int notFinal_ID;
+//   int mass_ID;
+//   int sapa_ID;
+//   int block_ID;
+//   double wight;
+//   String type;
+//   int scissor;
+//   List<ActionModel> actions;
+
+// }
+
+// class Mass{
+//   int mass_ID;
+//   int sapa_ID;
+//   int block_ID;
+//   Itme item;
+//   bool underOperation;
+//   bool isfinal;
+//   String note;
+//   int invoiceNum;
+//   int CuttingOrderNum;
+//   String customer;
+
+//  final List<Stage> stages;
+//  final List<ActionModel> actions;
+
+// }
+
 
 class BlockModel {
   int id;
