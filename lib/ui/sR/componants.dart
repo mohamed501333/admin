@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
-import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 import 'package:jason_company/ui/sR/Rscissor_view.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
-import 'package:provider/provider.dart';
 
 showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
     int scissor, int lastStage) {

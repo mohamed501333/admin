@@ -42,13 +42,13 @@ class Rscissor_viewmodel extends BaseViewModel {
     return fractions
         .where(
           (f) =>
-              e.color == f.color &&
-              e.density == f.density &&
-              e.serial == f.serial &&
-              e.hight == f.hight &&
-              e.wedth == f.wedth &&
-              e.lenth == f.lenth &&
-              e.type == f.type,
+              e.item.color == f.item.color &&
+              e.item.density == f.item.density &&
+              e.fraction_ID == f.fraction_ID &&
+              e.item.H == f.item.H &&
+              e.item.W == f.item.W &&
+              e.item.L == f.item.L &&
+              e.item.type == f.item.type,
         )
         .toList()
         .length;

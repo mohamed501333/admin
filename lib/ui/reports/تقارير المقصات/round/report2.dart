@@ -133,7 +133,7 @@ class _Report2ForRState extends State<Report2ForR> {
 
   List<int> allstage(
       List<FractionModel> fractions, List<FinalProductModel> finalProdcuts) {
-    List<int> allStages = fractions.map((e) => e.stage).toList() +
+    List<int> allStages = fractions.map((e) => e.scissorStage).toList() +
         finalProdcuts.map((e) => e.stageOfR).toList();
     return allStages;
   }
@@ -145,7 +145,6 @@ class _Report2ForRState extends State<Report2ForR> {
         .blocks
         .expand((element) => element.fractions)
         .where((element) =>
-            element.Rscissor == scissor &&
             element.actions
                     .get_Date_of_action(
                         FractionActon.cut_fraction_OnRscissor.getTitle)
@@ -237,7 +236,7 @@ class Details extends StatelessWidget {
                                 context,
                                 scissor,
                                 fractions
-                                    .where((element) => element.stage == k)
+                                    .where((element) => element.scissorStage == k)
                                     .toList())
                             .map((e) => Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -279,10 +278,9 @@ class Details extends StatelessWidget {
                       //دون التام
                       Column(
                         children: fractions
-                            .where((element) => element.stage == k)
-                            .expand((s) => s.notfinals)
+                            .where((element) => element.scissorStage == k)
+                            .expand((s) => s.stages.map((e) => e.notfinals))
                             .toList()
-                            .filter_notfinals___()
                             .map((f) => Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -290,7 +288,9 @@ class Details extends StatelessWidget {
                                       width: MediaQuery.of(context).size.width *
                                           .29,
                                       child: Text(
-                                        "${f.type} kg ${fractions.where((element) => element.stage == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
+                                        ""
+                                        // ${f.type} kg ${fractions.where((element) => element.stage == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
+                                        ,
                                       ),
                                     ),
                                   ],
@@ -382,16 +382,15 @@ class Details extends StatelessWidget {
                 //دون التام
                 Column(
                   children: fractions
-                      .expand((s) => s.notfinals)
                       .toList()
-                      .filter_notfinals___()
                       .map((f) => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * .29,
-                                child: Text(
-                                  "${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
+                                child: Text(""
+                                  // ${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
+                                  ,
                                 ),
                               ),
                             ],
@@ -426,7 +425,9 @@ class Details extends StatelessWidget {
                     padding: const EdgeInsets.all(4.0),
                     child: Center(
                       child: Text(
-                          " kg ${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? 0 : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
+                          "kg "
+                          //  ${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? 0 : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
+                           ,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 17)),
                     ),

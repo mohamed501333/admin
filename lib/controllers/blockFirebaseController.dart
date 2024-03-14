@@ -9,7 +9,9 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 
 class BlockFirebasecontroller extends ChangeNotifier {
+
   get_blocks_data() {
+
     try {
       FirebaseDatabase.instance
           .ref("blocks")
@@ -40,6 +42,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
         notifyListeners();
       });
     } catch (e) {}
+
   }
 
   List<BlockModel> all = [];
@@ -86,11 +89,14 @@ class BlockFirebasecontroller extends ChangeNotifier {
   // }
 
   c() {
-    // print(11);
-    // for (var el in all) {
-    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-
-    // }
+    print(11);
+    for (var el in blocks.where((element) => element.serial=="D33s_9_3_2024" &&element.number>110&&element.number<162)) {
+      el.density=33.0;
+      el.color="برتقالى";
+      el.type="سوفت";
+      el.discreption="D33s_orange-180";
+      FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    }
   }
 
   void runFilter(String enteredKeyword) {
@@ -110,6 +116,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
     // Refresh_the_UI();
   }
+  
 
   Refresh_the_UI() {
     notifyListeners();
@@ -132,7 +139,16 @@ class BlockFirebasecontroller extends ChangeNotifier {
       notifyListeners();
     } catch (e) {}
   }
+  undeleteblock(BlockModel block) {
+    int index = block.actions.indexWhere((element) =>
+        element.action == BlockAction.archive_block.getactionTitle);
+    block.actions.removeAt(index);
 
+    try {
+      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      notifyListeners();
+    } catch (e) {}
+  }
   consumeblock(BlockModel block, String outto) {
     block.actions.add(BlockAction.consume_block.add);
     block.OutTo = outto;

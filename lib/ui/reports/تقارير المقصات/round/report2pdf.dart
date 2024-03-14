@@ -119,7 +119,7 @@ newMethod(
                                     context,
                                     scissor,
                                     fractions
-                                        .where((element) => element.stage == k)
+                                        .where((element) => element.scissorStage == k)
                                         .toList())
                                 .map((e) => Padding(
                                     padding: const EdgeInsets.all(1),
@@ -167,10 +167,8 @@ newMethod(
                           //دون التام
                           Row(
                             children: fractions
-                                .where((element) => element.stage == k)
-                                .expand((s) => s.notfinals)
+                                .where((element) => element.scissorStage == k)
                                 .toList()
-                                .filter_notfinals___()
                                 .map((f) => Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 6),
@@ -184,8 +182,9 @@ newMethod(
                                               MainAxisAlignment.center,
                                           children: [
                                             SizedBox(
-                                              child: Text(
-                                                "${f.type} kg ${fractions.where((element) => element.stage == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
+                                              child: Text(""
+                                                // ${f.type} kg ${fractions.where((element) => element.stage == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
+                                                ,
                                               ),
                                             ),
                                           ].reversed.toList(),
@@ -284,15 +283,15 @@ newMethod(
                     //دون التام
                     Column(
                       children: fractions
-                          .expand((s) => s.notfinals)
                           .toList()
-                          .filter_notfinals___()
                           .map((f) => Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SizedBox(
                                     child: Text(
-                                      "${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
+                                      ""
+                                      // ${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
+                                      ,
                                     ),
                                   ),
                                 ].reversed.toList(),
@@ -327,7 +326,9 @@ newMethod(
                         padding: const EdgeInsets.all(4.0),
                         child: Center(
                           child: Text(
-                              " kg ${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? "0" : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
+                              " kg "
+                              // ${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? "0" : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
+                              ,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 17)),
                         ),

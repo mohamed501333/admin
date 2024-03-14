@@ -672,7 +672,6 @@ class ArchivedTheTable extends StatelessWidget {
       children: [
         Consumer<BlockFirebasecontroller>(
           builder: (context, blocks, child) {
-            blocks.runFilter(vm.blocknumbercontroller.text);
             return Expanded(
               flex: 4,
               child: SingleChildScrollView(
@@ -703,11 +702,11 @@ class ArchivedTheTable extends StatelessWidget {
                           15: FlexColumnWidth(.8),
                           16: FlexColumnWidth(.8),
                         },
-                        children: blocks.archived_blocks.reversed
+                        children: blocks.search.reversed
                             .sortedBy<num>((element) => element.actions
                                 .get_Date_of_action(
-                                    BlockAction.archive_block.getactionTitle)
-                                .day)
+                                    BlockAction.archive_block.getactionTitle).millisecondsSinceEpoch
+                                )
                             .reversed
                             .take(context
                                 .read<SettingController>()
@@ -730,15 +729,12 @@ class ArchivedTheTable extends StatelessWidget {
                                         padding: const EdgeInsets.all(4),
                                         child: GestureDetector(
                                             onTap: () {
-                                              if (user.actions.if_action_exist(
-                                                      BlockAction.cut_block_on_H
-                                                          .getactionTitle) ==
-                                                  false) {
+                                      
                                                 context
                                                     .read<
                                                         BlockFirebasecontroller>()
-                                                    .deleteblock(user);
-                                              }
+                                                    .undeleteblock(user);
+                                              
                                             },
                                             child: const Icon(
                                               Icons.delete,
