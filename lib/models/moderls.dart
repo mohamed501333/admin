@@ -424,8 +424,11 @@ class BlockModel {
       OutTo: map['OutTo'] as String,
       notes: map['notes'] as String,
       discreption: map['discreption'] as String,
-      fractions:
-      [],
+        fractions: List<FractionModel>.from(
+        (map['fractions'] as List<dynamic>).map<FractionModel>(
+          (x) => FractionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
       actions: List<ActionModel>.from(
         (map['actions'] as List<dynamic>).map<ActionModel>(
           (x) => ActionModel.fromMap(x as Map<String, dynamic>),
