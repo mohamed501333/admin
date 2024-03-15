@@ -32,7 +32,6 @@ DateFormat formatwitTime3 = DateFormat('hh:mm a');
 late Database database;
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -43,19 +42,16 @@ void main() async {
   FirebaseDatabase.instance.setPersistenceEnabled(true);
   FirebaseDatabase.instance.ref();
   database = await Database.create();
-  FirebaseApi().initNoticfication();
+  // FirebaseApi().initNoticfication();
   runApp(const MyApp());
-  
 }
 
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
-
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
@@ -74,7 +70,6 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => final_prodcut_controller(),
           ),
-      
           ChangeNotifierProvider(
             create: (context) => UpdatesController(),
           ),
@@ -110,7 +105,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
-          navigatorKey:navigatorKey ,
+          navigatorKey: navigatorKey,
           theme: ThemeData(useMaterial3: false),
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
@@ -138,7 +133,6 @@ class MyApp extends StatelessWidget {
 
     return x;
   }
-
 }
 
 class Commons {
