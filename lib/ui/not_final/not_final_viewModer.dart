@@ -7,36 +7,32 @@ import 'package:provider/provider.dart';
 
 class NotFinalViewModer extends BaseViewModel {
   add(BuildContext context, String type) {
-    if (formKey.currentState!.validate()) {
-      NotFinalmodel input = NotFinalmodel(
-        Hscissor: 0,
-        Rscissor: 0,
-        actions: [],
-        id: DateTime.now().microsecondsSinceEpoch,
-        date: DateTime.now(),
-        wight: double.parse(wightcontroller.text),
-        type: type,
-      );
-      context.read<NonFinalController>().add_to_not_FInals(input);
-      clearfields();
-    }
+    // if (formKey.currentState!.validate()) {
+    //   NotFinal input = NotFinal(
+
+    //     actions: [],
+    //     notFinal_ID: DateTime.now().microsecondsSinceEpoch,
+    //     wight: double.parse(wightcontroller.text),
+    //     type: type,
+    //   );
+    //   context.read<NonFinalController>().add_to_not_FInals(input);
+    //   clearfields();
+    // }
   }
 
   addwithMinus(BuildContext context, String type) {
-    if (formKey.currentState!.validate()) {
-      NotFinalmodel input = NotFinalmodel(
-        Hscissor: 0,
-        Rscissor: 0,
-        actions: [],
-        id: DateTime.now().microsecondsSinceEpoch,
-        date: DateTime.now(),
-        wight: -double.parse(wightcontroller.text),
-        type: type,
-      );
-      context.read<NonFinalController>().add_to_not_FInals(input);
+//     if (formKey.currentState!.validate()) {
+//       NotFinal input = NotFinal(
+// block_ID: ,
+//         actions: [],
+//         notFinal_ID: DateTime.now().microsecondsSinceEpoch,
+//         wight: -double.parse(wightcontroller.text),
+//         type: type,
+//       );
+//       context.read<NonFinalController>().add_to_not_FInals(input);
 
-      clearfields();
-    }
+//       clearfields();
+//     }
   }
 
   get(String v) {
@@ -55,8 +51,7 @@ class NotFinalViewModer extends BaseViewModel {
   }
 
 //الحصول على البيانات
-  data_for_type(
-      BuildContext context, String type, List<NotFinalmodel> not_finals) {
+  data_for_type(BuildContext context, String type, List<NotFinal> not_finals) {
     var a = not_finals
         .where((element) => element.type == get(type))
         .map((e) => e.wight);

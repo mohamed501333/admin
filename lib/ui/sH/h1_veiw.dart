@@ -221,7 +221,7 @@ class buttoms extends StatelessWidget {
                     vm.permanentFractons.clear();
                   } else {
                     if (vm.permanentFractons.isNotEmpty) {
-                      vm.add_fraction(context, m, scissor);
+                      vm.cut_block(context, m, scissor);
                     }
                   }
                 }

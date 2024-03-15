@@ -74,8 +74,8 @@ table0(List<BlockModel> b, int s, String chosenDate) {
       .toList();
   List<FractionModel> fractions =
       a.expand((element) => element.fractions).toList();
-  List<NotFinalmodel> notfinals =
-      a.expand((element) => element.notfinals).toList();
+  List<NotFinal> notfinals = [];
+  // a.expand((element) => element.notfinals).toList();
   scissor_viewmodel vm = scissor_viewmodel();
   var totalblockvolume =
       a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty
@@ -184,8 +184,9 @@ table0(List<BlockModel> b, int s, String chosenDate) {
         width: 50,
         decoration: BoxDecoration(border: Border.all()),
         child: Center(
-            child: Text(
-                "${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg")),
+            child: Text(""
+                // "${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg"
+                )),
       ),
     ]),
     Row(children: [

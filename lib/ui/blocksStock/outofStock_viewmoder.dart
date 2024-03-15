@@ -57,7 +57,7 @@ class BlocksStockViewModel extends BaseViewModel {
         OutTo: outTo.text.isEmpty ? "" : outTo.text,
         cumingFrom: cummingFrom.text.isEmpty ? "الصبه" : cummingFrom.text,
         fractions: [],
-        notfinals: [],
+        stages: [],
         id: DateTime.now().millisecondsSinceEpoch,
         Hscissor: int.tryParse(scissorcontroller.text) ?? 0,
         color: colercontroller.text,
@@ -80,7 +80,7 @@ class BlocksStockViewModel extends BaseViewModel {
         OutTo: "",
         cumingFrom: cummingFrom.text.isEmpty ? "الصبه" : cummingFrom.text,
         fractions: [],
-        notfinals: [],
+        stages: [],
         id: DateTime.now().microsecondsSinceEpoch + num,
         Hscissor: 0,
         color: blockcategory.color,
@@ -104,7 +104,7 @@ class BlocksStockViewModel extends BaseViewModel {
             OutTo: outTo.text.isEmpty ? "" : outTo.text,
             cumingFrom: cummingFrom.text.isEmpty ? "المصنع" : cummingFrom.text,
             fractions: [],
-            notfinals: [],
+            stages: [],
             actions: [BlockAction.create_block.add],
             Hscissor: 0,
             Rcissor: 0,
@@ -127,7 +127,8 @@ class BlocksStockViewModel extends BaseViewModel {
   double wight_of_fractions(BlockModel block) {
     return block.fractions.isNotEmpty
         ? block.fractions
-            .map((e) => e.item.W * e.item.L * e.item.L * e.item.density / 1000000)
+            .map((e) =>
+                e.item.W * e.item.L * e.item.L * e.item.density / 1000000)
             .reduce((a, b) => a + b)
             .removeTrailingZeros
             .to_double()
@@ -135,13 +136,15 @@ class BlocksStockViewModel extends BaseViewModel {
   }
 
   double wight_of_notfinal(BlockModel block) {
-    return block.notfinals.isNotEmpty
-        ? block.notfinals
-            .map((e) => e.wight)
-            .reduce((a, b) => a + b)
-            .removeTrailingZeros
-            .to_double()
-        : 0;
+    return
+        // block.notfinals.isNotEmpty
+        //     ? block.notfinals
+        //         .map((e) => e.wight)
+        //         .reduce((a, b) => a + b)
+        //         .removeTrailingZeros
+        //         .to_double()
+        //     :
+        0;
   }
 
   double difrence(BlockModel block) {

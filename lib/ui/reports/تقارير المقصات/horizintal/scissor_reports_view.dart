@@ -42,8 +42,8 @@ class _H_Reports_viewState extends State<H_Reports_view> {
             .toList();
         List<FractionModel> fractions =
             totalblocks.expand((element) => element.fractions).toList();
-        List<NotFinalmodel> notfinals =
-            totalblocks.expand((element) => element.notfinals).toList();
+        List<NotFinal> notfinals = [];
+        // totalblocks.map((element) => element.stages).map((element) => element).toList();
         return Scaffold(
           appBar: AppBar(
             actions: [
@@ -105,8 +105,9 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ExpansionTile(
-                    title: Text(
-                        " kg ${totalblocks.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : totalblocks.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(2)}    :  اجمالى الهوالك"),
+                    title: Text(""
+                        // " kg ${totalblocks.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : totalblocks.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(2)}    :  اجمالى الهوالك"
+                        ),
                     children: notfinals
                         .filter_notfinals___()
                         .map((e) => Row(
@@ -136,7 +137,8 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                               children: [
                                 Text(
                                     " ${vm.total_amount_for_single_siz__fractions(e, fractions)}  <=عدد"),
-                                Text(" ${e.item.color} ${e.item.type} ك${e.item.density}"),
+                                Text(
+                                    " ${e.item.color} ${e.item.type} ك${e.item.density}"),
                                 Text(" ${e.item.L}*${e.item.W}*${e.item.H}"),
                               ],
                             ))

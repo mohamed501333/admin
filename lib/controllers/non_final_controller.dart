@@ -13,17 +13,16 @@ class NonFinalController extends ChangeNotifier {
           .snapshots()
           .listen((event) {
         not_finals.clear();
-        not_finals.addAll(event.docs
-            .map((doc) => NotFinalmodel.fromMap(doc.data()))
-            .toList());
+        not_finals.addAll(
+            event.docs.map((doc) => NotFinal.fromMap(doc.data())).toList());
         notifyListeners();
       });
     } catch (e) {}
   }
 
-  List<NotFinalmodel> not_finals = [];
+  List<NotFinal> not_finals = [];
 
-  add_to_not_FInals(NotFinalmodel notfinal) async {
+  add_to_not_FInals(NotFinal notfinal) async {
     try {
       await FirebaseFirestore.instance
           .collection('nonFinal')

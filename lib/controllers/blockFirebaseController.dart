@@ -9,9 +9,7 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 
 class BlockFirebasecontroller extends ChangeNotifier {
-
   get_blocks_data() {
-
     try {
       FirebaseDatabase.instance
           .ref("blocks")
@@ -42,7 +40,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
         notifyListeners();
       });
     } catch (e) {}
-
   }
 
   List<BlockModel> all = [];
@@ -116,7 +113,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
     // Refresh_the_UI();
   }
-  
 
   Refresh_the_UI() {
     notifyListeners();
@@ -139,6 +135,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
       notifyListeners();
     } catch (e) {}
   }
+
   undeleteblock(BlockModel block) {
     int index = block.actions.indexWhere((element) =>
         element.action == BlockAction.archive_block.getactionTitle);
@@ -149,6 +146,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
       notifyListeners();
     } catch (e) {}
   }
+
   consumeblock(BlockModel block, String outto) {
     block.actions.add(BlockAction.consume_block.add);
     block.OutTo = outto;
@@ -189,25 +187,17 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  Add_fraction(
-      {required BlockModel block,
-      required List<FractionModel> fractions,
-      required int Hscissor,
-      required NotFinalmodel notfinal}) {
-    block.actions.add(BlockAction.cut_block_on_H.add);
-    block.Hscissor = Hscissor;
-    block.fractions.addAll(fractions);
-    block.notfinals.add(notfinal);
-
+  Cut_block({
+    required BlockModel block,
+  }) {
     try {
       FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
 
-  Add_not_finalTo_block(
-      {required BlockModel block, required NotFinalmodel notfinal}) {
-    block.notfinals.add(notfinal);
+  Add_not_finalTo_block({required BlockModel block, required Stage stage}) {
+    block.stages.add(stage);
 
     try {
       FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
@@ -224,7 +214,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
     block.Hscissor = 0;
     block.fractions.clear();
-    block.notfinals.clear();
 
     try {
       FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
@@ -255,7 +244,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
     //   notifyListeners();
     // } catch (e) {}
   }
-
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   var initialDateRange =

@@ -54,8 +54,7 @@ class Rscissor_viewmodel extends BaseViewModel {
         .length;
   }
 
-  double total_amount_for_notfinals(
-      NotFinalmodel e, List<NotFinalmodel> fractions) {
+  double total_amount_for_notfinals(NotFinal e, List<NotFinal> fractions) {
     return fractions
         .where(
           (f) => e.type == f.type,

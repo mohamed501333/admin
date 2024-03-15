@@ -186,58 +186,56 @@ extension Fd on List<ChemicalsModel> {
 }
 
 extension Filter on List<FinalProductModel> {
-
-
   List<FinalProductModel> filterItemsPasedOnDensites(
       BuildContext context, List<String> densities) {
     List<FinalProductModel> l = [];
     if (densities.isNotEmpty) {
       for (var f in densities) {
-      for (var i in this) {
-        if (i.density.toString() == f) {
-          l.add(i);
+        for (var i in this) {
+          if (i.density.toString() == f) {
+            l.add(i);
+          }
         }
       }
+      return l;
+    } else {
+      return this;
     }
-return l;
-  }else{return this;}
   }
 
   List<FinalProductModel> filterItemsPasedOncolors(
       BuildContext context, List<String> colors) {
     List<FinalProductModel> l = [];
-  if (colors.isNotEmpty) {
+    if (colors.isNotEmpty) {
       for (var f in colors) {
-      for (var i in this) {
-        if (i.color.toString() == f) {
-          l.add(i);
+        for (var i in this) {
+          if (i.color.toString() == f) {
+            l.add(i);
+          }
         }
       }
+      return l;
+    } else {
+      return this;
     }
-return l;
-  }else{return this;}
-    
   }
 
   List<FinalProductModel> filterItemsPasedOntypes(
       BuildContext context, List<String> types) {
     List<FinalProductModel> l = [];
-  if (types.isNotEmpty) {
+    if (types.isNotEmpty) {
       for (var f in types) {
-      for (var i in this) {
-        if (i.type.toString() == f) {
-          l.add(i);
+        for (var i in this) {
+          if (i.type.toString() == f) {
+            l.add(i);
+          }
         }
       }
+      return l;
+    } else {
+      return this;
     }
-return l;
-  }else{return this;}
   }
-
-
-
-
-
 
   List<FinalProductModel> filterFinalProductDateBetween(
       DateTimeRange initialDateRange) {
@@ -369,11 +367,12 @@ extension DD on List<ActionModel> {
 }
 
 // ignore: camel_case_extensions
-extension sdsd on List<NotFinalmodel> {
-  List<NotFinalmodel> filter_date(BuildContext context) {
+extension sdsd on List<NotFinal> {
+  List<NotFinal> filter_date(BuildContext context) {
     DateFormat format = DateFormat('yyyy/MM/dd');
     return where((element) =>
-        format.format(element.date) ==
+        format.format(element.actions.get_Date_of_action(
+            NotFinalAction.create_Not_final_cumingFrom_H.getTitle)) ==
         context.read<SettingController>().currentDate()).toList();
   }
 }
@@ -384,7 +383,7 @@ extension Filterfgddf on List<FractionModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].block_ID == nonRepetitive[j].block_ID ) {
+        if (this[i].block_ID == nonRepetitive[j].block_ID) {
           repeated = true;
         }
       }
@@ -419,9 +418,9 @@ extension Filterfgddf on List<FractionModel> {
 // filter date and not archive
 }
 
-extension C33r on List<NotFinalmodel> {
-  List<NotFinalmodel> filter_notfinals___() {
-    List<NotFinalmodel> nonRepetitive = [];
+extension C33r on List<NotFinal> {
+  List<NotFinal> filter_notfinals___() {
+    List<NotFinal> nonRepetitive = [];
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
@@ -452,6 +451,7 @@ extension C3 on List<ActionModel> {
   String get_order_Who_Of(OrderAction action) {
     return where((element) => element.action == action.getTitle).first.who;
   }
+
   String get_purche_Who_Of(PurcheAction action) {
     return where((element) => element.action == action.getTitle).first.who;
   }

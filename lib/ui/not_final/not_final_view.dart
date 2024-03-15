@@ -77,9 +77,6 @@ class Item001 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
-        List<NotFinalmodel> v =
-            myType.blocks.expand((e) => e.notfinals).toList();
-
         return Container(
           margin: const EdgeInsets.only(top: 13, left: 15, right: 15),
           decoration: BoxDecoration(
@@ -121,8 +118,7 @@ class Item001 extends StatelessWidget {
                       //       showAlertDialog(context, vm, 0, type);
                       //     },
                       //     icon: const Icon(Icons.add)),
-                      Text(
-                          "" "kg",
+                      Text("" "kg",
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -179,7 +175,7 @@ class TheTable0012 extends StatelessWidget {
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
                                         onTap: () {
-                                          vm.delete(context, user.id);
+                                          vm.delete(context, user.notFinal_ID);
                                         },
                                         child: const Icon(
                                           Icons.delete,
