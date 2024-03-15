@@ -87,11 +87,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
   c() {
     // print(11);
-    // for (var el in blocks.where((element) => element.serial=="D33s_9_3_2024" &&element.number>110&&element.number<162)) {
-    //   el.density=33.0;
-    //   el.color="برتقالى";
-    //   el.type="سوفت";
-    //   el.discreption="D33s_orange-180";
+    // for (var el in blocks.where((element) =>element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)==true)) {
+
     //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
     // }
   }
