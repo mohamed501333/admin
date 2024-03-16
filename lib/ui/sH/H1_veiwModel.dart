@@ -130,9 +130,9 @@ class H1VeiwModel extends BaseViewModel {
           worker: "",
           note: "",
           notfinals: [notfinal]);
-
+      block.Hscissor=scissor;
       block.stages.add(stage);
-
+ 
       block.actions.add(BlockAction.cut_block_on_H.add);
 
       block.fractions.addAll(permanentFractons);

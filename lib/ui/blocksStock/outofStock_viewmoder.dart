@@ -136,14 +136,15 @@ class BlocksStockViewModel extends BaseViewModel {
   }
 
   double wight_of_notfinal(BlockModel block) {
+    var notfinalsOfBlock=block.stages.expand((e) => e.notfinals);
     return
-        // block.notfinals.isNotEmpty
-        //     ? block.notfinals
-        //         .map((e) => e.wight)
-        //         .reduce((a, b) => a + b)
-        //         .removeTrailingZeros
-        //         .to_double()
-        //     :
+        notfinalsOfBlock.isNotEmpty
+            ? notfinalsOfBlock
+                .map((e) => e.wight)
+                .reduce((a, b) => a + b)
+                .removeTrailingZeros
+                .to_double()
+            :
         0;
   }
 

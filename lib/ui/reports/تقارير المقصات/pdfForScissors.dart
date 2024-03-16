@@ -21,7 +21,7 @@ class PdfBlockReport123 {
             tableCell: TextStyle(font: arabicFont, fontSize: 13),
             defaultTextStyle: TextStyle(font: arabicFont, fontSize: 10)),
         pageFormat: const PdfPageFormat(21.0 * cm, 29.7 * cm, marginAll: 3),
-        orientation: PageOrientation.landscape,
+        orientation: PageOrientation.natural,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         build: (context) {
@@ -32,6 +32,7 @@ class PdfBlockReport123 {
                     decoration: const BoxDecoration(color: PdfColors.grey500),
                     child: Text("يومية المقصات  الراسى $chosenDate",
                         style: const TextStyle(fontSize: 14)))),
+        
             Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -42,18 +43,7 @@ class PdfBlockReport123 {
                             style: const TextStyle(fontSize: 14))),
                     table0(blocks, 1, chosenDate),
                   ]),
-                  Column(children: [
-                    Center(
-                        child: Text("يومية المقص الراسى(2)",
-                            style: const TextStyle(fontSize: 14))),
-                    table0(blocks, 2, chosenDate),
-                  ]),
-                  Column(children: [
-                    Center(
-                        child: Text("يومية المقص الراسى(3)",
-                            style: const TextStyle(fontSize: 14))),
-                    table0(blocks, 3, chosenDate),
-                  ]),
+         
                 ]),
           ];
         },
@@ -97,7 +87,9 @@ table0(List<BlockModel> b, int s, String chosenDate) {
               .toStringAsFixed(1)
               .to_double();
 
-  return Column(children: [
+  return Column(
+    children: [
+  
     Row(children: [
       Container(
         height: 14,
@@ -112,6 +104,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
         child: Center(child: Text(" ${a.length}")),
       ),
     ]),
+   
     Row(children: [
       Container(
         height: 14,
@@ -126,6 +119,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
         child: Center(child: Text(" $totalblockvolume m3")),
       ),
     ]),
+    
     Row(children: [
       Container(
         height: 14,
@@ -142,6 +136,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
                 " ${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.density * e.lenth * e.width * e.hight / 1000000).reduce((value, element) => value + element).toStringAsFixed(1)} kg")),
       ),
     ]),
+    
     Row(children: [
       Container(
         height: 14,
@@ -156,6 +151,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
         child: Center(child: Text("$totlresultsvolume m3")),
       ),
     ]),
+   
     Row(children: [
       Container(
         height: 14,
@@ -172,6 +168,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
                 "${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.fractions).expand((element) => element.map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)).reduce((a, b) => a + b).toStringAsFixed(2)} kg ")),
       ),
     ]),
+    
     Row(children: [
       Container(
         height: 14,
@@ -189,6 +186,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
                 )),
       ),
     ]),
+  
     Row(children: [
       Container(
         height: 14,
@@ -205,6 +203,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
                 "${(100 * totlresultsvolume / totalblockvolume).toStringAsFixed(1)} %")),
       ),
     ]),
+   
     Row(children: [
       Container(
         height: 14,
@@ -221,6 +220,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
                 "${(100 - (100 * totlresultsvolume / totalblockvolume).toStringAsFixed(1).to_double()).toStringAsFixed(1)} %")),
       ),
     ]),
+  
     Column(
         children: notfinals
             .filter_notfinals___()
@@ -243,7 +243,9 @@ table0(List<BlockModel> b, int s, String chosenDate) {
                               style: const TextStyle(fontSize: 10)))),
                 ])))
             .toList()),
+  
     table2(fractions)
+  
   ]);
 }
 
@@ -288,7 +290,7 @@ table2(List<FractionModel> fractions) {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                            Text(" ${e.item.L}*${e.item.W}*${e.item.H}"),
+                            Text(" ${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
                             Text(
                                 " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
                           ]))),

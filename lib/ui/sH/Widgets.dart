@@ -150,20 +150,7 @@ class TheTable0001 extends StatelessWidget {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, blocks, child) {
         int x = 0;
-        List<BlockModel> b = blocks.search
-            .where((element) =>
-                format.format(element.actions.get_Date_of_action(
-                    BlockAction.cut_block_on_H.getactionTitle)) ==
-                chosenDate)
-            .where((element) => element.Hscissor == scissor)
-            .toList()
-            .where((element) =>
-                element.actions
-                    .block_action_Stutus(BlockAction.consume_block) ==
-                true)
-            .sortedBy<num>((element) => element.actions
-                .get_Date_of_action(BlockAction.cut_block_on_H.getactionTitle)
-                .millisecondsSinceEpoch);
+        List<BlockModel> b = getBloksCuttedOnThisScissor(blocks);
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(
@@ -214,6 +201,7 @@ class TheTable0001 extends StatelessWidget {
                                     : Colors.amber[50],
                               ),
                               children: [
+                                //الحذف
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
@@ -226,18 +214,21 @@ class TheTable0001 extends StatelessWidget {
                                           Icons.delete,
                                           color: Colors.red,
                                         ))),
+                                
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(vm
                                             .percentage(user)
                                             .removeTrailingZeros))),
+
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(vm
                                             .difrence(user)
                                             .removeTrailingZeros))),
+                                            
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
@@ -426,6 +417,24 @@ class TheTable0001 extends StatelessWidget {
         );
       },
     );
+  }
+
+  List<BlockModel> getBloksCuttedOnThisScissor(BlockFirebasecontroller blocks) {
+         List<BlockModel> b = blocks.search
+        .where((element) =>
+            format.format(element.actions.get_Date_of_action(
+                BlockAction.cut_block_on_H.getactionTitle)) ==
+            chosenDate)
+        .where((element) => element.stages.first.scissor== scissor )
+        .toList()
+        .where((element) =>
+            element.actions
+                .block_action_Stutus(BlockAction.consume_block) ==
+            true)
+        .sortedBy<num>((element) => element.actions
+            .get_Date_of_action(BlockAction.cut_block_on_H.getactionTitle)
+            .millisecondsSinceEpoch);
+    return b;
   }
 }
 

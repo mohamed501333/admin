@@ -355,7 +355,7 @@ class BlockModel {
   String OutTo;
   String notes;
   String discreption;
-
+  // bool isfinal;
   List<FractionModel> fractions;
   List<ActionModel> actions;
   List<Stage> stages;
@@ -478,7 +478,7 @@ class BlockModel {
         ),
       ),
       stages: List<Stage>.from(
-        (map['stages'] as List<int>).map<Stage>(
+        (map['stages'] as List<dynamic>).map<Stage>(
           (x) => Stage.fromMap(x as Map<String, dynamic>),
         ),
       ),

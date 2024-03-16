@@ -112,7 +112,7 @@ class Results extends StatelessWidget {
                                 border: Border.all(
                                     color: ColorManager.blueGrey, width: 3)),
                             child: Text(
-                              "${e.item.H}*${e.item.W}*${e.item.L}",
+                              "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}",
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             )),

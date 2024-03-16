@@ -31,9 +31,8 @@ class _H_Reports_viewState extends State<H_Reports_view> {
         List<BlockModel> totalblocks = myType.blocks
             .where((element) =>
                 element.Hscissor ==
-                    context
-                        .read<dropDowenContoller>()
-                        .initioalFor_ScissorsReports &&
+                    context.read<dropDowenContoller>().initioalFor_ScissorsReports 
+                    &&
                 element.actions
                         .get_Date_of_action(
                             BlockAction.cut_block_on_H.getactionTitle)
