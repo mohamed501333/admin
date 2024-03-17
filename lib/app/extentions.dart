@@ -414,6 +414,23 @@ extension Filterfgddf on List<FractionModel> {
     }
     return nonRepetitive;
   }
+  List<FractionModel> filter_Fractios_T_D_C() {
+    List<FractionModel> nonRepetitive = [];
+    for (var i = 0; i < length; i++) {
+      bool repeated = false;
+      for (var j = 0; j < nonRepetitive.length; j++) {
+        if (this[i].item.color == nonRepetitive[j].item.color &&
+            this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.density == nonRepetitive[j].item.density) {
+          repeated = true;
+        }
+      }
+      if (!repeated) {
+        nonRepetitive.add(this[i]);
+      }
+    }
+    return nonRepetitive;
+  }
 
 // filter date and not archive
 }
