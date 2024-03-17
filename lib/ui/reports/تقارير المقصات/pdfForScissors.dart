@@ -406,6 +406,11 @@ table3(List<FractionModel> fractions) {
                       child: Center(
                           child: Text(
                               "${vm.total_amount_for_single_siz__fractions(e, fractions)}"))),
+                  Container(
+                      padding: const EdgeInsets.all(0),
+                      child: Center(
+                          child: Text(
+                              "${vm.total_amount_for_single_siz__fractions(e, fractions)}"))),
                 ].reversed.toList()),
               )
               .toList(),
