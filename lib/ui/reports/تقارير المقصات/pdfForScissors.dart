@@ -354,6 +354,8 @@ table3(List<FractionModel> fractions) {
         Table(
           columnWidths: {
             0: const FlexColumnWidth(1),
+            1: const FlexColumnWidth(1),
+            2: const FlexColumnWidth(1),
             3: const FlexColumnWidth(3),
           },
           children: [
@@ -379,7 +381,9 @@ table3(List<FractionModel> fractions) {
         ),
         Table(
           columnWidths: {
-            0: const FlexColumnWidth(1),
+             0: const FlexColumnWidth(1),
+            1: const FlexColumnWidth(1),
+            2: const FlexColumnWidth(1),
             3: const FlexColumnWidth(3),
           },
           children: fractions
