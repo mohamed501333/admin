@@ -41,7 +41,7 @@ class PdfBlockReport123 {
                     Center(
                         child: Text("يومية المقص الراسى(1)",
                             style: const TextStyle(fontSize: 14))),
-                    table0(blocks, 1, chosenDate),
+                    table0(blocks, 3, chosenDate),
                   ]),
          
                 ]),
@@ -56,18 +56,18 @@ class PdfBlockReport123 {
 table0(List<BlockModel> b, int s, String chosenDate) {
   List<BlockModel> a = b
       .where((element) =>
-          element.Hscissor == s &&
+          // element.Hscissor == s &&
           element.actions
                   .get_Date_of_action(BlockAction.cut_block_on_H.getactionTitle)
                   .formatt() ==
               chosenDate)
       .toList();
-  List<FractionModel> fractions =
-      a.expand((element) => element.fractions).toList();
-  List<NotFinal> notfinals = [];
-  // a.expand((element) => element.notfinals).toList();
+
+  List<FractionModel> fractions =a.expand((element) => element.fractions).toList();
+  
+  List<NotFinal> notfinals = a.expand((element) => element.stages).expand((e) => e.notfinals).toList();
   scissor_viewmodel vm = scissor_viewmodel();
-  var totalblockvolume =
+  double  totalblockvolume =
       a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty
           ? 0
           : a
@@ -76,7 +76,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
               .toStringAsFixed(1)
               .to_double();
 
-  var totlresultsvolume =
+  double  totlresultsvolume =
       a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty
           ? 0
           : a
@@ -86,89 +86,138 @@ table0(List<BlockModel> b, int s, String chosenDate) {
               .reduce((a, b) => a + b)
               .toStringAsFixed(1)
               .to_double();
-
+double  diffrenceofvol=totalblockvolume-totlresultsvolume;
+double  bolckswt=a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.density * e.lenth * e.width * e.hight / 1000000).reduce((value, element) => value + element);
+double  resultewt=a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.fractions).expand((element) => element.map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)).reduce((a, b) => a + b);
   return Column(
     children: [
   
-    Row(children: [
-      Container(
-        height: 14,
-        width: 80,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(child: Text("عدد البلوكات")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(child: Text(" ${a.length}")),
-      ),
-    ]),
+    // Row(children: [
+    //   Container(
+    //     height: 14,
+    //     width: 80,
+    //     decoration: BoxDecoration(border: Border.all()),
+    //     child: Center(child: Text("عدد البلوكات")),
+    //   ),
+    //   Container(
+    //     height: 14,
+    //     width: 50,
+    //     decoration: BoxDecoration(border: Border.all()),
+    //     child: Center(child: Text(" ${a.length}")),
+    //   ),
+    // ]),
    
-    Row(children: [
+  
+
+
+//الوزن
+
+    Container(
+          decoration: BoxDecoration(border: Border.all()),
+
+  child:Row(children: [
+    Column(children: [
       Container(
         height: 14,
         width: 80,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(child: Text("حجم البلوكات")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(child: Text(" $totalblockvolume m3")),
-      ),
-    ]),
-    
-    Row(children: [
-      Container(
-        height: 14,
-        width: 80,
-        decoration: BoxDecoration(border: Border.all()),
         child: Center(child: Text("وزن البلوكات")),
       ),
       Container(
         height: 14,
         width: 50,
-        decoration: BoxDecoration(border: Border.all()),
         child: Center(
             child: Text(
-                " ${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.density * e.lenth * e.width * e.hight / 1000000).reduce((value, element) => value + element).toStringAsFixed(1)} kg")),
+                " ${bolckswt.toStringAsFixed(1)} kg")),
       ),
     ]),
     
-    Row(children: [
+    Column(children: [
       Container(
         height: 14,
         width: 80,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(child: Text("حجم النواتج")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(child: Text("$totlresultsvolume m3")),
-      ),
-    ]),
-   
-    Row(children: [
-      Container(
-        height: 14,
-        width: 80,
-        decoration: BoxDecoration(border: Border.all()),
         child: Center(child: Text("وزن النواتج")),
       ),
       Container(
         height: 14,
         width: 50,
-        decoration: BoxDecoration(border: Border.all()),
         child: Center(
             child: Text(
-                "${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.fractions).expand((element) => element.map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)).reduce((a, b) => a + b).toStringAsFixed(2)} kg ")),
+                "${resultewt.toStringAsFixed(1)} kg ")),
+      ),
+    ]),
+   
+      Column(children: [
+      Container(
+        height: 14,
+        width: 80,
+        child: Center(child: Text("الفرق")),
+      ),
+      Container(
+        height: 14,
+        width: 50,
+        child: Center(
+            child: Text(""
+                "${bolckswt.toDouble()-resultewt.toDouble()} kg"
+                )),
       ),
     ]),
     
+    
+    ]),
+ ),
+
+SizedBox(height: 5),
+//الحجم
+    Container(
+    decoration: BoxDecoration(border: Border.all()),
+      child:Row(children: [
+        
+          Column(children: [
+      Container(
+        height: 14,
+        width: 80,
+        child: Center(child: Text("حجم البلوكات")),
+      ),
+      Container(
+        height: 14,
+        width: 50,
+        child: Center(child: Text(" $totalblockvolume m3")),
+      ),
+    ]),
+    
+          Column(children: [
+      Container(
+        height: 14,
+        width: 80,
+        child: Center(child: Text("حجم النواتج")),
+      ),
+      Container(
+        height: 14,
+        width: 50,
+        child: Center(child: Text("$totlresultsvolume m3")),
+      ),
+    ]),
+        
+          Column(children: [
+      Container(
+        height: 14,
+        width: 80,
+        child: Center(child: Text("الفرق")),
+      ),
+      Container(
+        height: 14,
+        width: 50,
+        child: Center(
+            child: Text(
+                "${diffrenceofvol} m3"
+                )),
+      ),
+    ]),
+    
+    ]),
+ ),
+   
+//اجمالى دون التام
     Row(children: [
       Container(
         height: 14,
@@ -181,12 +230,11 @@ table0(List<BlockModel> b, int s, String chosenDate) {
         width: 50,
         decoration: BoxDecoration(border: Border.all()),
         child: Center(
-            child: Text(""
-                // "${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg"
-                )),
+            child: Text(
+                "${a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.expand((e) => e.stages).map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg")),
       ),
     ]),
-  
+//نسبة الدرحه الاولى
     Row(children: [
       Container(
         height: 14,
@@ -203,7 +251,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
                 "${(100 * totlresultsvolume / totalblockvolume).toStringAsFixed(1)} %")),
       ),
     ]),
-   
+   //نسبة  دون التام
     Row(children: [
       Container(
         height: 14,
@@ -220,7 +268,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
                 "${(100 - (100 * totlresultsvolume / totalblockvolume).toStringAsFixed(1).to_double()).toStringAsFixed(1)} %")),
       ),
     ]),
-  
+//دون التام
     Column(
         children: notfinals
             .filter_notfinals___()
@@ -255,7 +303,7 @@ table2(List<FractionModel> fractions) {
   return SizedBox(
       width: 210,
       child: Column(children: [
-        Center(child: Text("النواتج")),
+        Center(child: Text("(عدد)النواتج")),
         Table(
           columnWidths: {
             0: const FlexColumnWidth(1),
