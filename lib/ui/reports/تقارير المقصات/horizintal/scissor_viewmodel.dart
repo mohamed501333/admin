@@ -53,6 +53,31 @@ class scissor_viewmodel extends BaseViewModel {
         .toList()
         .length;
   }
+  double total_volume_for_T_D_C_Blocks(
+      Itme e, List<BlockModel> blocks) {
+    return blocks
+        .where(
+          (f) =>
+              e.color == f.color &&
+              e.density == f.density &&
+              e.type == f.type,
+        )
+        .map((e) => e.lenth*e.hight*e.width/1000000).reduce((a, b) => a+b)
+        ;
+  }
+  double total_volume_for_T_D_C_fractions(
+      Itme e, List<FractionModel> fract) {
+    return fract
+        .where(
+          (f) =>
+              e.color == f.item.color &&
+              e.density == f.item.density &&
+              e.type == f.item.type,
+        )
+        .map((e) => e.item.L*e.item.H*e.item.W/1000000).reduce((a, b) => a+b)
+        ;
+  }
+
 
   double total_amount_for_notfinals(NotFinal e, List<NotFinal> fractions) {
     return fractions

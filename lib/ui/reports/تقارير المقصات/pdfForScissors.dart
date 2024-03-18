@@ -75,6 +75,23 @@ table0(List<BlockModel> b, int s, String chosenDate) {
   return Row(children: [
     Column(
     children: [
+
+  Container(
+    decoration: BoxDecoration(color: PdfColors.grey100),
+    child:    Row(children: [
+      Container(
+   
+        child: Center(child: Text("عدد البلوكات=")),
+      ),
+      Container(
+   
+        child: Center(child: Text(" ${a.length}")),
+      ),
+    ]),
+  ),
+
+
+
 //الوزن
 
     Container(
@@ -260,26 +277,19 @@ SizedBox(height: 5),
                 "${a.expand((e) => e.stages).isEmpty ? 0 : a.expand((e) => e.stages).map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg")),
       ),
     ]),
-
     ]),
    ]),
 
-    Row(children: [
-      Container(
-   
-        child: Center(child: Text("عدد البلوكات=")),
-      ),
-      Container(
-   
-        child: Center(child: Text(" ${a.length}")),
-      ),
-    ]),
+ 
    
     table2(fractions)
   
-  ])
+  ]),
   
-                     ,table3( fractions)
+   Column(children: [
+    table3( a)
+   ,table4( a)
+   ])                 
 
   
   ]);
@@ -344,8 +354,9 @@ table2(List<FractionModel> fractions) {
 }
 
 
-table3(List<FractionModel> fractions) {
+table3(List<BlockModel> a) {
   scissor_viewmodel vm = scissor_viewmodel();
+  List<FractionModel> fractions =a.expand((element) => element.fractions).toList();
 
   return SizedBox(
       width: 210,
@@ -389,7 +400,11 @@ table3(List<FractionModel> fractions) {
           children: fractions
               .filter_Fractios_T_D_C()
               .map(
-                (e) => TableRow(
+                (e) {
+                  
+                double A=  vm.total_volume_for_T_D_C_Blocks(e.item, a);
+               double B=   vm.total_volume_for_T_D_C_fractions(e.item, fractions);
+                  return TableRow(
                     children: [
                   Container(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -404,18 +419,102 @@ table3(List<FractionModel> fractions) {
                       padding: const EdgeInsets.all(0),
                       child: Center(
                           child: Text(
-                              "${vm.total_amount_for_single_siz__fractions(e, fractions)}"))),
+                             A.toStringAsFixed(1)))),
                   Container(
                       padding: const EdgeInsets.all(0),
                       child: Center(
                           child: Text(
-                              "${vm.total_amount_for_single_siz__fractions(e, fractions)}"))),
+                             B.toStringAsFixed(1) ))),
                   Container(
                       padding: const EdgeInsets.all(0),
                       child: Center(
                           child: Text(
-                              "${vm.total_amount_for_single_siz__fractions(e, fractions)}"))),
-                ].reversed.toList()),
+                              (A-B).toStringAsFixed(1)))),
+                ].reversed.toList());},
+              )
+              .toList(),
+          border: TableBorder.all(width: 1, color: PdfColors.black),
+        )
+      ]));
+}
+
+table4(List<BlockModel> a) {
+  scissor_viewmodel vm = scissor_viewmodel();
+  List<FractionModel> fractions =a.expand((element) => element.fractions).toList();
+
+  return SizedBox(
+      width: 210,
+      child: Column(children: [
+        Center(child: Text("وزن")),
+        Table(
+          columnWidths: {
+            0: const FlexColumnWidth(1),
+            1: const FlexColumnWidth(1),
+            2: const FlexColumnWidth(1),
+            3: const FlexColumnWidth(3),
+          },
+          children: [
+            TableRow(
+                decoration: const BoxDecoration(color: PdfColors.grey100),
+                children: [
+                  Container(child: Center(child: Text("البيان"))),
+                  Container(
+                      color: PdfColors.grey100,
+                      padding: const EdgeInsets.all(1),
+                      child: Center(child: Text("البلوكات"))),
+                  Container(
+                      color: PdfColors.grey100,
+                      padding: const EdgeInsets.all(1),
+                      child: Center(child: Text("النواتج"))),
+                  Container(
+                      color: PdfColors.grey100,
+                      padding: const EdgeInsets.all(1),
+                      child: Center(child: Text("الفرق"))),
+                ].reversed.toList())
+          ],
+          border: TableBorder.all(width: 1, color: PdfColors.black),
+        ),
+        Table(
+          columnWidths: {
+             0: const FlexColumnWidth(1),
+            1: const FlexColumnWidth(1),
+            2: const FlexColumnWidth(1),
+            3: const FlexColumnWidth(3),
+          },
+          children: fractions
+              .filter_Fractios_T_D_C()
+              .map(
+                (e) {
+                  
+                double A=  vm.total_volume_for_T_D_C_Blocks(e.item, a)*e.item.density;
+               double B=   vm.total_volume_for_T_D_C_fractions(e.item, fractions)*e.item.density;
+                  return TableRow(
+                    children: [
+                  Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Center(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                            Text(
+                                " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
+                          ]))),
+                  Container(
+                      padding: const EdgeInsets.all(0),
+                      child: Center(
+                          child: Text(
+                             A.toStringAsFixed(1)))),
+                  Container(
+                      padding: const EdgeInsets.all(0),
+                      child: Center(
+                          child: Text(
+                             B.toStringAsFixed(1) ))),
+                  Container(
+                      padding: const EdgeInsets.all(0),
+                      child: Center(
+                          child: Text(
+                              (A-B).toStringAsFixed(1)))),
+                ].reversed.toList());},
               )
               .toList(),
           border: TableBorder.all(width: 1, color: PdfColors.black),
