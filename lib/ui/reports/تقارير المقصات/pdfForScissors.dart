@@ -77,7 +77,7 @@ table0(List<BlockModel> b, int s, String chosenDate) {
     children: [
 
   Container(
-    decoration: BoxDecoration(color: PdfColors.grey100),
+    decoration: const BoxDecoration(color: PdfColors.grey100),
     child:    Row(children: [
       Container(
    
