@@ -41,7 +41,7 @@ void main() async {
   FirebaseDatabase.instance.setPersistenceEnabled(true);
   FirebaseDatabase.instance.ref();
   database = await Database.create();
-  // FirebaseApi().initNoticfication();
+  // FirebaseApi().initNoticfication();96
   runApp(const MyApp());
 }
 

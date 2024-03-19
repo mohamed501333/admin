@@ -78,19 +78,19 @@ class BlockFirebasecontroller extends ChangeNotifier {
   //   }
   // }
   // c() {
-  //   print(11);
-  //   for (var el in all.where((element) => element.serial == "D35h_4-2-24")) {
-  //     el.type = "هارد";
-  //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-  //   }
+    // print(11);
+    // for (var el in all.where((element) => element.serial == "D18h_17_3_2024")) {
+    //   el.density = 18.0;
+    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    // }
   // }
 
   c() {
-    // print(11);
-    // for (var el in blocks.where((element) =>element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)==true)) {
-
-    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-    // }
+    print(11);
+    for (var el in blocks.where((element) => element.stages.isNotEmpty)) {
+       el.stages=[];
+      FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
+    }
   }
 
   void runFilter(String enteredKeyword) {
