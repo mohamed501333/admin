@@ -102,9 +102,12 @@ class H1VeiwModel extends BaseViewModel {
         item: item,
         underOperation: true,
         isfinal: false,
+        Ascissor:0 ,
+        Hscissor: scissor,
+        Rscissor: 0,
+        notfinals:[] ,
+        stage:1 ,
         note: "",
-        scissorStage: 0,
-        stages: [],
         actions: []);
 
     permanentFractons.add(fraction);
@@ -122,19 +125,12 @@ class H1VeiwModel extends BaseViewModel {
           wight: wightcontroller.text.to_double(),
           type: context.read<ObjectBoxController>().gdet(),
           scissor: scissor,
+          stage: 0,
           actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]);
 
-      var stage = Stage(
-          stageNum: block.stages.length + 1,
-          scissor: scissor,
-          worker: "",
-          note: "",
-          notfinals: [notfinal]);
+      block.stages.add(notfinal);
       block.Hscissor=scissor;
-      block.stages.add(stage);
- 
       block.actions.add(BlockAction.cut_block_on_H.add);
-
       block.fractions.addAll(permanentFractons);
 
       context.read<BlockFirebasecontroller>().Cut_block(block: block);
@@ -147,17 +143,21 @@ class H1VeiwModel extends BaseViewModel {
   }
 
   Add_not_finalTo_block(BuildContext context, BlockModel b) {
-    // context.read<BlockFirebasecontroller>().Add_not_finalTo_block(
-    //       notfinal: NotFinalmodel(
-    //           id: DateTime.now().millisecond,
-    //           date: DateTime.now(),
-    //           wight: wightcontroller.text.to_double(),
-    //           type: context.read<ObjectBoxController>().gdet(),
-    //           Rscissor: 0,
-    //           Hscissor: b.Hscissor,
-    //           actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]),
-    //       block: b,
-    //     );
+    context.read<BlockFirebasecontroller>().Add_not_finalTo_block(
+          notFinal: NotFinal(
+            sapa_ID: b.serial,
+            notFinal_ID:DateTime.now().microsecondsSinceEpoch ,
+            fraction_ID:0 ,
+            block_ID: b.id,
+            scissor: b.Hscissor,
+            stage:0 ,
+           StockRequisetionOrder_ID: 0,
+              wight: wightcontroller.text.to_double(),
+              type: context.read<ObjectBoxController>().gdet(),
+     
+              actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]),
+          block: b,
+        );
   }
 
   @override

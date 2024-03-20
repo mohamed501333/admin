@@ -87,8 +87,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
   c() {
     print(11);
-    for (var el in blocks.where((element) => element.stages.isNotEmpty)) {
+    for (var el in blocks.where((element) => element.fractions.isNotEmpty)) {
        el.stages=[];
+       el.fractions.clear();
       FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
     }
   }
@@ -193,8 +194,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  Add_not_finalTo_block({required BlockModel block, required Stage stage}) {
-    block.stages.add(stage);
+  Add_not_finalTo_block({required BlockModel block, required NotFinal notFinal}) {
+    block.stages.add(notFinal);
 
     try {
       FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());

@@ -133,7 +133,7 @@ class _Report2ForRState extends State<Report2ForR> {
 
   List<int> allstage(
       List<FractionModel> fractions, List<FinalProductModel> finalProdcuts) {
-    List<int> allStages = fractions.map((e) => e.scissorStage).toList() +
+    List<int> allStages = fractions.map((e) => e.stage).toList() +
         finalProdcuts.map((e) => e.stageOfR).toList();
     return allStages;
   }
@@ -236,7 +236,7 @@ class Details extends StatelessWidget {
                                 context,
                                 scissor,
                                 fractions
-                                    .where((element) => element.scissorStage == k)
+                                    .where((element) => element.stage == k)
                                     .toList())
                             .map((e) => Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -278,8 +278,7 @@ class Details extends StatelessWidget {
                       //دون التام
                       Column(
                         children: fractions
-                            .where((element) => element.scissorStage == k)
-                            .expand((s) => s.stages.map((e) => e.notfinals))
+                            .where((element) => element.stage == k)
                             .toList()
                             .map((f) => Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

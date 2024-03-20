@@ -24,7 +24,7 @@ class scissor_viewmodel extends BaseViewModel {
     return blocks
         .where(
           (f) =>
-              f.hashCode == scissor &&
+              f.Rcissor == scissor &&
               e.color == f.color &&
               e.density == f.density &&
               e.serial == f.serial &&
@@ -44,7 +44,6 @@ class scissor_viewmodel extends BaseViewModel {
           (f) =>
               e.item.color == f.item.color &&
               e.item.density == f.item.density &&
-              e.fraction_ID == f.fraction_ID &&
               e.item.H == f.item.H &&
               e.item.W == f.item.W &&
               e.item.L == f.item.L &&

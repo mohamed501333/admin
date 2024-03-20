@@ -136,7 +136,7 @@ class BlocksStockViewModel extends BaseViewModel {
   }
 
   double wight_of_notfinal(BlockModel block) {
-    var notfinalsOfBlock=block.stages.expand((e) => e.notfinals);
+    var notfinalsOfBlock=block.stages.map((e) => e);
     return
         notfinalsOfBlock.isNotEmpty
             ? notfinalsOfBlock
