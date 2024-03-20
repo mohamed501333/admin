@@ -30,7 +30,8 @@ class PdfForAllOfH{
         orientation: PageOrientation.natural,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
-        build: (context) {
+        build: (context) {  List<FractionModel> fractions =blocks.expand((element) => element.fractions).toList();
+
           return [
             SizedBox(height: 10),
             Center(
@@ -45,7 +46,8 @@ class PdfForAllOfH{
                 children: [
              
                     table0(blocks, chosenDate),
-         
+         table2(fractions)
+
                 ]),
           ];
         },
@@ -57,7 +59,6 @@ class PdfForAllOfH{
 
 table0(List<BlockModel> a, String chosenDate) {
     
-  List<FractionModel> fractions =a.expand((element) => element.fractions).toList();
   List<NotFinal> notfinals = a.expand((element) => element.stages).toList();
   scissor_viewmodel vm = scissor_viewmodel();
   double  totalblockvolume =a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty? 0: a.map((e) => e.lenth * e.width * e.hight / 1000000).reduce((value, element) => value + element).toStringAsFixed(1).to_double();
@@ -67,7 +68,9 @@ table0(List<BlockModel> a, String chosenDate) {
   double  resultewt=a.expand((e) => e.fractions).toList().isEmpty ? 0 : a.map((e) => e.fractions).expand((element) => element.map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)).reduce((a, b) => a + b);
   double  diffrenceofwt=bolckswt-resultewt;
 
-  return Row(children: [
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
     Column(
     children: [
 
@@ -84,9 +87,6 @@ table0(List<BlockModel> a, String chosenDate) {
       ),
     ]),
   ),
-
-
-
 //الوزن
 
     Container(
@@ -276,16 +276,13 @@ SizedBox(height: 5),
    ]),
 
  
-   
-    table2(fractions)
+    table3( a),
+    table4( a)
+    
   
   ]),
   
-   Column(children: [
-    table3( a)
-   ,table4( a)
-   ])                 
-
+               
   
   ]);
 }

@@ -1,12 +1,12 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/pdfForAllOF_h.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/pdfForScissors.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +55,28 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                           color: Colors.black, fontWeight: FontWeight.bold),
                     )),
                
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        permission().then((value) async {
+                          PdfForAllOfH.generate(1, myType.blocks, chosenDate)
+                              .then((value) => context.gonext(
+                                  context,
+                                  PDfpreview(
+                                    v: value.save(),
+                                  )));
+                        });
+                      },
+                      child: Container(
+                        child: const Row(
+                          children: [
+                            Text("كل الراسى"),
+                            Icon(Icons.picture_as_pdf),
+                          ],
+                        ),
+                      )),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
