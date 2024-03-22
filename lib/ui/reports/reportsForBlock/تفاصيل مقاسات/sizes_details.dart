@@ -121,7 +121,7 @@ class _BlocksSizesDetialsState extends State<BlocksSizesDetials> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: blocks
                       .filter_filter_type_and_density_color()
-                      .sortedBy<num>((element) => element.density)
+                      .sortedBy<num>((element) => element.item.density)
                       .map((e) => Column(
                             children: [
                               //الجزء الاصفر
@@ -152,7 +152,7 @@ class _BlocksSizesDetialsState extends State<BlocksSizesDetials> {
                                                         const EdgeInsets.all(
                                                             2.0),
                                                     child: Text(
-                                                      "volume: ${vm.sizes(e, blocks).isEmpty ? 0 : vm.sizes(e, blocks).map((e) => e.lenth * e.width * e.hight / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
+                                                      "volume: ${vm.sizes(e, blocks).isEmpty ? 0 : vm.sizes(e, blocks).map((e) => e.item.L * e.item.W * e.item.H / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
                                                       style: const TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 10,
@@ -168,7 +168,7 @@ class _BlocksSizesDetialsState extends State<BlocksSizesDetials> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          "ك${e.density.removeTrailingZeros}  ${e.type}  ${e.color}",
+                                          "ك${e.item.density.removeTrailingZeros}  ${e.item.type}  ${e.item.color}",
                                           style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
@@ -185,9 +185,9 @@ class _BlocksSizesDetialsState extends State<BlocksSizesDetials> {
                                       .sizes(e, blocks)
                                       .filter_filter_type_density_color_size()
                                       .sortedBy<num>((element) =>
-                                          element.width *
-                                          element.hight *
-                                          element.lenth)
+                                          element.item.W *
+                                          element.item.H *
+                                          element.item.L)
                                       .map((r) => TableRow(children: [
                                             Center(
                                               child: Text(
@@ -203,7 +203,7 @@ class _BlocksSizesDetialsState extends State<BlocksSizesDetials> {
                                                   const EdgeInsets.all(4.0),
                                               child: Center(
                                                 child: Text(
-                                                  "${r.lenth}*${r.width}",
+                                                  "${r.item.L}*${r.item.W}",
                                                   style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
@@ -251,7 +251,7 @@ class _BlocksSizesDetialsState extends State<BlocksSizesDetials> {
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Text(
-                                "grand volume : ${blocks.isEmpty ? 0 : blocks.map((e) => e.lenth * e.width * e.hight / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
+                                "grand volume : ${blocks.isEmpty ? 0 : blocks.map((e) => e.item.L * e.item.W * e.item.H / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,

@@ -271,7 +271,7 @@ class TheTable0001 extends StatelessWidget {
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(
-                                            "${user.wight.removeTrailingZeros.to_double() - vm.wight_of_fractions(user).removeTrailingZeros.to_double() - vm.wight_of_notfinal(user).removeTrailingZeros.to_double()}"))),
+                                            "${user.item.wight.removeTrailingZeros.to_double() - vm.wight_of_fractions(user).removeTrailingZeros.to_double() - vm.wight_of_notfinal(user).removeTrailingZeros.to_double()}"))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
@@ -367,7 +367,7 @@ class TheTable0001 extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                      child: Text(user.type.toString(),
+                                      child: Text(user.item.type.toString(),
                                           style: const TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w600)),
@@ -376,7 +376,7 @@ class TheTable0001 extends StatelessWidget {
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                       child: Text(
-                                        user.density.toString(),
+                                        user.item.density.toString(),
                                         style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400),
@@ -385,16 +385,18 @@ class TheTable0001 extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(user.color.toString()))),
+                                        child:
+                                            Text(user.item.color.toString()))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(user.wight.toString()))),
+                                        child:
+                                            Text(user.item.wight.toString()))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                       child: Text(
-                                          "${user.hight}*${user.width}*${user.lenth}"),
+                                          "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}"),
                                     )),
                                 Container(
                                     padding: const EdgeInsets.all(2),

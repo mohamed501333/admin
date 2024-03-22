@@ -76,14 +76,16 @@ class BlocksStock extends StatelessWidget {
                                     hint: "من ",
                                     keybordtupe: TextInputType.number,
                                     controller: vm.from,
-                                    validator: Validation.validateothers,
+                                    validator:
+                                        Validation.validatefromTo(context, vm),
                                   ),
                                   CustomTextFormField(
                                     width:
                                         MediaQuery.of(context).size.width * .16,
                                     hint: "الى ",
                                     controller: vm.to,
-                                    validator: Validation.validateothers,
+                                    validator:
+                                        Validation.validatefromTo(context, vm),
                                   ),
                                   CustomTextFormField(
                                     width:
@@ -154,17 +156,9 @@ class BlocksStock extends StatelessWidget {
                                                 .read<Category_controller>()
                                                 .initialFordropdowen !=
                                             null) {
-                                      for (var i = vm.from.text.to_int();
-                                          i < vm.to.text.to_int() + 1;
-                                          i++) {
-                                        vm.incertblock2(
-                                            context,
-                                            i,
-                                            context
-                                                .read<Category_controller>()
-                                                .initialFordropdowen!);
-                                      }
-
+                                      vm.incertblock2(
+                                        context,
+                                      );
                                       vm.clearfields();
                                     }
                                   },
@@ -450,7 +444,7 @@ class TheTable extends StatelessWidget {
                       16: FlexColumnWidth(.8),
                     },
                     children: blocks.search.reversed
-                        .sortedBy<num>((element) => element.id)
+                        .sortedBy<num>((element) => element.Block_Id)
                         .reversed
                         .take(context
                             .read<SettingController>()
@@ -461,8 +455,8 @@ class TheTable extends StatelessWidget {
                           return TableRow(
                               decoration: BoxDecoration(
                                 color: blocks.search
-                                                .sortedBy<num>(
-                                                    (element) => element.id)
+                                                .sortedBy<num>((element) =>
+                                                    element.Block_Id)
                                                 .indexOf(user) %
                                             2 ==
                                         0
@@ -585,7 +579,7 @@ class TheTable extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                      child: Text(user.type.toString(),
+                                      child: Text(user.item.type.toString(),
                                           style: const TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w600)),
@@ -594,7 +588,7 @@ class TheTable extends StatelessWidget {
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                       child: Text(
-                                        user.density.toString(),
+                                        user.item.density.toString(),
                                         style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400),
@@ -603,16 +597,18 @@ class TheTable extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(user.color.toString()))),
+                                        child:
+                                            Text(user.item.color.toString()))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(user.wight.toString()))),
+                                        child:
+                                            Text(user.item.wight.toString()))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                       child: Text(
-                                          "${user.hight}*${user.width}*${user.lenth}"),
+                                          "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}"),
                                     )),
                                 Container(
                                     padding: const EdgeInsets.all(2),
@@ -628,7 +624,7 @@ class TheTable extends StatelessWidget {
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(
-                                            "${1 + blocks.search.sortedBy<num>((element) => element.id).indexOf(user)}"))),
+                                            "${1 + blocks.search.sortedBy<num>((element) => element.Block_Id).indexOf(user)}"))),
                               ]);
                         })
                         .toList()
@@ -705,8 +701,8 @@ class ArchivedTheTable extends StatelessWidget {
                         children: blocks.search.reversed
                             .sortedBy<num>((element) => element.actions
                                 .get_Date_of_action(
-                                    BlockAction.archive_block.getactionTitle).millisecondsSinceEpoch
-                                )
+                                    BlockAction.archive_block.getactionTitle)
+                                .millisecondsSinceEpoch)
                             .reversed
                             .take(context
                                 .read<SettingController>()
@@ -716,8 +712,8 @@ class ArchivedTheTable extends StatelessWidget {
                               return TableRow(
                                   decoration: BoxDecoration(
                                     color: blocks.search
-                                                    .sortedBy<num>(
-                                                        (element) => element.id)
+                                                    .sortedBy<num>((element) =>
+                                                        element.Block_Id)
                                                     .indexOf(user) %
                                                 2 ==
                                             0
@@ -729,12 +725,10 @@ class ArchivedTheTable extends StatelessWidget {
                                         padding: const EdgeInsets.all(4),
                                         child: GestureDetector(
                                             onTap: () {
-                                      
-                                                context
-                                                    .read<
-                                                        BlockFirebasecontroller>()
-                                                    .undeleteblock(user);
-                                              
+                                              context
+                                                  .read<
+                                                      BlockFirebasecontroller>()
+                                                  .undeleteblock(user);
                                             },
                                             child: const Icon(
                                               Icons.delete,
@@ -847,7 +841,7 @@ class ArchivedTheTable extends StatelessWidget {
                                     Container(
                                         padding: const EdgeInsets.all(2),
                                         child: Center(
-                                          child: Text(user.type.toString(),
+                                          child: Text(user.item.type.toString(),
                                               style: const TextStyle(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.w600)),
@@ -856,7 +850,7 @@ class ArchivedTheTable extends StatelessWidget {
                                         padding: const EdgeInsets.all(2),
                                         child: Center(
                                           child: Text(
-                                            user.density.toString(),
+                                            user.item.density.toString(),
                                             style: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
@@ -865,18 +859,18 @@ class ArchivedTheTable extends StatelessWidget {
                                     Container(
                                         padding: const EdgeInsets.all(2),
                                         child: Center(
-                                            child:
-                                                Text(user.color.toString()))),
+                                            child: Text(
+                                                user.item.color.toString()))),
                                     Container(
                                         padding: const EdgeInsets.all(2),
                                         child: Center(
-                                            child:
-                                                Text(user.wight.toString()))),
+                                            child: Text(
+                                                user.item.wight.toString()))),
                                     Container(
                                         padding: const EdgeInsets.all(2),
                                         child: Center(
                                           child: Text(
-                                              "${user.hight}*${user.width}*${user.lenth}"),
+                                              "${user.item.H}*${user.item.W}*${user.item.L}"),
                                         )),
                                     Container(
                                         padding: const EdgeInsets.all(2),
@@ -892,7 +886,7 @@ class ArchivedTheTable extends StatelessWidget {
                                         padding: const EdgeInsets.all(2),
                                         child: Center(
                                             child: Text(
-                                                "${1 + blocks.search.sortedBy<num>((element) => element.id).indexOf(user)}"))),
+                                                "${1 + blocks.search.sortedBy<num>((element) => element.Block_Id).indexOf(user)}"))),
                                   ]);
                             })
                             .toList()

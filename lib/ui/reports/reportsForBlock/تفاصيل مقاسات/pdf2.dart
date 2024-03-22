@@ -59,7 +59,7 @@ content(List<BlockModel> blocks, bool? showVolume) {
     crossAxisAlignment: CrossAxisAlignment.center,
     children: blocks
         .filter_filter_type_and_density_color()
-        .sortedBy<num>((element) => element.density)
+        .sortedBy<num>((element) => element.item.density)
         .map((e) => Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -83,7 +83,7 @@ content(List<BlockModel> blocks, bool? showVolume) {
                                     child: Padding(
                                       padding: const EdgeInsets.all(2.0),
                                       child: Text(
-                                        "volume: ${vm.sizes(e, blocks).isEmpty ? 0 : vm.sizes(e, blocks).map((e) => e.lenth * e.width * e.hight / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
+                                        "volume: ${vm.sizes(e, blocks).isEmpty ? 0 : vm.sizes(e, blocks).map((e) => e.item.L * e.item.W * e.item.H / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
                                         style: const TextStyle(
                                           color: PdfColors.white,
                                           fontSize: 10,
@@ -93,7 +93,7 @@ content(List<BlockModel> blocks, bool? showVolume) {
                                   ),
                                 ),
                           Text(
-                            "ك${e.density.removeTrailingZeros}  ${e.type}  ${e.color}",
+                            "ك${e.item.density.removeTrailingZeros}  ${e.item.type}  ${e.item.color}",
                             style: const TextStyle(fontSize: 12),
                           ),
                           Text(
@@ -113,7 +113,7 @@ content(List<BlockModel> blocks, bool? showVolume) {
                         .sizes(e, blocks)
                         .filter_filter_type_density_color_size()
                         .sortedBy<num>((element) =>
-                            element.width * element.hight * element.lenth)
+                            element.item.W * element.item.H * element.item.L)
                         .map((r) => TableRow(children: [
                               Center(
                                 child: Text(
@@ -127,7 +127,7 @@ content(List<BlockModel> blocks, bool? showVolume) {
                                 padding: const EdgeInsets.all(2.0),
                                 child: Center(
                                   child: Text(
-                                    "${r.lenth}*${r.width}*${r.hight}",
+                                    "${r.item.L}*${r.item.W}*${r.item.H}",
                                     style: const TextStyle(fontSize: 12),
                                   ),
                                 ),
@@ -156,7 +156,7 @@ Column grandtotal(List<BlockModel> blocks, showVolume) {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
-                    "grand volume : ${blocks.isEmpty ? 0 : blocks.map((e) => e.lenth * e.width * e.hight / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
+                    "grand volume : ${blocks.isEmpty ? 0 : blocks.map((e) => e.item.L * e.item.W * e.item.H / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)} ",
                     style: const TextStyle(
                       color: PdfColors.white,
                       fontSize: 18,

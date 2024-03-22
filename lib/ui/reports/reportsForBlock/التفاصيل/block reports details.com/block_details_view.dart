@@ -194,7 +194,8 @@ class Block_detaild_view extends StatelessWidget {
                         onTap: () {
                           blocks.deleteblock(blocks.blocks
                               .where((element) =>
-                                  element.id == row.getCells().first.value)
+                                  element.Block_Id ==
+                                  row.getCells().first.value)
                               .first);
                         },
                         child: Container(
@@ -239,17 +240,18 @@ class EmployeeDataSource22 extends DataGridSource {
   }) {
     data = coumingData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<int>(columnName: 'id', value: e.id),
+              DataGridCell<int>(columnName: 'id', value: e.Block_Id),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.hight}*${e.width}*${e.lenth}"),
-              DataGridCell<String>(columnName: 'color', value: e.color),
-              DataGridCell<double>(columnName: 'density', value: e.density),
-              DataGridCell<String>(columnName: 'type', value: e.type),
+                  value: "${e.item.H}*${e.item.W}*${e.item.L}"),
+              DataGridCell<String>(columnName: 'color', value: e.item.color),
+              DataGridCell<double>(
+                  columnName: 'density', value: e.item.density),
+              DataGridCell<String>(columnName: 'type', value: e.item.type),
               DataGridCell<String>(columnName: 'serial', value: e.serial),
               DataGridCell<String>(
                   columnName: 'description', value: e.discreption),
-              DataGridCell<double>(columnName: 'wight', value: e.wight),
+              DataGridCell<double>(columnName: 'wight', value: e.item.wight),
               DataGridCell<int>(columnName: 'num', value: e.number),
               DataGridCell<String>(
                   columnName: 'date',
@@ -336,11 +338,11 @@ class EmployeeDataSource22 extends DataGridSource {
             List<String> b = i.replaceAll("*", " ").split(" ");
             context
                 .read<BlockFirebasecontroller>()
-                .edit_cell_size(oldValue, u.id, column.columnName, b);
+                .edit_cell_size(oldValue, u.Block_Id, column.columnName, b);
           } else {
             context
                 .read<BlockFirebasecontroller>()
-                .edit_cell(u.id, column.columnName, value);
+                .edit_cell(u.Block_Id, column.columnName, value);
             submitCell();
           }
           submitCell();

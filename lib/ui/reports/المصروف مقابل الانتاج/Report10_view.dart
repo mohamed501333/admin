@@ -94,7 +94,7 @@ class Report10View extends StatelessWidget {
                             children: [
                           Center(
                             child: Text(
-                                "${e.color} ${e.type} ك ${e.density.removeTrailingZeros}"),
+                                "${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
                           ),
                           Center(child: Text(a.toStringAsFixed(1))),
                           Center(child: Text(b.toStringAsFixed(1))),

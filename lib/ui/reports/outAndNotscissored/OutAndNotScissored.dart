@@ -138,13 +138,13 @@ class TheTable9 extends StatelessWidget {
                           )),
                       Container(
                           padding: const EdgeInsets.all(2),
-                          child: Text(user.type.toString(),
+                          child: Text(user.item.type.toString(),
                               style: const TextStyle(
                                   fontSize: 10, fontWeight: FontWeight.w600))),
                       Container(
                           padding: const EdgeInsets.all(2),
                           child: Text(
-                            user.density.toString(),
+                            user.item.density.toString(),
                             style: const TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w400),
                           )),
@@ -153,11 +153,11 @@ class TheTable9 extends StatelessWidget {
                           child: Text(user.hashCode.toString())),
                       Container(
                           padding: const EdgeInsets.all(2),
-                          child: Text(user.color.toString())),
+                          child: Text(user.item.color.toString())),
                       Container(
                           padding: const EdgeInsets.all(2),
                           child: Text(
-                              "${user.hight}*${user.width}*${user.lenth}")),
+                              "${user.item.H}*${user.item.W}*${user.item.L}")),
                       Container(
                           padding: const EdgeInsets.all(2),
                           child: Text(

@@ -53,6 +53,34 @@ class Validation {
     };
   }
 
+  static validatefromTo(BuildContext context, BlocksStockViewModel vm) {
+    return (String? value) {
+      if (value!.isEmpty) {
+        return "فارغ";
+      }
+      if (vm.to.text.to_int() < vm.from.text.to_int()) {
+        return "حطأ";
+      }
+
+      var list1 = vm.to.text.to_int() < vm.from.text.to_int()
+          ? []
+          : List<int>.generate(vm.to.text.to_int() - vm.from.text.to_int() + 1,
+              (i) => vm.from.text.to_int() + i);
+      var list2 = context
+          .read<BlockFirebasecontroller>()
+          .blocks
+          .where((element) => element.serial == vm.codecontroller.text)
+          .map((e) => e.number)
+          .toList();
+      list2.removeWhere((item) => !list1.contains(item));
+      if (list2.isNotEmpty) {
+        return "موجود";
+      }
+
+      return null;
+    };
+  }
+
   static if_cusomer_serial_exist(BuildContext context) {
     return (String? value) {
       if (value!.isEmpty) {

@@ -211,7 +211,8 @@ class buttoms extends StatelessWidget {
                 int vloumeOfblock;
 
                 if (vm.permanentFractons.isNotEmpty) {
-                  vloumeOfblock = m.width * m.lenth * m.hight;
+                  vloumeOfblock =
+                      m.item.W.toInt() * m.item.L.toInt() * m.item.H.toInt();
                   vloumeOfFractions = vm.permanentFractons
                       .map((e) => e.item.W * e.item.H * e.item.L)
                       .reduce((a, b) => a + b);

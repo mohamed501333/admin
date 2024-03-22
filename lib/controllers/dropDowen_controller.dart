@@ -79,7 +79,7 @@ class dropDowenContoller extends ChangeNotifier {
                 element.actions.if_action_exist(
                     BlockAction.consume_block.getactionTitle) ==
                 false)
-            .where((element) => element.density == initialdensity)
+            .where((element) => element.item.density == initialdensity)
             .toList()
         : DoNothingAction;
     initialcolor != null
@@ -90,7 +90,7 @@ class dropDowenContoller extends ChangeNotifier {
                 element.actions.if_action_exist(
                     BlockAction.consume_block.getactionTitle) ==
                 false)
-            .where((element) => element.color == initialcolor)
+            .where((element) => element.item.color == initialcolor)
             .toList()
         : DoNothingAction;
     initialtype != null
@@ -101,7 +101,7 @@ class dropDowenContoller extends ChangeNotifier {
                 element.actions.if_action_exist(
                     BlockAction.consume_block.getactionTitle) ==
                 false)
-            .where((element) => element.type == initialtype)
+            .where((element) => element.item.type == initialtype)
             .toList()
         : DoNothingAction;
     if (initialtype != null && initialcolor != null) {
@@ -113,7 +113,8 @@ class dropDowenContoller extends ChangeNotifier {
                   .if_action_exist(BlockAction.consume_block.getactionTitle) ==
               false)
           .where((element) =>
-              element.color == initialcolor && element.type == initialtype)
+              element.item.color == initialcolor &&
+              element.item.type == initialtype)
           .toList();
     }
     if (initialtype != null && initialdensity != null) {
@@ -125,7 +126,8 @@ class dropDowenContoller extends ChangeNotifier {
                   .if_action_exist(BlockAction.consume_block.getactionTitle) ==
               false)
           .where((element) =>
-              element.density == initialdensity && element.type == initialtype)
+              element.item.density == initialdensity &&
+              element.item.type == initialtype)
           .toList();
     }
     if (initialdensity != null && initialcolor != null) {
@@ -137,8 +139,8 @@ class dropDowenContoller extends ChangeNotifier {
                   .if_action_exist(BlockAction.consume_block.getactionTitle) ==
               false)
           .where((element) =>
-              element.density == initialdensity &&
-              element.color == initialcolor)
+              element.item.density == initialdensity &&
+              element.item.color == initialcolor)
           .toList();
     }
 
@@ -149,17 +151,17 @@ class dropDowenContoller extends ChangeNotifier {
 
   String? initialtype;
   List<String> filterType() {
-    return blocks.map((e) => e.type).toSet().toList();
+    return blocks.map((e) => e.item.type).toSet().toList();
   }
 
   String? initialcolor;
   List<String> filtercolor() {
-    return blocks.map((e) => e.color).toSet().toList();
+    return blocks.map((e) => e.item.color).toSet().toList();
   }
 
   double? initialdensity;
   List<double> filterdensity() {
-    return blocks.map((e) => e.density.toDouble()).toSet().toList();
+    return blocks.map((e) => e.item.density.toDouble()).toSet().toList();
   }
 
   String? selectedreport;
