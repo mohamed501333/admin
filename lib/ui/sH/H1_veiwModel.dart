@@ -82,31 +82,31 @@ class H1VeiwModel extends BaseViewModel {
     var w = e.width.removeTrailingZeros.to_double();
     var h = e.hight.removeTrailingZeros.to_double();
     var volume = L * w * h / 1000000;
-    var wight = block.density * L * w * h / 1000000;
+    var wight = block.item.density * L * w * h / 1000000;
 
     var item = Itme(
         L: L,
         W: w,
         H: h,
-        density: block.density,
+        density: block.item.density,
         volume: volume,
         wight: wight,
-        color: block.color,
-        type: block.type,
+        color: block.item.color,
+        type: block.item.type,
         price: 0);
 
     var fraction = FractionModel(
         fraction_ID: DateTime.now().microsecondsSinceEpoch,
         sapa_ID: block.serial,
-        block_ID: block.id,
+        block_ID: block.Block_Id,
         item: item,
         underOperation: true,
         isfinal: false,
-        Ascissor:0 ,
+        Ascissor: 0,
         Hscissor: scissor,
         Rscissor: 0,
-        notfinals:[] ,
-        stage:1 ,
+        notfinals: [],
+        stage: 1,
         note: "",
         actions: []);
 
@@ -119,7 +119,7 @@ class H1VeiwModel extends BaseViewModel {
       var notfinal = NotFinal(
           notFinal_ID: DateTime.now().microsecondsSinceEpoch,
           sapa_ID: block.serial,
-          block_ID: block.id,
+          block_ID: block.Block_Id,
           fraction_ID: 0,
           StockRequisetionOrder_ID: 0,
           wight: wightcontroller.text.to_double(),
@@ -128,8 +128,8 @@ class H1VeiwModel extends BaseViewModel {
           stage: 0,
           actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]);
 
-      block.stages.add(notfinal);
-      block.Hscissor=scissor;
+      block.notFinals.add(notfinal);
+      block.Hscissor = scissor;
       block.actions.add(BlockAction.cut_block_on_H.add);
       block.fractions.addAll(permanentFractons);
 
@@ -145,16 +145,15 @@ class H1VeiwModel extends BaseViewModel {
   Add_not_finalTo_block(BuildContext context, BlockModel b) {
     context.read<BlockFirebasecontroller>().Add_not_finalTo_block(
           notFinal: NotFinal(
-            sapa_ID: b.serial,
-            notFinal_ID:DateTime.now().microsecondsSinceEpoch ,
-            fraction_ID:0 ,
-            block_ID: b.id,
-            scissor: b.Hscissor,
-            stage:0 ,
-           StockRequisetionOrder_ID: 0,
+              sapa_ID: b.serial,
+              notFinal_ID: DateTime.now().microsecondsSinceEpoch,
+              fraction_ID: 0,
+              block_ID: b.Block_Id,
+              scissor: b.Hscissor,
+              stage: 0,
+              StockRequisetionOrder_ID: 0,
               wight: wightcontroller.text.to_double(),
               type: context.read<ObjectBoxController>().gdet(),
-     
               actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]),
           block: b,
         );

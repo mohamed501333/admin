@@ -124,27 +124,27 @@ Widget dataa(List<BlockModel> blocks) {
                     Container(
                       width: 40,
                       decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(child: Text(e.density.toString())),
+                      child: Center(child: Text(e.item.density.toString())),
                     ),
                     Container(
                       width: 40,
                       decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(child: Text(e.color)),
+                      child: Center(child: Text(e.item.color)),
                     ),
                     Container(
                       width: 40,
                       decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(child: Text(e.lenth.toString())),
+                      child: Center(child: Text(e.item.L.toString())),
                     ),
                     Container(
                       width: 40,
                       decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(child: Text(e.width.toString())),
+                      child: Center(child: Text(e.item.W.toString())),
                     ),
                     Container(
                       width: 40,
                       decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(child: Text(e.hight.toString())),
+                      child: Center(child: Text(e.item.H.toString())),
                     ),
                     Container(
                       width: 115,

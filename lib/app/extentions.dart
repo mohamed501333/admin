@@ -414,6 +414,7 @@ extension Filterfgddf on List<FractionModel> {
     }
     return nonRepetitive;
   }
+
   List<FractionModel> filter_Fractios_T_D_C() {
     List<FractionModel> nonRepetitive = [];
     for (var i = 0; i < length; i++) {
@@ -534,7 +535,7 @@ extension A1 on List<BlockModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].id == nonRepetitive[j].id) {
+        if (this[i].Block_Id == nonRepetitive[j].Block_Id) {
           repeated = true;
         }
       }
@@ -562,8 +563,8 @@ extension A1 on List<BlockModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].type == nonRepetitive[j].type &&
-            this[i].density == nonRepetitive[j].density) {
+        if (this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.density == nonRepetitive[j].item.density) {
           repeated = true;
         }
       }
@@ -579,9 +580,9 @@ extension A1 on List<BlockModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].type == nonRepetitive[j].type &&
-            this[i].color == nonRepetitive[j].color &&
-            this[i].density == nonRepetitive[j].density) {
+        if (this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.color == nonRepetitive[j].item.color &&
+            this[i].item.density == nonRepetitive[j].item.density) {
           repeated = true;
         }
       }
@@ -613,14 +614,14 @@ extension A1 on List<BlockModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].type == nonRepetitive[j].type &&
-            this[i].density == nonRepetitive[j].density &&
-            this[i].color == nonRepetitive[j].color &&
+        if (this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.density == nonRepetitive[j].item.density &&
+            this[i].item.color == nonRepetitive[j].item.color &&
 
             // this[i].hight == nonRepetitive[j].hight &&
 
-            this[i].lenth == nonRepetitive[j].lenth &&
-            this[i].width == nonRepetitive[j].width) {
+            this[i].item.L == nonRepetitive[j].item.L &&
+            this[i].item.W == nonRepetitive[j].item.W) {
           repeated = true;
         }
       }
@@ -636,13 +637,13 @@ extension A1 on List<BlockModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].type == nonRepetitive[j].type &&
-            this[i].density == nonRepetitive[j].density &&
-            this[i].color == nonRepetitive[j].color &&
+        if (this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.density == nonRepetitive[j].item.density &&
+            this[i].item.color == nonRepetitive[j].item.color &&
             this[i].serial == nonRepetitive[j].serial &&
-            this[i].lenth == nonRepetitive[j].lenth &&
-            this[i].width == nonRepetitive[j].width &&
-            this[i].hight == nonRepetitive[j].hight) {
+            this[i].item.L == nonRepetitive[j].item.L &&
+            this[i].item.W == nonRepetitive[j].item.W &&
+            this[i].item.H == nonRepetitive[j].item.H) {
           repeated = true;
         }
       }

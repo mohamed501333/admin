@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84%20%D9%85%D9%82%D8%A7%D8%B3%D8%A7%D8%AA/pdf2.dart';
 import 'package:provider/provider.dart';
 
 class BlocksStockViewModel extends BaseViewModel {
@@ -43,81 +45,113 @@ class BlocksStockViewModel extends BaseViewModel {
   }
 
   incertblock(BuildContext context) {
-    bool co = context.read<SettingController>().valueOfRadio1;
+    var L = double.parse(lenthcontroller.text);
+    var w = double.parse(widthcontroller.text);
+    var H = double.parse(hightncontroller.text);
+    BlockWetOutput wetOutPut =
+        BlockWetOutput(L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
+
+    Itme item = Itme(
+        L: L,
+        W: w,
+        H: H,
+        density: double.parse(densitycontroller.text),
+        volume: L * w * H / 1000000,
+        wight: wightcontroller.text.to_double(),
+        color: colercontroller.text,
+        type: typecontroller.text,
+        price: 0);
     context.read<BlockFirebasecontroller>().addblock(BlockModel(
+        item: item,
         discreption: blockdesription.text,
-        actions: co == true
-            ? [
-                BlockAction.create_block.add,
-                BlockAction.consume_block.add,
-              ]
-            : [BlockAction.create_block.add],
-        //هنا اذا كان الخيار مفعل فى الاعدادات
-        //صرف عند الاضافه
+        actions: [BlockAction.create_block.add],
         OutTo: outTo.text.isEmpty ? "" : outTo.text,
         cumingFrom: cummingFrom.text.isEmpty ? "الصبه" : cummingFrom.text,
         fractions: [],
-        stages: [],
-        id: DateTime.now().millisecondsSinceEpoch,
+        Block_Id: DateTime.now().millisecondsSinceEpoch,
         Hscissor: int.tryParse(scissorcontroller.text) ?? 0,
-        color: colercontroller.text,
-        density: double.parse(densitycontroller.text),
-        type: typecontroller.text,
         serial: codecontroller.text,
         number: int.parse(blocknumbercontroller.text),
-        width: int.parse(widthcontroller.text),
-        lenth: int.parse(lenthcontroller.text),
-        hight: int.parse(hightncontroller.text),
-        wight: wightcontroller.text.to_double(),
         Rcissor: 0,
-        notes: notes.text.isEmpty ? "" : notes.text));
+        notes: notes.text.isEmpty ? "" : notes.text,
+        wetOutPut: wetOutPut,
+        notFinals: []));
   }
 
-  incertblock2(BuildContext context, int num, BlockCategory blockcategory) {
-    context.read<BlockFirebasecontroller>().addblock(BlockModel(
-        discreption: blockcategory.description,
-        actions: [BlockAction.create_block.add],
-        OutTo: "",
-        cumingFrom: cummingFrom.text.isEmpty ? "الصبه" : cummingFrom.text,
-        fractions: [],
-        stages: [],
-        id: DateTime.now().microsecondsSinceEpoch + num,
-        Hscissor: 0,
-        color: blockcategory.color,
-        density: double.parse(blockcategory.density),
-        type: blockcategory.type,
-        serial: codecontroller.text,
-        number: num,
-        width: int.parse(widthcontroller.text),
-        lenth: int.parse(lenthcontroller.text),
-        hight: int.parse(hightncontroller.text),
-        wight: wightcontroller.text.to_double(),
-        Rcissor: 0,
-        notes: notes.text.isEmpty ? "" : notes.text));
+  incertblock2(BuildContext context) {
+    BlockCategory blockcategory =
+        context.read<Category_controller>().initialFordropdowen!;
+    List<BlockModel> s = [];
+    for (var i = from.text.to_int(); i < to.text.to_int() + 1; i++) {
+      var L = double.parse(lenthcontroller.text);
+      var w = double.parse(widthcontroller.text);
+      var H = double.parse(hightncontroller.text);
+      Itme item = Itme(
+          L: L,
+          W: w,
+          H: H,
+          density: double.parse(blockcategory.density),
+          volume: L * w * H / 1000000,
+          wight: wightcontroller.text.to_double(),
+          color: blockcategory.color,
+          type: blockcategory.type,
+          price: 0);
+      BlockWetOutput wetOutPut =
+          BlockWetOutput(L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
+
+      BlockModel block = BlockModel(
+          item: item,
+          notFinals: [],
+          wetOutPut: wetOutPut,
+          discreption: blockcategory.description,
+          actions: [BlockAction.create_block.add],
+          OutTo: "",
+          cumingFrom: cummingFrom.text.isEmpty ? "الصبه" : cummingFrom.text,
+          fractions: [],
+          Block_Id: DateTime.now().microsecondsSinceEpoch + i,
+          Hscissor: 0,
+          serial: codecontroller.text,
+          number: i,
+          Rcissor: 0,
+          notes: notes.text.isEmpty ? "" : notes.text);
+      s.add(block);
+    }
+    context.read<BlockFirebasecontroller>().addblocklist(s);
   }
 
   incertblockformchip(BuildContext context, ChipBlockModel chi) {
+    var L = double.parse(lenthcontroller.text);
+    var w = double.parse(widthcontroller.text);
+    var H = double.parse(hightncontroller.text);
+    BlockWetOutput wetOutPut =
+        BlockWetOutput(L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
+
+    Itme item = Itme(
+        L: chi.lenth.removeTrailingZeros.to_double(),
+        W: chi.width.removeTrailingZeros.to_double(),
+        H: chi.hight.removeTrailingZeros.to_double(),
+        density: chi.density,
+        volume: L * w * H / 1000000,
+        wight: chi.wight,
+        color: chi.color,
+        type: chi.type,
+        price: 0);
     int num = context.read<SettingController>().number;
     context.read<BlockFirebasecontroller>().addblock(
           BlockModel(
+            item: item,
+            notFinals: [],
+            wetOutPut: wetOutPut,
             discreption: chi.description,
             OutTo: outTo.text.isEmpty ? "" : outTo.text,
             cumingFrom: cummingFrom.text.isEmpty ? "المصنع" : cummingFrom.text,
             fractions: [],
-            stages: [],
             actions: [BlockAction.create_block.add],
             Hscissor: 0,
             Rcissor: 0,
-            wight: chi.wight,
-            id: DateTime.now().millisecondsSinceEpoch,
-            color: chi.color,
-            density: chi.density,
-            type: chi.type,
+            Block_Id: DateTime.now().millisecondsSinceEpoch,
             serial: chi.serial,
             number: num,
-            width: chi.width.removeTrailingZeros.to_int(),
-            lenth: chi.lenth.removeTrailingZeros.to_int(),
-            hight: chi.hight.removeTrailingZeros.to_int(),
             notes: chi.notes,
           ),
         );
@@ -136,23 +170,23 @@ class BlocksStockViewModel extends BaseViewModel {
   }
 
   double wight_of_notfinal(BlockModel block) {
-    var notfinalsOfBlock=block.stages.map((e) => e);
-    return
-        notfinalsOfBlock.isNotEmpty
-            ? notfinalsOfBlock
-                .map((e) => e.wight)
-                .reduce((a, b) => a + b)
-                .removeTrailingZeros
-                .to_double()
-            :
-        0;
+    var notfinalsOfBlock = block.notFinals.map((e) => e);
+    return notfinalsOfBlock.isNotEmpty
+        ? notfinalsOfBlock
+            .map((e) => e.wight)
+            .reduce((a, b) => a + b)
+            .removeTrailingZeros
+            .to_double()
+        : 0;
   }
 
   double difrence(BlockModel block) {
-    return block.wight - wight_of_fractions(block) - wight_of_notfinal(block);
+    return block.item.wight -
+        wight_of_fractions(block) -
+        wight_of_notfinal(block);
   }
 
   double percentage(BlockModel block) {
-    return 100 * wight_of_notfinal(block) / block.wight;
+    return 100 * wight_of_notfinal(block) / block.item.wight;
   }
 }

@@ -51,7 +51,7 @@ class ObjectBoxController extends ChangeNotifier {
   String? initialcolorforH;
 
   List<String> filtercolor(List<BlockModel> blocks) {
-    return blocks.map((e) => e.color).toSet().toList();
+    return blocks.map((e) => e.item.color).toSet().toList();
   }
 
   List<String> filtercolorforH(List<BlockModel> blocks) {
@@ -61,7 +61,7 @@ class ObjectBoxController extends ChangeNotifier {
                     BlockAction.consume_block.getactionTitle) ==
                 true &&
             element.Hscissor == 0)
-        .map((e) => e.color)
+        .map((e) => e.item.color)
         .toSet()
         .toList();
   }
@@ -80,7 +80,7 @@ class ObjectBoxController extends ChangeNotifier {
         ? x = context
             .read<BlockFirebasecontroller>()
             .blocks
-            .where((element) => element.color == initialcolor)
+            .where((element) => element.item.color == initialcolor)
             .toList()
         : DoNothingAction;
     serial != null
@@ -115,7 +115,7 @@ class ObjectBoxController extends ChangeNotifier {
                     true &&
                 element.Hscissor == 0)
             .toList()
-            .where((element) => element.color == initialcolorforH)
+            .where((element) => element.item.color == initialcolorforH)
             .toList()
         : DoNothingAction;
     serialforH != null

@@ -110,10 +110,10 @@ class EmployeeDataSourcee extends DataGridSource {
                       e, coumingData, scissor)),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.hight}*${e.width}*${e.lenth}"),
-              DataGridCell<String>(columnName: 'color', value: e.color),
-              DataGridCell<double>(columnName: 'denety', value: e.density),
-              DataGridCell<String>(columnName: 'type', value: e.type),
+                  value: "${e.item.H}*${e.item.W}*${e.item.L}"),
+              DataGridCell<String>(columnName: 'color', value: e.item.color),
+              DataGridCell<double>(columnName: 'denety', value: e.item.density),
+              DataGridCell<String>(columnName: 'type', value: e.item.type),
               DataGridCell<String>(columnName: 'serial', value: e.serial),
             ]))
         .toList();

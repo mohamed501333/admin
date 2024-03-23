@@ -68,7 +68,7 @@ class TheTable2 extends StatelessWidget {
 
                 // .filter_date(context)
                 .filter_filter_type_and_density()
-                .sortedBy<num>((element) => element.density)
+                .sortedBy<num>((element) => element.item.density)
                 .map((e) {
               String x = (vm.Last_period_balance(context, blocks.blocks, e) +
                       vm.total_spend(context,
@@ -104,17 +104,17 @@ class TheTable2 extends StatelessWidget {
                     x.to_double() != 0
                         ? Container(
                             padding: const EdgeInsets.all(0),
-                            child: Text(e.color.toString()))
+                            child: Text(e.item.color.toString()))
                         : const SizedBox(),
                     x.to_double() != 0
                         ? Container(
                             padding: const EdgeInsets.all(0),
-                            child: Text(e.density.toString()))
+                            child: Text(e.item.density.toString()))
                         : const SizedBox(),
                     x.to_double() != 0
                         ? Container(
                             padding: const EdgeInsets.all(0),
-                            child: Text(e.type))
+                            child: Text(e.item.type))
                         : const SizedBox(),
                   ]);
             }).toList(),
@@ -219,10 +219,10 @@ class EmployeeDataSource extends DataGridSource {
                   value: vm.total_amount_for_single_siz__(e, coumingData)),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.hight}*${e.width}*${e.lenth}"),
-              DataGridCell<String>(columnName: 'color', value: e.color),
-              DataGridCell<double>(columnName: 'denety', value: e.density),
-              DataGridCell<String>(columnName: 'type', value: e.type),
+                  value: "${e.item.H}*${e.item.W}*${e.item.L}"),
+              DataGridCell<String>(columnName: 'color', value: e.item.color),
+              DataGridCell<double>(columnName: 'denety', value: e.item.density),
+              DataGridCell<String>(columnName: 'type', value: e.item.type),
             ]))
         .toList();
   }
@@ -333,10 +333,10 @@ class TheTable222 extends StatelessWidget {
 
                       Container(
                           padding: const EdgeInsets.all(0),
-                          child: Text(e.density.toString())),
+                          child: Text(e.item.density.toString())),
                       Container(
                           padding: const EdgeInsets.all(0),
-                          child: Text(e.type)),
+                          child: Text(e.item.type)),
                     ]);
               }).toList(),
               border: TableBorder.all(width: 1, color: Colors.black),
@@ -445,10 +445,10 @@ class EmployeeDataSource22 extends DataGridSource {
                   value: vm.total_amount_for_single_siz__(e, coumingData)),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.hight}*${e.width}*${e.lenth}"),
-              DataGridCell<String>(columnName: 'color', value: e.color),
-              DataGridCell<double>(columnName: 'denety', value: e.density),
-              DataGridCell<String>(columnName: 'type', value: e.type),
+                  value: "${e.item.H}*${e.item.W}*${e.item.L}"),
+              DataGridCell<String>(columnName: 'color', value: e.item.color),
+              DataGridCell<double>(columnName: 'denety', value: e.item.density),
+              DataGridCell<String>(columnName: 'type', value: e.item.type),
             ]))
         .toList();
   }

@@ -6,16 +6,17 @@ import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
-class PdfForAllOfH{
+class PdfForAllOfH {
   static Future<Document> generate(
       sissor, List<BlockModel> b, chosenDate) async {
     var data = await rootBundle.load("assets/fonts/HacenTunisia.ttf");
-    var blocks=b.where((element) =>
-          element.actions
-                  .get_Date_of_action(BlockAction.cut_block_on_H.getactionTitle)
-                  .formatt() ==
-              chosenDate)
-      .toList();
+    var blocks = b
+        .where((element) =>
+            element.actions
+                .get_Date_of_action(BlockAction.cut_block_on_H.getactionTitle)
+                .formatt() ==
+            chosenDate)
+        .toList();
     var arabicFont = Font.ttf(data);
     final pdf = Document();
     const double inch = 72.0;
@@ -30,7 +31,9 @@ class PdfForAllOfH{
         orientation: PageOrientation.natural,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
-        build: (context) {  List<FractionModel> fractions =blocks.expand((element) => element.fractions).toList();
+        build: (context) {
+          List<FractionModel> fractions =
+              blocks.expand((element) => element.fractions).toList();
 
           return [
             SizedBox(height: 10),
@@ -39,16 +42,10 @@ class PdfForAllOfH{
                     decoration: const BoxDecoration(color: PdfColors.grey500),
                     child: Text("يومية المقصات  الراسى $chosenDate",
                         style: const TextStyle(fontSize: 14)))),
-              
             Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-             
-                    table0(blocks, chosenDate),
-         table2(fractions)
-
-                ]),
+                children: [table0(blocks, chosenDate), table2(fractions)]),
           ];
         },
       ),
@@ -58,232 +55,235 @@ class PdfForAllOfH{
 }
 
 table0(List<BlockModel> a, String chosenDate) {
-    
-  List<NotFinal> notfinals = a.expand((element) => element.stages).toList();
+  List<NotFinal> notfinals = a.expand((element) => element.notFinals).toList();
   scissor_viewmodel vm = scissor_viewmodel();
-  double  totalblockvolume =a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty? 0: a.map((e) => e.lenth * e.width * e.hight / 1000000).reduce((value, element) => value + element).toStringAsFixed(1).to_double();
-  double  totlresultsvolume =a.expand((e) => e.fractions).isEmpty? 0: a.map((e) => e.fractions).expand((element) =>element.map((e) => e.item.L * e.item.W * e.item.H / 1000000)).reduce((a, b) => a + b).toStringAsFixed(1).to_double();
-  double  diffrenceofvol=totalblockvolume-totlresultsvolume;
-  double  bolckswt=a.map((e) => e.lenth * e.width * e.hight / 1000000).isEmpty ? 0 : a.map((e) => e.density * e.lenth * e.width * e.hight / 1000000).reduce((value, element) => value + element);
-  double  resultewt=a.expand((e) => e.fractions).toList().isEmpty ? 0 : a.map((e) => e.fractions).expand((element) => element.map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)).reduce((a, b) => a + b);
-  double  diffrenceofwt=bolckswt-resultewt;
+  double totalblockvolume =
+      a.map((e) => e.item.L * e.item.W * e.item.H / 1000000).isEmpty
+          ? 0
+          : a
+              .map((e) => e.item.L * e.item.W * e.item.H / 1000000)
+              .reduce((value, element) => value + element)
+              .toStringAsFixed(1)
+              .to_double();
+  double totlresultsvolume = a.expand((e) => e.fractions).isEmpty
+      ? 0
+      : a
+          .map((e) => e.fractions)
+          .expand((element) =>
+              element.map((e) => e.item.L * e.item.W * e.item.H / 1000000))
+          .reduce((a, b) => a + b)
+          .toStringAsFixed(1)
+          .to_double();
+  double diffrenceofvol = totalblockvolume - totlresultsvolume;
+  double bolckswt = a
+          .map((e) => e.item.L * e.item.W * e.item.H / 1000000)
+          .isEmpty
+      ? 0
+      : a
+          .map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)
+          .reduce((value, element) => value + element);
+  double resultewt = a.expand((e) => e.fractions).toList().isEmpty
+      ? 0
+      : a
+          .map((e) => e.fractions)
+          .expand((element) => element.map(
+              (e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000))
+          .reduce((a, b) => a + b);
+  double diffrenceofwt = bolckswt - resultewt;
 
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-    Column(
-    children: [
-
-  Container(
-    decoration: const BoxDecoration(color: PdfColors.grey100),
-    child:    Row(children: [
+  return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+    Column(children: [
       Container(
-   
-        child: Center(child: Text("عدد البلوكات=")),
+        decoration: const BoxDecoration(color: PdfColors.grey100),
+        child: Row(children: [
+          Container(
+            child: Center(child: Text("عدد البلوكات=")),
+          ),
+          Container(
+            child: Center(child: Text(" ${a.length}")),
+          ),
+        ]),
       ),
-      Container(
-   
-        child: Center(child: Text(" ${a.length}")),
-      ),
-    ]),
-  ),
 //الوزن
 
-    Container(
-          decoration: BoxDecoration(border: Border.all()),
+      Container(
+        decoration: BoxDecoration(border: Border.all()),
+        child: Row(children: [
+          Column(children: [
+            Container(
+              height: 14,
+              width: 90,
+              child: Center(child: Text("وزن البلوكات")),
+            ),
+            Container(
+              height: 14,
+              width: 50,
+              child: Center(child: Text(" ${bolckswt.toStringAsFixed(1)} kg")),
+            ),
+          ]),
+          Column(children: [
+            Container(
+              height: 14,
+              width: 90,
+              child: Center(child: Text("وزن النواتج")),
+            ),
+            Container(
+              height: 14,
+              width: 50,
+              child: Center(child: Text("${resultewt.toStringAsFixed(1)} kg ")),
+            ),
+          ]),
+          Column(children: [
+            Container(
+              height: 14,
+              width: 90,
+              child: Center(child: Text("الفرق")),
+            ),
+            Container(
+              height: 14,
+              width: 50,
+              child:
+                  Center(child: Text("${diffrenceofwt.toStringAsFixed(2)}kg")),
+            ),
+          ]),
+        ]),
+      ),
 
-  child:Row(children: [
-    Column(children: [
-      Container(
-        height: 14,
-        width: 90,
-        child: Center(child: Text("وزن البلوكات")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        child: Center(
-            child: Text(
-                " ${bolckswt.toStringAsFixed(1)} kg")),
-      ),
-    ]),
-    
-    Column(children: [
-      Container(
-        height: 14,
-        width: 90,
-        child: Center(child: Text("وزن النواتج")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        child: Center(
-            child: Text(
-                "${resultewt.toStringAsFixed(1)} kg ")),
-      ),
-    ]),
-   
-      Column(children: [
-      Container(
-        height: 14,
-        width: 90,
-        child: Center(child: Text("الفرق")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        child: Center(child: Text("${diffrenceofwt.toStringAsFixed(2)}kg")),
-      ),
-    ]),
-    
-    
-    ]),
- ),
-
-SizedBox(height: 5),
+      SizedBox(height: 5),
 //الحجم
-    Container(
-    decoration: BoxDecoration(border: Border.all()),
-      child:Row(children: [
-        
+      Container(
+        decoration: BoxDecoration(border: Border.all()),
+        child: Row(children: [
           Column(children: [
-      Container(
-        height: 14,
-        width: 90,
-        child: Center(child: Text("حجم البلوكات")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        child: Center(child: Text(" $totalblockvolume m3")),
-      ),
-    ]),
-    
+            Container(
+              height: 14,
+              width: 90,
+              child: Center(child: Text("حجم البلوكات")),
+            ),
+            Container(
+              height: 14,
+              width: 50,
+              child: Center(child: Text(" $totalblockvolume m3")),
+            ),
+          ]),
           Column(children: [
-      Container(
-        height: 14,
-        width: 90,
-        child: Center(child: Text("حجم النواتج")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        child: Center(child: Text("$totlresultsvolume m3")),
-      ),
-    ]),
-        
+            Container(
+              height: 14,
+              width: 90,
+              child: Center(child: Text("حجم النواتج")),
+            ),
+            Container(
+              height: 14,
+              width: 50,
+              child: Center(child: Text("$totlresultsvolume m3")),
+            ),
+          ]),
           Column(children: [
-      Container(
-        height: 14,
-        width: 90,
-        child: Center(child: Text("الفرق")),
+            Container(
+              height: 14,
+              width: 90,
+              child: Center(child: Text("الفرق")),
+            ),
+            Container(
+              height: 14,
+              width: 50,
+              child:
+                  Center(child: Text("${diffrenceofvol.toStringAsFixed(1)}m3")),
+            ),
+          ]),
+        ]),
       ),
-      Container(
-        height: 14,
-        width: 50,
-        child:Center(child: Text("${diffrenceofvol.toStringAsFixed(1)}m3")),
 
-      ),
-    ]),
-    
-    ]),
- ),
- 
-  SizedBox(height: 5),
-   
-   Row(children: [
-    Column(children: [
-      //نسبة الدرحه الاولى
-    Row(children: [
-      Container(
-        height: 14,
-        width: 80,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(child: Text("نسبة الدرجه الاولى")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(
-            child: Text(
-                "${(100 * totlresultsvolume / totalblockvolume).toStringAsFixed(1)} %")),
-      ),
-    ]),
- 
-   //نسبة  دون التام
-    Row(children: [
-      Container(
-        height: 14,
-        width: 80,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(child: Text("نسبة  دون التام")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(
-            child: Text(
-                "${(100 - (100 * totlresultsvolume / totalblockvolume).toStringAsFixed(1).to_double()).toStringAsFixed(1)} %")),
-      ),
-    ]),
+      SizedBox(height: 5),
 
-    ]),
-    SizedBox(width: 8),
-    Column(children: [
-      //دون التام
-    Column(
-        children: notfinals
-            .filter_notfinals___()
-            .map((e) => Container(
-                    child: Row(children: [
-                  Container(
-                      height: 14,
-                      width: 80,
-                      decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(
-                          child: Text("${vm.get(e.type)}",
-                              style: const TextStyle(fontSize: 10)))),
-                  Container(
-                      height: 14,
-                      width: 50,
-                      decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(
-                          child: Text(
-                              "${notfinals.isEmpty ? 0 : vm.total_amount_for_notfinals(e, notfinals).toStringAsFixed(1)} kg",
-                              style: const TextStyle(fontSize: 10)))),
-                ])))
-            .toList()),
-  //اجمالى دون التام
-    Row(children: [
-      Container(
-        height: 14,
-        width: 80,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(child: Text("اجمالى دون تام")),
-      ),
-      Container(
-        height: 14,
-        width: 50,
-        decoration: BoxDecoration(border: Border.all()),
-        child: Center(
-            child: Text(
-                "${a.expand((e) => e.stages).isEmpty ? 0 : a.expand((e) => e.stages).map((element) => element.wight).reduce((a, b) => a + b).toStringAsFixed(1)} kg")),
-      ),
-    ]),
-    ]),
-   ]),
+      Row(children: [
+        Column(children: [
+          //نسبة الدرحه الاولى
+          Row(children: [
+            Container(
+              height: 14,
+              width: 80,
+              decoration: BoxDecoration(border: Border.all()),
+              child: Center(child: Text("نسبة الدرجه الاولى")),
+            ),
+            Container(
+              height: 14,
+              width: 50,
+              decoration: BoxDecoration(border: Border.all()),
+              child: Center(
+                  child: Text(
+                      "${(100 * totlresultsvolume / totalblockvolume).toStringAsFixed(1)} %")),
+            ),
+          ]),
 
- 
-    table3( a),
-    table4( a)
-    
-  
-  ]),
-  
-               
-  
+          //نسبة  دون التام
+          Row(children: [
+            Container(
+              height: 14,
+              width: 80,
+              decoration: BoxDecoration(border: Border.all()),
+              child: Center(child: Text("نسبة  دون التام")),
+            ),
+            Container(
+              height: 14,
+              width: 50,
+              decoration: BoxDecoration(border: Border.all()),
+              child: Center(
+                  child: Text(
+                      "${(100 - (100 * totlresultsvolume / totalblockvolume).toStringAsFixed(1).to_double()).toStringAsFixed(1)} %")),
+            ),
+          ]),
+        ]),
+        SizedBox(width: 8),
+        Column(children: [
+          //دون التام
+          Column(
+              children: notfinals
+                  .filter_notfinals___()
+                  .map((e) => Container(
+                          child: Row(children: [
+                        Container(
+                            height: 14,
+                            width: 80,
+                            decoration:
+                                BoxDecoration(border: Border.all(width: 1)),
+                            child: Center(
+                                child: Text("${vm.get(e.type)}",
+                                    style: const TextStyle(fontSize: 10)))),
+                        Container(
+                            height: 14,
+                            width: 50,
+                            decoration:
+                                BoxDecoration(border: Border.all(width: 1)),
+                            child: Center(
+                                child: Text(
+                                    "${notfinals.isEmpty ? 0 : vm.total_amount_for_notfinals(e, notfinals).toStringAsFixed(1)} kg",
+                                    style: const TextStyle(fontSize: 10)))),
+                      ])))
+                  .toList()),
+          //اجمالى دون التام
+          Row(children: [
+            Container(
+              height: 14,
+              width: 80,
+              decoration: BoxDecoration(border: Border.all()),
+              child: Center(child: Text("اجمالى دون تام")),
+            ),
+            Container(
+              height: 14,
+              width: 50,
+              decoration: BoxDecoration(border: Border.all()),
+              child: Center(
+                  child: Text(
+                      "${a.expand((e) => e.notFinals).isEmpty ? 0 : a.expand((e) => e.notFinals).map((element) => element.wight).reduce((a, b) => a + b).toStringAsFixed(1)} kg")),
+            ),
+          ]),
+        ]),
+      ]),
+
+      table3(a),
+      table4(a)
+    ]),
   ]);
 }
 
@@ -328,7 +328,8 @@ table2(List<FractionModel> fractions) {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                            Text(" ${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                            Text(
+                                " ${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
                             Text(
                                 " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
                           ]))),
@@ -345,10 +346,10 @@ table2(List<FractionModel> fractions) {
       ]));
 }
 
-
 table3(List<BlockModel> a) {
   scissor_viewmodel vm = scissor_viewmodel();
-  List<FractionModel> fractions =a.expand((element) => element.fractions).toList();
+  List<FractionModel> fractions =
+      a.expand((element) => element.fractions).toList();
 
   return SizedBox(
       width: 210,
@@ -384,47 +385,38 @@ table3(List<BlockModel> a) {
         ),
         Table(
           columnWidths: {
-             0: const FlexColumnWidth(1),
+            0: const FlexColumnWidth(1),
             1: const FlexColumnWidth(1),
             2: const FlexColumnWidth(1),
             3: const FlexColumnWidth(3),
           },
-          children: fractions
-              .filter_Fractios_T_D_C()
-              .map(
-                (e) {
-                  
-                double A=  vm.total_volume_for_T_D_C_Blocks(e.item, a);
-               double B=   vm.total_volume_for_T_D_C_fractions(e.item, fractions);
-                  return TableRow(
-                    children: [
-                  Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Center(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                            Text(
-                                " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
-                          ]))),
-                  Container(
-                      padding: const EdgeInsets.all(0),
-                      child: Center(
-                          child: Text(
-                             A.toStringAsFixed(1)))),
-                  Container(
-                      padding: const EdgeInsets.all(0),
-                      child: Center(
-                          child: Text(
-                             B.toStringAsFixed(1) ))),
-                  Container(
-                      padding: const EdgeInsets.all(0),
-                      child: Center(
-                          child: Text(
-                              (A-B).toStringAsFixed(1)))),
-                ].reversed.toList());},
-              )
-              .toList(),
+          children: fractions.filter_Fractios_T_D_C().map(
+            (e) {
+              double A = vm.total_volume_for_T_D_C_Blocks(e.item, a);
+              double B = vm.total_volume_for_T_D_C_fractions(e.item, fractions);
+              return TableRow(
+                  children: [
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Center(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                          Text(
+                              " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
+                        ]))),
+                Container(
+                    padding: const EdgeInsets.all(0),
+                    child: Center(child: Text(A.toStringAsFixed(1)))),
+                Container(
+                    padding: const EdgeInsets.all(0),
+                    child: Center(child: Text(B.toStringAsFixed(1)))),
+                Container(
+                    padding: const EdgeInsets.all(0),
+                    child: Center(child: Text((A - B).toStringAsFixed(1)))),
+              ].reversed.toList());
+            },
+          ).toList(),
           border: TableBorder.all(width: 1, color: PdfColors.black),
         )
       ]));
@@ -432,7 +424,8 @@ table3(List<BlockModel> a) {
 
 table4(List<BlockModel> a) {
   scissor_viewmodel vm = scissor_viewmodel();
-  List<FractionModel> fractions =a.expand((element) => element.fractions).toList();
+  List<FractionModel> fractions =
+      a.expand((element) => element.fractions).toList();
 
   return SizedBox(
       width: 210,
@@ -468,47 +461,41 @@ table4(List<BlockModel> a) {
         ),
         Table(
           columnWidths: {
-             0: const FlexColumnWidth(1),
+            0: const FlexColumnWidth(1),
             1: const FlexColumnWidth(1),
             2: const FlexColumnWidth(1),
             3: const FlexColumnWidth(3),
           },
-          children: fractions
-              .filter_Fractios_T_D_C()
-              .map(
-                (e) {
-                  
-                double A=  vm.total_volume_for_T_D_C_Blocks(e.item, a)*e.item.density;
-               double B=   vm.total_volume_for_T_D_C_fractions(e.item, fractions)*e.item.density;
-                  return TableRow(
-                    children: [
-                  Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Center(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                            Text(
-                                " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
-                          ]))),
-                  Container(
-                      padding: const EdgeInsets.all(0),
-                      child: Center(
-                          child: Text(
-                             A.toStringAsFixed(1)))),
-                  Container(
-                      padding: const EdgeInsets.all(0),
-                      child: Center(
-                          child: Text(
-                             B.toStringAsFixed(1) ))),
-                  Container(
-                      padding: const EdgeInsets.all(0),
-                      child: Center(
-                          child: Text(
-                              (A-B).toStringAsFixed(1)))),
-                ].reversed.toList());},
-              )
-              .toList(),
+          children: fractions.filter_Fractios_T_D_C().map(
+            (e) {
+              double A =
+                  vm.total_volume_for_T_D_C_Blocks(e.item, a) * e.item.density;
+              double B =
+                  vm.total_volume_for_T_D_C_fractions(e.item, fractions) *
+                      e.item.density;
+              return TableRow(
+                  children: [
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Center(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                          Text(
+                              " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
+                        ]))),
+                Container(
+                    padding: const EdgeInsets.all(0),
+                    child: Center(child: Text(A.toStringAsFixed(1)))),
+                Container(
+                    padding: const EdgeInsets.all(0),
+                    child: Center(child: Text(B.toStringAsFixed(1)))),
+                Container(
+                    padding: const EdgeInsets.all(0),
+                    child: Center(child: Text((A - B).toStringAsFixed(1)))),
+              ].reversed.toList());
+            },
+          ).toList(),
           border: TableBorder.all(width: 1, color: PdfColors.black),
         )
       ]));

@@ -25,13 +25,13 @@ class Rscissor_viewmodel extends BaseViewModel {
         .where(
           (f) =>
               f.hashCode == scissor &&
-              e.color == f.color &&
-              e.density == f.density &&
+              e.item.color == f.item.color &&
+              e.item.density == f.item.density &&
               e.serial == f.serial &&
-              e.hight == f.hight &&
-              e.width == f.width &&
-              e.lenth == f.lenth &&
-              e.type == f.type,
+              e.item.H == f.item.H &&
+              e.item.W == f.item.W &&
+              e.item.L == f.item.L &&
+              e.item.type == f.item.type,
         )
         .toList()
         .length;

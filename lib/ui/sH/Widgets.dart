@@ -214,7 +214,7 @@ class TheTable0001 extends StatelessWidget {
                                           Icons.delete,
                                           color: Colors.red,
                                         ))),
-                                
+
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
@@ -228,7 +228,7 @@ class TheTable0001 extends StatelessWidget {
                                         child: Text(vm
                                             .difrence(user)
                                             .removeTrailingZeros))),
-                                            
+
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
@@ -244,7 +244,8 @@ class TheTable0001 extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(user.wight.toString()))),
+                                        child:
+                                            Text(user.item.wight.toString()))),
                                 Column(
                                   children: [
                                     Container(
@@ -359,7 +360,7 @@ class TheTable0001 extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                      child: Text(user.type.toString(),
+                                      child: Text(user.item.type.toString(),
                                           style: const TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w600)),
@@ -368,7 +369,7 @@ class TheTable0001 extends StatelessWidget {
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                       child: Text(
-                                        user.density.toString(),
+                                        user.item.density.toString(),
                                         style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400),
@@ -377,12 +378,13 @@ class TheTable0001 extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(user.color.toString()))),
+                                        child:
+                                            Text(user.item.color.toString()))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                       child: Text(
-                                          "${user.hight}*${user.width}*${user.lenth}"),
+                                          "${user.item.H}*${user.item.W}*${user.item.L}"),
                                     )),
                                 GestureDetector(
                                   onTap: () {
@@ -420,16 +422,15 @@ class TheTable0001 extends StatelessWidget {
   }
 
   List<BlockModel> getBloksCuttedOnThisScissor(BlockFirebasecontroller blocks) {
-         List<BlockModel> b = blocks.search
+    List<BlockModel> b = blocks.search
         .where((element) =>
             format.format(element.actions.get_Date_of_action(
                 BlockAction.cut_block_on_H.getactionTitle)) ==
             chosenDate)
-        .where((element) => element.stages.first.scissor== scissor )
+        .where((element) => element.notFinals.first.scissor == scissor)
         .toList()
         .where((element) =>
-            element.actions
-                .block_action_Stutus(BlockAction.consume_block) ==
+            element.actions.block_action_Stutus(BlockAction.consume_block) ==
             true)
         .sortedBy<num>((element) => element.actions
             .get_Date_of_action(BlockAction.cut_block_on_H.getactionTitle)

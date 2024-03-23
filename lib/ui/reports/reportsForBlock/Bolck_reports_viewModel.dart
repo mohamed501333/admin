@@ -11,9 +11,11 @@ class BlockReportsViewModel extends BaseViewModel {
       BuildContext context, List<BlockModel> blocks, BlockModel block) {
     var x = blocks
         // .filter_date_consumed(context)
-        .where((e) => e.density == block.density && e.type == block.type)
+        .where((e) =>
+            e.item.density == block.item.density &&
+            e.item.type == block.item.type)
         .toList()
-        .map((e) => e.hight * e.lenth * e.width / 1000000)
+        .map((e) => e.item.W * e.item.L * e.item.W / 1000000)
         .toList();
 
     if (x.isNotEmpty) {
@@ -30,9 +32,11 @@ class BlockReportsViewModel extends BaseViewModel {
             element.actions
                 .if_action_exist(BlockAction.consume_block.getactionTitle) ==
             false)
-        .where((e) => e.density == block.density && e.type == block.type)
+        .where((e) =>
+            e.item.density == block.item.density &&
+            e.item.type == block.item.type)
         .toList()
-        .map((e) => e.hight * e.lenth * e.width / 1000000);
+        .map((e) => e.item.H * e.item.L * e.item.W / 1000000);
 
     if (x.isNotEmpty) {
       return x.reduce((a, b) => a + b);
@@ -45,12 +49,12 @@ class BlockReportsViewModel extends BaseViewModel {
     return blocks
         .where(
           (f) =>
-              e.color == f.color &&
-              e.density == f.density &&
+              e.item.color == f.item.color &&
+              e.item.density == f.item.density &&
               // e.hight == f.hight &&
-              e.width == f.width &&
-              e.lenth == f.lenth &&
-              e.type == f.type,
+              e.item.W == f.item.W &&
+              e.item.L == f.item.L &&
+              e.item.type == f.item.type,
         )
         .toList()
         .length;
@@ -60,7 +64,9 @@ class BlockReportsViewModel extends BaseViewModel {
     return blocks
         .where(
           (f) =>
-              e.color == f.color && e.density == f.density && e.type == f.type,
+              e.item.color == f.item.color &&
+              e.item.density == f.item.density &&
+              e.item.type == f.item.type,
         )
         .toList();
   }

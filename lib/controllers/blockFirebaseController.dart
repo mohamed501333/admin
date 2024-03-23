@@ -47,51 +47,15 @@ class BlockFirebasecontroller extends ChangeNotifier {
   List<BlockModel> archived_blocks = [];
   List<BlockModel> search = [];
 
-  // List<BlockModel2> edits = [];
-  // c() {
-  //   print(33);
-  //   for (var el in blocks
-  //       .where((element) => element.discreption == "D30s-yellow-200")
-  //       .where((element) => element.type == "سوبرسوفت")) {
-  //     BlockModel e = BlockModel(
-  //         discreption: "D30ss-yellow-200",
-  //         id: el.id,
-  //         color: el.color,
-  //         density: el.density,
-  //         type: el.type,
-  //         serial: el.serial,
-  //         number: el.number,
-  //         Rcissor: el.Rcissor,
-  //         Hscissor: el.Hscissor,
-  //         width: el.width,
-  //         lenth: el.lenth,
-  //         hight: el.hight,
-  //         wight: el.wight,
-  //         cumingFrom: el.cumingFrom,
-  //         OutTo: el.OutTo,
-  //         notes: el.notes,
-  //         fractions: el.fractions,
-  //         actions: el.actions,
-  //         notfinals: el.notfinals);
-
-  //     FirebaseDatabase.instance.ref("blocks/${el.id}").set(e.toJson());
-  //   }
-  // }
-  // c() {
-    // print(11);
-    // for (var el in all.where((element) => element.serial == "D18h_17_3_2024")) {
-    //   el.density = 18.0;
-    //   FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-    // }
-  // }
-
   c() {
-    print(11);
-    for (var el in blocks.where((element) => element.fractions.isNotEmpty)) {
-       el.stages=[];
-       el.fractions.clear();
-      FirebaseDatabase.instance.ref("blocks/${el.id}").set(el.toJson());
-    }
+    // print(11);
+    // print(all.length);
+    // var s = {};
+    // s.addEntries(
+    //     all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
+    // s.addEntries(all.map((el) => MapEntry("${3}", el.toJson().toString())));
+
+    // FirebaseDatabase.instance.ref("a").set(s);
   }
 
   void runFilter(String enteredKeyword) {
@@ -121,15 +85,25 @@ class BlockFirebasecontroller extends ChangeNotifier {
   addblock(BlockModel block) async {
     try {
       await FirebaseDatabase.instance
-          .ref("blocks/${block.id}")
+          .ref("blocks/${block.Block_Id}")
           .set(block.toJson());
+    } catch (e) {}
+  }
+
+  addblocklist(List<BlockModel> blocks) async {
+    try {
+      for (var e in blocks) {
+        FirebaseDatabase.instance.ref("blocks/${e.Block_Id}").set(e.toJson());
+      }
     } catch (e) {}
   }
 
   deleteblock(BlockModel block) {
     block.actions.add(BlockAction.archive_block.add);
     try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
@@ -140,7 +114,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
     block.actions.removeAt(index);
 
     try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
@@ -149,7 +125,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
     block.actions.add(BlockAction.consume_block.add);
     block.OutTo = outto;
     try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
@@ -161,7 +139,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
     block.actions.add(BlockAction.unconsume_block.add);
 
     try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
@@ -170,7 +150,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
     block.actions.add(BlockAction.cut_block_on_H.add);
 
     try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
@@ -180,7 +162,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
         element.action == BlockAction.cut_block_on_H.getactionTitle);
     block.actions.removeAt(index);
     try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
@@ -189,16 +173,21 @@ class BlockFirebasecontroller extends ChangeNotifier {
     required BlockModel block,
   }) {
     try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
 
-  Add_not_finalTo_block({required BlockModel block, required NotFinal notFinal}) {
-    block.stages.add(notFinal);
+  Add_not_finalTo_block(
+      {required BlockModel block, required NotFinal notFinal}) {
+    block.notFinals.add(notFinal);
 
     try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
@@ -214,7 +203,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
     block.fractions.clear();
 
     try {
-      FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
       notifyListeners();
     } catch (e) {}
   }
@@ -284,38 +275,46 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
   edit_cell_size(dynamic oldvalue, int id, String cell, List<String> newvalue) {
-    BlockModel user = blocks.where((element) => element.id == id).first;
+    BlockModel user = blocks.where((element) => element.Block_Id == id).first;
 
     user.actions.add(ActionModel(
         action:
             "edit $cell of block  ${user.serial}/${user.number}/  from  $oldvalue  to  $newvalue",
         who: FirebaseAuth.instance.currentUser!.email ?? "",
         when: DateTime.now()));
-    user.lenth = newvalue[0].to_int();
-    user.width = newvalue[1].to_int();
-    user.hight = newvalue[2].to_int();
+    user.item.L = newvalue[0].to_double();
+    user.item.W = newvalue[1].to_double();
+    user.item.H = newvalue[2].to_double();
 
     try {
-      FirebaseDatabase.instance.ref("blocks/${user.id}").set(user.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${user.Block_Id}")
+          .set(user.toJson());
     } catch (e) {}
   }
 
   edit_cell(int id, String cell, String newvalue) {
-    BlockModel user = blocks.where((element) => element.id == id).first;
+    BlockModel user = blocks.where((element) => element.Block_Id == id).first;
 
     user.actions.add(ActionModel(
         action: "edit $cell",
         who: FirebaseAuth.instance.currentUser!.email ?? "",
         when: DateTime.now()));
-    cell == "color" ? user.color = newvalue : DoNothingAction();
-    cell == "type" ? user.type = newvalue : DoNothingAction();
-    cell == "density" ? user.density = newvalue.to_double() : DoNothingAction();
+    cell == "color" ? user.item.color = newvalue : DoNothingAction();
+    cell == "type" ? user.item.type = newvalue : DoNothingAction();
+    cell == "density"
+        ? user.item.density = newvalue.to_double()
+        : DoNothingAction();
     cell == "serial" ? user.serial = newvalue : DoNothingAction();
     cell == "num" ? user.number = newvalue.to_int() : DoNothingAction();
     cell == "description" ? user.discreption = newvalue : DoNothingAction();
-    cell == "wight" ? user.wight = newvalue.to_double() : DoNothingAction();
+    cell == "wight"
+        ? user.item.wight = newvalue.to_double()
+        : DoNothingAction();
     try {
-      FirebaseDatabase.instance.ref("blocks/${user.id}").set(user.toJson());
+      FirebaseDatabase.instance
+          .ref("blocks/${user.Block_Id}")
+          .set(user.toJson());
     } catch (e) {}
   }
 }
