@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
-import 'package:jason_company/models/moderls.dart';
-
 import 'package:jason_company/ui/not_final/not_final_viewModer.dart';
 import 'package:provider/provider.dart';
 
