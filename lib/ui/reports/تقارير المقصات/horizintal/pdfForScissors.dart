@@ -97,7 +97,9 @@ table0(List<BlockModel> a, int s, String chosenDate) {
           .reduce((a, b) => a + b);
   double diffrenceofwt = bolckswt - resultewt;
 
-  return Row(children: [
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: [
     Column(children: [
       Container(
         decoration: const BoxDecoration(color: PdfColors.grey100),
@@ -287,10 +289,12 @@ table0(List<BlockModel> a, int s, String chosenDate) {
           ]),
         ]),
       ]),
-
-      table2(fractions)
+      table3(a), table4(a)
     ]),
-    Column(children: [table3(a), table4(a)])
+    SizedBox(width: 15),
+    Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [table2(fractions)])
   ]);
 }
 
@@ -359,7 +363,7 @@ table3(List<BlockModel> a) {
       a.expand((element) => element.fractions).toList();
 
   return SizedBox(
-      width: 210,
+      width: 250,
       child: Column(children: [
         Center(child: Text("حجم")),
         Table(
@@ -367,7 +371,7 @@ table3(List<BlockModel> a) {
             0: const FlexColumnWidth(1),
             1: const FlexColumnWidth(1),
             2: const FlexColumnWidth(1),
-            3: const FlexColumnWidth(3),
+            3: const FlexColumnWidth(4),
           },
           children: [
             TableRow(
@@ -395,12 +399,13 @@ table3(List<BlockModel> a) {
             0: const FlexColumnWidth(1),
             1: const FlexColumnWidth(1),
             2: const FlexColumnWidth(1),
-            3: const FlexColumnWidth(3),
+            3: const FlexColumnWidth(4),
           },
           children: fractions.filter_Fractios_T_D_C().map(
             (e) {
               double A = vm.total_volume_for_T_D_C_Blocks(e.item, a);
               double B = vm.total_volume_for_T_D_C_fractions(e.item, fractions);
+              int C = vm.total_Quantity_for_T_D_C_Blocks(e.item, a);
               return TableRow(
                   children: [
                 Container(
@@ -410,7 +415,7 @@ table3(List<BlockModel> a) {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                           Text(
-                              " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
+                              " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}=(${" عدد"}$C)"),
                         ]))),
                 Container(
                     padding: const EdgeInsets.all(0),
@@ -435,7 +440,7 @@ table4(List<BlockModel> a) {
       a.expand((element) => element.fractions).toList();
 
   return SizedBox(
-      width: 210,
+      width: 250,
       child: Column(children: [
         Center(child: Text("وزن")),
         Table(
@@ -443,7 +448,7 @@ table4(List<BlockModel> a) {
             0: const FlexColumnWidth(1),
             1: const FlexColumnWidth(1),
             2: const FlexColumnWidth(1),
-            3: const FlexColumnWidth(3),
+            3: const FlexColumnWidth(4),
           },
           children: [
             TableRow(
@@ -471,7 +476,7 @@ table4(List<BlockModel> a) {
             0: const FlexColumnWidth(1),
             1: const FlexColumnWidth(1),
             2: const FlexColumnWidth(1),
-            3: const FlexColumnWidth(3),
+            3: const FlexColumnWidth(4),
           },
           children: fractions.filter_Fractios_T_D_C().map(
             (e) {
@@ -480,6 +485,8 @@ table4(List<BlockModel> a) {
               double B =
                   vm.total_volume_for_T_D_C_fractions(e.item, fractions) *
                       e.item.density;
+              int C = vm.total_Quantity_for_T_D_C_Blocks(e.item, a);
+
               return TableRow(
                   children: [
                 Container(
@@ -489,7 +496,7 @@ table4(List<BlockModel> a) {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                           Text(
-                              " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
+                              " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}=(${" عدد"}$C)"),
                         ]))),
                 Container(
                     padding: const EdgeInsets.all(0),
