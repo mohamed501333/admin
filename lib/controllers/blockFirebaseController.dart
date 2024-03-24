@@ -215,23 +215,22 @@ class BlockFirebasecontroller extends ChangeNotifier {
       {required BuildContext context,
       required FractionModel fractiond,
       required int lastStage,
-      required int scissor}) {
-    // BlockModel block = blocks
-    //     .where((element) => element.id == fractiond.block_ID)
-    //     .toList()
-    //     .first;
-    // var f =
-    //     block.fractions.where((element) => element.fraction_ID == fractiond.fraction_ID).first;
+      required int Rscissor}) {
+    BlockModel block =
+        blocks.firstWhere((element) => element.Block_Id == fractiond.block_ID);
+    var f = block.fractions
+        .firstWhere((element) => element.fraction_ID == fractiond.fraction_ID);
 
-    // f.s = scissor;
+    f.Rscissor = Rscissor;
+    f.actions.add(FractionActon.cut_fraction_OnRscissor.add);
+    f.stage = lastStage;
 
-    // f.actions.add(FractionActon.cut_fraction_OnRscissor.add);
-    // f.stage = lastStage;
-
-    // try {
-    //   FirebaseDatabase.instance.ref("blocks/${block.id}").set(block.toJson());
-    //   notifyListeners();
-    // } catch (e) {}
+    try {
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
+      notifyListeners();
+    } catch (e) {}
   }
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
@@ -317,4 +316,10 @@ class BlockFirebasecontroller extends ChangeNotifier {
           .set(user.toJson());
     } catch (e) {}
   }
+
+  void add_Not_final_ToFraction(
+      {required FractionModel fractiond,
+      required String type,
+      required int Rscissord,
+      required double wight}) {}
 }

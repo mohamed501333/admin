@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
+import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 import 'package:jason_company/ui/sR/Rscissor_view.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
+import 'package:provider/provider.dart';
 
 showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
     int scissor, int lastStage) {
   Rscissor_veiwModel vm = Rscissor_veiwModel();
-  List<FractionModel> fractions_Not_Cut_On_RScissor =
+  List<FractionModel> fractionsNotCutOnRscissor =
       vm.fractions_Not_Cut_On_RScissor(context, myType.blocks);
   showDialog(
       context: context,
@@ -30,28 +32,26 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
                 const Text("من"),
                 SingleChildScrollView(
                   child: Column(
-                    children: fractions_Not_Cut_On_RScissor
+                    children: fractionsNotCutOnRscissor
                         .filter_Fractios___()
                         .map(
                           (e) => GestureDetector(
                             onTap: () {
                               if (vm.amountcontroller.text.isNotEmpty) {
-                                for (var element
-                                    in fractions_Not_Cut_On_RScissor
-                                        .where((f) =>
-                                            f.item.W == e.item.W &&
-                                            f.item.type == e.item.type &&
-                                            f.item.density == e.item.density &&
-                                            f.item.color == e.item.color &&
-                                            f.item.H == e.item.H &&
-                                            f.item.L == e.item.L)
-                                        .take(vm.amountcontroller.text
-                                            .to_int())) {
+                                for (var element in fractionsNotCutOnRscissor
+                                    .where((f) =>
+                                        f.item.W == e.item.W &&
+                                        f.item.type == e.item.type &&
+                                        f.item.density == e.item.density &&
+                                        f.item.color == e.item.color &&
+                                        f.item.H == e.item.H &&
+                                        f.item.L == e.item.L)
+                                    .take(vm.amountcontroller.text.to_int())) {
                                   myType.add_on_R_scissor(
                                     lastStage: lastStage,
                                     context: context,
                                     fractiond: element,
-                                    scissor: scissor,
+                                    Rscissor: scissor,
                                   );
                                 }
                               }
@@ -82,11 +82,13 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    fractions_Not_Cut_On_RScissor
+                                    fractionsNotCutOnRscissor
                                         .where((element) =>
-                                            element.item.color == e.item.color &&
+                                            element.item.color ==
+                                                e.item.color &&
                                             element.item.type == e.item.type &&
-                                            element.item.density == e.item.density &&
+                                            element.item.density ==
+                                                e.item.density &&
                                             element.item.W == e.item.W &&
                                             element.item.L == e.item.L &&
                                             element.item.H == e.item.H)
@@ -150,18 +152,18 @@ dialogOfAddNotFinalToBlock4544(
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
-                  // for (var e in fractions) {
-                  //   context
-                  //       .read<BlockFirebasecontroller>()
-                  //       .add_Not_final_ToFraction(
-                  //           fractiond: e,
-                  //           type: context.read<ObjectBoxController>().initial2,
-                  //           Rscissord: e.Rscissor,
-                  //           wight: vm.wightcontroller.text.to_double() /
-                  //               fractions.length);
-                  // }
+                  for (var e in fractions) {
+                    context
+                        .read<BlockFirebasecontroller>()
+                        .add_Not_final_ToFraction(
+                            fractiond: e,
+                            type: context.read<ObjectBoxController>().initial2,
+                            Rscissord: e.Rscissor,
+                            wight: vm.wightcontroller.text.to_double() /
+                                fractions.length);
+                  }
 
-                  // Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: const Text('تم')),
           ],

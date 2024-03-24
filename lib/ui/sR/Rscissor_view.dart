@@ -9,32 +9,31 @@ import 'package:provider/provider.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
-import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
 
 class RVeiw2 extends StatelessWidget {
   RVeiw2({
     super.key,
-    required this.scissor,
+    required this.Rscissor,
   });
-  final int scissor;
+  final int Rscissor;
   Rscissor_veiwModel vm = Rscissor_veiwModel();
 
   @override
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
-        // List<FractionModel> fractions = vm.getFractions(myType, scissor);
-        // List<int> AllStages = fractions
-        //     .map((e) => e.stage)
-        //     .toSet()
-        //     .toList()
-        //     .sortedBy<num>((element) => element)
-        //     .reversed
-        //     .toList();
-        // int lastStage = AllStages.isEmpty ? 0 : AllStages.first;
+        List<FractionModel> fractions =
+            vm.getFractions_Cutted_On_Rscissor(myType, Rscissor);
+        List<int> AllStages = fractions
+            .map((e) => e.stage)
+            .toSet()
+            .toList()
+            .sortedBy<num>((element) => element)
+            .reversed
+            .toList();
+        int lastStage = AllStages.isEmpty ? 0 : AllStages.first;
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -45,7 +44,7 @@ class RVeiw2 extends StatelessWidget {
                     border: Border.all(),
                     color: const Color.fromARGB(255, 175, 132, 132)),
                 child: Text(
-                  "      مقص دائرى ( $scissor )     ",
+                  "      مقص دائرى ( $Rscissor )     ",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 16),
                 ),
@@ -56,8 +55,8 @@ class RVeiw2 extends StatelessWidget {
                 children: [
                   IconButton(
                       onPressed: () {
-                        // showmyAlertDialog1414(
-                        //     context, myType, scissor, lastStage + 1);
+                        showmyAlertDialog1414(
+                            context, myType, Rscissor, lastStage + 1);
                       },
                       icon: const Icon(
                         Icons.add,
@@ -66,127 +65,125 @@ class RVeiw2 extends StatelessWidget {
                       ))
                 ],
               ),
-
-              // Column(
-              //   children: AllStages.map((e) => Container(
-              //         decoration: BoxDecoration(
-              //             border: Border.all(),
-              //             color: const Color.fromARGB(255, 231, 223, 223)),
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             SizedBox(
-              //               width: MediaQuery.of(context).size.width * .11,
-              //               child: Center(
-              //                   child: Text(
-              //                 textAlign: TextAlign.center,
-              //                 "$e",
-              //                 style:
-              //                     const TextStyle(fontWeight: FontWeight.bold),
-              //               )),
-              //             ),
-              //             Container(
-              //               // height: 40,
-              //               width: MediaQuery.of(context).size.width * .59,
-              //               decoration: const BoxDecoration(
-              //                   border:
-              //                       Border.symmetric(vertical: BorderSide()),
-              //                   color: Color.fromARGB(255, 231, 223, 223)),
-              //               child: Center(
-              //                   child: Column(
-              //                 children: [
-              //                   Column(
-              //                     children: fractions
-              //                         .where((element) => element.stage == e)
-              //                         .toList()
-              //                         .filter_Fractios___()
-              //                         .map((f) => Row(
-              //                               mainAxisAlignment:
-              //                                   MainAxisAlignment.center,
-              //                               children: [
-              //                                 Text(
-              //                                     "${f.color} ${f.type} ك${f.density.removeTrailingZeros}"),
-              //                                 Text(
-              //                                     "  ${f.lenth}*${f.wedth}*${f.hight} من "),
-              //                                 Text(
-              //                                     "${fractions.where((element) => element.stage == f.stage && element.color == f.color && element.type == f.type && element.wedth == f.wedth && element.lenth == f.lenth && element.hight == f.hight).length} "),
-              //                               ],
-              //                             ))
-              //                         .toList(),
-              //                   ),
-              //                   Row(
-              //                     mainAxisAlignment: MainAxisAlignment.end,
-              //                     children: [
-              //                       IconButton(
-              //                           onPressed: () {
-              //                             showmyAlertDialog1414(
-              //                                 context, myType, scissor, e);
-              //                           },
-              //                           icon: const Icon(
-              //                             Icons.add,
-              //                             size: 30,
-              //                             color: Colors.deepOrangeAccent,
-              //                           ))
-              //                     ],
-              //                   )
-              //                 ],
-              //               )),
-              //             ),
-              //             SizedBox(
-              //               width: MediaQuery.of(context).size.width * .29,
-              //               child: Center(
-              //                   child: Column(
-              //                 children: [
-              //                   Column(
-              //                     children: fractions
-              //                         .where((element) => element.stage == e)
-              //                         .expand((s) => s.notfinals)
-              //                         .toList()
-              //                         .filter_notfinals___()
-              //                         .map((f) => Row(
-              //                               mainAxisAlignment:
-              //                                   MainAxisAlignment.center,
-              //                               children: [
-              //                                 SizedBox(
-              //                                   width: MediaQuery.of(context)
-              //                                           .size
-              //                                           .width *
-              //                                       .29,
-              //                                   child: Text(
-              //                                     "${f.type} kg ${fractions.where((element) => element.stage == e).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).toStringAsFixed(2)}",
-              //                                   ),
-              //                                 ),
-              //                               ],
-              //                             ))
-              //                         .toList(),
-              //                   ),
-              //                   Row(
-              //                     mainAxisAlignment: MainAxisAlignment.end,
-              //                     children: [
-              //                       IconButton(
-              //                           onPressed: () {
-              //                             dialogOfAddNotFinalToBlock4544(
-              //                                 context,
-              //                                 fractions
-              //                                     .where((element) =>
-              //                                         element.stage == e)
-              //                                     .toList());
-              //                           },
-              //                           icon: const Icon(
-              //                             Icons.add,
-              //                             size: 30,
-              //                             color: Colors.deepOrangeAccent,
-              //                           ))
-              //                     ],
-              //                   )
-              //                 ],
-              //               )),
-              //             ),
-              //           ].reversed.toList(),
-              //         ),
-              //       )).toList(),
-              // ),
-           
+              Column(
+                children: AllStages.map((e) => Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(),
+                          color: const Color.fromARGB(255, 231, 223, 223)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .11,
+                            child: Center(
+                                child: Text(
+                              textAlign: TextAlign.center,
+                              "$e",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                          ),
+                          Container(
+                            // height: 40,
+                            width: MediaQuery.of(context).size.width * .59,
+                            decoration: const BoxDecoration(
+                                border:
+                                    Border.symmetric(vertical: BorderSide()),
+                                color: Color.fromARGB(255, 231, 223, 223)),
+                            child: Center(
+                                child: Column(
+                              children: [
+                                Column(
+                                  children: fractions
+                                      .where((element) => element.stage == e)
+                                      .toList()
+                                      .filter_Fractios___()
+                                      .map((f) => Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                  "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
+                                              Text(
+                                                  "  ${f.item.L.removeTrailingZeros}*${f.item.W.removeTrailingZeros}*${f.item.H.removeTrailingZeros} من "),
+                                              Text(
+                                                  "${fractions.where((element) => element.stage == f.stage && element.item.color == f.item.color && element.item.type == f.item.type && element.item.W == f.item.W && element.item.L == f.item.L && element.item.H == f.item.H).length} "),
+                                            ],
+                                          ))
+                                      .toList(),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          showmyAlertDialog1414(
+                                              context, myType, Rscissor, e);
+                                        },
+                                        icon: const Icon(
+                                          Icons.add,
+                                          size: 30,
+                                          color: Colors.deepOrangeAccent,
+                                        ))
+                                  ],
+                                )
+                              ],
+                            )),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .29,
+                            child: Center(
+                                child: Column(
+                              children: [
+                                Column(
+                                  children: fractions
+                                      .where((element) => element.stage == e)
+                                      .expand((s) => s.notfinals)
+                                      .toList()
+                                      .filter_notfinals___()
+                                      .map((f) => Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .29,
+                                                child: Text(
+                                                  "${f.type} kg ${fractions.where((element) => element.stage == e).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).toStringAsFixed(2)}",
+                                                ),
+                                              ),
+                                            ],
+                                          ))
+                                      .toList(),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          dialogOfAddNotFinalToBlock4544(
+                                              context,
+                                              fractions
+                                                  .where((element) =>
+                                                      element.stage == e)
+                                                  .toList());
+                                        },
+                                        icon: const Icon(
+                                          Icons.add,
+                                          size: 30,
+                                          color: Colors.deepOrangeAccent,
+                                        ))
+                                  ],
+                                )
+                              ],
+                            )),
+                          ),
+                        ].reversed.toList(),
+                      ),
+                    )).toList(),
+              ),
             ],
           ),
         );

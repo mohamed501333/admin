@@ -22,9 +22,9 @@ class ScissorsView extends StatelessWidget {
       const H1Veiw(
         scissor: 3,
       ).permition(context, UserPermition.show_H3),
-      RVeiw2(scissor: 1).permition(context, UserPermition.show_R1),
-      RVeiw2(scissor: 2).permition(context, UserPermition.show_R2),
-      RVeiw2(scissor: 3).permition(context, UserPermition.show_R3),
+      RVeiw2(Rscissor: 1).permition(context, UserPermition.show_R1),
+      RVeiw2(Rscissor: 2).permition(context, UserPermition.show_R2),
+      RVeiw2(Rscissor: 3).permition(context, UserPermition.show_R3),
     ];
 
     return Consumer<ScissorsController>(

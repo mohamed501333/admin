@@ -8,11 +8,11 @@ import 'package:jason_company/ui/base/base_view_mode.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 
 class Rscissor_veiwModel extends BaseViewModel {
-  List<FractionModel> getFractions(
-      BlockFirebasecontroller myType, int scissor) {
+  List<FractionModel> getFractions_Cutted_On_Rscissor(
+      BlockFirebasecontroller myType, int Rscissor) {
     return myType.blocks
         .expand((e) => e.fractions.where((element) =>
-            // element.Rscissor == scissor &&
+            element.Rscissor == Rscissor &&
             element.actions
                     .get_Date_of_action(
                         FractionActon.cut_fraction_OnRscissor.getTitle)
@@ -26,7 +26,7 @@ class Rscissor_veiwModel extends BaseViewModel {
     return blocks
         .map((e) => e.fractions)
         .expand((element) => element)
-        // .where((element) => element.Rscissor == 0 && element.Ascissor == 0)
+        .where((element) => element.isfinal == false)
         .toList();
   }
 }
