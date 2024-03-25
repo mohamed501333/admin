@@ -1,6 +1,9 @@
 // ignore_for_file: camel_case_types
 
+import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/ui/chemical_stock/componants/IN.dart';
@@ -51,9 +54,16 @@ class Chemical_view extends StatelessWidget {
           return Column(
             children: [
               BoxOFReport(),
-              myType.selectedreport == 'تقرير الكمية المتوفره فقط'
-                  ? R_FOR_onlyAvilableQuantity()
-                  : const SizedBox()
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                         myType.selectedreport == 'تقرير الكمية المتوفره فقط'
+                      ? R_FOR_onlyAvilableQuantity()
+                      : const SizedBox()
+                  ],),
+                ),
+              )
+             
             ],
           );
         },

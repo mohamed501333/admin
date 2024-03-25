@@ -82,7 +82,7 @@ table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
   //     fractions.expand((element) => element.notfinals).toList();
 
 //حجم الفرد
-  scissor_viewmodel vm = scissor_viewmodel();
+  // scissor_viewmodel vm = scissor_viewmodel();
   var totafractionvolume =
       fractions.map((e) => e.item.L * e.item.W * e.item.H / 1000000).isEmpty
           ? 0

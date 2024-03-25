@@ -370,7 +370,7 @@ class _DroStatee extends State<DropForFamily> {
             ),
           ),
           searchMatchFn: (item, searchValue) {
-            return item.value.toString().contains(searchValue);
+            return item.value.toString().toLowerCase().contains(searchValue.toLowerCase());
           },
         ),
         //This to clear the search value when you close the menu
@@ -713,7 +713,7 @@ class _ChemicaTableForSupplyingState extends State<ChemicaTableForSupplying> {
   Widget build(BuildContext context) {
     List<ChemicalsModel> Chemicals = context
         .read<Chemicals_controller>()
-        .Chemicals
+        .Chemicals.sortedBy<num>((element) => element.supplyOrderNum).reversed.toList()
         .where((element) =>
             element.Totalquantity > 0 &&
             element.supplyOrderNum != 0 &&

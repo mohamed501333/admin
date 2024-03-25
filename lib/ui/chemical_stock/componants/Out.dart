@@ -713,7 +713,7 @@ class _ChemicaTableForSupplyingState extends State<ChemicaTableForSupplying> {
   Widget build(BuildContext context) {
     List<ChemicalsModel> Chemicals = context
         .read<Chemicals_controller>()
-        .Chemicals
+        .Chemicals.sortedBy<num>((element) => element.supplyOrderNum).reversed.toList()
         .where((element) =>
             element.StockRequisitionNum != 0 &&
             element.actions

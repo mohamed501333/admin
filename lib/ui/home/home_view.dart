@@ -218,7 +218,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, Chemical_view());
                     },
-                  ).permition(context, UserPermition.not_working),
+                  ).permition(context, UserPermition.show_chemicals_model),
                 ],
               ),
               Row(

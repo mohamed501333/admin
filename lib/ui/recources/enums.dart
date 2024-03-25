@@ -618,6 +618,9 @@ can_approve_from_generalManager,
 
 
 
+  can_get_data_of_chemicals,
+  can_get_data_of_chemical_category,
+  show_chemicals_model,
 
 
   show_Reports_finalprodcut,
@@ -648,8 +651,6 @@ can_approve_from_generalManager,
   show_users_actions,
   can_get_data_of_fractions,
   can_get_data_of_notfinals,
-  can_get_data_of_chemicals,
-  can_get_data_of_chemical_category,
 
   not_working,
 }
@@ -836,7 +837,11 @@ extension QQ on UserPermition {
       case UserPermition.can_approve_from_generalManager:
         return UserpermitionTittle(tittle: "موافقة المدير العام");
       case UserPermition.show_Ohda_management:
-   return UserpermitionTittle(tittle: "موديول ادارة العهد");    }
+   return UserpermitionTittle(tittle: "موديول ادارة العهد"); 
+      case UserPermition.show_chemicals_model:
+   return UserpermitionTittle(tittle: "موديول  الكيماويات"); 
+   
+      }
   }
 
   String get getTitle {
@@ -1036,6 +1041,8 @@ extension QQ on UserPermition {
         return "can_get_data_of_fractions";
       case UserPermition.can_get_data_of_notfinals:
         return "can_get_data_of_notfinals";
+      case UserPermition.show_chemicals_model:
+        return  "موديول  الكيماويات";
     }
   }
 }
