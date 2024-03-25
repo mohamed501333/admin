@@ -231,17 +231,17 @@ class RowItem extends StatelessWidget {
           Container(
             width: 80,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Center(child: Text("${item.item.L}")),
+            child: Center(child: Text(item.item.L.removeTrailingZeros)),
           ),
           Container(
             width: 80,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Center(child: Text("${item.item.W}")),
+            child: Center(child: Text(item.item.W.removeTrailingZeros)),
           ),
           Container(
             width: 80,
             decoration: BoxDecoration(border: Border.all(width: 1)),
-            child: Center(child: Text("${item.item.H}")),
+            child: Center(child: Text(item.item.H.removeTrailingZeros)),
           ),
           Container(
             width: 150,

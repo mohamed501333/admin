@@ -76,7 +76,7 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
                               child: Row(
                                 children: [
                                   Text(
-                                    "${e.item.W}*${e.item.L}*${e.item.H} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
+                                    "${e.item.W.removeTrailingZeros}*${e.item.L}*${e.item.H.removeTrailingZeros} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
                                     style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),

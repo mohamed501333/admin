@@ -870,7 +870,7 @@ class ArchivedTheTable extends StatelessWidget {
                                         padding: const EdgeInsets.all(2),
                                         child: Center(
                                           child: Text(
-                                              "${user.item.H}*${user.item.W}*${user.item.L}"),
+                                              "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}"),
                                         )),
                                     Container(
                                         padding: const EdgeInsets.all(2),

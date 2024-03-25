@@ -127,7 +127,7 @@ content(List<BlockModel> blocks, bool? showVolume) {
                                 padding: const EdgeInsets.all(2.0),
                                 child: Center(
                                   child: Text(
-                                    "${r.item.L}*${r.item.W}*${r.item.H}",
+                                    "${r.item.L.removeTrailingZeros}*${r.item.W.removeTrailingZeros}*${r.item.H.removeTrailingZeros}",
                                     style: const TextStyle(fontSize: 12),
                                   ),
                                 ),

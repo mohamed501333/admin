@@ -18,7 +18,7 @@ class AllReportsViewModel {
               voluem: e.item.W * e.item.L * e.item.H,
               total: total_amount_for_single_siz__fractions(e, fractions),
               descrioption:
-                  "${e.item.W}*${e.item.L}*${e.item.H} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
+                  "${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}*${e.item.H.removeTrailingZeros} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
             ))
         .toList();
   }

@@ -219,7 +219,7 @@ class EmployeeDataSource extends DataGridSource {
                   value: vm.total_amount_for_single_siz__(e, coumingData)),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.item.H}*${e.item.W}*${e.item.L}"),
+                  value: "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
               DataGridCell<String>(columnName: 'color', value: e.item.color),
               DataGridCell<double>(columnName: 'denety', value: e.item.density),
               DataGridCell<String>(columnName: 'type', value: e.item.type),
@@ -445,7 +445,7 @@ class EmployeeDataSource22 extends DataGridSource {
                   value: vm.total_amount_for_single_siz__(e, coumingData)),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.item.H}*${e.item.W}*${e.item.L}"),
+                  value: "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
               DataGridCell<String>(columnName: 'color', value: e.item.color),
               DataGridCell<double>(columnName: 'denety', value: e.item.density),
               DataGridCell<String>(columnName: 'type', value: e.item.type),

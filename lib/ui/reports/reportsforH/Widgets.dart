@@ -110,7 +110,7 @@ class EmployeeDataSourcee extends DataGridSource {
                       e, coumingData, scissor)),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.item.H}*${e.item.W}*${e.item.L}"),
+                  value: "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
               DataGridCell<String>(columnName: 'color', value: e.item.color),
               DataGridCell<double>(columnName: 'denety', value: e.item.density),
               DataGridCell<String>(columnName: 'type', value: e.item.type),
@@ -260,7 +260,7 @@ class TheTable23 extends StatelessWidget {
                   Container(
                       padding: const EdgeInsets.all(4),
                       child: Text(
-                        "${e..item.H}*${e..item.L}*${e.item.W}",
+                        "${e..item.H.removeTrailingZeros}*${e..item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}",
                         style: const TextStyle(
                             color: Color.fromARGB(255, 221, 2, 75)),
                       )),

@@ -336,7 +336,7 @@ class TheTable0001 extends StatelessWidget {
                                         (e) => Container(
                                             padding: const EdgeInsets.all(2),
                                             child: Text(
-                                                "${e.item.L}*${e.item.W}*${e.item.H}")),
+                                                "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}")),
                                       )
                                       .toList(),
                                 ),
@@ -384,7 +384,7 @@ class TheTable0001 extends StatelessWidget {
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                       child: Text(
-                                          "${user.item.H}*${user.item.W}*${user.item.L}"),
+                                          "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}"),
                                     )),
                                 GestureDetector(
                                   onTap: () {
