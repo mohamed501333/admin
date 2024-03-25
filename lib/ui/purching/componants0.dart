@@ -583,32 +583,36 @@ class Details extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+
+
+                  // Column(
+                  //   children: [
+                  //     const Text("مدير المصنع",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                  //          myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_generalm))     :const SizedBox(),
+                  //     IconButton(onPressed: (){
+                  //   if (permitionss(context, UserPermition.can_approve_from_generalManager)) {
+                  //       PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
+                  //     p .actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
+                  //       DoNothingAction():myType.aprove_on_purchOrder_form_GeneralManager(p);
+                  //   }
+                  //     }, icon: 
+                  //     myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
+                      
+                  //     const Icon(size: 50,
+                  //     Icons.check
+                  //     ,color: Colors.green):
+                  //     const Icon(size: 50,
+                  //     Icons.close
+                  //     ,color: Colors.red)
+                      
+                  //     ),
+                  //   ],
+                  // ),
+      
+      
                   Column(
                     children: [
-                      const Text("مدير المصنع",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_generalm))     :const SizedBox(),
-                      IconButton(onPressed: (){
-                    if (permitionss(context, UserPermition.can_approve_from_generalManager)) {
-                        PurcheOrder p=   myType.purchesOrders.firstWhere((element) => element.serial==serial);
-                      p .actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
-                        DoNothingAction():myType.aprove_on_purchOrder_form_GeneralManager(p);
-                    }
-                      }, icon: 
-                      myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_generalm.getTitle)?
-                      
-                      const Icon(size: 50,
-                      Icons.check
-                      ,color: Colors.green):
-                      const Icon(size: 50,
-                      Icons.close
-                      ,color: Colors.red)
-                      
-                      ),
-                    ],
-                  ),
-          Column(
-                    children: [
-                      const Text("رئيس القطاع المالى",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                      const Text(" رئيس القطاع المالى والادارئ",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
 myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_Financem.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_Financem))     :const SizedBox(),
                       IconButton(onPressed: (){
                             if (permitionss(context, UserPermition.can_approve_from_financeManager)) {
@@ -634,7 +638,7 @@ myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_
 
                   Column(
                     children: [
-                      const Text("مدير المشتروات",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                      const Text("مدير المشتريات",style:TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
 myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.if_action_exist(PurcheAction.Purche_approved_PurcheM.getTitle)? Text(myType.purchesOrders.firstWhere((element) => element.serial==serial).actions.get_purche_Who_Of(PurcheAction.Purche_approved_PurcheM))     :const SizedBox(),
                       IconButton(onPressed: (){
                    if (permitionss(context, UserPermition.can_approve_from_purchingManager)) {
