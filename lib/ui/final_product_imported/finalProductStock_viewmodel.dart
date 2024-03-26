@@ -101,4 +101,49 @@ class FinalProductStockViewModel extends BaseViewModel {
       clearfields();
     }
   }
+
+
+
+  addpermanentFractons(
+      BuildContext context, List<BlockModel> b, int scissor) {
+    var L = lenthcontroller.text.to_double();
+    var w = widthcontroller.text.to_double();
+    var h = hightncontroller.text.to_double();
+    var volume = L * w * h / 1000000;
+    var wight = densitycontroller.text.to_double() * L * w * h / 1000000;
+
+    var item = Itme(
+        L: L,
+        W: w,
+        H: h,
+        density: densitycontroller.text.to_double(),
+        volume: volume,
+        wight: wight,
+        color: colercontroller.text,
+        type: typecontroller.text,
+        price: 0);
+
+    var fraction = FractionModel(
+        fraction_ID: DateTime.now().microsecondsSinceEpoch,
+        sapa_ID:"",
+        block_ID: 0,
+        item: item,
+        underOperation: true,
+        isfinal: false,
+        Ascissor: 0,
+        Hscissor: 0,
+        Rscissor: 0,
+        notfinals: [],
+        stage: 1,
+        note: "",
+        actions: []);
+
+  }
+
+  add_UnderOperatin_work(BuildContext context){
+    
+
+    
+  }
+
 }

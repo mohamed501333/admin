@@ -503,17 +503,7 @@ class AddUnregular2 extends StatelessWidget {
                                         controller: vm.densitycontroller,
                                         validator: Validation.validateothers,
                                       ),
-                                      CustomTextFormField(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        keybordtupe: TextInputType.number,
-                                        hint: "العميل",
-                                        controller: vm.companycontroller,
-                                        validator:
-                                            Validation.if_cusomer_serial_exist(
-                                                context),
-                                      ),
+                         
                                     ],
                                   ),
                                   const SizedBox(height: 15),
@@ -604,8 +594,7 @@ class AddUnregular2 extends StatelessWidget {
                                                 MaterialStateProperty.all(
                                                     Colors.red)),
                                         onPressed: () {
-                                          vm.validate();
-                                          vm.add_unregular(context, false);
+                                          vm.add_UnderOperatin_work(context);
                                         },
                                         child: const Text('أضافه')),
                                   ),
