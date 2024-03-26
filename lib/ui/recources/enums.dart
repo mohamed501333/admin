@@ -141,7 +141,8 @@ enum FractionActon {
   creat_fraction,
   archive_fraction,
   cut_fraction_OnHscissor,
-  cut_fraction_OnRscissor
+  cut_fraction_OnRscissor,
+  cut_fraction_OnAscissor
 }
 
 extension X5 on FractionActon {
@@ -167,7 +168,11 @@ extension X5 on FractionActon {
             action: "cut_fraction_OnRscissor",
             who: SringsManager.myemail,
             when: DateTime.now());
-    }
+      case FractionActon.cut_fraction_OnAscissor:
+   return ActionModel(
+            action: "cut_fraction_OnAscissor",
+            who: SringsManager.myemail,
+            when: DateTime.now());    }
   }
 
   String get getTitle {
@@ -180,6 +185,8 @@ extension X5 on FractionActon {
         return "cut_fraction_OnHscissor";
       case FractionActon.cut_fraction_OnRscissor:
         return "cut_fraction_OnRscissor";
+      case FractionActon.cut_fraction_OnAscissor:
+        return "cut_fraction_OnAscissor";
     }
   }
 }
@@ -431,7 +438,8 @@ extension Dkk on NonFinalType {
 
 enum NotFinalAction {
   create_Not_final_cumingFrom_H,
-  create_Not_final_cumingFrom_R,
+  create_Not_final_cumingFrom_R, 
+  create_Not_final_cumingFrom_A,
 }
 
 extension SSS on NotFinalAction {
@@ -447,6 +455,11 @@ extension SSS on NotFinalAction {
             action: "create_Not_final_cumingFrom_R",
             who: SringsManager.myemail,
             when: DateTime.now());
+      case NotFinalAction.create_Not_final_cumingFrom_A:
+        return ActionModel(
+            action: "create_Not_final_cumingFrom_A",
+            who: SringsManager.myemail,
+            when: DateTime.now());
     }
   }
 
@@ -456,6 +469,8 @@ extension SSS on NotFinalAction {
         return "create_Not_final_cumingFrom_H";
       case NotFinalAction.create_Not_final_cumingFrom_R:
         return "create_Not_final_cumingFrom_R";
+      case NotFinalAction.create_Not_final_cumingFrom_A:
+        return "create_Not_final_cumingFrom_A";
     }
   }
 }
@@ -642,6 +657,7 @@ can_approve_from_generalManager,
   show_R1,
   show_R2,
   show_R3,
+  show_A1,
 
  
   delete_in_finalprodcut_details,
@@ -841,6 +857,8 @@ extension QQ on UserPermition {
       case UserPermition.show_chemicals_model:
    return UserpermitionTittle(tittle: "موديول  الكيماويات"); 
    
+      case UserPermition.show_A1:
+   return UserpermitionTittle(tittle: "show_A1"); 
       }
   }
 
@@ -848,6 +866,8 @@ extension QQ on UserPermition {
     switch (this) {
    
     
+      case UserPermition.show_A1:
+        return "show_A1";
       case UserPermition.show_Ohda_management:
         return "موديول ادارة العهد";
     

@@ -232,6 +232,28 @@ class BlockFirebasecontroller extends ChangeNotifier {
       notifyListeners();
     } catch (e) {}
   }
+//zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  add_on_A_scissor(
+      {required BuildContext context,
+      required FractionModel fractiond,
+      required int lastStage,
+      required int Ascissor}) {
+    BlockModel block =
+        blocks.firstWhere((element) => element.Block_Id == fractiond.block_ID);
+    var f = block.fractions
+        .firstWhere((element) => element.fraction_ID == fractiond.fraction_ID);
+
+    f.Ascissor = Ascissor;
+    f.actions.add(FractionActon.cut_fraction_OnAscissor.add);
+    f.stage = lastStage;
+
+    try {
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
+      notifyListeners();
+    } catch (e) {}
+  }
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   var initialDateRange =
@@ -317,9 +339,38 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  void add_Not_final_ToFraction(
+  void add_Not_final_ToFractionR(
       {required FractionModel fractiond,
       required String type,
       required int Rscissord,
-      required double wight}) {}
+      required double wight}) {
+
+           var  b= blocks.firstWhere((element) => element.Block_Id==fractiond.block_ID);
+           var f=b.fractions.firstWhere((element) => element.fraction_ID==fractiond.fraction_ID);
+            f.notfinals.add(NotFinal(notFinal_ID: DateTime.now().microsecondsSinceEpoch, sapa_ID: f.sapa_ID, block_ID: f.block_ID, fraction_ID: f.fraction_ID, StockRequisetionOrder_ID: 0, stage: f.stage, wight: wight, type: type, scissor: 3+f.Rscissor, actions: [NotFinalAction.create_Not_final_cumingFrom_R.add]));
+            f.isfinal=true;
+            f.underOperation=false;
+            try {
+      FirebaseDatabase.instance
+          .ref("blocks/${b.Block_Id}")
+          .set(b.toJson());
+    } catch (e) {}
+      }
+  void add_Not_final_ToFractionA(
+      {required FractionModel fractiond,
+      required String type,
+      required int Ascissord,
+      required double wight}) {
+
+           var  b= blocks.firstWhere((element) => element.Block_Id==fractiond.block_ID);
+           var f=b.fractions.firstWhere((element) => element.fraction_ID==fractiond.fraction_ID);
+            f.notfinals.add(NotFinal(notFinal_ID: DateTime.now().microsecondsSinceEpoch, sapa_ID: f.sapa_ID, block_ID: f.block_ID, fraction_ID: f.fraction_ID, StockRequisetionOrder_ID: 0, stage: f.stage, wight: wight, type: type, scissor: 7, actions: [NotFinalAction.create_Not_final_cumingFrom_A.add]));
+            f.isfinal=true;
+            f.underOperation=false;
+            try {
+      FirebaseDatabase.instance
+          .ref("blocks/${b.Block_Id}")
+          .set(b.toJson());
+    } catch (e) {}
+      }
 }

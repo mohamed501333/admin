@@ -145,6 +145,7 @@ class _Report2ForRState extends State<Report2ForR> {
         .blocks
         .expand((element) => element.fractions)
         .where((element) =>
+        element.Rscissor==scissor&&
             element.actions
                     .get_Date_of_action(
                         FractionActon.cut_fraction_OnRscissor.getTitle)
@@ -279,6 +280,9 @@ class Details extends StatelessWidget {
                       Column(
                         children: fractions
                             .where((element) => element.stage == k)
+                             .expand((s) => s.notfinals)
+                                      .toList()
+                                      .filter_notfinals___()
                             .toList()
                             .map((f) => Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -287,8 +291,8 @@ class Details extends StatelessWidget {
                                       width: MediaQuery.of(context).size.width *
                                           .29,
                                       child: Text(
-                                        ""
-                                        // ${f.type} kg ${fractions.where((element) => element.stage == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
+                                        
+                                        "${f.type} kg ${fractions.where((element) => element.stage == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}"
                                         ,
                                       ),
                                     ),
@@ -381,6 +385,9 @@ class Details extends StatelessWidget {
                 //دون التام
                 Column(
                   children: fractions
+                   .expand((s) => s.notfinals)
+                                      .toList()
+                                      .filter_notfinals___()
                       .toList()
                       .map((f) => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -388,8 +395,8 @@ class Details extends StatelessWidget {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * .29,
                                 child: Text(""
-                                  // ${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
-                                  ,
+                                "${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}"
+                                 
                                 ),
                               ),
                             ],
@@ -425,7 +432,7 @@ class Details extends StatelessWidget {
                     child: Center(
                       child: Text(
                           "kg "
-                          //  ${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? 0 : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
+                           "${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? 0 : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}"
                            ,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 17)),

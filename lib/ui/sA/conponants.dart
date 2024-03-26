@@ -10,8 +10,8 @@ import 'package:jason_company/ui/sR/Rscissor_view.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
 import 'package:provider/provider.dart';
 
-showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
-    int scissor, int lastStage) {
+showmyAlertDialog141422(BuildContext context, BlockFirebasecontroller myType,
+    int Acissor, int lastStage) {
   Rscissor_veiwModel vm = Rscissor_veiwModel();
   List<FractionModel> fractionsNotCutOnRscissor =
       vm.fractions_Underoperation(context, myType.blocks);
@@ -47,11 +47,11 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
                                         f.item.H == e.item.H &&
                                         f.item.L == e.item.L)
                                     .take(vm.amountcontroller.text.to_int())) {
-                                  myType.add_on_R_scissor(
+                                  myType.add_on_A_scissor(
                                     lastStage: lastStage,
                                     context: context,
                                     fractiond: element,
-                                    Rscissor: scissor,
+                                    Ascissor: Acissor,
                                   );
                                 }
                               }
@@ -123,7 +123,7 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
       });
 }
 
-dialogOfAddNotFinalToBlock4544(
+dialogOfAddNotFinalToBlock454422(
     BuildContext context,
     //الفرد المقصوصه على هذا المقص فى هئا الدور 
     List<FractionModel> fractions) {
@@ -155,10 +155,10 @@ dialogOfAddNotFinalToBlock4544(
                   for (var e in fractions) {
                     context
                         .read<BlockFirebasecontroller>()
-                        .add_Not_final_ToFractionR(
+                        .add_Not_final_ToFractionA(
                             fractiond: e,
                             type: context.read<ObjectBoxController>().initial2,
-                            Rscissord: e.Rscissor,
+                            Ascissord: e.Ascissor,
                             wight: vm.wightcontroller.text.to_double() /
                                 fractions.length);
                   }

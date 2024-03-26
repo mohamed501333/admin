@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/reports_viewmoder.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
@@ -189,9 +188,8 @@ table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
         width: 50,
         decoration: BoxDecoration(border: Border.all()),
         child: Center(
-            child: Text(""
-                
-                // ${fractions.map((e) => e.item.L * e.item.W * e.item.H / 1000000).isEmpty ? 0 : fractions.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg
+            child: Text(
+                 "${fractions.map((e) => e.item.L * e.item.W * e.item. H/ 1000000).isEmpty ? 0 : fractions.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg"
                 )),
       ),
     ]),

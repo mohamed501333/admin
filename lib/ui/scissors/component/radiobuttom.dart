@@ -11,19 +11,19 @@ class Radiobuttom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomRadioButton(
-      width: 63,
+      width: 60,
       defaultSelected: Provider.of<ScissorsController>(context, listen: false)
           .indexOfRadioButon,
       elevation: 0,
       absoluteZeroSpacing: true,
       unSelectedColor: Theme.of(context).canvasColor,
-      buttonLables: const ['H1', 'H2', 'H3', 'R1', 'R2', 'R3'],
+      buttonLables: const ['H1', 'H2', 'H3', 'R1', 'R2', 'R3','A1'],
       // ignore: prefer_const_literals_to_create_immutables
-      buttonValues: [0, 1, 2, 3, 4, 5],
+      buttonValues: [0, 1, 2, 3, 4, 5,6],
       radioButtonValue: (value) =>
           Provider.of<ScissorsController>(context, listen: false)
               .changeIndexOfRadioButoon(value),
-      selectedColor: Colors.blueAccent,
+      selectedColor: const Color.fromARGB(255, 127, 242, 40),
       buttonTextStyle: const ButtonTextStyle(
           selectedColor: Colors.white,
           unSelectedColor: Colors.black,

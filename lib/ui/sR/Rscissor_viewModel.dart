@@ -20,8 +20,20 @@ class Rscissor_veiwModel extends BaseViewModel {
                 DateTime.now().formatt()))
         .toList();
   }
+  List<FractionModel> getFractions_Cutted_On_Ascissor(
+      BlockFirebasecontroller myType, int Ascissor) {
+    return myType.blocks
+        .expand((e) => e.fractions.where((element) =>
+            element.Ascissor == Ascissor &&
+            element.actions
+                    .get_Date_of_action(
+                        FractionActon.cut_fraction_OnAscissor.getTitle)
+                    .formatt() ==
+                DateTime.now().formatt()))
+        .toList();
+  }
 
-  List<FractionModel> fractions_Not_Cut_On_RScissor(
+  List<FractionModel> fractions_Underoperation(
       BuildContext context, List<BlockModel> blocks) {
     return blocks
         .map((e) => e.fractions)
