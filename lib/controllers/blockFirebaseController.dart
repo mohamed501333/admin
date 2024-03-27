@@ -48,14 +48,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
   List<BlockModel> search = [];
 
   c() {
-    // print(11);
-    // print(all.length);
-    // var s = {};
-    // s.addEntries(
-    //     all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
-    // s.addEntries(all.map((el) => MapEntry("${3}", el.toJson().toString())));
-
-    // FirebaseDatabase.instance.ref("a").set(s);
+    // print(99999);
+    // for (var el in blocks.where((element) => element.fractions.isNotEmpty)) {
+    //        el.fractions.clear();
+    //   FirebaseDatabase.instance.ref("blocks/${el.Block_Id}").set(el.toJson());
+    // }
   }
 
   void runFilter(String enteredKeyword) {
