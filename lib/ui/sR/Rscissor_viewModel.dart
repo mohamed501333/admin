@@ -38,7 +38,7 @@ class Rscissor_veiwModel extends BaseViewModel {
     return blocks
         .map((e) => e.fractions)
         .expand((element) => element)
-        .where((element) => element.isfinal == false)
+        .where((element) => element.underOperation == true)
         .toList();
   }
 }

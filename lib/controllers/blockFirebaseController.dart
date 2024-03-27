@@ -223,7 +223,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
     f.Rscissor = Rscissor;
     f.actions.add(FractionActon.cut_fraction_OnRscissor.add);
-    f.stage = lastStage;
+    f.stagenum = lastStage;
 
     try {
       FirebaseDatabase.instance
@@ -245,7 +245,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
     f.Ascissor = Ascissor;
     f.actions.add(FractionActon.cut_fraction_OnAscissor.add);
-    f.stage = lastStage;
+    f.stagenum = lastStage;
 
     try {
       FirebaseDatabase.instance
@@ -347,8 +347,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
            var  b= blocks.firstWhere((element) => element.Block_Id==fractiond.block_ID);
            var f=b.fractions.firstWhere((element) => element.fraction_ID==fractiond.fraction_ID);
-            f.notfinals.add(NotFinal(notFinal_ID: DateTime.now().microsecondsSinceEpoch, sapa_ID: f.sapa_ID, block_ID: f.block_ID, fraction_ID: f.fraction_ID, StockRequisetionOrder_ID: 0, stage: f.stage, wight: wight, type: type, scissor: 3+f.Rscissor, actions: [NotFinalAction.create_Not_final_cumingFrom_R.add]));
-            f.isfinal=true;
+            f.notfinals.add(NotFinal(notFinal_ID: DateTime.now().microsecondsSinceEpoch, sapa_ID: f.sapa_ID, block_ID: f.block_ID, fraction_ID: f.fraction_ID, StockRequisetionOrder_ID: 0, stage: f.stagenum, wight: wight, type: type, scissor: 3+f.Rscissor, actions: [NotFinalAction.create_Not_final_cumingFrom_R.add]));
             f.underOperation=false;
             try {
       FirebaseDatabase.instance
@@ -364,8 +363,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
            var  b= blocks.firstWhere((element) => element.Block_Id==fractiond.block_ID);
            var f=b.fractions.firstWhere((element) => element.fraction_ID==fractiond.fraction_ID);
-            f.notfinals.add(NotFinal(notFinal_ID: DateTime.now().microsecondsSinceEpoch, sapa_ID: f.sapa_ID, block_ID: f.block_ID, fraction_ID: f.fraction_ID, StockRequisetionOrder_ID: 0, stage: f.stage, wight: wight, type: type, scissor: 7, actions: [NotFinalAction.create_Not_final_cumingFrom_A.add]));
-            f.isfinal=true;
+            f.notfinals.add(NotFinal(notFinal_ID: DateTime.now().microsecondsSinceEpoch, sapa_ID: f.sapa_ID, block_ID: f.block_ID, fraction_ID: f.fraction_ID, StockRequisetionOrder_ID: 0, stage: f.stagenum, wight: wight, type: type, scissor: 7, actions: [NotFinalAction.create_Not_final_cumingFrom_A.add]));
             f.underOperation=false;
             try {
       FirebaseDatabase.instance

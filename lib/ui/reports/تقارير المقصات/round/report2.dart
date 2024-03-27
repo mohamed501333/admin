@@ -133,7 +133,7 @@ class _Report2ForRState extends State<Report2ForR> {
 
   List<int> allstage(
       List<FractionModel> fractions, List<FinalProductModel> finalProdcuts) {
-    List<int> allStages = fractions.map((e) => e.stage).toList() +
+    List<int> allStages = fractions.map((e) => e.stagenum).toList() +
         finalProdcuts.map((e) => e.stageOfR).toList();
     return allStages;
   }
@@ -237,7 +237,7 @@ class Details extends StatelessWidget {
                                 context,
                                 scissor,
                                 fractions
-                                    .where((element) => element.stage == k)
+                                    .where((element) => element.stagenum == k)
                                     .toList())
                             .map((e) => Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -279,7 +279,7 @@ class Details extends StatelessWidget {
                       //دون التام
                       Column(
                         children: fractions
-                            .where((element) => element.stage == k)
+                            .where((element) => element.stagenum == k)
                              .expand((s) => s.notfinals)
                                       .toList()
                                       .filter_notfinals___()
@@ -292,7 +292,7 @@ class Details extends StatelessWidget {
                                           .29,
                                       child: Text(
                                         
-                                        "${f.type} kg ${fractions.where((element) => element.stage == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}"
+                                        "${f.type} kg ${fractions.where((element) => element.stagenum == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}"
                                         ,
                                       ),
                                     ),

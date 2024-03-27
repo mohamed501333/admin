@@ -25,7 +25,7 @@ class RVeiw23 extends StatelessWidget {
       builder: (context, myType, child) {
         List<FractionModel> fractions =vm.getFractions_Cutted_On_Ascissor(myType, Ascissor);
         List<int> AllStages = fractions
-            .map((e) => e.stage)
+            .map((e) => e.stagenum)
             .toSet()
             .toList()
             .sortedBy<num>((element) => element)
@@ -93,7 +93,7 @@ class RVeiw23 extends StatelessWidget {
                               children: [
                                 Column(
                                   children: fractions
-                                      .where((element) => element.stage == e)
+                                      .where((element) => element.stagenum == e)
                                       .toList()
                                       .filter_Fractios___()
                                       .map((f) => Row(
@@ -105,7 +105,7 @@ class RVeiw23 extends StatelessWidget {
                                               Text(
                                                   "  ${f.item.L.removeTrailingZeros}*${f.item.W.removeTrailingZeros}*${f.item.H.removeTrailingZeros} من "),
                                               Text(
-                                                  "${fractions.where((element) => element.stage == f.stage && element.item.color == f.item.color && element.item.type == f.item.type && element.item.W == f.item.W && element.item.L == f.item.L && element.item.H == f.item.H).length} "),
+                                                  "${fractions.where((element) => element.stagenum == f.stagenum && element.item.color == f.item.color && element.item.type == f.item.type && element.item.W == f.item.W && element.item.L == f.item.L && element.item.H == f.item.H).length} "),
                                             ],
                                           ))
                                       .toList(),
@@ -135,7 +135,7 @@ class RVeiw23 extends StatelessWidget {
                               children: [
                                 Column(
                                   children: fractions
-                                      .where((element) => element.stage == e)
+                                      .where((element) => element.stagenum == e)
                                       .expand((s) => s.notfinals)
                                       .toList()
                                       .filter_notfinals___()
@@ -149,7 +149,7 @@ class RVeiw23 extends StatelessWidget {
                                                         .width *
                                                     .29,
                                                 child: Text(
-                                                  "${f.type} kg ${fractions.where((element) => element.stage == e).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).toStringAsFixed(2)}",
+                                                  "${f.type} kg ${fractions.where((element) => element.stagenum == e).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).toStringAsFixed(2)}",
                                                 ),
                                               ),
                                             ],
@@ -165,7 +165,7 @@ class RVeiw23 extends StatelessWidget {
                                               context,
                                               fractions
                                                   .where((element) =>
-                                                      element.stage == e)
+                                                      element.stagenum == e)
                                                   .toList());
                                         },
                                         icon: const Icon(

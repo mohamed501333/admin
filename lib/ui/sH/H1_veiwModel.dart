@@ -99,14 +99,16 @@ class H1VeiwModel extends BaseViewModel {
         fraction_ID: DateTime.now().microsecondsSinceEpoch,
         sapa_ID: block.serial,
         block_ID: block.Block_Id,
+        sapa_desc: block.discreption,
         item: item,
         underOperation: true,
-        isfinal: false,
         Ascissor: 0,
         Hscissor: scissor,
         Rscissor: 0,
         notfinals: [],
-        stage: 1,
+        SubFractions: [],
+        stagenum: 1,
+        quality: 0,
         note: "",
         actions: []);
 

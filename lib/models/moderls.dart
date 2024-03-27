@@ -207,90 +207,6 @@ class BlockWetOutput {
   }
 }
 
-class Stage {
-  int stageNum;
-  int scissor;
-  String worker;
-  String note;
-  final List<NotFinal> notfinals;
-  Stage({
-    required this.stageNum,
-    required this.scissor,
-    required this.worker,
-    required this.note,
-    required this.notfinals,
-  });
-
-  Stage copyWith({
-    int? stageNum,
-    int? scissor,
-    String? worker,
-    String? note,
-    List<NotFinal>? notfinals,
-  }) {
-    return Stage(
-      stageNum: stageNum ?? this.stageNum,
-      scissor: scissor ?? this.scissor,
-      worker: worker ?? this.worker,
-      note: note ?? this.note,
-      notfinals: notfinals ?? this.notfinals,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'stageNum': stageNum,
-      'scissor': scissor,
-      'worker': worker,
-      'note': note,
-      'notfinals': notfinals.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  factory Stage.fromMap(Map<String, dynamic> map) {
-    return Stage(
-      stageNum: map['stageNum'] as int,
-      scissor: map['scissor'] as int,
-      worker: map['worker'] as String,
-      note: map['note'] as String,
-      notfinals: List<NotFinal>.from(
-        (map['notfinals'] as List<dynamic>).map<NotFinal>(
-          (x) => NotFinal.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Stage.fromJson(String source) =>
-      Stage.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'Stage(stageNum: $stageNum, scissor: $scissor, worker: $worker, note: $note, notfinals: $notfinals)';
-  }
-
-  @override
-  bool operator ==(covariant Stage other) {
-    if (identical(this, other)) return true;
-
-    return other.stageNum == stageNum &&
-        other.scissor == scissor &&
-        other.worker == worker &&
-        other.note == note &&
-        listEquals(other.notfinals, notfinals);
-  }
-
-  @override
-  int get hashCode {
-    return stageNum.hashCode ^
-        scissor.hashCode ^
-        worker.hashCode ^
-        note.hashCode ^
-        notfinals.hashCode;
-  }
-}
 
 class NotFinal {
   int notFinal_ID;
@@ -419,20 +335,7 @@ class NotFinal {
   }
 }
 
-// class Mass{
-//   int mass_ID;
-//   int sapa_ID;
-//   int block_ID;
-//   Itme item;
-//   bool underOperation;
-//   bool isfinal;
-//   String note;
-//   int invoiceNum;
-//   int CuttingOrderNum;
-//   String customer;
-//  final List<Stage> stages;
-//  final List<ActionModel> actions;
-// }
+
 
 class BlockModel {
   int Block_Id;
@@ -603,61 +506,234 @@ class BlockModel {
 class FractionModel {
   int fraction_ID;
   String sapa_ID;
+  String sapa_desc;
   int block_ID;
   Itme item;
   bool underOperation;
-  bool isfinal;
   String note;
-
+   
   int Hscissor;
   int Rscissor;
   int Ascissor;
-  int stage;
+  int stagenum;
+  int quality;
+ 
   final List<NotFinal> notfinals;
+  final List<SubFraction> SubFractions;
   final List<ActionModel> actions;
   FractionModel({
     required this.fraction_ID,
     required this.sapa_ID,
+    required this.sapa_desc,
     required this.block_ID,
     required this.item,
     required this.underOperation,
-    required this.isfinal,
     required this.note,
     required this.Hscissor,
     required this.Rscissor,
     required this.Ascissor,
-    required this.stage,
+    required this.stagenum,
+    required this.quality,
     required this.notfinals,
+    required this.SubFractions,
     required this.actions,
   });
+
 
   FractionModel copyWith({
     int? fraction_ID,
     String? sapa_ID,
+    String? sapa_desc,
     int? block_ID,
     Itme? item,
     bool? underOperation,
-    bool? isfinal,
     String? note,
     int? Hscissor,
     int? Rscissor,
     int? Ascissor,
-    int? stage,
+    int? stagenum,
+    int? quality,
     List<NotFinal>? notfinals,
+    List<SubFraction>? SubFractions,
     List<ActionModel>? actions,
   }) {
     return FractionModel(
       fraction_ID: fraction_ID ?? this.fraction_ID,
       sapa_ID: sapa_ID ?? this.sapa_ID,
+      sapa_desc: sapa_desc ?? this.sapa_desc,
       block_ID: block_ID ?? this.block_ID,
       item: item ?? this.item,
       underOperation: underOperation ?? this.underOperation,
-      isfinal: isfinal ?? this.isfinal,
       note: note ?? this.note,
       Hscissor: Hscissor ?? this.Hscissor,
       Rscissor: Rscissor ?? this.Rscissor,
       Ascissor: Ascissor ?? this.Ascissor,
-      stage: stage ?? this.stage,
+      stagenum: stagenum ?? this.stagenum,
+      quality: quality ?? this.quality,
+      notfinals: notfinals ?? this.notfinals,
+      SubFractions: SubFractions ?? this.SubFractions,
+      actions: actions ?? this.actions,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'fraction_ID': fraction_ID,
+      'sapa_ID': sapa_ID,
+      'sapa_desc': sapa_desc,
+      'block_ID': block_ID,
+      'item': item.toMap(),
+      'underOperation': underOperation,
+      'note': note,
+      'Hscissor': Hscissor,
+      'Rscissor': Rscissor,
+      'Ascissor': Ascissor,
+      'stagenum': stagenum,
+      'quality': quality,
+      'notfinals': notfinals.map((x) => x.toMap()).toList(),
+      'SubFractions': SubFractions.map((x) => x.toMap()).toList(),
+      'actions': actions.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory FractionModel.fromMap(Map<String, dynamic> map) {
+    return FractionModel(
+      fraction_ID: map['fraction_ID'] as int,
+      sapa_ID: map['sapa_ID'] as String,
+      sapa_desc: map['sapa_desc'] as String,
+      block_ID: map['block_ID'] as int,
+      item: Itme.fromMap(map['item'] as Map<String,dynamic>),
+      underOperation: map['underOperation'] as bool,
+      note: map['note'] as String,
+      Hscissor: map['Hscissor'] as int,
+      Rscissor: map['Rscissor'] as int,
+      Ascissor: map['Ascissor'] as int,
+      stagenum: map['stagenum'] as int,
+      quality: map['quality'] as int,
+      notfinals: List<NotFinal>.from((map['notfinals'] as List<dynamic>).map<NotFinal>((x) => NotFinal.fromMap(x as Map<String,dynamic>),),),
+      SubFractions: List<SubFraction>.from((map['SubFractions'] as List<dynamic>).map<SubFraction>((x) => SubFraction.fromMap(x as Map<String,dynamic>),),),
+      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory FractionModel.fromJson(String source) => FractionModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'FractionModel(fraction_ID: $fraction_ID, sapa_ID: $sapa_ID, sapa_desc: $sapa_desc, block_ID: $block_ID, item: $item, underOperation: $underOperation, note: $note, Hscissor: $Hscissor, Rscissor: $Rscissor, Ascissor: $Ascissor, stagenum: $stagenum, quality: $quality, notfinals: $notfinals, SubFractions: $SubFractions, actions: $actions)';
+  }
+
+  @override
+  bool operator ==(covariant FractionModel other) {
+    if (identical(this, other)) return true;
+  
+    return 
+      other.fraction_ID == fraction_ID &&
+      other.sapa_ID == sapa_ID &&
+      other.sapa_desc == sapa_desc &&
+      other.block_ID == block_ID &&
+      other.item == item &&
+      other.underOperation == underOperation &&
+      other.note == note &&
+      other.Hscissor == Hscissor &&
+      other.Rscissor == Rscissor &&
+      other.Ascissor == Ascissor &&
+      other.stagenum == stagenum &&
+      other.quality == quality &&
+      listEquals(other.notfinals, notfinals) &&
+      listEquals(other.SubFractions, SubFractions) &&
+      listEquals(other.actions, actions);
+  }
+
+  @override
+  int get hashCode {
+    return fraction_ID.hashCode ^
+      sapa_ID.hashCode ^
+      sapa_desc.hashCode ^
+      block_ID.hashCode ^
+      item.hashCode ^
+      underOperation.hashCode ^
+      note.hashCode ^
+      Hscissor.hashCode ^
+      Rscissor.hashCode ^
+      Ascissor.hashCode ^
+      stagenum.hashCode ^
+      quality.hashCode ^
+      notfinals.hashCode ^
+      SubFractions.hashCode ^
+      actions.hashCode;
+  }
+}
+
+class SubFraction {
+  int fraction_ID;
+  String sapa_ID;
+  String sapa_desc;
+  int block_ID;
+  Itme item;
+  bool underOperation;
+  String note;
+
+  int Hscissor;
+  int Rscissor;
+  int Ascissor;
+  int Rstagenum;
+  int Astagenum;
+  int quality;
+  final List<NotFinal> notfinals;
+  final List<ActionModel> actions;
+  SubFraction({
+    required this.fraction_ID,
+    required this.sapa_ID,
+    required this.sapa_desc,
+    required this.block_ID,
+    required this.item,
+    required this.underOperation,
+    required this.note,
+    required this.Hscissor,
+    required this.Rscissor,
+    required this.Ascissor,
+    required this.Rstagenum,
+    required this.Astagenum,
+    required this.quality,
+    required this.notfinals,
+    required this.actions,
+  });
+
+
+  SubFraction copyWith({
+    int? fraction_ID,
+    String? sapa_ID,
+    String? sapa_desc,
+    int? block_ID,
+    Itme? item,
+    bool? underOperation,
+    String? note,
+    int? Hscissor,
+    int? Rscissor,
+    int? Ascissor,
+    int? Rstagenum,
+    int? Astagenum,
+    int? quality,
+    List<NotFinal>? notfinals,
+    List<ActionModel>? actions,
+  }) {
+    return SubFraction(
+      fraction_ID: fraction_ID ?? this.fraction_ID,
+      sapa_ID: sapa_ID ?? this.sapa_ID,
+      sapa_desc: sapa_desc ?? this.sapa_desc,
+      block_ID: block_ID ?? this.block_ID,
+      item: item ?? this.item,
+      underOperation: underOperation ?? this.underOperation,
+      note: note ?? this.note,
+      Hscissor: Hscissor ?? this.Hscissor,
+      Rscissor: Rscissor ?? this.Rscissor,
+      Ascissor: Ascissor ?? this.Ascissor,
+      Rstagenum: Rstagenum ?? this.Rstagenum,
+      Astagenum: Astagenum ?? this.Astagenum,
+      quality: quality ?? this.quality,
       notfinals: notfinals ?? this.notfinals,
       actions: actions ?? this.actions,
     );
@@ -667,92 +743,94 @@ class FractionModel {
     return <String, dynamic>{
       'fraction_ID': fraction_ID,
       'sapa_ID': sapa_ID,
+      'sapa_desc': sapa_desc,
       'block_ID': block_ID,
       'item': item.toMap(),
       'underOperation': underOperation,
-      'isfinal': isfinal,
       'note': note,
       'Hscissor': Hscissor,
       'Rscissor': Rscissor,
       'Ascissor': Ascissor,
-      'stage': stage,
+      'Rstagenum': Rstagenum,
+      'Astagenum': Astagenum,
+      'quality': quality,
       'notfinals': notfinals.map((x) => x.toMap()).toList(),
       'actions': actions.map((x) => x.toMap()).toList(),
     };
   }
 
-  factory FractionModel.fromMap(Map<String, dynamic> map) {
-    return FractionModel(
+  factory SubFraction.fromMap(Map<String, dynamic> map) {
+    return SubFraction(
       fraction_ID: map['fraction_ID'] as int,
       sapa_ID: map['sapa_ID'] as String,
+      sapa_desc: map['sapa_desc'] as String,
       block_ID: map['block_ID'] as int,
-      item: Itme.fromMap(map['item'] as Map<String, dynamic>),
+      item: Itme.fromMap(map['item'] as Map<String,dynamic>),
       underOperation: map['underOperation'] as bool,
-      isfinal: map['isfinal'] as bool,
       note: map['note'] as String,
       Hscissor: map['Hscissor'] as int,
       Rscissor: map['Rscissor'] as int,
       Ascissor: map['Ascissor'] as int,
-      stage: map['stage'] as int,
-      notfinals: List<NotFinal>.from(
-        (map['notfinals'] as List<dynamic>).map<NotFinal>(
-          (x) => NotFinal.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      actions: List<ActionModel>.from(
-        (map['actions'] as List<dynamic>).map<ActionModel>(
-          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      Rstagenum: map['Rstagenum'] as int,
+      Astagenum: map['Astagenum'] as int,
+      quality: map['quality'] as int,
+      notfinals: List<NotFinal>.from((map['notfinals'] as List<dynamic>).map<NotFinal>((x) => NotFinal.fromMap(x as Map<String,dynamic>),),),
+      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory FractionModel.fromJson(String source) =>
-      FractionModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory SubFraction.fromJson(String source) => SubFraction.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'FractionModel(fraction_ID: $fraction_ID, sapa_ID: $sapa_ID, block_ID: $block_ID, item: $item, underOperation: $underOperation, isfinal: $isfinal, note: $note, Hscissor: $Hscissor, Rscissor: $Rscissor, Ascissor: $Ascissor, stage: $stage, notfinals: $notfinals, actions: $actions)';
+    return 'SubFraction(fraction_ID: $fraction_ID, sapa_ID: $sapa_ID, sapa_desc: $sapa_desc, block_ID: $block_ID, item: $item, underOperation: $underOperation, note: $note, Hscissor: $Hscissor, Rscissor: $Rscissor, Ascissor: $Ascissor, Rstagenum: $Rstagenum, Astagenum: $Astagenum, quality: $quality, notfinals: $notfinals, actions: $actions)';
   }
 
   @override
-  bool operator ==(covariant FractionModel other) {
+  bool operator ==(covariant SubFraction other) {
     if (identical(this, other)) return true;
-
-    return other.fraction_ID == fraction_ID &&
-        other.sapa_ID == sapa_ID &&
-        other.block_ID == block_ID &&
-        other.item == item &&
-        other.underOperation == underOperation &&
-        other.isfinal == isfinal &&
-        other.note == note &&
-        other.Hscissor == Hscissor &&
-        other.Rscissor == Rscissor &&
-        other.Ascissor == Ascissor &&
-        other.stage == stage &&
-        listEquals(other.notfinals, notfinals) &&
-        listEquals(other.actions, actions);
+  
+    return 
+      other.fraction_ID == fraction_ID &&
+      other.sapa_ID == sapa_ID &&
+      other.sapa_desc == sapa_desc &&
+      other.block_ID == block_ID &&
+      other.item == item &&
+      other.underOperation == underOperation &&
+      other.note == note &&
+      other.Hscissor == Hscissor &&
+      other.Rscissor == Rscissor &&
+      other.Ascissor == Ascissor &&
+      other.Rstagenum == Rstagenum &&
+      other.Astagenum == Astagenum &&
+      other.quality == quality &&
+      listEquals(other.notfinals, notfinals) &&
+      listEquals(other.actions, actions);
   }
 
   @override
   int get hashCode {
     return fraction_ID.hashCode ^
-        sapa_ID.hashCode ^
-        block_ID.hashCode ^
-        item.hashCode ^
-        underOperation.hashCode ^
-        isfinal.hashCode ^
-        note.hashCode ^
-        Hscissor.hashCode ^
-        Rscissor.hashCode ^
-        Ascissor.hashCode ^
-        stage.hashCode ^
-        notfinals.hashCode ^
-        actions.hashCode;
+      sapa_ID.hashCode ^
+      sapa_desc.hashCode ^
+      block_ID.hashCode ^
+      item.hashCode ^
+      underOperation.hashCode ^
+      note.hashCode ^
+      Hscissor.hashCode ^
+      Rscissor.hashCode ^
+      Ascissor.hashCode ^
+      Rstagenum.hashCode ^
+      Astagenum.hashCode ^
+      quality.hashCode ^
+      notfinals.hashCode ^
+      actions.hashCode;
   }
 }
+
+
 
 class FinalProductModel {
   int id;

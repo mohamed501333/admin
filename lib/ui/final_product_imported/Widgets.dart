@@ -481,7 +481,7 @@ class AddUnregular2 extends StatelessWidget {
                                 children: [
                                   const SizedBox(
                                     height: 15,
-                                  ),
+                                  ),   
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
@@ -575,7 +575,7 @@ class AddUnregular2 extends StatelessWidget {
                                   CustomTextFormField(
                                     width:
                                         MediaQuery.of(context).size.width * .22,
-                                    hint: "رقم الدور",
+                                    hint: " رقم الدور",
                                     controller: vm.N,
                                     validator: Validation.validateothers,
                                   ),
@@ -594,7 +594,10 @@ class AddUnregular2 extends StatelessWidget {
                                                 MaterialStateProperty.all(
                                                     Colors.red)),
                                         onPressed: () {
-                                          vm.add_UnderOperatin_work(context);
+                                          if (vm.validate()) {
+                                            vm.add_UnderOperatin_work(context);
+                                          }
+                                          
                                         },
                                         child: const Text('أضافه')),
                                   ),

@@ -119,7 +119,7 @@ newMethod(
                                     context,
                                     scissor,
                                     fractions
-                                        .where((element) => element.stage == k)
+                                        .where((element) => element.stagenum == k)
                                         .toList())
                                 .map((e) => Padding(
                                     padding: const EdgeInsets.all(1),
@@ -167,7 +167,7 @@ newMethod(
                           //دون التام
                           Row(
                             children: fractions
-                                .where((element) => element.stage == k)
+                                .where((element) => element.stagenum == k)
                                 .toList()
                                 .map((f) => Padding(
                                     padding: const EdgeInsets.symmetric(
