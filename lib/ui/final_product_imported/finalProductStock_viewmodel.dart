@@ -12,10 +12,8 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class FinalProductStockViewModel extends BaseViewModel {
-  OrderModel find(
-    List<OrderModel> orders,
-    OperationOrederItems item,
-  ) {
+  OrderModel find(   
+    List<OrderModel> orders,OperationOrederItems item) {
     return orders
         .where((element) => element.items.map((e) => e.id).contains(item.id))
         .first;
@@ -128,7 +126,8 @@ class FinalProductStockViewModel extends BaseViewModel {
         price: 0);
 
     var fraction = SubFraction(
-        fraction_ID: DateTime.now().microsecondsSinceEpoch,
+        subfraction_ID: DateTime.now().microsecondsSinceEpoch,
+        fraction_ID:0 ,
         sapa_ID:"",
         block_ID: 0,
         sapa_desc:"" ,
@@ -141,12 +140,9 @@ class FinalProductStockViewModel extends BaseViewModel {
         notfinals: [],
         Rstagenum: N.text.to_int(),
         Astagenum: 0,
-
         note: "",
         actions: []);
-
   }
-
 
 
 }

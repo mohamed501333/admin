@@ -207,7 +207,6 @@ class BlockWetOutput {
   }
 }
 
-
 class NotFinal {
   int notFinal_ID;
   String sapa_ID;
@@ -334,8 +333,6 @@ class NotFinal {
         actions.hashCode;
   }
 }
-
-
 
 class BlockModel {
   int Block_Id;
@@ -668,6 +665,7 @@ class FractionModel {
 }
 
 class SubFraction {
+  int subfraction_ID;
   int fraction_ID;
   String sapa_ID;
   String sapa_desc;
@@ -685,6 +683,7 @@ class SubFraction {
   final List<NotFinal> notfinals;
   final List<ActionModel> actions;
   SubFraction({
+    required this.subfraction_ID,
     required this.fraction_ID,
     required this.sapa_ID,
     required this.sapa_desc,
@@ -704,6 +703,7 @@ class SubFraction {
 
 
   SubFraction copyWith({
+    int? subfraction_ID,
     int? fraction_ID,
     String? sapa_ID,
     String? sapa_desc,
@@ -721,6 +721,7 @@ class SubFraction {
     List<ActionModel>? actions,
   }) {
     return SubFraction(
+      subfraction_ID: subfraction_ID ?? this.subfraction_ID,
       fraction_ID: fraction_ID ?? this.fraction_ID,
       sapa_ID: sapa_ID ?? this.sapa_ID,
       sapa_desc: sapa_desc ?? this.sapa_desc,
@@ -741,6 +742,7 @@ class SubFraction {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'subfraction_ID': subfraction_ID,
       'fraction_ID': fraction_ID,
       'sapa_ID': sapa_ID,
       'sapa_desc': sapa_desc,
@@ -761,6 +763,7 @@ class SubFraction {
 
   factory SubFraction.fromMap(Map<String, dynamic> map) {
     return SubFraction(
+      subfraction_ID: map['subfraction_ID'] as int,
       fraction_ID: map['fraction_ID'] as int,
       sapa_ID: map['sapa_ID'] as String,
       sapa_desc: map['sapa_desc'] as String,
@@ -785,7 +788,7 @@ class SubFraction {
 
   @override
   String toString() {
-    return 'SubFraction(fraction_ID: $fraction_ID, sapa_ID: $sapa_ID, sapa_desc: $sapa_desc, block_ID: $block_ID, item: $item, underOperation: $underOperation, note: $note, Hscissor: $Hscissor, Rscissor: $Rscissor, Ascissor: $Ascissor, Rstagenum: $Rstagenum, Astagenum: $Astagenum, quality: $quality, notfinals: $notfinals, actions: $actions)';
+    return 'SubFraction(subfraction_ID: $subfraction_ID, fraction_ID: $fraction_ID, sapa_ID: $sapa_ID, sapa_desc: $sapa_desc, block_ID: $block_ID, item: $item, underOperation: $underOperation, note: $note, Hscissor: $Hscissor, Rscissor: $Rscissor, Ascissor: $Ascissor, Rstagenum: $Rstagenum, Astagenum: $Astagenum, quality: $quality, notfinals: $notfinals, actions: $actions)';
   }
 
   @override
@@ -793,6 +796,7 @@ class SubFraction {
     if (identical(this, other)) return true;
   
     return 
+      other.subfraction_ID == subfraction_ID &&
       other.fraction_ID == fraction_ID &&
       other.sapa_ID == sapa_ID &&
       other.sapa_desc == sapa_desc &&
@@ -812,7 +816,8 @@ class SubFraction {
 
   @override
   int get hashCode {
-    return fraction_ID.hashCode ^
+    return subfraction_ID.hashCode ^
+      fraction_ID.hashCode ^
       sapa_ID.hashCode ^
       sapa_desc.hashCode ^
       block_ID.hashCode ^
@@ -829,8 +834,6 @@ class SubFraction {
       actions.hashCode;
   }
 }
-
-
 
 class FinalProductModel {
   int id;
