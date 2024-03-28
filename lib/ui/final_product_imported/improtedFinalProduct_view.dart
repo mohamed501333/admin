@@ -29,8 +29,8 @@ class _FinalProductViewState extends State<FinalProductView> {
       child: Scaffold(
         appBar: AppBar(
           actions: [
-            AddUnregular2().permition(context,
-                UserPermition.incert_notFinal_in_importedfinal_prodcut),
+            // AddUnregular2().permition(context,
+            //     UserPermition.incert_notFinal_in_importedfinal_prodcut),
             TextButton(
                     onPressed: () async {
                       DateTime? pickedDate = await showDatePicker(
@@ -53,15 +53,16 @@ class _FinalProductViewState extends State<FinalProductView> {
                     ))
                 .permition(
                     context, UserPermition.show_date_in_finalProduct_imported),
-            AddUnregular().permition(context,
-                UserPermition.incert_unregular_in_importedfinal_prodcut),
+        
+            // AddUnregular().permition(context,
+            //     UserPermition.incert_unregular_in_importedfinal_prodcut),
           ],
         ),
         body: Form(
           key: vm.formKey,
           child: Column(
             children: [
-              Fields(vm: vm).permition(
+              FieldsINsertInFInalProdcut(vm: vm).permition(
                   context, UserPermition.incert_in_finalProdcut_imorted),
               Buttoms(vm: vm).permition(
                   context, UserPermition.incert_in_finalProdcut_imorted),
@@ -150,7 +151,7 @@ class TheTable extends StatelessWidget {
                                                       .final_prodcut_DidQalityCheck
                                                       .getactionTitle) ==
                                               false) {
-                                            showmyAlertDialog(
+                                            showmyAlertDialog2333323242(
                                                 context, vm, user, "delete");
                                           }
                                         },
@@ -174,7 +175,7 @@ class TheTable extends StatelessWidget {
                                                 UserPermition
                                                     .can_aprove_from_recive_from_final_prodcut) &&
                                             user.isfinal == true
-                                        ? showmyAlertDialog(
+                                        ? showmyAlertDialog2333323242(
                                             context, vm, user, "stock")
                                         : DoNothingAction();
                                   },
@@ -237,7 +238,7 @@ class TheTable extends StatelessWidget {
                                                         .final_prodcut_DidQalityCheck
                                                         .getactionTitle) ==
                                                 false
-                                        ? showmyAlertDialog(
+                                        ? showmyAlertDialog2333323242(
                                             context, vm, user, "q")
                                         : DoNothingAction();
                                   },
@@ -401,7 +402,7 @@ class TheTable extends StatelessWidget {
   }
 }
 
-showmyAlertDialog(BuildContext context, FinalProductStockViewModel vm,
+showmyAlertDialog2333323242(BuildContext context, FinalProductStockViewModel vm,
     FinalProductModel item, String casefun) {
   showDialog(
       context: context,

@@ -657,6 +657,9 @@ can_approve_from_generalManager,
   show_R1,
   show_R2,
   show_R3,
+  Rshow_bottomOFfinalproduct,
+  Rshow_bottomOFFractions,
+  Rshow_bottomOFNotfinl,
   show_A1,
 
  
@@ -859,6 +862,12 @@ extension QQ on UserPermition {
    
       case UserPermition.show_A1:
    return UserpermitionTittle(tittle: "show_A1"); 
+      case UserPermition.Rshow_bottomOFfinalproduct:
+   return UserpermitionTittle(tittle: "Rزر اضافه الى الصادر"); 
+      case UserPermition.Rshow_bottomOFFractions:
+   return UserpermitionTittle(tittle: "Rزر اضافه الى الوراد"); 
+      case UserPermition.Rshow_bottomOFNotfinl:
+   return UserpermitionTittle(tittle: "Rزر اضافه الى دون التام"); 
       }
   }
 
@@ -866,6 +875,12 @@ extension QQ on UserPermition {
     switch (this) {
    
     
+      case UserPermition.Rshow_bottomOFfinalproduct:
+        return "ٌRزر اضافه الى الصادر";
+      case UserPermition.Rshow_bottomOFFractions:
+        return "Rزر اضافه الى الوراد";
+      case UserPermition.Rshow_bottomOFNotfinl:
+        return "Rزر اضافه الى دون التام";
       case UserPermition.show_A1:
         return "show_A1";
       case UserPermition.show_Ohda_management:
