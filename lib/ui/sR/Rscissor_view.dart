@@ -1,18 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 // ignore_for_file: must_be_immutable
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:jason_company/controllers/final_product_controller.dart';
-import 'package:jason_company/ui/recources/enums.dart';
-import 'package:jason_company/ui/sR/componants.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
+import 'package:jason_company/ui/sR/componants.dart';
 
 class RVeiw2 extends StatelessWidget {
   RVeiw2({
@@ -26,54 +25,15 @@ class RVeiw2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<BlockFirebasecontroller, final_prodcut_controller>(
       builder: (context, blocks, finalprodcuts, child) {
-        List<FractionModel> fractions =
-            vm.getFractions_Cutted_On_Rscissor(blocks, Rscissor);
-        List<FinalProductModel> finalproducts = context
-            .read<final_prodcut_controller>()
-            .SumTheTOw()
-            .where((element) =>
-                element.scissor == Rscissor + 3 &&
-                element.actions
-                        .get_Date_of_action(finalProdcutAction
-                            .incert_finalProduct_from_cutingUnit.getactionTitle)
-                        .formatt() ==
-                    DateTime.now().formatt())
-            .toList();
-
-        List<int> a = fractions.map((e) => e.stagenum).toSet().toList();
-        List<int> b = fractions
-            .expand((element) => element.SubFractions)
-            .where((element) => element.Rscissor == Rscissor)
-            .map((e) => e.Rstagenum)
-            .toSet()
-            .toList();
-        List<int> c = finalproducts.map((e) => e.stageOfR).toSet().toList();
-        List<int> all = [];
-        all.addAll(a);
-        all.addAll(b);
-        all.addAll(c);
-        List<int> AllStages = all
-            .toSet()
-            .toList()
-            .sortedBy<num>((element) => element)
-            .reversed
-            .toList();
-
+         List<FractionModel> fractions =vm.getFractions_Cutted_On_Rscissor(blocks, Rscissor);
+         List<FinalProductModel>finalproducts = vm.getDataOF_finalProdcutOF_scissor(context,Rscissor);
+         List<int> AllStages = vm.getAllStages(fractions, Rscissor, finalproducts);
         int lastStage = AllStages.isEmpty ? 0 : AllStages.first;
         return Column(
           children: [
-            Container(
-              margin: const EdgeInsets.all(5),
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  border: Border.all(),
-                  color: const Color.fromARGB(255, 175, 132, 132)),
-              child: Text(
-                "      مقص دائرى ( $Rscissor )     ",
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ),
+
+            scissorNameAndNum(Rscissor: Rscissor),
+          
             Expanded(
                 child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -82,56 +42,7 @@ class RVeiw2 extends StatelessWidget {
                 width: 700,
                 child: ListView(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * .11,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              color: const Color.fromARGB(255, 170, 164, 164)),
-                          child: const Center(
-                              child: Text(
-                            "الدور",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                        ),
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width * .62,
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              color: const Color.fromARGB(255, 170, 164, 164)),
-                          child: const Center(
-                              child: Text(" الوارد ",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                        ),
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width * .62,
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              color: const Color.fromARGB(255, 170, 164, 164)),
-                          child: const Center(
-                              child: Text(" الصادر ",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                        ),
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width * .31,
-                          decoration: BoxDecoration(
-                              border: Border.all(),
-                              color: const Color.fromARGB(255, 170, 164, 164)),
-                          child: const Center(
-                              child: Text("دون التام",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                        ),
-                      ].reversed.toList(),
-                    ),
+                    const HeaderOfThable(),
                     // ازرار الدور
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,7 +59,7 @@ class RVeiw2 extends StatelessWidget {
                             )).permition(context, UserPermition.Rshow_bottomOFfinalproduct),
                         IconButton(
                             onPressed: () {
-                              showmyAlertDialog1414(
+                              showmyAlertDialog1_for_ading_fractions414(
                                   context, blocks, Rscissor, lastStage + 1);
                             },
                             icon: const Icon(
@@ -219,7 +130,7 @@ class RVeiw2 extends StatelessWidget {
                                         children: [
                                           IconButton(
                                               onPressed: () {
-                                                showmyAlertDialog1414(context,
+                                                showmyAlertDialog1_for_ading_fractions414(context,
                                                     blocks, Rscissor, e);
                                               },
                                               icon: const Icon(
@@ -355,6 +266,9 @@ class RVeiw2 extends StatelessWidget {
     );
   }
 
+ 
+
+
   int totalOfFinalProdcut(
           List<FinalProductModel> finalproducts, FinalProductModel f) =>
       finalproducts
@@ -367,6 +281,91 @@ class RVeiw2 extends StatelessWidget {
               element.hight == f.hight)
           .map((e) => e.amount)
           .reduce((value, element) => value + element);
+}
+
+class scissorNameAndNum extends StatelessWidget {
+  const scissorNameAndNum({
+    super.key,
+    required this.Rscissor,
+  });
+
+  final int Rscissor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          border: Border.all(),
+          color: const Color.fromARGB(255, 175, 132, 132)),
+      child: Text(
+        "      مقص دائرى ( $Rscissor )     ",
+        style:
+            const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    );
+  }
+}
+
+class HeaderOfThable extends StatelessWidget {
+  const HeaderOfThable({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width * .11,
+          height: 40,
+          decoration: BoxDecoration(
+              border: Border.all(),
+              color: const Color.fromARGB(255, 170, 164, 164)),
+          child: const Center(
+              child: Text(
+            "الدور",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )),
+        ),
+        Container(
+          height: 40,
+          width: MediaQuery.of(context).size.width * .62,
+          decoration: BoxDecoration(
+              border: Border.all(),
+              color: const Color.fromARGB(255, 170, 164, 164)),
+          child: const Center(
+              child: Text(" الوارد ",
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold))),
+        ),
+        Container(
+          height: 40,
+          width: MediaQuery.of(context).size.width * .62,
+          decoration: BoxDecoration(
+              border: Border.all(),
+              color: const Color.fromARGB(255, 170, 164, 164)),
+          child: const Center(
+              child: Text(" الصادر ",
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold))),
+        ),
+        Container(
+          height: 40,
+          width: MediaQuery.of(context).size.width * .31,
+          decoration: BoxDecoration(
+              border: Border.all(),
+              color: const Color.fromARGB(255, 170, 164, 164)),
+          child: const Center(
+              child: Text("دون التام",
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold))),
+        ),
+      ].reversed.toList(),
+    );
+  }
 }
 
 class DropDdowen0023 extends StatelessWidget {

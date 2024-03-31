@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
@@ -11,21 +11,23 @@ import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/final_product_imported/Widgets.dart';
-import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmodel.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 import 'package:jason_company/ui/sR/Rscissor_view.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
 
-showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
-    int scissor, int lastStage) {
+showmyAlertDialog1_for_ading_fractions414(BuildContext context,
+    BlockFirebasecontroller myType, int scissor, int lastStage) {
   Rscissor_veiwModel vm = Rscissor_veiwModel();
   List<FractionModel> fractionsNotCutOnRscissor =
-      vm.fractions_Underoperation(context, myType.blocks);
+      vm.getfractions_Underoperation(context, myType.blocks);
   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           title: const Text(''),
           content: SizedBox(
             height: 400,
@@ -66,7 +68,7 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
                             },
                             child: Container(
                               margin: const EdgeInsets.only(top: 10),
-                              width: 180,
+                              // width: 180,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 12,
                                 vertical: 10,
@@ -83,7 +85,7 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
                               child: Row(
                                 children: [
                                   Text(
-                                    "${e.item.W.removeTrailingZeros}*${e.item.L}*${e.item.H.removeTrailingZeros} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
+                                    "${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}*${e.item.H.removeTrailingZeros} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}    ",
                                     style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
@@ -129,82 +131,74 @@ showmyAlertDialog1414(BuildContext context, BlockFirebasecontroller myType,
         );
       });
 }
-// ignore: non_constant_identifier_names
-showmyAlertDialog_forAddingFinalProductToRscissor(BuildContext context,
-    int Rscissor, int stageOfR) {
+
+showmyAlertDialog_forAddingFinalProductToRscissor(
+    BuildContext context, int Rscissor, int stageOfR) {
   Rscissor_veiwModel vm = Rscissor_veiwModel();
-  FinalProductStockViewModel vm1=FinalProductStockViewModel();
 
   showDialog(
-               
-
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           insetPadding: EdgeInsets.zero,
           contentPadding: EdgeInsets.zero,
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          title: const Text(''),
+          title: const Text('اضافة منتج تام'),
           content: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 200,
             child: SingleChildScrollView(
-              
               child: Form(
                 key: vm.formKey,
-                child: Column(
-                  
-                  children: [
-                  
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                   children: [
-                       CustomTextFormField(
-                  keybordtupe: TextInputType.name,
-                  width: MediaQuery.of(context).size.width * .40,
-                  hint: "ملاحظات ",
-                  controller: vm.notes,
-                ),
-                     Column(
-                       children: [
-                         CustomTextFormField(
-                          width: MediaQuery.of(context).size.width * .23,
-                          hint: "عدد",
-                          controller: vm.amountcontroller,
-                          validator: Validation.validateothers,
-                                       ),
-                                        const Text("من",style: TextStyle(fontWeight: FontWeight.bold),),
-                                        
-                       ],
-                     ),
-                   ],
-                 ),
-                 
-                FieldsINsertInFInalProdcutFormScissor(vm: vm1)
-                            
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomTextFormField(
+                        keybordtupe: TextInputType.name,
+                        width: MediaQuery.of(context).size.width * .40,
+                        hint: "ملاحظات ",
+                        controller: vm.notes,
+                      ),
+                      Column(
+                        children: [
+                          CustomTextFormField(
+                            width: MediaQuery.of(context).size.width * .23,
+                            hint: "عدد",
+                            controller: vm.amountcontroller,
+                            validator: Validation.validateothers,
+                          ),
+                          const Text(
+                            "من",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SearchForSize(),
                 ]),
               ),
             ),
           ),
           actions: [
-               Row(
-                       children: [
-
-                         AddUnregular2(Rscissor: Rscissor,lastStage:stageOfR ,).permition(context,
-                                         UserPermition.incert_unregular_in_importedfinal_prodcut),
-
-                                          AddUnregular().permition(context,
-                               UserPermition.incert_unregular_in_importedfinal_prodcut)
-
-                       ],
-                     ),
+            Row(
+              children: [
+                AddUnderOperation(
+    
+                ).permition(context,
+                    UserPermition.incert_underoperation),
+                AddUnregular().permition(context,
+                    UserPermition.incert_unregular_in_importedfinal_prodcut)
+              ],
+            ),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
                   if (vm.formKey.currentState!.validate()) {
-                    vm.incert_finalProduct_from_cutingUnitR2324(context, stageOfR, Rscissor);
-                  Navigator.pop(context);
-
+                    vm.incert_finalProduct_from_cutingUnitR2324(
+                        context, stageOfR, Rscissor);
+                    Navigator.pop(context);
                   }
                 },
                 child: const Text('ok')),
@@ -215,7 +209,7 @@ showmyAlertDialog_forAddingFinalProductToRscissor(BuildContext context,
 
 dialogOfAddNotFinalToBlock4544(
     BuildContext context,
-    //الفرد المقصوصه على هذا المقص فى هئا الدور 
+    //الفرد المقصوصه على هذا المقص فى هئا الدور
     List<FractionModel> fractions) {
   H1VeiwModel vm = H1VeiwModel();
   return showDialog(
@@ -261,41 +255,14 @@ dialogOfAddNotFinalToBlock4544(
       });
 }
 
-
-class FieldsINsertInFInalProdcutFormScissor extends StatelessWidget {
-  const FieldsINsertInFInalProdcutFormScissor({
-    super.key,
-    required this.vm,
-  });
-
-  final FinalProductStockViewModel vm;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15),
-      child: Column(
-        children: [
-          SearchForSize(),
-    
-          const SizedBox(height: 15),
-        
-        ],
-      ),
-    );
-  }
-}
-
 //شغل مرحله اخرى تحت التشغيل(غير تام)'
-class AddUnregular2 extends StatelessWidget {
-  AddUnregular2({
-    Key? key,
-    required this.Rscissor,
-    required this.lastStage,
-  }) : super(key: key);
+class AddUnderOperation extends StatelessWidget {
+  AddUnderOperation({
+    super.key,
+
+  });
   Rscissor_veiwModel vm = Rscissor_veiwModel();
-   final int Rscissor;
-   final int lastStage;
+
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -330,114 +297,7 @@ class AddUnregular2 extends StatelessWidget {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      CustomTextFormField(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        hint: "النوع",
-                                        keybordtupe: TextInputType.name,
-                                        controller: vm.typecontroller,
-                                        validator: Validation.validateothers,
-                                      ),
-                                      CustomTextFormField(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        hint: "الكثافه",
-                                        controller: vm.densitycontroller,
-                                        validator: Validation.validateothers,
-                                      ),
-                         
-                                    ],
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      CustomTextFormField(
-                                        validator: Validation.validateothers,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        keybordtupe: TextInputType.number,
-                                        hint: "الكميه",
-                                        controller: vm.amountcontroller,
-                                      ),
-                                      CustomTextFormField(
-                                        validator: Validation.validateothers,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        keybordtupe: TextInputType.number,
-                                        hint: "مقص",
-                                        controller: vm.scissorcontroller,
-                                      ),
-                                      CustomTextFormField(
-                                        validator: Validation.validateothers,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        keybordtupe: TextInputType.name,
-                                        hint: "اللون",
-                                        controller: vm.colercontroller,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      CustomTextFormField(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        hint: "الارتفاع",
-                                        controller: vm.hightncontroller,
-                                        validator: Validation.validateothers,
-                                      ),
-                                      CustomTextFormField(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        hint: "العرض",
-                                        controller: vm.widthcontroller,
-                                        validator: Validation.validateothers,
-                                      ),
-                                      CustomTextFormField(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        hint: "الطول ",
-                                        controller: vm.lenthcontroller,
-                                        validator: Validation.validateothers,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 15),
-                                  CustomTextFormField(
-                                    width:
-                                        MediaQuery.of(context).size.width * .22,
-                                    hint: "رقم الدور",
-                                    controller: vm.N,
-                                    validator: Validation.validateothers,
-                                  ),
-                                  const SizedBox(height: 15),
-                                ],
-                              ),
+                          
                               const SizedBox(
                                 height: 10,
                               ),
@@ -453,7 +313,6 @@ class AddUnregular2 extends StatelessWidget {
                                           if (vm.validate()) {
                                             vm.add_UnderOperatin_work(context);
                                           }
-                                          
                                         },
                                         child: const Text('أضافه')),
                                   ),

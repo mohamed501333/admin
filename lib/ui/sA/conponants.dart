@@ -14,7 +14,7 @@ showmyAlertDialog141422(BuildContext context, BlockFirebasecontroller myType,
     int Acissor, int lastStage) {
   Rscissor_veiwModel vm = Rscissor_veiwModel();
   List<FractionModel> fractionsNotCutOnRscissor =
-      vm.fractions_Underoperation(context, myType.blocks);
+      vm.getfractions_Underoperation(context, myType.blocks);
   showDialog(
       context: context,
       builder: (BuildContext context) {

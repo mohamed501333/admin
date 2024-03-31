@@ -221,6 +221,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     f.Rscissor = Rscissor;
     f.actions.add(FractionActon.cut_fraction_OnRscissor.add);
     f.stagenum = lastStage;
+    f.underOperation=false;
 
     try {
       FirebaseDatabase.instance

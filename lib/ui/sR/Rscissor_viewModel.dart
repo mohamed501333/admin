@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, non_constant_identifier_names, file_names
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
@@ -39,7 +40,7 @@ class Rscissor_veiwModel extends BaseViewModel {
         .toList();
   }
 
-  List<FractionModel> fractions_Underoperation(
+  List<FractionModel> getfractions_Underoperation(
       BuildContext context, List<BlockModel> blocks) {
     return blocks
         .map((e) => e.fractions)
@@ -47,7 +48,25 @@ class Rscissor_veiwModel extends BaseViewModel {
         .where((element) => element.underOperation == true)
         .toList();
   }
+ 
+                    List<int>  getAllStages( List<FractionModel> fractions,int Rscissor, List<FinalProductModel> finalproducts ){
+                            List<int> allStagesOf_fractions = fractions.map((e) => e.stagenum).toSet().toList();
 
+        List<int> allStagesOf_subfraction =get_subfractions(fractions,Rscissor).map((e) => e.Rstagenum).toSet().toList();
+       
+        List<int> allStagesOf_finalproduct = finalproducts.map((e) => e.stageOfR).toSet().toList();
+       
+        List<int> all = [];
+        all.addAll(allStagesOf_fractions);
+        all.addAll(allStagesOf_subfraction);
+        all.addAll(allStagesOf_finalproduct);
+       return all.toSet().toList().sortedBy<num>((element) => element).reversed.toList();
+                      }
+ List<SubFraction> get_subfractions(List<FractionModel> fractions,int Rscissor) {
+    return fractions
+          .expand((element) => element.SubFractions)
+          .where((element) => element.Rscissor == Rscissor).toList();
+  }
   incert_finalProduct_from_cutingUnitR2324(BuildContext context,int stageOFR,int Rscissor) {
 
     OrderController my = context.read<OrderController>();
@@ -136,6 +155,19 @@ class Rscissor_veiwModel extends BaseViewModel {
     }
   }
 
+  List<FinalProductModel> getDataOF_finalProdcutOF_scissor(BuildContext context,int Rscissor) {
+    return context
+          .read<final_prodcut_controller>()
+          .SumTheTOw()
+          .where((element) =>
+              element.scissor == Rscissor + 3 &&
+              element.actions
+                      .get_Date_of_action(finalProdcutAction
+                          .incert_finalProduct_from_cutingUnit.getactionTitle)
+                      .formatt() ==
+                  DateTime.now().formatt())
+          .toList();
+  }
 
 
 // TO:DO

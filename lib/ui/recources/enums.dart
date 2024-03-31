@@ -593,6 +593,7 @@ enum UserPermition {
   show_finalprodcut_importedFormcuttingUint,
   incert_in_finalProdcut_imorted,
   incert_unregular_in_importedfinal_prodcut,
+  incert_underoperation,
   incert_notFinal_in_importedfinal_prodcut,
   incert_in_final_prodcutStock,
   incert_in_final_prodcutStock_From_Excel,
@@ -868,6 +869,8 @@ extension QQ on UserPermition {
    return UserpermitionTittle(tittle: "Rزر اضافه الى الوراد"); 
       case UserPermition.Rshow_bottomOFNotfinl:
    return UserpermitionTittle(tittle: "Rزر اضافه الى دون التام"); 
+      case UserPermition.incert_underoperation:
+   return UserpermitionTittle(tittle: "ٌRاضافة شغل مرحله اخرى"); 
       }
   }
 
@@ -875,6 +878,8 @@ extension QQ on UserPermition {
     switch (this) {
    
     
+      case UserPermition.incert_underoperation:
+        return "ٌRاضافة شغل مرحله اخرى";
       case UserPermition.Rshow_bottomOFfinalproduct:
         return "ٌRزر اضافه الى الصادر";
       case UserPermition.Rshow_bottomOFFractions:
