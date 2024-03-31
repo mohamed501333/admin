@@ -6,6 +6,7 @@ import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
 import 'package:provider/provider.dart';
 
 class ObjectBoxController extends ChangeNotifier {
@@ -147,6 +148,7 @@ class ObjectBoxController extends ChangeNotifier {
   ];
   String initial = "جوانب";
   String initial2 = "ارضيات";
+  BLockDetailsOf? selectedValueOfBLockDetailsOf;
   gdet() {
     switch (initial) {
       case "جوانب":

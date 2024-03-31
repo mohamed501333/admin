@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names, camel_case_types
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
@@ -133,7 +133,7 @@ showmyAlertDialog1_for_ading_fractions414(BuildContext context,
 }
 
 showmyAlertDialog_forAddingFinalProductToRscissor(
-    BuildContext context, int Rscissor, int stageOfR) {
+    BuildContext context, int Rscissor, int stageOfR, List<FractionModel> fractions) {
   Rscissor_veiwModel vm = Rscissor_veiwModel();
 
   showDialog(
@@ -184,10 +184,8 @@ showmyAlertDialog_forAddingFinalProductToRscissor(
           actions: [
             Row(
               children: [
-                AddUnderOperation(
-    
-                ).permition(context,
-                    UserPermition.incert_underoperation),
+                AddUnderOperation(fractions: fractions,stateOfR: stageOfR,
+                ).permition(context, UserPermition.incert_underoperation),
                 AddUnregular().permition(context,
                     UserPermition.incert_unregular_in_importedfinal_prodcut)
               ],
@@ -259,10 +257,13 @@ dialogOfAddNotFinalToBlock4544(
 class AddUnderOperation extends StatelessWidget {
   AddUnderOperation({
     super.key,
-
+    required this.fractions,
+    required this.stateOfR,
   });
-  Rscissor_veiwModel vm = Rscissor_veiwModel();
 
+  Rscissor_veiwModel vm = Rscissor_veiwModel();
+ final List<FractionModel> fractions;
+ final int stateOfR;
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -297,10 +298,34 @@ class AddUnderOperation extends StatelessWidget {
                               const SizedBox(
                                 height: 10,
                               ),
-                          
-                              const SizedBox(
-                                height: 10,
-                              ),
+
+                              CustomTextFormField(
+                    hint: "عددد",
+                    width: 120,
+                    validator: Validation.validateothers,
+                    controller: vm.amountcontroller),
+                    const Text("من"),
+                    
+                    DropDdowenForList_of_blocks_In_Rstage(data: vm.getAllDetiails_OFscissor_OFstage(stateOfR, fractions)),
+
+                    Row(children: [
+                      CustomTextFormField(
+                    hint: "طول ",
+                    width: 70,
+                    validator: Validation.validateothers,
+                    controller: vm.lenthcontroller),CustomTextFormField(
+                    hint: "عرض",
+                    width: 70,
+                    validator: Validation.validateothers,
+                    controller: vm.hightncontroller),
+                    CustomTextFormField(
+                    hint: "ارتفاع",
+                    width: 70,
+                    validator: Validation.validateothers,
+                    controller: vm.hightncontroller)
+                    ],),
+
+                              //buttons
                               Row(
                                 children: [
                                   Expanded(
@@ -311,7 +336,7 @@ class AddUnderOperation extends StatelessWidget {
                                                     Colors.red)),
                                         onPressed: () {
                                           if (vm.validate()) {
-                                            vm.add_UnderOperatin_work(context);
+                                            vm.add_UnderOperatin_subfractions(context);
                                           }
                                         },
                                         child: const Text('أضافه')),
@@ -340,5 +365,35 @@ class AddUnderOperation extends StatelessWidget {
                   ));
         },
         icon: const Icon(color: Colors.red, Icons.add_box_sharp));
+  }
+}
+
+
+class DropDdowenForList_of_blocks_In_Rstage extends StatelessWidget {
+  const DropDdowenForList_of_blocks_In_Rstage({
+    super.key,
+    required this.data,
+  });
+final List<BLockDetailsOf> data;
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ObjectBoxController>(
+      builder: (context, v, child) {
+        return DropdownButton(
+            value: context.read<ObjectBoxController>().selectedValueOfBLockDetailsOf,
+            items: data
+                .map((e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e.sapadescriotion.toString()),
+                    ))
+                .toList(),
+            onChanged: (v) {
+              if (v != null) {
+                context.read<ObjectBoxController>().selectedValueOfBLockDetailsOf = v;
+                context.read<ObjectBoxController>().get();
+              }
+            });
+      },
+    );
   }
 }

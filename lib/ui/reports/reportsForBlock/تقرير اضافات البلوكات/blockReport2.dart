@@ -33,7 +33,7 @@ class BlockReport3 extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () async {
-                    generateAndSaveExcel();
+                    generateAndSaveExcel(blocks);
                   },
                   icon: const Icon(Icons.explicit_outlined),
                 ),

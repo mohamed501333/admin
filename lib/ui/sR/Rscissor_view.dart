@@ -25,10 +25,18 @@ class RVeiw2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<BlockFirebasecontroller, final_prodcut_controller>(
       builder: (context, blocks, finalprodcuts, child) {
-         List<FractionModel> fractions =vm.getFractions_Cutted_On_Rscissor(blocks, Rscissor);
+
+
+
+         List<FractionModel> fractions =vm.getFractions_Cutted_On_Rscissor_today(blocks, Rscissor);
+         List<SubFraction> subfraction =blocks.subfractions;
          List<FinalProductModel>finalproducts = vm.getDataOF_finalProdcutOF_scissor(context,Rscissor);
          List<int> AllStages = vm.getAllStages(fractions, Rscissor, finalproducts);
         int lastStage = AllStages.isEmpty ? 0 : AllStages.first;
+
+
+
+
         return Column(
           children: [
 
@@ -50,7 +58,7 @@ class RVeiw2 extends StatelessWidget {
                         IconButton(
                             onPressed: () {
                               showmyAlertDialog_forAddingFinalProductToRscissor(
-                                  context, Rscissor, lastStage + 1);
+                                  context, Rscissor, lastStage + 1,fractions);
                             },
                             icon: const Icon(
                               Icons.add,
@@ -182,7 +190,7 @@ class RVeiw2 extends StatelessWidget {
                                           IconButton(
                                               onPressed: () {
                                                 showmyAlertDialog_forAddingFinalProductToRscissor(
-                                                    context, Rscissor, e);
+                                                    context, Rscissor, e,fractions);
                                               },
                                               icon: const Icon(
                                                 Icons.add,
@@ -260,6 +268,7 @@ class RVeiw2 extends StatelessWidget {
                 ),
               ),
             )),
+        
           ],
         );
       },
@@ -285,9 +294,9 @@ class RVeiw2 extends StatelessWidget {
 
 class scissorNameAndNum extends StatelessWidget {
   const scissorNameAndNum({
-    super.key,
+    Key? key,
     required this.Rscissor,
-  });
+  }) : super(key: key);
 
   final int Rscissor;
 

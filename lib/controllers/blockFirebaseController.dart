@@ -25,7 +25,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
           for (var item in map.values.toList()) {
             all.add(BlockModel.fromJson(item.toString()));
           }
-
+           subfractions.addAll(all.where((element) => element.Block_Id==1).expand((element) => element.fractions.expand((e) => e.SubFractions)).toList());
           blocks.addAll(all.where((element) =>
               element.actions
                   .if_action_exist(BlockAction.archive_block.getactionTitle) ==
@@ -42,6 +42,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
+
+   List<SubFraction>  subfractions=[];
   List<BlockModel> all = [];
   List<BlockModel> blocks = [];
   List<BlockModel> archived_blocks = [];
@@ -78,6 +80,14 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
   int amountofView = 5;
+   addsubfractions(List<SubFraction> supfraction) async {
+    BlockModel block =all.firstWhere((element) => element.Block_Id==1);
+     block.fractions.firstWhere((element) => element.fraction_ID==1).SubFractions.addAll(supfraction);
+    try {
+      await FirebaseDatabase.instance
+          .ref("blocks/1").set(block.toJson());
+    } catch (e) {}
+  }
 
   addblock(BlockModel block) async {
     try {

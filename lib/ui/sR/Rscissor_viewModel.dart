@@ -1,7 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: camel_case_types, non_constant_identifier_names, file_names
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/ObjectBoxController.dart';
+import 'package:provider/provider.dart';
+
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
@@ -10,11 +14,10 @@ import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:provider/provider.dart';
 
 class Rscissor_veiwModel extends BaseViewModel {
 
-  List<FractionModel> getFractions_Cutted_On_Rscissor(
+  List<FractionModel> getFractions_Cutted_On_Rscissor_today(
       BlockFirebasecontroller myType, int Rscissor) {
     return myType.blocks
         .expand((e) => e.fractions.where((element) =>
@@ -24,6 +27,20 @@ class Rscissor_veiwModel extends BaseViewModel {
                         FractionActon.cut_fraction_OnRscissor.getTitle)
                     .formatt() ==
                 DateTime.now().formatt()))
+        .toList();
+  }
+
+  List<SubFraction> getsubfraction_Cutted_On_Rscissor(
+      BlockFirebasecontroller myType, int Rscissor) {
+    return myType.blocks
+        .expand((e) => e.fractions.expand((element) => element.SubFractions)).
+            where((element) =>
+            element.Rscissor == Rscissor &&
+            element.actions
+                    .get_Date_of_action(
+                        FractionActon.cut_fraction_OnRscissor.getTitle)
+                    .formatt() ==
+                DateTime.now().formatt())
         .toList();
   }
 
@@ -49,7 +66,7 @@ class Rscissor_veiwModel extends BaseViewModel {
         .toList();
   }
  
-                    List<int>  getAllStages( List<FractionModel> fractions,int Rscissor, List<FinalProductModel> finalproducts ){
+ List<int>  getAllStages( List<FractionModel> fractions,int Rscissor, List<FinalProductModel> finalproducts ){
                             List<int> allStagesOf_fractions = fractions.map((e) => e.stagenum).toSet().toList();
 
         List<int> allStagesOf_subfraction =get_subfractions(fractions,Rscissor).map((e) => e.Rstagenum).toSet().toList();
@@ -62,11 +79,13 @@ class Rscissor_veiwModel extends BaseViewModel {
         all.addAll(allStagesOf_finalproduct);
        return all.toSet().toList().sortedBy<num>((element) => element).reversed.toList();
                       }
+
  List<SubFraction> get_subfractions(List<FractionModel> fractions,int Rscissor) {
     return fractions
           .expand((element) => element.SubFractions)
           .where((element) => element.Rscissor == Rscissor).toList();
   }
+  
   incert_finalProduct_from_cutingUnitR2324(BuildContext context,int stageOFR,int Rscissor) {
 
     OrderController my = context.read<OrderController>();
@@ -168,13 +187,18 @@ class Rscissor_veiwModel extends BaseViewModel {
                   DateTime.now().formatt())
           .toList();
   }
+   
+
+   List<BLockDetailsOf> getAllDetiails_OFscissor_OFstage(  int StageOfR, List<FractionModel> fractions){
+       return  fractions.where((element) => element.stagenum==StageOfR).map((e) => BLockDetailsOf(sapadescriotion: e.sapa_desc, sapaId: e.sapa_ID, density: e.item.density, type: e.item.type, color: e.item.color,stageOfR: StageOfR)).toList();
+   }
 
 
 // TO:DO
-  add_UnderOperatin_work(BuildContext context) {
+  add_UnderOperatin_subfractions(BuildContext context) {
 
-        var quantity=amountcontroller.text.to_int();
-        var block=context.read<BlockFirebasecontroller>().blocks.where((element) => false);
+     var quantity=amountcontroller.text.to_int();
+     BLockDetailsOf? sapadetails= context.read<ObjectBoxController>().selectedValueOfBLockDetailsOf;
     
     var L = lenthcontroller.text.to_double();
     var w = widthcontroller.text.to_double();
@@ -186,30 +210,55 @@ class Rscissor_veiwModel extends BaseViewModel {
         L: L,
         W: w,
         H: h,
-        density: densitycontroller.text.to_double(),
+        density: sapadetails!.density,
         volume: volume,
         wight: wight,
-        color: colercontroller.text,
-        type: typecontroller.text,
+        color: sapadetails.color,
+        type: sapadetails.type,
         price: 0);
 
-    var fraction = SubFraction(
+    var subfraction = SubFraction(
         subfraction_ID: DateTime.now().microsecondsSinceEpoch,
         fraction_ID:0 ,
-        sapa_ID:"",
+        sapa_ID:sapadetails.sapaId,
         block_ID: 0,
-        sapa_desc:"" ,
+        sapa_desc:sapadetails.sapadescriotion ,
         item: item,
         underOperation: true,
         Ascissor: 0,
         Hscissor: 0,
-        Rscissor: scissorcontroller.text.to_int(),
+        Rscissor: 0,
         quality: 0,
         notfinals: [],
-        Rstagenum: N.text.to_int(),
+        Rstagenum:sapadetails.stageOfR,
         Astagenum: 0,
         note: "",
         actions: []);
+  
+        
+        if (sapadetails!=null) {
+          
+        }
+
+       context.read<BlockFirebasecontroller>().addsubfractions(List.generate(quantity.toInt(), (index) => subfraction));
+
+
   }
 
 }
+class BLockDetailsOf {
+  String sapadescriotion;
+  String sapaId;
+  double density;
+  String type;
+  String color;
+  int stageOfR;
+  BLockDetailsOf({
+    required this.sapadescriotion,
+    required this.sapaId,
+    required this.density,
+    required this.type,
+    required this.color,
+    required this.stageOfR,
+  });
+ }
