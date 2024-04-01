@@ -188,14 +188,11 @@ class Rscissor_veiwModel extends BaseViewModel {
           .toList();
   }
    
-
    List<BLockDetailsOf> getAllDetiails_OFscissor_OFstage(  int StageOfR, List<FractionModel> fractions){
        return  fractions.where((element) => element.stagenum==StageOfR).map((e) => BLockDetailsOf(sapadescriotion: e.sapa_desc, sapaId: e.sapa_ID, density: e.item.density, type: e.item.type, color: e.item.color,stageOfR: StageOfR)).toList();
    }
 
-
-// TO:DO
-  add_UnderOperatin_subfractions(BuildContext context) {
+  add_UnderOperatin_subfractions(BuildContext context,int Rscissor) {
 
      var quantity=amountcontroller.text.to_int();
      BLockDetailsOf? sapadetails= context.read<ObjectBoxController>().selectedValueOfBLockDetailsOf;
@@ -204,13 +201,13 @@ class Rscissor_veiwModel extends BaseViewModel {
     var w = widthcontroller.text.to_double();
     var h = hightncontroller.text.to_double();
     var volume = L * w * h / 1000000;
-    var wight = densitycontroller.text.to_double() * volume;
+    var wight = sapadetails!.density * volume;
 
     var item = Itme(
         L: L,
         W: w,
         H: h,
-        density: sapadetails!.density,
+        density: sapadetails.density,
         volume: volume,
         wight: wight,
         color: sapadetails.color,
@@ -227,25 +224,29 @@ class Rscissor_veiwModel extends BaseViewModel {
         underOperation: true,
         Ascissor: 0,
         Hscissor: 0,
-        Rscissor: 0,
+        Rscissor: Rscissor,
         quality: 0,
         notfinals: [],
         Rstagenum:sapadetails.stageOfR,
         Astagenum: 0,
+        Hstagenum: 0,
         note: "",
-        actions: []);
-  
-        
-        if (sapadetails!=null) {
-          
-        }
+        actions: [subfractionAction.create_new_subfraction.add]);
 
-       context.read<BlockFirebasecontroller>().addsubfractions(List.generate(quantity.toInt(), (index) => subfraction));
+    context.read<BlockFirebasecontroller>().addsubfractions(List.generate(quantity.toInt(), (index) => subfraction));
+   
+        amountcontroller.clear();
+        lenthcontroller.clear();
+        widthcontroller.clear();
+        hightncontroller.clear();
+        sapadetails=null;
+
 
 
   }
 
 }
+
 class BLockDetailsOf {
   String sapadescriotion;
   String sapaId;

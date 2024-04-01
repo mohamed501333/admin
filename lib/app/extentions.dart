@@ -185,6 +185,30 @@ extension Fd on List<ChemicalsModel> {
   }
 }
 
+extension  sdfdsf on List<SubFraction>{
+ 
+    List<SubFraction> filtersubfractions() {
+    List<SubFraction> nonRepetitive = [];
+    for (var i = 0; i < length; i++) {
+      bool repeated = false;
+      for (var j = 0; j < nonRepetitive.length; j++) {
+        if (this[i].item.H == nonRepetitive[j].item.H &&
+            this[i].item.W == nonRepetitive[j].item.W &&
+            this[i].item.L == nonRepetitive[j].item.L &&
+            this[i].item.color == nonRepetitive[j].item.color &&
+            this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.density == nonRepetitive[j].item.density) {
+          repeated = true;
+        }
+      }
+      if (!repeated) {
+        nonRepetitive.add(this[i]);
+      }
+    }
+    return nonRepetitive;
+  }
+}
+
 extension Filter on List<FinalProductModel> {
   List<FinalProductModel> filterItemsPasedOnDensites(
       BuildContext context, List<String> densities) {

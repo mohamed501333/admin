@@ -679,6 +679,7 @@ class SubFraction {
   int Ascissor;
   int Rstagenum;
   int Astagenum;
+  int Hstagenum;
   int quality;
   final List<NotFinal> notfinals;
   final List<ActionModel> actions;
@@ -696,6 +697,7 @@ class SubFraction {
     required this.Ascissor,
     required this.Rstagenum,
     required this.Astagenum,
+    required this.Hstagenum,
     required this.quality,
     required this.notfinals,
     required this.actions,
@@ -716,6 +718,7 @@ class SubFraction {
     int? Ascissor,
     int? Rstagenum,
     int? Astagenum,
+    int? Hstagenum,
     int? quality,
     List<NotFinal>? notfinals,
     List<ActionModel>? actions,
@@ -734,6 +737,7 @@ class SubFraction {
       Ascissor: Ascissor ?? this.Ascissor,
       Rstagenum: Rstagenum ?? this.Rstagenum,
       Astagenum: Astagenum ?? this.Astagenum,
+      Hstagenum: Hstagenum ?? this.Hstagenum,
       quality: quality ?? this.quality,
       notfinals: notfinals ?? this.notfinals,
       actions: actions ?? this.actions,
@@ -755,6 +759,7 @@ class SubFraction {
       'Ascissor': Ascissor,
       'Rstagenum': Rstagenum,
       'Astagenum': Astagenum,
+      'Hstagenum': Hstagenum,
       'quality': quality,
       'notfinals': notfinals.map((x) => x.toMap()).toList(),
       'actions': actions.map((x) => x.toMap()).toList(),
@@ -776,6 +781,7 @@ class SubFraction {
       Ascissor: map['Ascissor'] as int,
       Rstagenum: map['Rstagenum'] as int,
       Astagenum: map['Astagenum'] as int,
+      Hstagenum: map['Hstagenum'] as int,
       quality: map['quality'] as int,
       notfinals: List<NotFinal>.from((map['notfinals'] as List<dynamic>).map<NotFinal>((x) => NotFinal.fromMap(x as Map<String,dynamic>),),),
       actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
@@ -788,7 +794,7 @@ class SubFraction {
 
   @override
   String toString() {
-    return 'SubFraction(subfraction_ID: $subfraction_ID, fraction_ID: $fraction_ID, sapa_ID: $sapa_ID, sapa_desc: $sapa_desc, block_ID: $block_ID, item: $item, underOperation: $underOperation, note: $note, Hscissor: $Hscissor, Rscissor: $Rscissor, Ascissor: $Ascissor, Rstagenum: $Rstagenum, Astagenum: $Astagenum, quality: $quality, notfinals: $notfinals, actions: $actions)';
+    return 'SubFraction(subfraction_ID: $subfraction_ID, fraction_ID: $fraction_ID, sapa_ID: $sapa_ID, sapa_desc: $sapa_desc, block_ID: $block_ID, item: $item, underOperation: $underOperation, note: $note, Hscissor: $Hscissor, Rscissor: $Rscissor, Ascissor: $Ascissor, Rstagenum: $Rstagenum, Astagenum: $Astagenum, Hstagenum: $Hstagenum, quality: $quality, notfinals: $notfinals, actions: $actions)';
   }
 
   @override
@@ -809,6 +815,7 @@ class SubFraction {
       other.Ascissor == Ascissor &&
       other.Rstagenum == Rstagenum &&
       other.Astagenum == Astagenum &&
+      other.Hstagenum == Hstagenum &&
       other.quality == quality &&
       listEquals(other.notfinals, notfinals) &&
       listEquals(other.actions, actions);
@@ -829,6 +836,7 @@ class SubFraction {
       Ascissor.hashCode ^
       Rstagenum.hashCode ^
       Astagenum.hashCode ^
+      Hstagenum.hashCode ^
       quality.hashCode ^
       notfinals.hashCode ^
       actions.hashCode;

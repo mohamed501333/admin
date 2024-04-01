@@ -208,7 +208,7 @@ class TheTable0001 extends StatelessWidget {
                                         onTap: () {
                                           context
                                               .read<BlockFirebasecontroller>()
-                                              .Delete_fraction(block: user);
+                                              .UnCutBlock_FromH(block: user);
                                         },
                                         child: const Icon(
                                           Icons.delete,

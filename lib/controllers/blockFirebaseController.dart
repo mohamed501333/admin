@@ -199,7 +199,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  Delete_fraction({
+  UnCutBlock_FromH({
     required BlockModel block,
   }) {
     int index = block.actions.indexWhere((element) =>
@@ -219,7 +219,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   add_on_R_scissor(
-      {required BuildContext context,
+      {
       required FractionModel fractiond,
       required int lastStage,
       required int Rscissor}) {
@@ -232,6 +232,27 @@ class BlockFirebasecontroller extends ChangeNotifier {
     f.actions.add(FractionActon.cut_fraction_OnRscissor.add);
     f.stagenum = lastStage;
     f.underOperation=false;
+
+    try {
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
+      notifyListeners();
+    } catch (e) {}
+  }
+  remove_from_R_scissor(
+      {
+      required FractionModel fraction,
+     }) {
+    BlockModel block =
+        blocks.firstWhere((element) => element.Block_Id == fraction.block_ID);
+    var f = block.fractions
+        .firstWhere((element) => element.fraction_ID == fraction.fraction_ID);
+
+    f.Rscissor = 0;
+    f.actions.add(FractionActon.archive_fraction.add);
+    f.stagenum = 0;
+    f.underOperation=true;
 
     try {
       FirebaseDatabase.instance
@@ -347,6 +368,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
+//zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+
   void add_Not_final_ToFractionR(
       {required FractionModel fractiond,
       required String type,
@@ -363,6 +386,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
           .set(b.toJson());
     } catch (e) {}
       }
+
   void add_Not_final_ToFractionA(
       {required FractionModel fractiond,
       required String type,

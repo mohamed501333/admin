@@ -506,6 +506,37 @@ extension CCc on customerAction {
   }
 }
 
+enum subfractionAction {
+  create_new_subfraction,
+  archive_subfraction,
+}
+
+extension dfdff on subfractionAction {
+  ActionModel get add {
+    switch (this) {
+      case subfractionAction.create_new_subfraction:
+        return ActionModel(
+            action: "create_new_subfraction",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case subfractionAction.archive_subfraction:
+        return ActionModel(
+            action: "archive_subfraction",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+    }
+  }
+
+  String get getTitle {
+    switch (this) {
+      case subfractionAction.create_new_subfraction:
+        return "create_new_subfraction";
+      case subfractionAction.archive_subfraction:
+        return "archive_subfraction";
+    }
+  }
+}
+
 enum OrderAction {
   create_order,
   Archive_order,
@@ -601,6 +632,7 @@ enum UserPermition {
   show_date_in_finalProduct_imported,
   can_aprove_from_quality,
   can_aprove_from_recive_from_final_prodcut,
+  Hide_total_in_finalproduct,
 
   can_get_data_of_invoice,
   show_finalprodcut_invoice,
@@ -661,6 +693,7 @@ can_approve_from_generalManager,
   Rshow_bottomOFfinalproduct,
   Rshow_bottomOFFractions,
   Rshow_bottomOFNotfinl,
+  can_delete_fractons_cutted_on_R,
   show_A1,
 
  
@@ -871,12 +904,21 @@ extension QQ on UserPermition {
    return UserpermitionTittle(tittle: "Rزر اضافه الى دون التام"); 
       case UserPermition.incert_underoperation:
    return UserpermitionTittle(tittle: "ٌRاضافة شغل مرحله اخرى"); 
+      case UserPermition.Hide_total_in_finalproduct:
+   return UserpermitionTittle(tittle: "اخفاء الاجمالى فى وارد المخزن من المقصات"); 
+      case UserPermition.can_delete_fractons_cutted_on_R:
+   return UserpermitionTittle(tittle: "امكانية حذف الفرد المقصوصه على الدائرى"); 
       }
   }
 
   String get getTitle {
     switch (this) {
    
+    
+      case UserPermition.can_delete_fractons_cutted_on_R:
+        return "امكانية حذف الفرد المقصوصه على الدائرى";
+      case UserPermition.Hide_total_in_finalproduct:
+        return "اخفاء الاجمالى فى وارد المخزن من المقصات";
     
       case UserPermition.incert_underoperation:
         return "ٌRاضافة شغل مرحله اخرى";

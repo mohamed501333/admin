@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names, camel_case_types, file_names
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
@@ -122,12 +122,15 @@ class RVeiw2 extends StatelessWidget {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
+                                                    IconButton(onPressed: (){
+                                                      deletefractons_cutted_FromRscissr(context, fractons_cutted_on_Rstage_rscossor(fractions, f).toList());
+                                                    }, icon: const Icon(Icons.delete,size: 24,),color: Colors.red,).permition(context, UserPermition.can_delete_fractons_cutted_on_R),
                                                     Text(
                                                         "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
                                                     Text(
                                                         "  ${f.item.L.removeTrailingZeros}*${f.item.W.removeTrailingZeros}*${f.item.H.removeTrailingZeros} من "),
                                                     Text(
-                                                        "${fractions.where((element) => element.stagenum == f.stagenum && element.item.color == f.item.color && element.item.type == f.item.type && element.item.W == f.item.W && element.item.L == f.item.L && element.item.H == f.item.H).length} "),
+                                                        "${fractons_cutted_on_Rstage_rscossor(fractions, f).length} "),
                                                   ],
                                                 ))
                                             .toList(),
@@ -183,6 +186,28 @@ class RVeiw2 extends StatelessWidget {
                                                 ))
                                             .toList(),
                                       ),
+                                     
+                                      Column(
+                                        children: subfraction
+                                            .where((element) =>
+                                                element.Rscissor==Rscissor&&
+                                                element.Rstagenum == e)
+                                            .toList().filtersubfractions()
+                                            .map((w) => Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                        "${w.item.color} ${w.item.type} ك${w.item.density.removeTrailingZeros}"),
+                                                    Text(
+                                                        "  ${w.item.L.removeTrailingZeros}*${w.item.W.removeTrailingZeros}*${w.item.H.removeTrailingZeros} من "),
+                                                    Text(
+                                                        "${totalOfsubfractions(subfraction, w)} "),
+                                                  ],
+                                                ))
+                                            .toList(),
+                                      ),
+
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -275,6 +300,8 @@ class RVeiw2 extends StatelessWidget {
     );
   }
 
+  Iterable<FractionModel> fractons_cutted_on_Rstage_rscossor(List<FractionModel> fractions, FractionModel f) => fractions.where((element) => element.stagenum == f.stagenum && element.item.color == f.item.color && element.item.type == f.item.type && element.item.W == f.item.W && element.item.L == f.item.L && element.item.H == f.item.H);
+
  
 
 
@@ -290,13 +317,26 @@ class RVeiw2 extends StatelessWidget {
               element.hight == f.hight)
           .map((e) => e.amount)
           .reduce((value, element) => value + element);
+ 
+  int totalOfsubfractions(
+          List<SubFraction> subfractions, SubFraction f) =>
+      subfractions
+          .where((v) =>
+              v.Rstagenum == f.Rstagenum &&
+              v.item.color == f.item.color &&
+              v.item.type == f.item.type &&
+              v.item.density == f.item.density &&
+              v.item.W == f.item.W &&
+              v.item.L == f.item.L &&
+              v.item.H == f.item.H).toList()
+          .length;
 }
 
 class scissorNameAndNum extends StatelessWidget {
   const scissorNameAndNum({
-    Key? key,
+    super.key,
     required this.Rscissor,
-  }) : super(key: key);
+  });
 
   final int Rscissor;
 
