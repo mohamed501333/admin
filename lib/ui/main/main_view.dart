@@ -29,6 +29,7 @@ class Mainview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Users_controller>(
       builder: (context, myType, child) {
+        print("refesh home");
         context.read<final_prodcut_controller>().c();
         permitionss(context, UserPermition.can_get_data_of_final_prodcut)
             ? context

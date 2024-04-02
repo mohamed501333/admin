@@ -114,23 +114,50 @@ class H1VeiwModel extends BaseViewModel {
 
     permanentFractons.add(fraction);
   }
+  addpermanentFractonsforNewview(
+      BuildContext context, BlockModel block, int scissor, ChipFraction e) {
+    var L = e.lenth.removeTrailingZeros.to_double();
+    var w = e.width.removeTrailingZeros.to_double();
+    var h = e.hight.removeTrailingZeros.to_double();
+    var volume = L * w * h / 1000000;
+    var wight = block.item.density * L * w * h / 1000000;
+
+    var item = Itme(
+        L: L,
+        W: w,
+        H: h,
+        density: block.item.density,
+        volume: volume,
+        wight: wight,
+        color: block.item.color,
+        type: block.item.type,
+        price: 0);
+
+    var fraction = FractionModel(
+        fraction_ID: DateTime.now().microsecondsSinceEpoch,
+        sapa_ID: block.serial,
+        block_ID: block.Block_Id,
+        sapa_desc: block.discreption,
+        item: item,
+        underOperation: true,
+        Ascissor: 0,
+        Hscissor: scissor,
+        Rscissor: 0,
+        notfinals: [],
+        SubFractions: [],
+        stagenum: 1,
+        quality: 0,
+        note: "",
+        actions: []);
+
+    permanentFractons.add(fraction);
+  }
 
 //قص
   cut_block(BuildContext context, BlockModel block, int scissor) {
     if (permanentFractons.isNotEmpty) {
-      var notfinal = NotFinal(
-          notFinal_ID: DateTime.now().microsecondsSinceEpoch,
-          sapa_ID: block.serial,
-          block_ID: block.Block_Id,
-          fraction_ID: 0,
-          StockRequisetionOrder_ID: 0,
-          wight: wightcontroller.text.to_double(),
-          type: context.read<ObjectBoxController>().gdet(),
-          scissor: scissor,
-          stage: 0,
-          actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]);
+   
 
-      block.notFinals.add(notfinal);
       block.Hscissor = scissor;
       block.actions.add(BlockAction.cut_block_on_H.add);
       block.fractions.addAll(permanentFractons);

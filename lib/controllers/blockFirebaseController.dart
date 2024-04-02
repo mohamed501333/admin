@@ -183,7 +183,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
       FirebaseDatabase.instance
           .ref("blocks/${block.Block_Id}")
           .set(block.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 

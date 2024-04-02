@@ -206,8 +206,8 @@ showmyAlertDialog_forAddingFinalProductToRscissor(
 
 dialogOfAddNotFinalToBlock4544(
     BuildContext context,
-    //الفرد المقصوصه على هذا المقص فى هئا الدور
-    List<FractionModel> fractions) {
+    List<FractionModel> fractions//الفرد المقصوصه على هذا المقص فى هئا الدور
+    ) {
   H1VeiwModel vm = H1VeiwModel();
   return showDialog(
       context: context,

@@ -239,7 +239,9 @@ class Rscissor_veiwModel extends BaseViewModel {
         lenthcontroller.clear();
         widthcontroller.clear();
         hightncontroller.clear();
-        sapadetails=null;
+        context.read<ObjectBoxController>().selectedValueOfBLockDetailsOf=null;
+        context.read<ObjectBoxController>().gdet();
+          
 
 
 

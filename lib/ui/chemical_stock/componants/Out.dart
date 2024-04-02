@@ -97,7 +97,7 @@ class Outing extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * .2,
                         controller: vm.quantity),
                     DropForunit(
-                      items: myType.Chemicals.where((e) => e.unit.isNotEmpty)
+                      items: myType.ChemicalCategorys.where((e) => e.unit.isNotEmpty)
                           .map((e) => e.unit)
                           .toList(),
                     ),
@@ -769,7 +769,7 @@ class _ChemicaTableForSupplyingState extends State<ChemicaTableForSupplying> {
                   8: FlexColumnWidth(1),
                 },
                 border: TableBorder.all(width: 1, color: Colors.black),
-                children: Chemicals.map((e) => TableRow(
+                children: Chemicals.sortedBy<num>((element) => element.id).map((e) => TableRow(
                     decoration: BoxDecoration(color: Colors.teal[50]
                         // : Colors.amber[50],
                         ),

@@ -56,23 +56,29 @@ class _H1VeiwState extends State<H1Veiw> {
                       fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
-              fields(vm: vm, b: blocks),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Results(vm: vm),
-                  Chips(
-                    vm: vm,
-                    b: blocks,
-                    scissor: widget.scissor,
-                  ),
-                  buttoms(
-                    vm: vm,
-                    b: blocks,
-                    scissor: widget.scissor,
-                  ),
-                ],
-              ),
+
+                 NewVeiw(Hscissor: widget.scissor)
+
+              // fields(vm: vm, b: blocks),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     Results(vm: vm),
+              //     Chips(
+              //       vm: vm,
+              //       b: blocks,
+              //       scissor: widget.scissor,
+              //     ),
+              //     buttoms(
+              //       vm: vm,
+              //       b: blocks,
+              //       scissor: widget.scissor,
+              //     ),
+              //   ],
+              // ),
+            
+            
+            
             ],
           ),
         );
@@ -92,7 +98,7 @@ class Results extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 350,
+      height: 250,
       child: Consumer<ObjectBoxController>(
         builder: (context, fractions, child) {
           return Column(
@@ -162,12 +168,67 @@ class Chips extends StatelessWidget {
                                     .deleteFractionchip(e.id);
                               },
                               onTap: () {
-                                if (vm.validate()) {
-                                  vm.addpermanentFractons(
+                                vm.addpermanentFractons(
                                       context, b, scissor, e);
                                   context.read<ObjectBoxController>().get();
                                   vm.clearfields();
-                                }
+                              },
+                              child: Chip(
+                                  labelStyle: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                  label: Text(
+                                      "  ${e.hight.removeTrailingZeros.toString()}* ${e.width.removeTrailingZeros.toString()}* ${e.lenth.removeTrailingZeros.toString()}")),
+                            ))
+                        .toList(),
+                  ),
+                ),
+              );
+            },
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class Chips2FrorNewView extends StatelessWidget {
+  const Chips2FrorNewView({
+    super.key,
+    required this.vm,
+    required this.b,
+    required this.scissor,
+  });
+  final H1VeiwModel vm;
+  final BlockModel b;
+  final int scissor;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 300,
+      width: 150,
+      child: Column(
+        children: [
+          Selector<ObjectBoxController, List<ChipFraction>>(
+            selector: (_, myType) => ObjectBoxController().fractionchips,
+            builder: (context, chips, child) {
+              return Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Wrap(
+                    spacing: 9,
+                    children: chips
+                        .map((e) => InkWell(
+                              onLongPress: () {
+                                context
+                                    .read<ObjectBoxController>()
+                                    .deleteFractionchip(e.id);
+                              },
+                              onTap: () {
+                                vm.addpermanentFractonsforNewview(
+                                      context, b, scissor, e);
+                                  context.read<ObjectBoxController>().get();
                               },
                               child: Chip(
                                   labelStyle: const TextStyle(
@@ -402,3 +463,9 @@ class DropDdowen002 extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+

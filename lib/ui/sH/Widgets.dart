@@ -1,9 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jason_company/ui/chips/constans_view.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
@@ -595,4 +596,201 @@ class HeaderOftable0011 extends StatelessWidget {
       ],
     );
   }
+}
+
+class NewVeiw extends StatelessWidget {
+  NewVeiw({
+    super.key,
+    required this.Hscissor,
+  });
+  final int Hscissor;
+  int x = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    int x = 0;
+
+    return Consumer<BlockFirebasecontroller>(
+      builder: (context, myType, child) {
+        List<BlockModel> blocks = myType.blocks
+            .where((element) =>
+                element.actions.if_action_exist(
+                    BlockAction.consume_block.getactionTitle) ==
+                true)
+            .toList()
+            .take(5)
+            .toList();
+
+        return Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            reverse: false,
+            child: SizedBox(
+              width: 480,
+              child: ListView(
+                children: [
+                  Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(1.8),
+                      1: FlexColumnWidth(1.8),
+                      2: FlexColumnWidth(2.5),
+                      3: FlexColumnWidth(2.5),
+                    },
+                    children: blocks
+                        .map((user) {
+                          x++;
+                          return TableRow(
+                              decoration: BoxDecoration(
+                                color: x % 2 == 0
+                                    ? Colors.teal[50]
+                                    : Colors.amber[50],
+                              ),
+                              children: [
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: SizedBox(
+                                    child: Column(
+                                      children: [
+                                        Text(user.number.toString(),
+                                            style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 234, 42, 109))),
+                                        Text(
+                                          user.serial,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: SizedBox(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                            "${user.item.color} ${user.item.type} ك${user.item.density.removeTrailingZeros}"),
+                                        Text(
+                                            "${user.item.L.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.H.removeTrailingZeros}"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    dialog_chipsAndResults(
+                                        context, user, Hscissor);
+                                  },
+                                  child: SizedBox(
+                                    child: user.fractions.isEmpty
+                                        ? const Center(
+                                            child: Text("اضافة نواتج"),
+                                          )
+                                        : Column(
+                                            children: user.fractions
+                                                .map(
+                                                  (e) => Text(
+                                                      "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                                                )
+                                                .toList(),
+                                          ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                  dialogOfAddNotFinalToBlock(context, user);
+                                  },
+                                  child: SizedBox(
+                                    child: user.notFinals.isEmpty
+                                        ? const Center(
+                                            child: Text("اضافة هوالك"),
+                                          )
+                                        : Column(
+                                            children: user.notFinals
+                                                .map(
+                                                  (e) => Text(
+                                                      "${e.type} ${e.wight.removeTrailingZeros}"),
+                                                )
+                                                .toList(),
+                                          ),
+                                  ),
+                                ),
+                           
+                              ].reversed.toList());
+                        })
+                        .toList()
+                        .reversed
+                        .toList(),
+                    border: TableBorder.all(width: 1, color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+//مقاسات الفرد و النواتج
+dialog_chipsAndResults(
+    BuildContext context, final BlockModel blockToCutted, final int Hscissor) {
+  H1VeiwModel vm = H1VeiwModel();
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          scrollable: true,
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ChipsForH123(),
+              ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  onPressed: () {
+                    double vloumeOfFractions;
+                    int vloumeOfblock;
+
+                    if (vm.permanentFractons.isNotEmpty) {
+                      vloumeOfblock = blockToCutted.item.W.toInt() *
+                          blockToCutted.item.L.toInt() *
+                          blockToCutted.item.H.toInt();
+                      vloumeOfFractions = vm.permanentFractons
+                          .map((e) => e.item.W * e.item.H * e.item.L)
+                          .reduce((a, b) => a + b);
+                      if (vloumeOfblock < vloumeOfFractions) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('حجم النواتج اكبر من حجم البلوك')));
+                        vm.permanentFractons.clear();
+                      } else {
+                        if (vm.permanentFractons.isNotEmpty) {
+                          vm.cut_block(context, blockToCutted, Hscissor);
+                        }
+                      }
+                    }
+                    Navigator.pop(context);
+                  },
+                  child: const Text('قص')),
+            ],
+          ),
+          content: SizedBox(
+            height: 340,
+            child: Column(children: [
+              Row(
+                children: [
+                  Results(vm: vm),
+                  Chips2FrorNewView(
+                      vm: vm, b: blockToCutted, scissor: Hscissor),
+                ].reversed.toList(),
+              )
+            ]),
+          ),
+        );
+      });
 }
