@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names, camel_case_types
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:collection/collection.dart';
@@ -58,21 +58,7 @@ class _ReportwForHViewState extends State<ReportwForHView> {
                 style: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
               )),
-          SizedBox(
-            width: 100,
-            child: Container(
-              color: const Color.fromARGB(96, 230, 218, 218),
-              child: TextField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                    icon: Icon(Icons.search), border: OutlineInputBorder()),
-                onChanged: (v) {
-                  context.read<BlockFirebasecontroller>().runFilter(v);
-                  context.read<BlockFirebasecontroller>().Refresh_the_UI();
-                },
-              ),
-            ),
-          ),
+          const SearchForBlockIN_H(),
           IconButton(
               onPressed: () {
                 thedialog(context);
@@ -88,6 +74,31 @@ class _ReportwForHViewState extends State<ReportwForHView> {
             chosenDate: chosenDate,
           )
         ],
+      ),
+    );
+  }
+}
+
+class SearchForBlockIN_H extends StatelessWidget {
+  const SearchForBlockIN_H({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 100,
+      child: Container(
+        color: const Color.fromARGB(96, 230, 218, 218),
+        child: TextField(
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+              icon: Icon(Icons.search), border: OutlineInputBorder()),
+          onChanged: (v) {
+            context.read<BlockFirebasecontroller>().runFilter(v);
+            context.read<BlockFirebasecontroller>().Refresh_the_UI();
+          },
+        ),
       ),
     );
   }
@@ -113,7 +124,7 @@ thedialog(BuildContext context) {
                       const InputDecoration(border: OutlineInputBorder()),
                   controller: c,
                 ),
-              )
+              ),
             ]),
           ),
           actions: [
@@ -123,6 +134,63 @@ thedialog(BuildContext context) {
                   vm.amountofView = c.text.to_int();
                   context.read<BlockFirebasecontroller>().amountofView =
                       c.text.to_int();
+                  context.read<BlockFirebasecontroller>().Refresh_the_UI();
+                  Navigator.pop(context);
+                },
+                child: const Text('تم')),
+          ],
+        );
+      });
+}
+
+diolg_ForSettingIN_mainveiwOF_H(BuildContext context) {
+  H1VeiwModel vm = H1VeiwModel();
+  TextEditingController c = TextEditingController();
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('  ?'),
+          content: SizedBox(
+            height: 200,
+            child: Column(children: [
+              const Text("كميه العرض"),
+              SizedBox(
+                width: 50,
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  decoration:
+                      const InputDecoration(border: OutlineInputBorder()),
+                  controller: c,
+                ),
+              ),
+              Selector<BlockFirebasecontroller, bool>(
+                selector: (_, myType) => myType.veiwCuttedAndimpatyNotfinals,
+                builder: (context, m, child) {
+                  return CheckboxListTile(
+                      title: const Text(
+                          "عرض البلوكات التى لم يتم اضافة هوالك لها"),
+                      value: m,
+                      onChanged: (v) {
+                        context
+                            .read<BlockFirebasecontroller>()
+                            .veiwCuttedAndimpatyNotfinals = v!;
+                        context
+                            .read<BlockFirebasecontroller>()
+                            .Refresh_the_UI();
+                      });
+                },
+              )
+            ]),
+          ),
+          actions: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                onPressed: () {
+                  vm.amountofView = c.text.to_int();
+                  context
+                      .read<BlockFirebasecontroller>()
+                      .amountofViewForMinVeiwIn_H = c.text.to_int();
                   context.read<BlockFirebasecontroller>().Refresh_the_UI();
                   Navigator.pop(context);
                 },
@@ -158,34 +226,29 @@ class TheTable0001 extends StatelessWidget {
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              width: 1600,
+              width: 1370,
               child: ListView(
                 children: [
                   const HeaderOftable0011(),
                   Table(
                     columnWidths: const {
                       0: FlexColumnWidth(1),
-                      1: FlexColumnWidth(1),
-                      2: FlexColumnWidth(1),
-                      3: FlexColumnWidth(1),
-                      4: FlexColumnWidth(1),
-                      5: FlexColumnWidth(1),
+                      1: FlexColumnWidth(1.1),
+                      2: FlexColumnWidth(1.1),
+                      3: FlexColumnWidth(1.1),
+                      4: FlexColumnWidth(1.1),
+                      5: FlexColumnWidth(1.1),
                       6: FlexColumnWidth(3),
                       7: FlexColumnWidth(3),
                       8: FlexColumnWidth(3),
                       9: FlexColumnWidth(3),
-                      10: FlexColumnWidth(1),
+                      10: FlexColumnWidth(2),
                       11: FlexColumnWidth(1),
-                      12: FlexColumnWidth(1),
-                      13: FlexColumnWidth(1),
+                      12: FlexColumnWidth(3),
+                      13: FlexColumnWidth(3),
                       14: FlexColumnWidth(1),
-                      15: FlexColumnWidth(1),
-                      16: FlexColumnWidth(2),
-                      17: FlexColumnWidth(1),
-                      18: FlexColumnWidth(1),
                     },
                     children: b
-                        // .takeWhile((value) => b.indexOf(value) < 21)
                         .toList()
                         .reversed
                         .take(context
@@ -228,25 +291,25 @@ class TheTable0001 extends StatelessWidget {
                                     child: Center(
                                         child: Text(vm
                                             .difrence(user)
-                                            .removeTrailingZeros))),
+                                            .toStringAsFixed(2)))),
 
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(vm
                                             .wight_of_notfinal(user)
-                                            .removeTrailingZeros))),
+                                            .toStringAsFixed(2)))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(vm
                                             .wight_of_fractions(user)
-                                            .removeTrailingZeros))),
+                                            .toStringAsFixed(2)))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child:
-                                            Text(user.item.wight.toString()))),
+                                        child: Text(user.item.wight
+                                            .toStringAsFixed(2)))),
                                 Column(
                                   children: [
                                     Container(
@@ -350,43 +413,22 @@ class TheTable0001 extends StatelessWidget {
                                     child: Center(
                                         child:
                                             Text(user.cumingFrom.toString()))),
+
+                                //بيان البلوك
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                      child: Text(
-                                        user.serial.toString(),
-                                        style: const TextStyle(fontSize: 14),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                              "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}"),
+                                          Text(
+                                              "${user.item.color} ${user.item.type} ك${user.item.density.removeTrailingZeros}"),
+                                        ],
                                       ),
                                     )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(user.item.type.toString(),
-                                          style: const TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w600)),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(
-                                        user.item.density.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child:
-                                            Text(user.item.color.toString()))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(
-                                          "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}"),
-                                    )),
+
+                                //بيان الرقم و الكود
                                 GestureDetector(
                                   onTap: () {
                                     dialogOfAddNotFinalToBlock(context, user);
@@ -394,14 +436,24 @@ class TheTable0001 extends StatelessWidget {
                                   child: Container(
                                       padding: const EdgeInsets.all(2),
                                       child: Center(
-                                        child: Text(
-                                          user.number.toString(),
-                                          style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 221, 2, 75)),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              user.number.toString(),
+                                              style: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 221, 2, 75)),
+                                            ),
+                                            Text(
+                                              user.serial.toString(),
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            )
+                                          ],
                                         ),
                                       )),
                                 ),
+
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
@@ -428,7 +480,7 @@ class TheTable0001 extends StatelessWidget {
             format.format(element.actions.get_Date_of_action(
                 BlockAction.cut_block_on_H.getactionTitle)) ==
             chosenDate)
-        .where((element) => element.notFinals.first.scissor == scissor)
+        .where((element) => element.Hscissor == scissor)
         .toList()
         .where((element) =>
             element.actions.block_action_Stutus(BlockAction.consume_block) ==
@@ -488,24 +540,20 @@ class HeaderOftable0011 extends StatelessWidget {
     return Table(
       columnWidths: const {
         0: FlexColumnWidth(1),
-        1: FlexColumnWidth(1),
-        2: FlexColumnWidth(1),
-        3: FlexColumnWidth(1),
-        4: FlexColumnWidth(1),
-        5: FlexColumnWidth(1),
+        1: FlexColumnWidth(1.1),
+        2: FlexColumnWidth(1.1),
+        3: FlexColumnWidth(1.1),
+        4: FlexColumnWidth(1.1),
+        5: FlexColumnWidth(1.1),
         6: FlexColumnWidth(3),
         7: FlexColumnWidth(3),
         8: FlexColumnWidth(3),
         9: FlexColumnWidth(3),
-        10: FlexColumnWidth(1),
+        10: FlexColumnWidth(2),
         11: FlexColumnWidth(1),
-        12: FlexColumnWidth(1),
-        13: FlexColumnWidth(1),
+        12: FlexColumnWidth(3),
+        13: FlexColumnWidth(3),
         14: FlexColumnWidth(1),
-        15: FlexColumnWidth(1),
-        16: FlexColumnWidth(2),
-        17: FlexColumnWidth(1),
-        18: FlexColumnWidth(1),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -533,7 +581,7 @@ class HeaderOftable0011 extends StatelessWidget {
                   ))),
               Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('وزن الهالك'))),
+                  child: const Center(child: Text('وزن الهوالك'))),
               Container(
                   padding: const EdgeInsets.all(4),
                   child: const Center(child: Text('وزن النواتج'))),
@@ -568,28 +616,15 @@ class HeaderOftable0011 extends StatelessWidget {
                   child: const Center(child: Text('وارد من'))),
               Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Text('الكود',
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.bold))),
+                  child: const Center(child: Text('بيان البلوك'))),
               Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Text('النوع',
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.bold))),
-              Container(
-                  padding: const EdgeInsets.all(0),
-                  child: const Center(
-                    child: Text('الكثافه',
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold)),
+                  child: const Column(
+                    children: [
+                      Text('رقم'),
+                      Text('كود'),
+                    ],
                   )),
-              Container(
-                  padding: const EdgeInsets.all(4), child: const Text('لون')),
-              Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('مقاس'))),
-              Container(
-                  padding: const EdgeInsets.all(4), child: const Text('رقم')),
               Container(
                   padding: const EdgeInsets.all(4), child: const Text('م')),
             ])
@@ -612,19 +647,33 @@ class NewVeiw extends StatelessWidget {
 
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
-        List<BlockModel> blocks = myType.blocks
+        List<BlockModel> blocksConsumedaAndNotCuttedOn_H = myType.search
             .where((element) =>
+                element.OutTo == "صالة الانتاج" &&
                 element.actions.if_action_exist(
-                    BlockAction.consume_block.getactionTitle) ==
-                true)
-            .toList()
-            .take(5)
+                        BlockAction.consume_block.getactionTitle) ==
+                    true)
+            .sortedBy<num>((element) => element.actions
+                .get_Date_of_action(BlockAction.consume_block.getactionTitle)
+                .millisecondsSinceEpoch)
             .toList();
 
+        List<BlockModel> blockswithNO_Notfinals =
+            blocksConsumedaAndNotCuttedOn_H
+                .where((element) =>
+                    element.Hscissor != 15 && element.notFinals.isEmpty)
+                .toList();
+
+        List<BlockModel> actualview =
+            myType.veiwCuttedAndimpatyNotfinals == false
+                ? blocksConsumedaAndNotCuttedOn_H
+                    .where((element) => element.Hscissor == 0)
+                    .toList()
+                : blockswithNO_Notfinals;
         return Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            reverse: false,
+            reverse: true,
             child: SizedBox(
               width: 480,
               child: ListView(
@@ -636,7 +685,12 @@ class NewVeiw extends StatelessWidget {
                       2: FlexColumnWidth(2.5),
                       3: FlexColumnWidth(2.5),
                     },
-                    children: blocks
+                    children: actualview.reversed
+                        .take(context
+                            .read<BlockFirebasecontroller>()
+                            .amountofViewForMinVeiwIn_H)
+                        .toList()
+                        .reversed
                         .map((user) {
                           x++;
                           return TableRow(
@@ -646,6 +700,11 @@ class NewVeiw extends StatelessWidget {
                                     : Colors.amber[50],
                               ),
                               children: [
+                                Container(
+                                    padding: const EdgeInsets.all(2),
+                                    child: Center(
+                                        child: Text(
+                                            "${actualview.indexOf(user) + 1}"))),
                                 GestureDetector(
                                   onTap: () {},
                                   child: SizedBox(
@@ -697,7 +756,7 @@ class NewVeiw extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                  dialogOfAddNotFinalToBlock(context, user);
+                                    dialogOfAddNotFinalToBlock(context, user);
                                   },
                                   child: SizedBox(
                                     child: user.notFinals.isEmpty
@@ -714,7 +773,6 @@ class NewVeiw extends StatelessWidget {
                                           ),
                                   ),
                                 ),
-                           
                               ].reversed.toList());
                         })
                         .toList()

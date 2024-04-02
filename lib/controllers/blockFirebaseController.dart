@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, empty_catches, file_names
 
+import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
           for (var item in map.values.toList()) {
             all.add(BlockModel.fromJson(item.toString()));
           }
-           subfractions.addAll(all.where((element) => element.Block_Id==1).expand((element) => element.fractions.expand((e) => e.SubFractions)).toList());
+          subfractions.addAll(all
+              .where((element) => element.Block_Id == 1)
+              .expand(
+                  (element) => element.fractions.expand((e) => e.SubFractions))
+              .toList());
           blocks.addAll(all.where((element) =>
               element.actions
                   .if_action_exist(BlockAction.archive_block.getactionTitle) ==
@@ -42,18 +47,36 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
-
-   List<SubFraction>  subfractions=[];
+  List<SubFraction> subfractions = [];
   List<BlockModel> all = [];
   List<BlockModel> blocks = [];
   List<BlockModel> archived_blocks = [];
   List<BlockModel> search = [];
 
+  // c() {
+  // print(99999);
+  // for (var el in blocks.where((element) => element.fractions.isNotEmpty)) {
+  //        el.fractions.clear();
+  //   FirebaseDatabase.instance.ref("blocks/${el.Block_Id}").set(el.toJson());
+  // }
+  // }
+
   c() {
-    // print(99999);
-    // for (var el in blocks.where((element) => element.fractions.isNotEmpty)) {
-    //        el.fractions.clear();
-    //   FirebaseDatabase.instance.ref("blocks/${el.Block_Id}").set(el.toJson());
+    // if (all.isNotEmpty) {
+    //   for (var element in all) {
+    //     element.item.volume =
+    //         element.item.H * element.item.L * element.item.W / 1000000;
+    //     element.item.wight = element.item.H *
+    //         element.item.L *
+    //         element.item.W *
+    //         element.item.density /
+    //         1000000;
+    //   }
+    //   var s = {};
+    //   s.addEntries(
+    //       all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
+
+    //   FirebaseDatabase.instance.ref("blocks").set(s);
     // }
   }
 
@@ -67,6 +90,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
               // .contains(enteredKeyword.toLowerCase()))
               // enteredKeyword.toLowerCase()
               )
+          .toList()
+          .sortedBy<num>((element) => element.number)
           .toList();
 
       // we use the toLowerCase() method to make it case-insensitive
@@ -80,12 +105,16 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
   int amountofView = 5;
-   addsubfractions(List<SubFraction> supfraction) async {
-    BlockModel block =all.firstWhere((element) => element.Block_Id==1);
-     block.fractions.firstWhere((element) => element.fraction_ID==1).SubFractions.addAll(supfraction);
+  int amountofViewForMinVeiwIn_H = 5;
+  bool veiwCuttedAndimpatyNotfinals = false;
+  addsubfractions(List<SubFraction> supfraction) async {
+    BlockModel block = all.firstWhere((element) => element.Block_Id == 1);
+    block.fractions
+        .firstWhere((element) => element.fraction_ID == 1)
+        .SubFractions
+        .addAll(supfraction);
     try {
-      await FirebaseDatabase.instance
-          .ref("blocks/1").set(block.toJson());
+      await FirebaseDatabase.instance.ref("blocks/1").set(block.toJson());
     } catch (e) {}
   }
 
@@ -204,9 +233,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
     int index = block.actions.indexWhere((element) =>
         element.action == BlockAction.cut_block_on_H.getactionTitle);
     block.actions.removeAt(index);
+    block.actions.add(BlockAction.UN_cut_block_on_H.add);
 
     block.Hscissor = 0;
     block.fractions.clear();
+    block.notFinals.clear();
 
     try {
       FirebaseDatabase.instance
@@ -218,8 +249,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   add_on_R_scissor(
-      {
-      required FractionModel fractiond,
+      {required FractionModel fractiond,
       required int lastStage,
       required int Rscissor}) {
     BlockModel block =
@@ -230,7 +260,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     f.Rscissor = Rscissor;
     f.actions.add(FractionActon.cut_fraction_OnRscissor.add);
     f.stagenum = lastStage;
-    f.underOperation=false;
+    f.underOperation = false;
 
     try {
       FirebaseDatabase.instance
@@ -239,10 +269,10 @@ class BlockFirebasecontroller extends ChangeNotifier {
       notifyListeners();
     } catch (e) {}
   }
-  remove_from_R_scissor(
-      {
-      required FractionModel fraction,
-     }) {
+
+  remove_from_R_scissor({
+    required FractionModel fraction,
+  }) {
     BlockModel block =
         blocks.firstWhere((element) => element.Block_Id == fraction.block_ID);
     var f = block.fractions
@@ -251,7 +281,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     f.Rscissor = 0;
     f.actions.add(FractionActon.archive_fraction.add);
     f.stagenum = 0;
-    f.underOperation=true;
+    f.underOperation = true;
 
     try {
       FirebaseDatabase.instance
@@ -260,6 +290,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
       notifyListeners();
     } catch (e) {}
   }
+
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   add_on_A_scissor(
       {required BuildContext context,
@@ -374,32 +405,50 @@ class BlockFirebasecontroller extends ChangeNotifier {
       required String type,
       required int Rscissord,
       required double wight}) {
-
-           var  b= blocks.firstWhere((element) => element.Block_Id==fractiond.block_ID);
-           var f=b.fractions.firstWhere((element) => element.fraction_ID==fractiond.fraction_ID);
-            f.notfinals.add(NotFinal(notFinal_ID: DateTime.now().microsecondsSinceEpoch, sapa_ID: f.sapa_ID, block_ID: f.block_ID, fraction_ID: f.fraction_ID, StockRequisetionOrder_ID: 0, stage: f.stagenum, wight: wight, type: type, scissor: 3+f.Rscissor, actions: [NotFinalAction.create_Not_final_cumingFrom_R.add]));
-            f.underOperation=false;
-            try {
-      FirebaseDatabase.instance
-          .ref("blocks/${b.Block_Id}")
-          .set(b.toJson());
+    var b =
+        blocks.firstWhere((element) => element.Block_Id == fractiond.block_ID);
+    var f = b.fractions
+        .firstWhere((element) => element.fraction_ID == fractiond.fraction_ID);
+    f.notfinals.add(NotFinal(
+        notFinal_ID: DateTime.now().microsecondsSinceEpoch,
+        sapa_ID: f.sapa_ID,
+        block_ID: f.block_ID,
+        fraction_ID: f.fraction_ID,
+        StockRequisetionOrder_ID: 0,
+        stage: f.stagenum,
+        wight: wight,
+        type: type,
+        scissor: 3 + f.Rscissor,
+        actions: [NotFinalAction.create_Not_final_cumingFrom_R.add]));
+    f.underOperation = false;
+    try {
+      FirebaseDatabase.instance.ref("blocks/${b.Block_Id}").set(b.toJson());
     } catch (e) {}
-      }
+  }
 
   void add_Not_final_ToFractionA(
       {required FractionModel fractiond,
       required String type,
       required int Ascissord,
       required double wight}) {
-
-           var  b= blocks.firstWhere((element) => element.Block_Id==fractiond.block_ID);
-           var f=b.fractions.firstWhere((element) => element.fraction_ID==fractiond.fraction_ID);
-            f.notfinals.add(NotFinal(notFinal_ID: DateTime.now().microsecondsSinceEpoch, sapa_ID: f.sapa_ID, block_ID: f.block_ID, fraction_ID: f.fraction_ID, StockRequisetionOrder_ID: 0, stage: f.stagenum, wight: wight, type: type, scissor: 7, actions: [NotFinalAction.create_Not_final_cumingFrom_A.add]));
-            f.underOperation=false;
-            try {
-      FirebaseDatabase.instance
-          .ref("blocks/${b.Block_Id}")
-          .set(b.toJson());
+    var b =
+        blocks.firstWhere((element) => element.Block_Id == fractiond.block_ID);
+    var f = b.fractions
+        .firstWhere((element) => element.fraction_ID == fractiond.fraction_ID);
+    f.notfinals.add(NotFinal(
+        notFinal_ID: DateTime.now().microsecondsSinceEpoch,
+        sapa_ID: f.sapa_ID,
+        block_ID: f.block_ID,
+        fraction_ID: f.fraction_ID,
+        StockRequisetionOrder_ID: 0,
+        stage: f.stagenum,
+        wight: wight,
+        type: type,
+        scissor: 7,
+        actions: [NotFinalAction.create_Not_final_cumingFrom_A.add]));
+    f.underOperation = false;
+    try {
+      FirebaseDatabase.instance.ref("blocks/${b.Block_Id}").set(b.toJson());
     } catch (e) {}
-      }
+  }
 }

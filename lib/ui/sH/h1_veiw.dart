@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, camel_case_types
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
-import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sH/Widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +25,12 @@ class H1Veiw extends StatefulWidget {
 class _H1VeiwState extends State<H1Veiw> {
   H1VeiwModel vm = H1VeiwModel();
   @override
+  void initState() {
+    context.read<BlockFirebasecontroller>().runFilter("");
+    super.initState();
+  }
+
+  @override
   void dispose() {
     vm.permanentFractons.clear;
     super.dispose();
@@ -35,29 +40,53 @@ class _H1VeiwState extends State<H1Veiw> {
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, b, child) {
-        List<BlockModel> blocks = b.blocks
-            .where((element) =>
-                element.actions.if_action_exist(
-                    BlockAction.consume_block.getactionTitle) ==
-                true)
-            .toList();
+        // List<BlockModel> blocks = b.blocks
+        //     .where((element) =>
+        //         element.actions.if_action_exist(
+        //             BlockAction.consume_block.getactionTitle) ==
+        //         true)
+        //     .toList();
         return Form(
           key: vm.formKey,
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.all(5),
-                padding: const EdgeInsets.all(5),
-                decoration:
-                    BoxDecoration(border: Border.all(), color: Colors.grey),
-                child: Text(
-                  "      مقص راسى ( ${widget.scissor} )     ",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        context.gonext(
+                            context,
+                            ReportwForHView(
+                              scissor: widget.scissor,
+                            ));
+                      },
+                      child: const Text(
+                        " تقرير ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      )),
+                  Container(
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
+                    decoration:
+                        BoxDecoration(border: Border.all(), color: Colors.grey),
+                    child: Text(
+                      "      مقص راسى ( ${widget.scissor} )     ",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        diolg_ForSettingIN_mainveiwOF_H(context);
+                      },
+                      icon: const Icon(Icons.settings))
+                ],
               ),
-
-                 NewVeiw(Hscissor: widget.scissor)
+              const SearchForBlockIN_H(),
+              NewVeiw(Hscissor: widget.scissor)
 
               // fields(vm: vm, b: blocks),
               // Row(
@@ -76,9 +105,6 @@ class _H1VeiwState extends State<H1Veiw> {
               //     ),
               //   ],
               // ),
-            
-            
-            
             ],
           ),
         );
@@ -168,10 +194,9 @@ class Chips extends StatelessWidget {
                                     .deleteFractionchip(e.id);
                               },
                               onTap: () {
-                                vm.addpermanentFractons(
-                                      context, b, scissor, e);
-                                  context.read<ObjectBoxController>().get();
-                                  vm.clearfields();
+                                vm.addpermanentFractons(context, b, scissor, e);
+                                context.read<ObjectBoxController>().get();
+                                vm.clearfields();
                               },
                               child: Chip(
                                   labelStyle: const TextStyle(
@@ -227,8 +252,8 @@ class Chips2FrorNewView extends StatelessWidget {
                               },
                               onTap: () {
                                 vm.addpermanentFractonsforNewview(
-                                      context, b, scissor, e);
-                                  context.read<ObjectBoxController>().get();
+                                    context, b, scissor, e);
+                                context.read<ObjectBoxController>().get();
                               },
                               child: Chip(
                                   labelStyle: const TextStyle(
@@ -463,9 +488,3 @@ class DropDdowen002 extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-

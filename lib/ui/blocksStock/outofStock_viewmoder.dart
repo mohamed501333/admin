@@ -49,14 +49,17 @@ class BlocksStockViewModel extends BaseViewModel {
     var H = double.parse(hightncontroller.text);
     BlockWetOutput wetOutPut =
         BlockWetOutput(L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
+    var volume = L * w * H / 1000000;
 
     Itme item = Itme(
         L: L,
         W: w,
         H: H,
         density: double.parse(densitycontroller.text),
-        volume: L * w * H / 1000000,
-        wight: wightcontroller.text.to_double(),
+        volume: volume,
+        wight: wightcontroller.text.isEmpty
+            ? volume * double.parse(densitycontroller.text)
+            : wightcontroller.text.to_double(),
         color: colercontroller.text,
         type: typecontroller.text,
         price: 0);
@@ -85,13 +88,16 @@ class BlocksStockViewModel extends BaseViewModel {
       var L = double.parse(lenthcontroller.text);
       var w = double.parse(widthcontroller.text);
       var H = double.parse(hightncontroller.text);
+      var volume = L * w * H / 1000000;
       Itme item = Itme(
           L: L,
           W: w,
           H: H,
           density: double.parse(blockcategory.density),
-          volume: L * w * H / 1000000,
-          wight: wightcontroller.text.to_double(),
+          volume: volume,
+          wight: wightcontroller.text.isEmpty
+              ? volume * double.parse(densitycontroller.text)
+              : wightcontroller.text.to_double(),
           color: blockcategory.color,
           type: blockcategory.type,
           price: 0);

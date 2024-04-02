@@ -9,6 +9,7 @@ enum BlockAction {
   unconsume_block,
   recive_block_form_cuttingUnit,
   cut_block_on_H,
+  UN_cut_block_on_H,
   archive_block,
 }
 
@@ -45,11 +46,18 @@ extension fdg on BlockAction {
             action: "archive_block",
             who: SringsManager.myemail,
             when: DateTime.now());
+      case BlockAction.UN_cut_block_on_H:
+        return ActionModel(
+            action: "UN_cut_block_on_H",
+            who: SringsManager.myemail,
+            when: DateTime.now());
     }
   }
 
   String get getactionTitle {
     switch (this) {
+      case BlockAction.UN_cut_block_on_H:
+        return "UN_cut_block_on_H";
       case BlockAction.create_block:
         return "create_block";
       case BlockAction.consume_block:
@@ -169,10 +177,11 @@ extension X5 on FractionActon {
             who: SringsManager.myemail,
             when: DateTime.now());
       case FractionActon.cut_fraction_OnAscissor:
-   return ActionModel(
+        return ActionModel(
             action: "cut_fraction_OnAscissor",
             who: SringsManager.myemail,
-            when: DateTime.now());    }
+            when: DateTime.now());
+    }
   }
 
   String get getTitle {
@@ -269,17 +278,17 @@ extension Fdf on PurcheAction {
             who: SringsManager.myemail,
             when: DateTime.now());
       case PurcheAction.Purche_approved_Financem:
-          return ActionModel(
+        return ActionModel(
             action: "Purche_approved_Financem",
             who: SringsManager.myemail,
             when: DateTime.now());
       case PurcheAction.Purche_approved_generalm:
-          return ActionModel(
+        return ActionModel(
             action: "Purche_approved_generalm",
             who: SringsManager.myemail,
             when: DateTime.now());
       case PurcheAction.Purche_approved_PurcheM:
-           return ActionModel(
+        return ActionModel(
             action: "Purche_approved_PurcheM",
             who: SringsManager.myemail,
             when: DateTime.now());
@@ -302,11 +311,12 @@ extension Fdf on PurcheAction {
       case PurcheAction.archive_Purche:
         return "archive_Purche";
       case PurcheAction.Purche_approved_Financem:
-          return "Purche_approved_Financem";
+        return "Purche_approved_Financem";
       case PurcheAction.Purche_approved_generalm:
-          return "Purche_approved_generalm";
+        return "Purche_approved_generalm";
       case PurcheAction.Purche_approved_PurcheM:
-   return "Purche_approved_PurcheM";    }
+        return "Purche_approved_PurcheM";
+    }
   }
 }
 
@@ -438,7 +448,7 @@ extension Dkk on NonFinalType {
 
 enum NotFinalAction {
   create_Not_final_cumingFrom_H,
-  create_Not_final_cumingFrom_R, 
+  create_Not_final_cumingFrom_R,
   create_Not_final_cumingFrom_A,
 }
 
@@ -595,14 +605,11 @@ extension FF on OrderAction {
 //صلاحيات المستخدمين
 
 enum UserPermition {
-
-
   show_all,
   can_get_data_of_blocks,
   show_block_incetion,
   show_date_in_block_stock,
   incert_in_block_stock,
-
 
   show_blockconsume,
   fields_buttoms_consumeBlock,
@@ -652,24 +659,20 @@ enum UserPermition {
   incert_in_customers,
   show_search_in_customers,
 
-
-can_get_data_of_purches,
-Show_purches_module,
-can_print_in_purche,
-sho_details_in_purchItem,
-can_make_new_purch_order,
-can_put_offer_in_purche,
-can_chose_from_offerPurches,
-can_approve_from_purchingManager,
-can_approve_from_financeManager,
-can_approve_from_generalManager,
-
-
+  can_get_data_of_purches,
+  Show_purches_module,
+  can_print_in_purche,
+  sho_details_in_purchItem,
+  can_make_new_purch_order,
+  can_put_offer_in_purche,
+  can_chose_from_offerPurches,
+  can_approve_from_purchingManager,
+  can_approve_from_financeManager,
+  can_approve_from_generalManager,
 
   can_get_data_of_chemicals,
   can_get_data_of_chemical_category,
   show_chemicals_model,
-
 
   show_Reports_finalprodcut,
   show_Reports_final_prodcutscisors,
@@ -683,7 +686,6 @@ can_approve_from_generalManager,
   show_Reports_R,
   show_Reports_Comparison_Of_consumedAndResults,
 
-  
   show_H1,
   show_H2,
   show_H3,
@@ -696,7 +698,6 @@ can_approve_from_generalManager,
   can_delete_fractons_cutted_on_R,
   show_A1,
 
- 
   delete_in_finalprodcut_details,
   allow_edit_in_details_finalProdcut,
   allow_edit_in_details_blocks,
@@ -859,8 +860,7 @@ extension QQ on UserPermition {
       case UserPermition.incert_in_final_prodcutStock_From_Excel:
         return UserpermitionTittle(
             tittle: "اضافه الى رصيد منتج تام من خلال ملف اكسل");
-   
- 
+
       case UserPermition.can_get_data_of_purches:
         return UserpermitionTittle(tittle: "can_get_data_of_Purches");
 
@@ -880,7 +880,8 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "امكانية اظافة عروض فى طلب الشراء");
 
       case UserPermition.can_chose_from_offerPurches:
-        return UserpermitionTittle(tittle: "امكانية الاختيار من العروض فى طلب الشراء");
+        return UserpermitionTittle(
+            tittle: "امكانية الاختيار من العروض فى طلب الشراء");
 
       case UserPermition.can_approve_from_purchingManager:
         return UserpermitionTittle(tittle: "موافقة مدير المشتريات");
@@ -890,36 +891,36 @@ extension QQ on UserPermition {
       case UserPermition.can_approve_from_generalManager:
         return UserpermitionTittle(tittle: "موافقة المدير العام");
       case UserPermition.show_Ohda_management:
-   return UserpermitionTittle(tittle: "موديول ادارة العهد"); 
+        return UserpermitionTittle(tittle: "موديول ادارة العهد");
       case UserPermition.show_chemicals_model:
-   return UserpermitionTittle(tittle: "موديول  الكيماويات"); 
-   
+        return UserpermitionTittle(tittle: "موديول  الكيماويات");
+
       case UserPermition.show_A1:
-   return UserpermitionTittle(tittle: "show_A1"); 
+        return UserpermitionTittle(tittle: "show_A1");
       case UserPermition.Rshow_bottomOFfinalproduct:
-   return UserpermitionTittle(tittle: "Rزر اضافه الى الصادر"); 
+        return UserpermitionTittle(tittle: "Rزر اضافه الى الصادر");
       case UserPermition.Rshow_bottomOFFractions:
-   return UserpermitionTittle(tittle: "Rزر اضافه الى الوراد"); 
+        return UserpermitionTittle(tittle: "Rزر اضافه الى الوراد");
       case UserPermition.Rshow_bottomOFNotfinl:
-   return UserpermitionTittle(tittle: "Rزر اضافه الى دون التام"); 
+        return UserpermitionTittle(tittle: "Rزر اضافه الى دون التام");
       case UserPermition.incert_underoperation:
-   return UserpermitionTittle(tittle: "ٌRاضافة شغل مرحله اخرى"); 
+        return UserpermitionTittle(tittle: "ٌRاضافة شغل مرحله اخرى");
       case UserPermition.Hide_total_in_finalproduct:
-   return UserpermitionTittle(tittle: "اخفاء الاجمالى فى وارد المخزن من المقصات"); 
+        return UserpermitionTittle(
+            tittle: "اخفاء الاجمالى فى وارد المخزن من المقصات");
       case UserPermition.can_delete_fractons_cutted_on_R:
-   return UserpermitionTittle(tittle: "امكانية حذف الفرد المقصوصه على الدائرى"); 
-      }
+        return UserpermitionTittle(
+            tittle: "امكانية حذف الفرد المقصوصه على الدائرى");
+    }
   }
 
   String get getTitle {
     switch (this) {
-   
-    
       case UserPermition.can_delete_fractons_cutted_on_R:
         return "امكانية حذف الفرد المقصوصه على الدائرى";
       case UserPermition.Hide_total_in_finalproduct:
         return "اخفاء الاجمالى فى وارد المخزن من المقصات";
-    
+
       case UserPermition.incert_underoperation:
         return "ٌRاضافة شغل مرحله اخرى";
       case UserPermition.Rshow_bottomOFfinalproduct:
@@ -932,7 +933,7 @@ extension QQ on UserPermition {
         return "show_A1";
       case UserPermition.show_Ohda_management:
         return "موديول ادارة العهد";
-    
+
       case UserPermition.can_get_data_of_purches:
         return "can_get_data_of_Purches";
       case UserPermition.Show_purches_module:
@@ -952,35 +953,7 @@ extension QQ on UserPermition {
       case UserPermition.can_approve_from_financeManager:
         return "موافقة مدير الماليه";
       case UserPermition.can_approve_from_generalManager:
-        return  "موافقة المدير العام";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return "موافقة المدير العام";
 
       case UserPermition.incert_in_final_prodcutStock_From_Excel:
         return "اضافه الى رصيد منتج تام من خلال ملف اكسل";
@@ -1124,7 +1097,7 @@ extension QQ on UserPermition {
       case UserPermition.can_get_data_of_notfinals:
         return "can_get_data_of_notfinals";
       case UserPermition.show_chemicals_model:
-        return  "موديول  الكيماويات";
+        return "موديول  الكيماويات";
     }
   }
 }
