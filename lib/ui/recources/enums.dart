@@ -697,6 +697,7 @@ enum UserPermition {
   Rshow_bottomOFNotfinl,
   can_delete_fractons_cutted_on_R,
   show_A1,
+  Hide_sizeofblock_formmainviewin_H,
 
   delete_in_finalprodcut_details,
   allow_edit_in_details_finalProdcut,
@@ -911,11 +912,15 @@ extension QQ on UserPermition {
       case UserPermition.can_delete_fractons_cutted_on_R:
         return UserpermitionTittle(
             tittle: "امكانية حذف الفرد المقصوصه على الدائرى");
+      case UserPermition.Hide_sizeofblock_formmainviewin_H:
+        return UserpermitionTittle(tittle: "اخفاء مقاس البلوك فى المقص الراسى");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.Hide_sizeofblock_formmainviewin_H:
+        return "اخفاء مقاس البلوك فى المقص الراسى";
       case UserPermition.can_delete_fractons_cutted_on_R:
         return "امكانية حذف الفرد المقصوصه على الدائرى";
       case UserPermition.Hide_total_in_finalproduct:

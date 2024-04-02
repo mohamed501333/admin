@@ -728,8 +728,11 @@ class NewVeiw extends StatelessWidget {
                                       children: [
                                         Text(
                                             "${user.item.color} ${user.item.type} ك${user.item.density.removeTrailingZeros}"),
-                                        Text(
-                                            "${user.item.L.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.H.removeTrailingZeros}"),
+                                        Text("${user.item.L.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.H.removeTrailingZeros}")
+                                            .permition(
+                                                context,
+                                                UserPermition
+                                                    .Hide_total_in_finalproduct),
                                       ],
                                     ),
                                   ),
