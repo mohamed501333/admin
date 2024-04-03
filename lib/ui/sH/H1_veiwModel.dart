@@ -155,7 +155,7 @@ class H1VeiwModel extends BaseViewModel {
   }
 
 //قص
-  cut_block(BuildContext context, BlockModel blockToCutted, int scissor) async{
+  cut_block(BuildContext context, BlockModel blockToCutted, int scissor) async {
     double vloumeOfFractions;
     int vloumeOfblock;
 
@@ -170,17 +170,16 @@ class H1VeiwModel extends BaseViewModel {
           const SnackBar(content: Text('حجم النواتج اكبر من حجم البلوك')));
       permanentFractons.clear();
     } else {
-       blockToCutted.Hscissor = scissor;
-    blockToCutted.actions.add(BlockAction.cut_block_on_H.add);
-    blockToCutted.fractions.addAll(permanentFractons);
+      blockToCutted.Hscissor = scissor;
+      blockToCutted.actions.add(BlockAction.cut_block_on_H.add);
+      blockToCutted.fractions.addAll(permanentFractons);
 
-       await context.read<BlockFirebasecontroller>().Cut_block(block: blockToCutted);
-       permanentFractons.clear();
-Navigator.of(context, rootNavigator: true).pop();
-
+      await context
+          .read<BlockFirebasecontroller>()
+          .Cut_block(block: blockToCutted);
+      permanentFractons.clear();
+      Navigator.of(context, rootNavigator: true).pop();
     }
-
-   
   }
 
   Add_not_finalTo_block(BuildContext context, BlockModel b) {

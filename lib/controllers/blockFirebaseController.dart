@@ -10,41 +10,85 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 
 class BlockFirebasecontroller extends ChangeNotifier {
-  get_blocks_data() {
+  get_blocks_data() async {
     try {
-      FirebaseDatabase.instance
-          .ref("blocks")
-          .orderByKey()
-          .onValue
-          .listen((event) {
-        all.clear();
-        archived_blocks.clear();
-        blocks.clear();
-        if (event.snapshot.value != null) {
-          Map<Object?, Object?> map =
-              event.snapshot.value as Map<Object?, Object?>;
-          for (var item in map.values.toList()) {
-            all.add(BlockModel.fromJson(item.toString()));
-          }
-          subfractions.addAll(all
-              .where((element) => element.Block_Id == 1)
-              .expand(
-                  (element) => element.fractions.expand((e) => e.SubFractions))
-              .toList());
-          blocks.addAll(all.where((element) =>
-              element.actions
-                  .if_action_exist(BlockAction.archive_block.getactionTitle) ==
-              false));
-          archived_blocks.addAll(all.where((element) =>
-              element.actions
-                  .if_action_exist(BlockAction.archive_block.getactionTitle) ==
-              true));
-        }
-        print("get data of blocks");
+      await FirebaseDatabase.instance.ref("blocks").get().then((v) async {
+        await getInitialData(v);
+      });
 
-        notifyListeners();
+      FirebaseDatabase.instance.ref("blocks").onChildChanged.listen((vv) async {
+        await refrech(vv);
       });
     } catch (e) {}
+  }
+
+  getInitialData(DataSnapshot v) async {
+    all.clear();
+    archived_blocks.clear();
+    blocks.clear();
+    for (var item in v.children) {
+      all.add(BlockModel.fromJson(item.value.toString()));
+    }
+    subfractions.addAll(all
+        .where((element) => element.Block_Id == 1)
+        .expand((element) => element.fractions.expand((e) => e.SubFractions))
+        .toList());
+
+    blocks.addAll(all.where((element) =>
+        element.actions
+            .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+        false));
+    archived_blocks.addAll(all.where((element) =>
+        element.actions
+            .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+        true));
+    notifyListeners();
+    print("get data of blocks");
+  }
+
+  refrech(DatabaseEvent vv) async {
+    BlockModel newvalue = BlockModel.fromJson(vv.snapshot.value as String);
+
+    all
+        .where((element) => element.Block_Id == newvalue.Block_Id)
+        .toList()
+        .first = newvalue;
+//--------------------------------------------------
+    List<BlockModel> b = blocks
+        .where((element) => element.Block_Id == newvalue.Block_Id)
+        .toList();
+    b.isNotEmpty
+        ? blocks
+            .where((element) => element.Block_Id == newvalue.Block_Id)
+            .toList()
+            .first = newvalue
+        : DoNothingAction();
+
+    b.isNotEmpty
+        ? b.first.actions.block_action_Stutus(BlockAction.archive_block)
+            ? blocks.remove(b.first)
+            : DoNothingAction()
+        : DoNothingAction();
+//--------------------------------------------------
+
+    List<BlockModel> c = archived_blocks
+        .where((element) => element.Block_Id == newvalue.Block_Id)
+        .toList();
+    c.isNotEmpty
+        ? archived_blocks
+            .where((element) => element.Block_Id == newvalue.Block_Id)
+            .toList()
+            .first = newvalue
+        : DoNothingAction();
+
+    newvalue.Block_Id == 1
+        ? subfractions = newvalue.fractions
+            .expand((element) => element.SubFractions)
+            .toList()
+        : DoNothingAction();
+
+    notifyListeners();
+    print("get data of blocks in listen");
   }
 
   List<SubFraction> subfractions = [];
@@ -104,11 +148,13 @@ class BlockFirebasecontroller extends ChangeNotifier {
     notifyListeners();
   }
 
+  String searchinconsumed = "";
   int amountofView = 5;
   int amountofViewForMinVeiwIn_H = 5;
   bool veiwCuttedAndimpatyNotfinals = false;
   addsubfractions(List<SubFraction> supfraction) async {
     BlockModel block = all.firstWhere((element) => element.Block_Id == 1);
+
     block.fractions
         .firstWhere((element) => element.fraction_ID == 1)
         .SubFractions
@@ -122,14 +168,23 @@ class BlockFirebasecontroller extends ChangeNotifier {
     try {
       await FirebaseDatabase.instance
           .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
+          .set(block.toJson())
+          .whenComplete(() => get_blocks_data());
     } catch (e) {}
   }
 
   addblocklist(List<BlockModel> blocks) async {
     try {
-      for (var e in blocks) {
-        FirebaseDatabase.instance.ref("blocks/${e.Block_Id}").set(e.toJson());
+      if (all.isNotEmpty) {
+        all.addAll(blocks);
+        var s = {};
+        s.addEntries(all
+            .map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
+
+        FirebaseDatabase.instance
+            .ref("blocks")
+            .set(s)
+            .whenComplete(() => get_blocks_data());
       }
     } catch (e) {}
   }
@@ -140,7 +195,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
       FirebaseDatabase.instance
           .ref("blocks/${block.Block_Id}")
           .set(block.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 

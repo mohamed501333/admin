@@ -114,20 +114,28 @@ class Buttoms extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          vm.consumeBlock(context);
-        },
-        child: const SizedBox(
-          width: 90,
-          height: 45,
-          child: Center(
-            child: Text(
-              "صرف",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ));
+    return Row(
+      children: [
+        const SearchForBlockIN_Consumed(),
+        const SizedBox(
+          width: 20,
+        ),
+        ElevatedButton(
+            onPressed: () {
+              vm.consumeBlock(context);
+            },
+            child: const SizedBox(
+              width: 90,
+              height: 45,
+              child: Center(
+                child: Text(
+                  "صرف",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+            )),
+      ],
+    );
   }
 }
 
@@ -204,36 +212,31 @@ class TheTable0001 extends StatelessWidget {
                 element.actions
                     .block_action_Stutus(BlockAction.consume_block) ==
                 true)
-            .toList();
+            .toList()
+            .search(blocks.searchinconsumed);
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              width: 1200,
+              width: 920,
               child: ListView(
                 children: [
                   const HeaderOftable001(),
                   Table(
                     columnWidths: const {
                       0: FlexColumnWidth(.8),
-                      1: FlexColumnWidth(1.1),
-                      2: FlexColumnWidth(1.2),
-                      3: FlexColumnWidth(1.2),
-                      4: FlexColumnWidth(3),
-                      5: FlexColumnWidth(3),
-                      6: FlexColumnWidth(1),
-                      7: FlexColumnWidth(1),
-                      8: FlexColumnWidth(.7),
-                      9: FlexColumnWidth(1.3),
+                      1: FlexColumnWidth(3),
+                      2: FlexColumnWidth(3),
+                      3: FlexColumnWidth(2),
+                      4: FlexColumnWidth(1.8),
+                      5: FlexColumnWidth(1),
+                      6: FlexColumnWidth(1.2),
+                      7: FlexColumnWidth(1.2),
+                      8: FlexColumnWidth(2.8),
+                      9: FlexColumnWidth(3),
                       10: FlexColumnWidth(1),
-                      11: FlexColumnWidth(1),
-                      12: FlexColumnWidth(1),
-                      13: FlexColumnWidth(1),
-                      14: FlexColumnWidth(1.8),
-                      15: FlexColumnWidth(.8),
-                      16: FlexColumnWidth(.8),
                     },
                     children: b
                         .toList()
@@ -267,23 +270,7 @@ class TheTable0001 extends StatelessWidget {
                                           color: Colors.red,
                                         ))).permition(context,
                                     UserPermition.delete_in_consume_block),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child: Text(
-                                            "${user.item.wight.removeTrailingZeros.to_double() - vm.wight_of_fractions(user).removeTrailingZeros.to_double() - vm.wight_of_notfinal(user).removeTrailingZeros.to_double()}"))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child: Text(vm
-                                            .wight_of_notfinal(user)
-                                            .removeTrailingZeros))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child: Text(vm
-                                            .wight_of_fractions(user)
-                                            .removeTrailingZeros))),
+
                                 Column(
                                   children: [
                                     Container(
@@ -356,57 +343,67 @@ class TheTable0001 extends StatelessWidget {
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(user.Hscissor.toString()))),
+
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                      child: Text(
-                                        user.serial.toString(),
-                                        style: const TextStyle(fontSize: 14),
-                                      ),
-                                    )),
+                                        child: Text(user.item.volume
+                                            .toStringAsFixed(1)))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                      child: Text(user.item.type.toString(),
-                                          style: const TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w600)),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(
-                                        user.item.density.toString(),
+                                        child: Text(user.item.wight
+                                            .toStringAsFixed(1)))),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}",
                                         style: const TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w400),
+                                            fontWeight: FontWeight.w500),
                                       ),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child:
-                                            Text(user.item.color.toString()))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child:
-                                            Text(user.item.wight.toString()))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(
-                                          "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}"),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(
-                                        user.number.toString(),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        "${user.item.color} ${user.item.type} ك${user.item.density.removeTrailingZeros}",
                                         style: const TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 221, 2, 75)),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
                                       ),
+                                    ],
+                                  ),
+                                ),
+                                //الرقم و الكود
+                                Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 9),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          user.number.toString(),
+                                          style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 221, 2, 75)),
+                                        ),
+                                        Text(
+                                          user.serial.toString(),
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
                                     )),
                                 Container(
                                     padding: const EdgeInsets.all(2),
@@ -429,6 +426,32 @@ class TheTable0001 extends StatelessWidget {
   }
 }
 
+class SearchForBlockIN_Consumed extends StatelessWidget {
+  const SearchForBlockIN_Consumed({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 60,
+      child: Container(
+        color: const Color.fromARGB(96, 230, 218, 218),
+        child: TextField(
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+              hintText: "بحث", border: OutlineInputBorder()),
+          onChanged: (v) {
+            context.read<BlockFirebasecontroller>().searchinconsumed = v;
+
+            context.read<BlockFirebasecontroller>().Refresh_the_UI();
+          },
+        ),
+      ),
+    );
+  }
+}
+
 class HeaderOftable001 extends StatelessWidget {
   const HeaderOftable001({
     super.key,
@@ -439,22 +462,16 @@ class HeaderOftable001 extends StatelessWidget {
     return Table(
       columnWidths: const {
         0: FlexColumnWidth(.8),
-        1: FlexColumnWidth(1.1),
-        2: FlexColumnWidth(1.2),
-        3: FlexColumnWidth(1.2),
-        4: FlexColumnWidth(3),
-        5: FlexColumnWidth(3),
-        6: FlexColumnWidth(1),
-        7: FlexColumnWidth(1),
-        8: FlexColumnWidth(.7),
-        9: FlexColumnWidth(1.3),
+        1: FlexColumnWidth(3),
+        2: FlexColumnWidth(3),
+        3: FlexColumnWidth(2),
+        4: FlexColumnWidth(1.8),
+        5: FlexColumnWidth(1),
+        6: FlexColumnWidth(1.2),
+        7: FlexColumnWidth(1.2),
+        8: FlexColumnWidth(2.8),
+        9: FlexColumnWidth(3),
         10: FlexColumnWidth(1),
-        11: FlexColumnWidth(1),
-        12: FlexColumnWidth(1),
-        13: FlexColumnWidth(1),
-        14: FlexColumnWidth(1.8),
-        15: FlexColumnWidth(.8),
-        16: FlexColumnWidth(.8),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -465,20 +482,7 @@ class HeaderOftable001 extends StatelessWidget {
             children: [
               Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text(' حذف'))),
-              Container(
-                  padding: const EdgeInsets.all(1),
-                  child: const Center(
-                      child: Text(
-                    'فرق الانتاج',
-                    style: TextStyle(fontSize: 12),
-                  ))),
-              Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('وزن الهالك'))),
-              Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('وزن النواتج'))),
+                  child: const Center(child: Text(''))),
               Container(
                   padding: const EdgeInsets.all(4),
                   child: const Center(child: Text('تم الصرف'))),
@@ -499,31 +503,30 @@ class HeaderOftable001 extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ))),
               Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Text('الكود',
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.bold))),
-              Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Text('النوع',
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.bold))),
-              Container(
-                  padding: const EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(1),
                   child: const Center(
-                    child: Text('الكثافه',
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold)),
-                  )),
+                      child: Text(
+                    'حجم',
+                    style: TextStyle(fontSize: 12),
+                  ))),
               Container(
-                  padding: const EdgeInsets.all(4), child: const Text('لون')),
-              Container(
-                  padding: const EdgeInsets.all(4), child: const Text('الوزن')),
+                  padding: const EdgeInsets.all(1),
+                  child: const Center(
+                      child: Text(
+                    'وزن',
+                    style: TextStyle(fontSize: 12),
+                  ))),
               Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('مقاس'))),
+                  child: const Center(child: Text('بيان البلوك'))),
               Container(
-                  padding: const EdgeInsets.all(4), child: const Text('رقم')),
+                  padding: const EdgeInsets.all(4),
+                  child: const Column(
+                    children: [
+                      Text('الرقم'),
+                      Text('الكود'),
+                    ],
+                  )),
               Container(
                   padding: const EdgeInsets.all(4), child: const Text('م')),
             ])

@@ -40,7 +40,7 @@ class Mainview extends StatelessWidget {
             ? context.read<BlockFirebasecontroller>().get_blocks_data()
             : DoNothingAction();
         context.read<BlockFirebasecontroller>().c();
- 
+
         permitionss(context, UserPermition.can_get_data_of_notfinals)
             ? context.read<NonFinalController>().getdataOfnotFinals()
             : DoNothingAction();

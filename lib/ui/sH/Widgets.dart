@@ -813,10 +813,7 @@ dialog_chipsAndResults(
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   onPressed: () {
-                    
-               
-                                              vm.cut_block(context, blockToCutted, Hscissor);
-
+                    vm.cut_block(context, blockToCutted, Hscissor);
                   },
                   child: const Text('قص')),
             ],

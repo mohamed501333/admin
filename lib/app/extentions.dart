@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/functions.dart';
@@ -185,9 +186,8 @@ extension Fd on List<ChemicalsModel> {
   }
 }
 
-extension  sdfdsf on List<SubFraction>{
- 
-    List<SubFraction> filtersubfractions() {
+extension sdfdsf on List<SubFraction> {
+  List<SubFraction> filtersubfractions() {
     List<SubFraction> nonRepetitive = [];
     for (var i = 0; i < length; i++) {
       bool repeated = false;
@@ -524,6 +524,20 @@ extension C3 on List<ActionModel> {
 }
 
 extension A1 on List<BlockModel> {
+  List<BlockModel> search(String value) {
+    if (value.isEmpty) {
+      return this;
+    } else {
+      return where((user) => user.number.toString().contains(value))
+          .toList()
+          .sortedBy<num>((element) => element.number)
+          .reversed
+          .toList();
+
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+  }
+
   List<BlockModel> filterConsumeDateBetween(DateTimeRange initialDateRange) {
     return where((element) =>
         element.OutTo == "صالة الانتاج" &&
