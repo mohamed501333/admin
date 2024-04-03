@@ -38,10 +38,9 @@ void main() async {
           appId: "1:106186917009:android:fcd892c86b7d3e3447ab30",
           messagingSenderId: "106186917009 ",
           projectId: "janson-11f24"));
-  FirebaseDatabase.instance.setPersistenceEnabled(true);
+FirebaseDatabase.instance.setPersistenceEnabled(true);
   FirebaseDatabase.instance.ref();
   database = await Database.create();
-  // FirebaseApi().initNoticfication();96
   runApp(const MyApp());
 }
 

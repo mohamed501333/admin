@@ -639,7 +639,7 @@ enum UserPermition {
   show_date_in_finalProduct_imported,
   can_aprove_from_quality,
   can_aprove_from_recive_from_final_prodcut,
-  Hide_total_in_finalproduct,
+  show_total_in_finalproduct,
 
   can_get_data_of_invoice,
   show_finalprodcut_invoice,
@@ -906,9 +906,9 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "Rزر اضافه الى دون التام");
       case UserPermition.incert_underoperation:
         return UserpermitionTittle(tittle: "ٌRاضافة شغل مرحله اخرى");
-      case UserPermition.Hide_total_in_finalproduct:
+      case UserPermition.show_total_in_finalproduct:
         return UserpermitionTittle(
-            tittle: "اخفاء الاجمالى فى وارد المخزن من المقصات");
+            tittle: "اظهار الاجمالى فى وارد المخزن من المقصات");
       case UserPermition.can_delete_fractons_cutted_on_R:
         return UserpermitionTittle(
             tittle: "امكانية حذف الفرد المقصوصه على الدائرى");
@@ -923,7 +923,7 @@ extension QQ on UserPermition {
         return "اخفاء مقاس البلوك فى المقص الراسى";
       case UserPermition.can_delete_fractons_cutted_on_R:
         return "امكانية حذف الفرد المقصوصه على الدائرى";
-      case UserPermition.Hide_total_in_finalproduct:
+      case UserPermition.show_total_in_finalproduct:
         return "اخفاء الاجمالى فى وارد المخزن من المقصات";
 
       case UserPermition.incert_underoperation:

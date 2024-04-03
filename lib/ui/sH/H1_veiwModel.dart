@@ -114,6 +114,7 @@ class H1VeiwModel extends BaseViewModel {
 
     permanentFractons.add(fraction);
   }
+
   addpermanentFractonsforNewview(
       BuildContext context, BlockModel block, int scissor, ChipFraction e) {
     var L = e.lenth.removeTrailingZeros.to_double();
@@ -154,21 +155,32 @@ class H1VeiwModel extends BaseViewModel {
   }
 
 //قص
-  cut_block(BuildContext context, BlockModel block, int scissor) {
-    if (permanentFractons.isNotEmpty) {
-   
+  cut_block(BuildContext context, BlockModel blockToCutted, int scissor) async{
+    double vloumeOfFractions;
+    int vloumeOfblock;
 
-      block.Hscissor = scissor;
-      block.actions.add(BlockAction.cut_block_on_H.add);
-      block.fractions.addAll(permanentFractons);
-
-      context.read<BlockFirebasecontroller>().Cut_block(block: block);
-
-      clearfields();
-      numbercontroller.clear();
+    vloumeOfblock = blockToCutted.item.W.toInt() *
+        blockToCutted.item.L.toInt() *
+        blockToCutted.item.H.toInt();
+    vloumeOfFractions = permanentFractons
+        .map((e) => e.item.W * e.item.H * e.item.L)
+        .reduce((a, b) => a + b);
+    if (vloumeOfblock < vloumeOfFractions) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('حجم النواتج اكبر من حجم البلوك')));
       permanentFractons.clear();
-      wightcontroller.clear();
+    } else {
+       blockToCutted.Hscissor = scissor;
+    blockToCutted.actions.add(BlockAction.cut_block_on_H.add);
+    blockToCutted.fractions.addAll(permanentFractons);
+
+       await context.read<BlockFirebasecontroller>().Cut_block(block: blockToCutted);
+       permanentFractons.clear();
+Navigator.of(context, rootNavigator: true).pop();
+
     }
+
+   
   }
 
   Add_not_finalTo_block(BuildContext context, BlockModel b) {

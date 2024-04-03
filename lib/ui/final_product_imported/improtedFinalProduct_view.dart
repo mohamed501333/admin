@@ -62,10 +62,10 @@ class _FinalProductViewState extends State<FinalProductView> {
           key: vm.formKey,
           child: Column(
             children: [
-              FieldsINsertInFInalProdcut(vm: vm).permition(
-                  context, UserPermition.incert_in_finalProdcut_imorted),
-              Buttoms(vm: vm).permition(
-                  context, UserPermition.incert_in_finalProdcut_imorted),
+              // FieldsINsertInFInalProdcut(vm: vm).permition(
+              //     context, UserPermition.incert_in_finalProdcut_imorted),
+              // Buttoms(vm: vm).permition(
+              //     context, UserPermition.incert_in_finalProdcut_imorted),
               TheTable(vm: vm, chosenDate: chosenDate),
             ],
           ),
@@ -379,7 +379,7 @@ class TheTable extends StatelessWidget {
                                         style: const TextStyle(
                                             color: Color.fromARGB(
                                                 255, 221, 2, 75)),
-                                      ),
+                                      ).permition(context, UserPermition.show_total_in_finalproduct),
                                     )),
 
                                 Container(

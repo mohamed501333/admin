@@ -732,7 +732,7 @@ class NewVeiw extends StatelessWidget {
                                             .permition(
                                                 context,
                                                 UserPermition
-                                                    .Hide_total_in_finalproduct),
+                                                    .Hide_sizeofblock_formmainviewin_H),
                                       ],
                                     ),
                                   ),
@@ -813,29 +813,10 @@ dialog_chipsAndResults(
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   onPressed: () {
-                    double vloumeOfFractions;
-                    int vloumeOfblock;
+                    
+               
+                                              vm.cut_block(context, blockToCutted, Hscissor);
 
-                    if (vm.permanentFractons.isNotEmpty) {
-                      vloumeOfblock = blockToCutted.item.W.toInt() *
-                          blockToCutted.item.L.toInt() *
-                          blockToCutted.item.H.toInt();
-                      vloumeOfFractions = vm.permanentFractons
-                          .map((e) => e.item.W * e.item.H * e.item.L)
-                          .reduce((a, b) => a + b);
-                      if (vloumeOfblock < vloumeOfFractions) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content:
-                                    Text('حجم النواتج اكبر من حجم البلوك')));
-                        vm.permanentFractons.clear();
-                      } else {
-                        if (vm.permanentFractons.isNotEmpty) {
-                          vm.cut_block(context, blockToCutted, Hscissor);
-                        }
-                      }
-                    }
-                    Navigator.pop(context);
                   },
                   child: const Text('قص')),
             ],

@@ -36,7 +36,6 @@ class RVeiw2 extends StatelessWidget {
 
 
 
-
         return Column(
           children: [
 
@@ -47,7 +46,7 @@ class RVeiw2 extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               reverse: true,
               child: SizedBox(
-                width: 700,
+                width: MediaQuery.of(context).size.width*2,
                 child: ListView(
                   children: [
                     const HeaderOfThable(),

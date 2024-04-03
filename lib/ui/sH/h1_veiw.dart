@@ -291,28 +291,7 @@ class buttoms extends StatelessWidget {
       children: [
         ElevatedButton(
             onPressed: () {
-              if (vm.validate()) {
-                BlockModel m = vm.get_block_of_num_in_controller(b, context);
-                double vloumeOfFractions;
-                int vloumeOfblock;
-
-                if (vm.permanentFractons.isNotEmpty) {
-                  vloumeOfblock =
-                      m.item.W.toInt() * m.item.L.toInt() * m.item.H.toInt();
-                  vloumeOfFractions = vm.permanentFractons
-                      .map((e) => e.item.W * e.item.H * e.item.L)
-                      .reduce((a, b) => a + b);
-                  if (vloumeOfblock < vloumeOfFractions) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('حجم النواتج اكبر من حجم البلوك')));
-                    vm.permanentFractons.clear();
-                  } else {
-                    if (vm.permanentFractons.isNotEmpty) {
-                      vm.cut_block(context, m, scissor);
-                    }
-                  }
-                }
-              }
+         
             },
             child: const Padding(
               padding: EdgeInsets.all(8.0),
