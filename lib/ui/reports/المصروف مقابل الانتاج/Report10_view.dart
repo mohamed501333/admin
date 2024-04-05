@@ -16,10 +16,9 @@ class Report10View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SettingController>(
-      builder: (context, myType, child) {
-        List<BlockModel> allblocks =
-            context.read<BlockFirebasecontroller>().blocks;
+    return Consumer2<SettingController, BlockFirebasecontroller>(
+      builder: (context, myType, blockscontroller, child) {
+        List<BlockModel> allblocks = blockscontroller.blocks;
         List<Itme> allunderoberationofFirstPeriod =
             allUnderOperationOfFirstPeriod(allblocks, myType, context);
 
@@ -203,6 +202,7 @@ class Report10View extends StatelessWidget {
             .subfractions
             .ReturnFirstPiriodBalanceOFUnderoperationSubFractons(
                 DateTimeRange(start: myType.from, end: myType.to));
+    print(subfractionsUnderoperation.length);
     //---------------------------------------------------------------------------
     List<Itme> allunderoberationofFirstPeriod =
         fractionsUnderOperation.map((element) => element.item).toList() +
