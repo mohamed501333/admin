@@ -42,7 +42,7 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.prussianBlue,
                     SringsManager.itemTitle12,
@@ -51,7 +51,7 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, BlocksStock());
                     },
                   ).permition(context, UserPermition.show_block_incetion),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xff1AB0B0),
                     SringsManager.itemTitle11,
@@ -65,7 +65,7 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.russet,
                     SringsManager.itemTitle9,
@@ -74,7 +74,7 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, const OutOfStockView());
                     },
                   ).permition(context, UserPermition.show_blockconsume),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xffFF7544),
                     SringsManager.itemTitle2,
@@ -89,7 +89,7 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.darkViolet,
                     SringsManager.itemTitle5,
@@ -98,7 +98,7 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, const NotFinal());
                     },
                   ).permition(context, UserPermition.show_not_final_stock),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.darkgreen,
                     SringsManager.itemTitle7,
@@ -113,7 +113,7 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xffFA5A7D),
                     SringsManager.itemTitle10,
@@ -122,7 +122,7 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, const CuttingOrderView());
                     },
                   ).permition(context, UserPermition.show_cutting_orders),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xff8676FE),
                     "اذون صرف منتج تام",
@@ -136,7 +136,7 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.arsenic,
                     " المقصات",
@@ -145,7 +145,7 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, const ScissorsView());
                     },
                   ).permition(context, UserPermition.show_scissors),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 47, 105, 42),
                     " المشتريات",
@@ -159,7 +159,7 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.cobalt,
                     SringsManager.itemTitle13,
@@ -168,7 +168,7 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, const MyStatefulWidget());
                     },
                   ),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 157, 125, 45),
                     "الاوردرات الاونلاين",
@@ -180,7 +180,7 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.teal,
                     "العملاء",
@@ -189,7 +189,7 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, Customers_view());
                     },
                   ).permition(context, UserPermition.show_customers),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.cobalt,
                     "قوائم الجرد",
@@ -203,14 +203,14 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.blueGrey,
                     "المراسله والطلبات",
                     IconsManager.itemIcon1,
                     ontap: () {},
                   ).permition(context, UserPermition.not_working),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 137, 180, 87),
                     " الكيماويات",
@@ -224,14 +224,14 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.prussianBlue,
                     " الاحصائيات",
                     IconsManager.itemIcon1,
                     ontap: () {},
                   ).permition(context, UserPermition.not_working),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.arsenic,
                     " الارشيف",
@@ -243,7 +243,7 @@ class HomeView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 26, 99, 70),
                     " تسجيل الاصناف",
@@ -252,22 +252,19 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, BlockCategoryView());
                     },
                   ).permition(context, UserPermition.show_add_new_category),
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 99, 26, 73),
                     "ادارة العهد",
                     IconsManager.itemIcon1,
-                    ontap: () async {
-                      
-             
-                    },
+                    ontap: () async {},
                   ).permition(context, UserPermition.show_Ohda_management),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Item(
+                  Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.arsenic,
                     " users actions",
@@ -277,7 +274,7 @@ class HomeView extends StatelessWidget {
                     },
                   ).permition(context, UserPermition.show_users_actions),
                   FirebaseAuth.instance.currentUser!.email == "m.khaled@0.com"
-                      ? Item(
+                      ? Item0(
                           MediaQuery.of(context).size.width * .45,
                           ColorManager.arsenic,
                           " dashboard ",

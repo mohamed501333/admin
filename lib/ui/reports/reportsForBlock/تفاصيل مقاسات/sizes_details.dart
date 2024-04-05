@@ -203,7 +203,7 @@ class _BlocksSizesDetialsState extends State<BlocksSizesDetials> {
                                                   const EdgeInsets.all(4.0),
                                               child: Center(
                                                 child: Text(
-                                                  "${r.item.L}*${r.item.W}",
+                                                  "${r.item.L.removeTrailingZeros}*${r.item.W.removeTrailingZeros}",
                                                   style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:

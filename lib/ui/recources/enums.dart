@@ -519,6 +519,9 @@ extension CCc on customerAction {
 enum subfractionAction {
   create_new_subfraction,
   archive_subfraction,
+  cut_subfraction_on_H,
+  cut_subfraction_on_R,
+  cut_subfraction_on_A,
 }
 
 extension dfdff on subfractionAction {
@@ -534,11 +537,32 @@ extension dfdff on subfractionAction {
             action: "archive_subfraction",
             who: SringsManager.myemail,
             when: DateTime.now());
+      case subfractionAction.cut_subfraction_on_H:
+        return ActionModel(
+            action: "cut_subfraction_on_H",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case subfractionAction.cut_subfraction_on_R:
+        return ActionModel(
+            action: "cut_subfraction_on_R",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case subfractionAction.cut_subfraction_on_A:
+        return ActionModel(
+            action: "cut_subfraction_on_A",
+            who: SringsManager.myemail,
+            when: DateTime.now());
     }
   }
 
   String get getTitle {
     switch (this) {
+      case subfractionAction.cut_subfraction_on_A:
+        return "cut_subfraction_on_A";
+      case subfractionAction.cut_subfraction_on_R:
+        return "cut_subfraction_on_R";
+      case subfractionAction.cut_subfraction_on_H:
+        return "cut_subfraction_on_H";
       case subfractionAction.create_new_subfraction:
         return "create_new_subfraction";
       case subfractionAction.archive_subfraction:

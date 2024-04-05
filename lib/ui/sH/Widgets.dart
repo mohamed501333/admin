@@ -95,7 +95,7 @@ class SearchForBlockIN_H extends StatelessWidget {
           decoration: const InputDecoration(
               icon: Icon(Icons.search), border: OutlineInputBorder()),
           onChanged: (v) {
-            context.read<BlockFirebasecontroller>().runFilter(v);
+            context.read<BlockFirebasecontroller>().searchin_H = v;
             context.read<BlockFirebasecontroller>().Refresh_the_UI();
           },
         ),
@@ -656,6 +656,7 @@ class NewVeiw extends StatelessWidget {
             .sortedBy<num>((element) => element.actions
                 .get_Date_of_action(BlockAction.consume_block.getactionTitle)
                 .millisecondsSinceEpoch)
+            .search(myType.searchin_H)
             .toList();
 
         List<BlockModel> blockswithNO_Notfinals =

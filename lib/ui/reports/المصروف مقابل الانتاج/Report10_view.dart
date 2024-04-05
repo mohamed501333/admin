@@ -18,24 +18,25 @@ class Report10View extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<SettingController>(
       builder: (context, myType, child) {
-        List<BlockModel> blocks = context
-            .read<BlockFirebasecontroller>()
-            .blocks
-            .filterConsumeDateBetween(
+        List<BlockModel> allblocks =
+            context.read<BlockFirebasecontroller>().blocks;
+        List<Itme> allunderoberationofFirstPeriod =
+            allUnderOperationOfFirstPeriod(allblocks, myType, context);
+
+        List<BlockModel> blocksconsumedBetweenTowDates =
+            allblocks.filterConsumeDateBetween(
                 DateTimeRange(start: myType.from, end: myType.to));
-        // print(myType.from);
-        // print(myType.to);
-        // print(blocks.length);
-        List<FinalProductModel> finalproducts = context
+        //---------------------------------------------------------------------------
+
+        List<FinalProductModel> finalproductsBetweenTowDates = context
             .read<final_prodcut_controller>()
             .finalproducts
             .filterFinalProductDateBetween(
                 DateTimeRange(start: myType.from, end: myType.to));
 
-        // var aa = vm.TotalvolOfConsumed(blocks);
-        // var bb = vm.TotalvolOfResults(finalproducts);
         List<double> aa = [];
         List<double> bb = [];
+        const textStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w700);
         return Scaffold(
           appBar: AppBar(
             title: const Text("مقارنة الانتاج بالمصروف"),
@@ -50,7 +51,7 @@ class Report10View extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   DatepickerTo(),
-                  DatepickerFrom(),
+                  DatePickerFrom(),
                 ],
               ),
               SizedBox(
@@ -60,18 +61,56 @@ class Report10View extends StatelessWidget {
                     Table(
                       columnWidths: const {
                         0: FlexColumnWidth(1),
-                        1: FlexColumnWidth(1),
-                        2: FlexColumnWidth(1),
-                        3: FlexColumnWidth(2.8),
+                        1: FlexColumnWidth(2),
                       },
                       border: TableBorder.all(),
                       children: [
                         TableRow(
                             children: [
-                          const Center(child: Text("البيان")),
-                          const Center(child: Text("حجم المصروف")),
-                          const Center(child: Text("حجم الانتاج")),
-                          const Center(child: Text("حجم الفرق")),
+                          const Center(
+                            child: Text(
+                              "رصيد اول المده (تحت التشغيل)",
+                              style: textStyle,
+                            ),
+                          ),
+                          Center(
+                              child: Text(allunderoberationofFirstPeriod
+                                  .volume()
+                                  .removeTrailingZeros)),
+                        ].reversed.toList()),
+                        TableRow(
+                            children: [
+                          const Center(
+                            child: Text(
+                              "اجمالى المنصرف (بلوكات )",
+                              style: textStyle,
+                            ),
+                          ),
+                          Center(
+                              child: Text(blocksconsumedBetweenTowDates
+                                  .map((e) => e.item)
+                                  .toList()
+                                  .volume()
+                                  .removeTrailingZeros)),
+                        ].reversed.toList()),
+                        TableRow(
+                            children: [
+                          const Center(
+                            child: Text(
+                              "اجمالى الانتاج (منتج تام)",
+                              style: textStyle,
+                            ),
+                          ),
+                          const Center(child: Text("")),
+                        ].reversed.toList()),
+                        TableRow(
+                            children: [
+                          const Center(
+                              child: Text(
+                            "اجمالى المتبقى (تحت التشغيل)",
+                            style: textStyle,
+                          )),
+                          const Center(child: Text("")),
                         ].reversed.toList()),
                       ],
                     ),
@@ -83,12 +122,14 @@ class Report10View extends StatelessWidget {
                         3: FlexColumnWidth(2.8),
                       },
                       border: TableBorder.all(),
-                      children: blocks
+                      children: blocksconsumedBetweenTowDates
                           .filter_filter_type_and_density_color()
                           .map((e) {
-                        var b = vm.volOfResults(finalproducts, e);
+                        var b =
+                            vm.volOfResults(finalproductsBetweenTowDates, e);
                         bb.add(b);
-                        var a = vm.volOfConsumed(blocks, e);
+                        var a =
+                            vm.volOfConsumed(blocksconsumedBetweenTowDates, e);
                         aa.add(a);
                         return TableRow(
                             children: [
@@ -142,116 +183,132 @@ class Report10View extends StatelessWidget {
       },
     );
   }
+
+  List<Itme> allUnderOperationOfFirstPeriod(List<BlockModel> allblocks,
+      SettingController myType, BuildContext context) {
+    //---------------------------------------------------------------------------
+    List<FractionModel>
+        fractionsUnderOperation = //رصيد اول المده من تحت التشغيل
+        allblocks
+            .expand((r) => r.fractions)
+            .toList()
+            .ReturnFirstPiriodBalanceOFUnderoperationFractons(
+                DateTimeRange(start: myType.from, end: myType.to));
+    //---------------------------------------------------------------------------
+
+    List<SubFraction>
+        subfractionsUnderoperation = //رصيد اول المده من تحت التشغيل
+        context
+            .read<BlockFirebasecontroller>()
+            .subfractions
+            .ReturnFirstPiriodBalanceOFUnderoperationSubFractons(
+                DateTimeRange(start: myType.from, end: myType.to));
+    //---------------------------------------------------------------------------
+    List<Itme> allunderoberationofFirstPeriod =
+        fractionsUnderOperation.map((element) => element.item).toList() +
+            subfractionsUnderoperation.map((element) => element.item).toList();
+    return allunderoberationofFirstPeriod;
+  }
 }
 
-class DatepickerFrom extends StatefulWidget {
-  const DatepickerFrom({super.key});
-
-  @override
-  State<DatepickerFrom> createState() => _DatepickerState();
-}
-
-class _DatepickerState extends State<DatepickerFrom> {
-  Rscissor_viewmodel vm = Rscissor_viewmodel();
+class DatepickerTo extends StatelessWidget {
+  const DatepickerTo({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var vm2 = context.read<SettingController>();
-    return Column(
-      children: [
-        TextButton(
-            onPressed: () async {
-              DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime.now());
+    return Consumer<SettingController>(
+      builder: (context, myType, child) {
+        return Column(
+          children: [
+            TextButton(
+                onPressed: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: context.read<SettingController>().from,
+                      lastDate: DateTime(2101));
 
-              if (pickedDate != null) {
-                setState(() {
-                  context.read<SettingController>().from = pickedDate;
-                  context.read<SettingController>().Refresh_Ui();
-                });
-              } else {}
-            },
-            child: Column(
-              children: [
-                const Text(
-                  "من",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.teal),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Text(
-                    vm2.from.formatt(),
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 97, 92, 92),
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            )),
-      ],
+                  if (pickedDate != null) {
+                    context.read<SettingController>().to = pickedDate;
+                    context.read<SettingController>().Refresh_Ui();
+                  } else {}
+                },
+                child: Column(
+                  children: [
+                    const Text(
+                      "الى",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.teal),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Text(
+                        myType.to.formatt(),
+                        style: const TextStyle(
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 97, 92, 92),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                )),
+          ],
+        );
+      },
     );
   }
 }
 
-class DatepickerTo extends StatefulWidget {
-  const DatepickerTo({super.key});
+class DatePickerFrom extends StatelessWidget {
+  const DatePickerFrom({super.key});
 
-  @override
-  State<DatepickerTo> createState() => _DatepickerStatef();
-}
-
-class _DatepickerStatef extends State<DatepickerTo> {
-  Rscissor_viewmodel vm = Rscissor_viewmodel();
   @override
   Widget build(BuildContext context) {
-    var vm2 = context.read<SettingController>();
+    return Consumer<SettingController>(
+      builder: (context, myType, child) {
+        return Column(
+          children: [
+            TextButton(
+                onPressed: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime.now());
 
-    return Column(
-      children: [
-        TextButton(
-            onPressed: () async {
-              DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: context.read<SettingController>().from,
-                  lastDate: DateTime(2101));
-
-              if (pickedDate != null) {
-                setState(() {
-                  context.read<SettingController>().to = pickedDate;
-                  context.read<SettingController>().Refresh_Ui();
-                });
-              } else {}
-            },
-            child: Column(
-              children: [
-                const Text(
-                  "الى",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.teal),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Text(
-                    vm2.to.formatt(),
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 97, 92, 92),
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            )),
-      ],
+                  if (pickedDate != null) {
+                    context.read<SettingController>().from = pickedDate;
+                    context.read<SettingController>().Refresh_Ui();
+                  } else {}
+                },
+                child: Column(
+                  children: [
+                    const Text(
+                      "من",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.teal),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Text(
+                        myType.from.formatt(),
+                        style: const TextStyle(
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 97, 92, 92),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                )),
+          ],
+        );
+      },
     );
   }
 }

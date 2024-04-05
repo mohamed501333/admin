@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/ui/recources/color_manager.dart';
 
 // ignore: must_be_immutable
-class Item extends StatelessWidget {
-  Item(
+class Item0 extends StatelessWidget {
+  Item0(
     this.width,
     this.color,
     this.titele,

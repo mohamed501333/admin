@@ -21,6 +21,7 @@ showmyAlertDialog1_for_ading_fractions414(BuildContext context,
   Rscissor_veiwModel vm = Rscissor_veiwModel();
   List<FractionModel> fractionsNotCutOnRscissor =
       vm.getfractions_Underoperation(context, myType.blocks);
+  print(fractionsNotCutOnRscissor.length);
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -131,8 +132,8 @@ showmyAlertDialog1_for_ading_fractions414(BuildContext context,
       });
 }
 
-showmyAlertDialog_forAddingFinalProductToRscissor(
-    BuildContext context, int Rscissor, int stageOfR, List<FractionModel> fractions) {
+showmyAlertDialog_forAddingFinalProductToRscissor(BuildContext context,
+    int Rscissor, int stageOfR, List<FractionModel> fractions) {
   Rscissor_veiwModel vm = Rscissor_veiwModel();
 
   showDialog(
@@ -183,7 +184,10 @@ showmyAlertDialog_forAddingFinalProductToRscissor(
           actions: [
             Row(
               children: [
-                AddUnderOperation(fractions: fractions,stateOfR: stageOfR,Rscissor: Rscissor,
+                AddUnderOperation(
+                  fractions: fractions,
+                  stateOfR: stageOfR,
+                  Rscissor: Rscissor,
                 ).permition(context, UserPermition.incert_underoperation),
                 AddUnregular().permition(context,
                     UserPermition.incert_unregular_in_importedfinal_prodcut)
@@ -204,9 +208,8 @@ showmyAlertDialog_forAddingFinalProductToRscissor(
       });
 }
 
-dialogOfAddNotFinalToBlock4544(
-    BuildContext context,
-    List<FractionModel> fractions//الفرد المقصوصه على هذا المقص فى هئا الدور
+dialogOfAddNotFinalToBlock4544(BuildContext context,
+    List<FractionModel> fractions //الفرد المقصوصه على هذا المقص فى هئا الدور
     ) {
   H1VeiwModel vm = H1VeiwModel();
   return showDialog(
@@ -262,9 +265,9 @@ class AddUnderOperation extends StatelessWidget {
   }) : super(key: key);
 
   Rscissor_veiwModel vm = Rscissor_veiwModel();
- final List<FractionModel> fractions;
- final int stateOfR;
- final int  Rscissor;
+  final List<FractionModel> fractions;
+  final int stateOfR;
+  final int Rscissor;
 
   @override
   Widget build(BuildContext context) {
@@ -302,30 +305,35 @@ class AddUnderOperation extends StatelessWidget {
                               ),
 
                               CustomTextFormField(
-                    hint: "عددد",
-                    width: 120,
-                    validator: Validation.validateothers,
-                    controller: vm.amountcontroller),
-                    const Text("من"),
-                    
-                    DropDdowenForList_of_blocks_In_Rstage(data: vm.getAllDetiails_OFscissor_OFstage(stateOfR, fractions)),
+                                  hint: "عددد",
+                                  width: 120,
+                                  validator: Validation.validateothers,
+                                  controller: vm.amountcontroller),
+                              const Text("من"),
 
-                    Row(children: [
-                      CustomTextFormField(
-                    hint: "طول ",
-                    width: 70,
-                    validator: Validation.validateothers,
-                    controller: vm.lenthcontroller),CustomTextFormField(
-                    hint: "عرض",
-                    width: 70,
-                    validator: Validation.validateothers,
-                    controller: vm.widthcontroller),
-                    CustomTextFormField(
-                    hint: "ارتفاع",
-                    width: 70,
-                    validator: Validation.validateothers,
-                    controller: vm.hightncontroller)
-                    ],),
+                              DropDdowenForList_of_blocks_In_Rstage(
+                                  data: vm.getAllDetiails_OFscissor_OFstage(
+                                      stateOfR, fractions)),
+
+                              Row(
+                                children: [
+                                  CustomTextFormField(
+                                      hint: "طول ",
+                                      width: 70,
+                                      validator: Validation.validateothers,
+                                      controller: vm.lenthcontroller),
+                                  CustomTextFormField(
+                                      hint: "عرض",
+                                      width: 70,
+                                      validator: Validation.validateothers,
+                                      controller: vm.widthcontroller),
+                                  CustomTextFormField(
+                                      hint: "ارتفاع",
+                                      width: 70,
+                                      validator: Validation.validateothers,
+                                      controller: vm.hightncontroller)
+                                ],
+                              ),
 
                               //buttons
                               Row(
@@ -337,8 +345,14 @@ class AddUnderOperation extends StatelessWidget {
                                                 MaterialStateProperty.all(
                                                     Colors.red)),
                                         onPressed: () {
-                                          if (vm.validate()&&context.read<ObjectBoxController>().selectedValueOfBLockDetailsOf!=null) {
-                                            vm.add_UnderOperatin_subfractions(context,Rscissor);
+                                          if (vm.validate() &&
+                                              context
+                                                      .read<
+                                                          ObjectBoxController>()
+                                                      .selectedValueOfBLockDetailsOf !=
+                                                  null) {
+                                            vm.add_UnderOperatin_subfractions(
+                                                context, Rscissor);
                                           }
                                         },
                                         child: const Text('أضافه')),
@@ -370,19 +384,20 @@ class AddUnderOperation extends StatelessWidget {
   }
 }
 
-
 class DropDdowenForList_of_blocks_In_Rstage extends StatelessWidget {
   const DropDdowenForList_of_blocks_In_Rstage({
     super.key,
     required this.data,
   });
-final List<BLockDetailsOf> data;
+  final List<BLockDetailsOf> data;
   @override
   Widget build(BuildContext context) {
     return Consumer<ObjectBoxController>(
       builder: (context, v, child) {
         return DropdownButton(
-            value: context.read<ObjectBoxController>().selectedValueOfBLockDetailsOf,
+            value: context
+                .read<ObjectBoxController>()
+                .selectedValueOfBLockDetailsOf,
             items: data
                 .map((e) => DropdownMenuItem(
                       value: e,
@@ -391,7 +406,9 @@ final List<BLockDetailsOf> data;
                 .toList(),
             onChanged: (v) {
               if (v != null) {
-                context.read<ObjectBoxController>().selectedValueOfBLockDetailsOf = v;
+                context
+                    .read<ObjectBoxController>()
+                    .selectedValueOfBLockDetailsOf = v;
                 context.read<ObjectBoxController>().get();
               }
             });
@@ -400,68 +417,56 @@ final List<BLockDetailsOf> data;
   }
 }
 
-
-deletefractons_cutted_FromRscissr(BuildContext context,List<FractionModel> fractions){
+deletefractons_cutted_FromRscissr(
+    BuildContext context, List<FractionModel> fractions) {
   showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                    scrollable: true,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    content: SizedBox(
-                      height: 50,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                                          
-                            //buttons
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.red)),
-                                      onPressed: () {
-                                           for (var element in fractions) {
-                                context.read<BlockFirebasecontroller>().remove_from_R_scissor(
-                                  fraction: element
-                                );
-                                
-                              }Navigator.pop(context);
-                                      },
-                                      child: const Text('حذف')),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Expanded(
-                                  child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.blue)),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('الغاء')),
-                                ),
-                              ],
-                            )
-                          ],
+      context: context,
+      builder: (_) => AlertDialog(
+            scrollable: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            content: SizedBox(
+              height: 50,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    //buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.red)),
+                              onPressed: () {
+                                for (var element in fractions) {
+                                  context
+                                      .read<BlockFirebasecontroller>()
+                                      .remove_from_R_scissor(fraction: element);
+                                }
+                                Navigator.pop(context);
+                              },
+                              child: const Text('حذف')),
                         ),
-                      ),
-                    ),
-                  ));
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.blue)),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('الغاء')),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ));
 }
-
-
-
-
-
-
-
-
- 

@@ -49,37 +49,21 @@ class BlockFirebasecontroller extends ChangeNotifier {
   refrech(DatabaseEvent vv) async {
     BlockModel newvalue = BlockModel.fromJson(vv.snapshot.value as String);
 
-    all
-        .where((element) => element.Block_Id == newvalue.Block_Id)
-        .toList()
-        .first = newvalue;
 //--------------------------------------------------
-    List<BlockModel> b = blocks
-        .where((element) => element.Block_Id == newvalue.Block_Id)
-        .toList();
-    b.isNotEmpty
-        ? blocks
-            .where((element) => element.Block_Id == newvalue.Block_Id)
-            .toList()
-            .first = newvalue
-        : DoNothingAction();
-
-    b.isNotEmpty
-        ? b.first.actions.block_action_Stutus(BlockAction.archive_block)
-            ? blocks.remove(b.first)
-            : DoNothingAction()
-        : DoNothingAction();
+    all.removeWhere((element) => element.Block_Id == newvalue.Block_Id);
+    all.add(newvalue);
 //--------------------------------------------------
 
-    List<BlockModel> c = archived_blocks
-        .where((element) => element.Block_Id == newvalue.Block_Id)
-        .toList();
-    c.isNotEmpty
-        ? archived_blocks
-            .where((element) => element.Block_Id == newvalue.Block_Id)
-            .toList()
-            .first = newvalue
-        : DoNothingAction();
+    blocks.removeWhere((element) => element.Block_Id == newvalue.Block_Id);
+
+    if (newvalue.actions.block_action_Stutus(BlockAction.archive_block) ==
+        false) {
+      blocks.add(newvalue);
+    } else {
+      archived_blocks.add(newvalue);
+    }
+
+//--------------------------------------------------
 
     newvalue.Block_Id == 1
         ? subfractions = newvalue.fractions
@@ -149,19 +133,46 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
   String searchinconsumed = "";
+  String searchin_H = "";
   int amountofView = 5;
   int amountofViewForMinVeiwIn_H = 5;
   bool veiwCuttedAndimpatyNotfinals = false;
   addsubfractions(List<SubFraction> supfraction) async {
-    BlockModel block = all.firstWhere((element) => element.Block_Id == 1);
-
-    block.fractions
-        .firstWhere((element) => element.fraction_ID == 1)
-        .SubFractions
-        .addAll(supfraction);
-    try {
-      await FirebaseDatabase.instance.ref("blocks/1").set(block.toJson());
-    } catch (e) {}
+    if (all.isNotEmpty) {
+      BlockModel block = all.firstWhere((element) => element.Block_Id == 1);
+      // block.fractions.add(FractionModel(
+      //     fraction_ID: 1,
+      //     sapa_ID: "",
+      //     sapa_desc: "",
+      //     block_ID: 1,
+      //     item: Itme(
+      //         L: 0.0,
+      //         W: 0.0,
+      //         H: 0.0,
+      //         density: 0.0,
+      //         volume: 0.0,
+      //         wight: 0.0,
+      //         color: "",
+      //         type: "",
+      //         price: 0.0),
+      //     underOperation: true,
+      //     note: "",
+      //     Hscissor: 0,
+      //     Rscissor: 0,
+      //     Ascissor: 0,
+      //     stagenum: 0,
+      //     quality: 0,
+      //     notfinals: [],
+      //     SubFractions: [],
+      //     actions: []));
+      block.fractions
+          .firstWhere((element) => element.fraction_ID == 1)
+          .SubFractions
+          .addAll(supfraction);
+      try {
+        await FirebaseDatabase.instance.ref("blocks/1").set(block.toJson());
+      } catch (e) {}
+    }
   }
 
   addblock(BlockModel block) async {

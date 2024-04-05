@@ -187,6 +187,43 @@ extension Fd on List<ChemicalsModel> {
 }
 
 extension sdfdsf on List<SubFraction> {
+  List<SubFraction> ReturnFirstPiriodBalanceOFUnderoperationSubFractons(
+      DateTimeRange initialDateRange) {
+    //------------------------------------------------
+    List<SubFraction> fractionscreatedBeforeperiod = where((element) =>
+        element.actions.if_action_exist(
+            subfractionAction.create_new_subfraction.getTitle) &&
+        element.actions
+                .get_Date_of_action(
+                    subfractionAction.create_new_subfraction.getTitle)
+                .formatToInt() <
+            initialDateRange.start.formatToInt()).toList();
+
+    List<SubFraction> fractionscuttedBeforeStart = where((element) =>
+        (element.actions.if_action_exist(subfractionAction.cut_subfraction_on_R.getTitle) == true &&
+            element.actions
+                    .get_Date_of_action(
+                        subfractionAction.cut_subfraction_on_R.getTitle)
+                    .formatToInt() <
+                initialDateRange.start.formatToInt()) ||
+        (element.actions.if_action_exist(subfractionAction.cut_subfraction_on_A.getTitle) == true &&
+            element.actions
+                    .get_Date_of_action(
+                        subfractionAction.cut_subfraction_on_A.getTitle)
+                    .formatToInt() <
+                initialDateRange.start.formatToInt()) ||
+        (element.actions.if_action_exist(subfractionAction.cut_subfraction_on_H.getTitle) == true &&
+            element.actions
+                    .get_Date_of_action(subfractionAction.cut_subfraction_on_H.getTitle)
+                    .formatToInt() <
+                initialDateRange.start.formatToInt())).toList();
+
+    List<SubFraction> firstperiocBalance = //رصيد قبل الفتره
+        List.from(Set.from(fractionscreatedBeforeperiod)
+            .difference(Set.from(fractionscuttedBeforeStart)));
+    return firstperiocBalance;
+  }
+
   List<SubFraction> filtersubfractions() {
     List<SubFraction> nonRepetitive = [];
     for (var i = 0; i < length; i++) {
@@ -402,6 +439,69 @@ extension sdsd on List<NotFinal> {
 }
 
 extension Filterfgddf on List<FractionModel> {
+  List<FractionModel> ReturnFirstPiriodBalanceOFUnderoperationFractons(
+      DateTimeRange initialDateRange) {
+    //------------------------------------------------
+    List<FractionModel> fractionscreatedBeforeperiod = where((element) =>
+        element.actions
+            .if_action_exist(FractionActon.creat_fraction.getTitle) &&
+        element.actions
+                .get_Date_of_action(FractionActon.creat_fraction.getTitle)
+                .formatToInt() <
+            initialDateRange.start.formatToInt()).toList();
+    List<FractionModel> fractionscuttedBeforeStart = where((element) =>
+        (element.actions.if_action_exist(FractionActon.cut_fraction_OnRscissor.getTitle) == true &&
+            element.actions
+                    .get_Date_of_action(
+                        FractionActon.cut_fraction_OnRscissor.getTitle)
+                    .formatToInt() <
+                initialDateRange.start.formatToInt()) ||
+        (element.actions.if_action_exist(FractionActon.cut_fraction_OnAscissor.getTitle) == true &&
+            element.actions
+                    .get_Date_of_action(
+                        FractionActon.cut_fraction_OnAscissor.getTitle)
+                    .formatToInt() <
+                initialDateRange.start.formatToInt()) ||
+        (element.actions.if_action_exist(FractionActon.cut_fraction_OnRscissor.getTitle) == true &&
+            element.actions
+                    .get_Date_of_action(FractionActon.cut_fraction_OnRscissor.getTitle)
+                    .formatToInt() <
+                initialDateRange.start.formatToInt())).toList();
+
+    List<FractionModel> firstperiocBalance = //رصيد قبل الفتره
+        List.from(Set.from(fractionscreatedBeforeperiod)
+            .difference(Set.from(fractionscuttedBeforeStart)));
+    return firstperiocBalance;
+    //------------------------------------------------
+    // var fractionscuttedINPeriod = // الغرد المقصوصه فى الغتره
+    //     where((element) =>
+    //         (element.actions.get_Date_of_action(FractionActon.cut_fraction_OnAscissor.getTitle).formatToInt() >=
+    //                 initialDateRange.start.formatToInt() &&
+    //             element.actions
+    //                     .get_Date_of_action(
+    //                         FractionActon.cut_fraction_OnAscissor.getTitle)
+    //                     .formatToInt() <
+    //                 initialDateRange.end.formatToInt()) ||
+    //         (element.actions.get_Date_of_action(FractionActon.cut_fraction_OnRscissor.getTitle).formatToInt() >=
+    //                 initialDateRange.start.formatToInt() &&
+    //             element.actions
+    //                     .get_Date_of_action(
+    //                         FractionActon.cut_fraction_OnRscissor.getTitle)
+    //                     .formatToInt() <
+    //                 initialDateRange.end.formatToInt()) ||
+    //         (element.actions.get_Date_of_action(FractionActon.cut_fraction_OnHscissor.getTitle).formatToInt() >=
+    //                 initialDateRange.start.formatToInt() &&
+    //             element.actions
+    //                     .get_Date_of_action(
+    //                         FractionActon.cut_fraction_OnHscissor.getTitle)
+    //                     .formatToInt() <
+    //                 initialDateRange.end.formatToInt())).toList();
+    // // print(fractionscuttedINPeriod.length);
+    // //------------------------------------------------
+    // return List.from(Set.from(firstperiocBalance)
+    //     .difference(Set.from(fractionscuttedINPeriod)));
+  }
+
   List<FractionModel> filteronFractionModel() {
     List<FractionModel> nonRepetitive = [];
     for (var i = 0; i < length; i++) {
@@ -690,5 +790,13 @@ extension A1 on List<BlockModel> {
       }
     }
     return nonRepetitive;
+  }
+}
+
+extension G5 on List<Itme> {
+  double volume() {
+    return isEmpty
+        ? 0
+        : map((e) => e.H * e.L * e.W / 1000000).reduce((a, b) => a + b);
   }
 }
