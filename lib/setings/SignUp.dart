@@ -57,7 +57,7 @@ class SignupPage extends StatelessWidget {
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: email,
-                    validator: Validation.validateothe,
+                    validator: Validation.validateIFimpty,
                     decoration: InputDecoration(
                         hintText: "Email",
                         border: OutlineInputBorder(
@@ -70,7 +70,7 @@ class SignupPage extends StatelessWidget {
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: password,
-                    validator: Validation.validateothe,
+                    validator: Validation.validateIFimpty,
                     decoration: InputDecoration(
                       hintText: "Password",
                       border: OutlineInputBorder(

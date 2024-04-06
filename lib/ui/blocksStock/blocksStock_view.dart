@@ -222,8 +222,7 @@ class Buttoms extends StatelessWidget {
         IconButton(
             onPressed: () {
               context
-                  .read<BlockFirebasecontroller>()
-                  .runFilter(vm.blocknumbercontroller.text);
+                  .read<BlockFirebasecontroller>();
               context.read<BlockFirebasecontroller>().Refresh_the_UI();
             },
             icon: const Icon(Icons.search)),
@@ -412,7 +411,6 @@ class TheTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, blocks, child) {
-        blocks.runFilter(vm.blocknumbercontroller.text);
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(

@@ -199,7 +199,6 @@ class TheTable0001 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, blocks, child) {
-        blocks.runFilter(vm.blocknumbercontroller.text);
         List<BlockModel> b = blocks.blocks.reversed
             .toList()
             .where((element) =>

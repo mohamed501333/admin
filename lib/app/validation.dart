@@ -190,4 +190,14 @@ class Validation {
     }
     return null;
   }
+  static String? validateIFimpty(String? value) {
+    if (value!.isEmpty) {
+      return "فارغ";
+    }
+
+    if (value.isEmpty) {
+      return 'لا تترك هذا الحقل فارغ';
+    } 
+    return null;
+  }
 }

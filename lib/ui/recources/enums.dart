@@ -381,6 +381,46 @@ extension ddsd on BlockCategoryAction {
     }
   }
 }
+enum VeiwingAction {
+  openHomePage,
+  Open_IcertIn_BlockModule,
+  close_IcertIn_BlockModule,
+ 
+}
+
+extension Dsf on VeiwingAction {
+  ActionModel get add {
+    switch (this) {
+      case VeiwingAction.Open_IcertIn_BlockModule:
+        return ActionModel(
+            action:"فتح اضافة الى البلوكات",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case VeiwingAction.close_IcertIn_BlockModule:
+        return ActionModel(
+            action: "غلق اضافة الى البلوكات",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+
+      case VeiwingAction.openHomePage:
+         return ActionModel(
+            action: "فتح الصفحة الرئيسيه",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+    }
+  }
+
+  String get getTitle {
+    switch (this) {
+   case VeiwingAction.Open_IcertIn_BlockModule:
+        return "فتح اضافة الى البلوكات";
+      case VeiwingAction.close_IcertIn_BlockModule:
+        return "غلق اضافة الى البلوكات";
+      case VeiwingAction.openHomePage:
+        return "فتح الصفحة الرئيسيه";
+    }
+  }
+}
 
 enum ChemicalAction {
   creat_new_ChemicalAction_item,
