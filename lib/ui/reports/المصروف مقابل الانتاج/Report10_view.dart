@@ -100,7 +100,7 @@ class Report10View extends StatelessWidget {
                               style: textStyle,
                             ),
                           ),
-                          const Center(child: Text("")),
+                           Center(child: Text("${finalproductsBetweenTowDates.map((e) =>e.amount*  e.lenth*e.width*e.hight/1000000).reduce((a, b) => a+b).toStringAsFixed(1)}")),
                         ].reversed.toList()),
                         TableRow(
                             children: [

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/controllers/CategorysController.dart';
@@ -38,6 +39,11 @@ void main() async {
           appId: "1:106186917009:android:fcd892c86b7d3e3447ab30",
           messagingSenderId: "106186917009 ",
           projectId: "janson-11f24"));
+          await FirebaseMessaging.instance.setAutoInitEnabled(true);
+          final notificationSettings = await FirebaseMessaging.instance.requestPermission(provisional: true);
+          
+
+
   FirebaseDatabase.instance.ref();
 
   FirebaseDatabase.instance.setPersistenceEnabled(true);
