@@ -50,7 +50,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
             .if_action_exist(BlockAction.archive_block.getactionTitle) ==
         true));
     notifyListeners();
-    print("get data of blocks");
+    print("get initial data of blocks");
   }
 
   refrech(DatabaseEvent vv) async {
@@ -79,7 +79,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
         : DoNothingAction();
 
     notifyListeners();
-    print("get data of blocks in listen");
+    print("refrech datata of block blocks in listen");
   }
 
   List<SubFraction> subfractions = [];
