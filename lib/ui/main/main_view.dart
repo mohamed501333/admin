@@ -4,6 +4,8 @@ import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
+import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
@@ -36,9 +38,19 @@ class Mainview extends StatelessWidget {
                 .read<final_prodcut_controller>()
                 .get_finalProdcut_data(context)
             : DoNothingAction();
+
         permitionss(context, UserPermition.can_get_data_of_blocks)
             ? context.read<BlockFirebasecontroller>().get_blocks_data()
             : DoNothingAction();
+
+        permitionss(context, UserPermition.can_get_data_of_fractions)
+            ? context.read<Fractions_Controller>().get_Fractions_data()
+            : DoNothingAction();
+
+        permitionss(context, UserPermition.can_get_data_of_subfractions)
+            ? context.read<SubFractions_Controller>().get_SubFractions_data()
+            : DoNothingAction();
+
         context.read<BlockFirebasecontroller>().c();
 
         permitionss(context, UserPermition.can_get_data_of_notfinals)

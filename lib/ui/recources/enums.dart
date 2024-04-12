@@ -149,8 +149,11 @@ enum FractionActon {
   creat_fraction,
   archive_fraction,
   cut_fraction_OnHscissor,
+  Uncut_fraction_OnHscissor,
   cut_fraction_OnRscissor,
-  cut_fraction_OnAscissor
+  Uncut_fraction_OnRscissor,
+  cut_fraction_OnAscissor,
+  Uncut_fraction_OnAscissor
 }
 
 extension X5 on FractionActon {
@@ -181,11 +184,32 @@ extension X5 on FractionActon {
             action: "cut_fraction_OnAscissor",
             who: SringsManager.myemail,
             when: DateTime.now());
+      case FractionActon.Uncut_fraction_OnHscissor:
+        return ActionModel(
+            action: "Uncut_fraction_OnHscissor",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case FractionActon.Uncut_fraction_OnRscissor:
+        return ActionModel(
+            action: "Uncut_fraction_OnRscissor",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case FractionActon.Uncut_fraction_OnAscissor:
+        return ActionModel(
+            action: "Uncut_fraction_OnAscissor",
+            who: SringsManager.myemail,
+            when: DateTime.now());
     }
   }
 
   String get getTitle {
     switch (this) {
+      case FractionActon.Uncut_fraction_OnHscissor:
+        return "Uncut_fraction_OnHscissor";
+      case FractionActon.Uncut_fraction_OnRscissor:
+        return "Uncut_fraction_OnRscissor";
+      case FractionActon.Uncut_fraction_OnAscissor:
+        return "Uncut_fraction_OnAscissor";
       case FractionActon.creat_fraction:
         return "creat_fraction";
       case FractionActon.archive_fraction:
@@ -381,11 +405,11 @@ extension ddsd on BlockCategoryAction {
     }
   }
 }
+
 enum VeiwingAction {
   openHomePage,
   Open_IcertIn_BlockModule,
   close_IcertIn_BlockModule,
- 
 }
 
 extension Dsf on VeiwingAction {
@@ -393,7 +417,7 @@ extension Dsf on VeiwingAction {
     switch (this) {
       case VeiwingAction.Open_IcertIn_BlockModule:
         return ActionModel(
-            action:"فتح اضافة الى البلوكات",
+            action: "فتح اضافة الى البلوكات",
             who: SringsManager.myemail,
             when: DateTime.now());
       case VeiwingAction.close_IcertIn_BlockModule:
@@ -403,7 +427,7 @@ extension Dsf on VeiwingAction {
             when: DateTime.now());
 
       case VeiwingAction.openHomePage:
-         return ActionModel(
+        return ActionModel(
             action: "فتح الصفحة الرئيسيه",
             who: SringsManager.myemail,
             when: DateTime.now());
@@ -412,7 +436,7 @@ extension Dsf on VeiwingAction {
 
   String get getTitle {
     switch (this) {
-   case VeiwingAction.Open_IcertIn_BlockModule:
+      case VeiwingAction.Open_IcertIn_BlockModule:
         return "فتح اضافة الى البلوكات";
       case VeiwingAction.close_IcertIn_BlockModule:
         return "غلق اضافة الى البلوكات";
@@ -671,6 +695,8 @@ extension FF on OrderAction {
 enum UserPermition {
   show_all,
   can_get_data_of_blocks,
+  can_get_data_of_fractions,
+  can_get_data_of_subfractions,
   show_block_incetion,
   show_date_in_block_stock,
   incert_in_block_stock,
@@ -768,7 +794,6 @@ enum UserPermition {
   allow_edit_in_details_blocks,
 
   show_users_actions,
-  can_get_data_of_fractions,
   can_get_data_of_notfinals,
 
   not_working,
@@ -978,6 +1003,8 @@ extension QQ on UserPermition {
             tittle: "امكانية حذف الفرد المقصوصه على الدائرى");
       case UserPermition.Hide_sizeofblock_formmainviewin_H:
         return UserpermitionTittle(tittle: "اخفاء مقاس البلوك فى المقص الراسى");
+      case UserPermition.can_get_data_of_subfractions:
+        return UserpermitionTittle(tittle: "can_get_data_of_subfractions");
     }
   }
 
@@ -985,6 +1012,8 @@ extension QQ on UserPermition {
     switch (this) {
       case UserPermition.Hide_sizeofblock_formmainviewin_H:
         return "اخفاء مقاس البلوك فى المقص الراسى";
+      case UserPermition.can_get_data_of_subfractions:
+        return "can_get_data_of_subfractions";
       case UserPermition.can_delete_fractons_cutted_on_R:
         return "امكانية حذف الفرد المقصوصه على الدائرى";
       case UserPermition.show_total_in_finalproduct:

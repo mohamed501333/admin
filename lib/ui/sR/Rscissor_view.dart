@@ -2,6 +2,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
@@ -23,30 +24,27 @@ class RVeiw2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<BlockFirebasecontroller, final_prodcut_controller>(
-      builder: (context, blocks, finalprodcuts, child) {
-
-
-
-         List<FractionModel> fractions =vm.getFractions_Cutted_On_Rscissor_today(blocks, Rscissor);
-         List<SubFraction> subfraction =blocks.subfractions;
-         List<FinalProductModel>finalproducts = vm.getDataOF_finalProdcutOF_scissor(context,Rscissor);
-         List<int> AllStages = vm.getAllStages(fractions, Rscissor, finalproducts);
+    return Consumer3<BlockFirebasecontroller, final_prodcut_controller,
+        SubFractions_Controller>(
+      builder: (context, blocks, finalprodcuts, SubFractions, child) {
+        List<FractionModel> fractions =
+            vm.getFractions_Cutted_On_Rscissor_today(blocks, Rscissor);
+        List<SubFraction> subfraction = SubFractions.subfractions;
+        List<FinalProductModel> finalproducts =
+            vm.getDataOF_finalProdcutOF_scissor(context, Rscissor);
+        List<int> AllStages =
+            vm.getAllStages(fractions, Rscissor, finalproducts);
         int lastStage = AllStages.isEmpty ? 0 : AllStages.first;
-
-
 
         return Column(
           children: [
-
             scissorNameAndNum(Rscissor: Rscissor),
-          
             Expanded(
                 child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               reverse: true,
               child: SizedBox(
-                width: MediaQuery.of(context).size.width*2,
+                width: MediaQuery.of(context).size.width * 2,
                 child: ListView(
                   children: [
                     const HeaderOfThable(),
@@ -55,25 +53,32 @@ class RVeiw2 extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                            onPressed: () {
-                              showmyAlertDialog_forAddingFinalProductToRscissor(
-                                  context, Rscissor, lastStage + 1,fractions);
-                            },
-                            icon: const Icon(
-                              Icons.add,
-                              size: 40,
-                              color: Color.fromARGB(255, 64, 124, 255),
-                            )).permition(context, UserPermition.Rshow_bottomOFfinalproduct),
+                                onPressed: () {
+                                  showmyAlertDialog_forAddingFinalProductToRscissor(
+                                      context,
+                                      Rscissor,
+                                      lastStage + 1,
+                                      fractions);
+                                },
+                                icon: const Icon(
+                                  Icons.add,
+                                  size: 40,
+                                  color: Color.fromARGB(255, 64, 124, 255),
+                                ))
+                            .permition(context,
+                                UserPermition.Rshow_bottomOFfinalproduct),
                         IconButton(
-                            onPressed: () {
-                              showmyAlertDialog1_for_ading_fractions414(
-                                  context, blocks, Rscissor, lastStage + 1);
-                            },
-                            icon: const Icon(
-                              Icons.add,
-                              size: 40,
-                              color: Color.fromARGB(255, 39, 123, 3),
-                            )).permition(context, UserPermition.Rshow_bottomOFFractions),
+                                onPressed: () {
+                                  showmyAlertDialog1_for_ading_fractions414(
+                                      context, blocks, Rscissor, lastStage + 1);
+                                },
+                                icon: const Icon(
+                                  Icons.add,
+                                  size: 40,
+                                  color: Color.fromARGB(255, 39, 123, 3),
+                                ))
+                            .permition(
+                                context, UserPermition.Rshow_bottomOFFractions),
                       ],
                     ),
 
@@ -121,9 +126,24 @@ class RVeiw2 extends StatelessWidget {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    IconButton(onPressed: (){
-                                                      deletefractons_cutted_FromRscissr(context, fractons_cutted_on_Rstage_rscossor(fractions, f).toList());
-                                                    }, icon: const Icon(Icons.delete,size: 24,),color: Colors.red,).permition(context, UserPermition.can_delete_fractons_cutted_on_R),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        deletefractons_cutted_FromRscissr(
+                                                            context,
+                                                            fractons_cutted_on_Rstage_rscossor(
+                                                                    fractions,
+                                                                    f)
+                                                                .toList());
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.delete,
+                                                        size: 24,
+                                                      ),
+                                                      color: Colors.red,
+                                                    ).permition(
+                                                        context,
+                                                        UserPermition
+                                                            .can_delete_fractons_cutted_on_R),
                                                     Text(
                                                         "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
                                                     Text(
@@ -139,15 +159,23 @@ class RVeiw2 extends StatelessWidget {
                                             MainAxisAlignment.end,
                                         children: [
                                           IconButton(
-                                              onPressed: () {
-                                                showmyAlertDialog1_for_ading_fractions414(context,
-                                                    blocks, Rscissor, e);
-                                              },
-                                              icon: const Icon(
-                                                Icons.add,
-                                                size: 30,
-                                                color: Colors.deepOrangeAccent,
-                                              )).permition(context, UserPermition.Rshow_bottomOFFractions)
+                                                  onPressed: () {
+                                                    showmyAlertDialog1_for_ading_fractions414(
+                                                        context,
+                                                        blocks,
+                                                        Rscissor,
+                                                        e);
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.add,
+                                                    size: 30,
+                                                    color:
+                                                        Colors.deepOrangeAccent,
+                                                  ))
+                                              .permition(
+                                                  context,
+                                                  UserPermition
+                                                      .Rshow_bottomOFFractions)
                                         ],
                                       )
                                     ],
@@ -185,13 +213,13 @@ class RVeiw2 extends StatelessWidget {
                                                 ))
                                             .toList(),
                                       ),
-                                     
                                       Column(
                                         children: subfraction
                                             .where((element) =>
-                                                element.Rscissor==Rscissor&&
+                                                element.Rscissor == Rscissor &&
                                                 element.Rstagenum == e)
-                                            .toList().filtersubfractions()
+                                            .toList()
+                                            .filtersubfractions()
                                             .map((w) => Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -206,21 +234,28 @@ class RVeiw2 extends StatelessWidget {
                                                 ))
                                             .toList(),
                                       ),
-
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
                                           IconButton(
-                                              onPressed: () {
-                                                showmyAlertDialog_forAddingFinalProductToRscissor(
-                                                    context, Rscissor, e,fractions);
-                                              },
-                                              icon: const Icon(
-                                                Icons.add,
-                                                size: 30,
-                                                color: Colors.deepOrangeAccent,
-                                              )).permition(context, UserPermition.Rshow_bottomOFfinalproduct)
+                                                  onPressed: () {
+                                                    showmyAlertDialog_forAddingFinalProductToRscissor(
+                                                        context,
+                                                        Rscissor,
+                                                        e,
+                                                        fractions);
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.add,
+                                                    size: 30,
+                                                    color:
+                                                        Colors.deepOrangeAccent,
+                                                  ))
+                                              .permition(
+                                                  context,
+                                                  UserPermition
+                                                      .Rshow_bottomOFfinalproduct)
                                         ],
                                       )
                                     ],
@@ -263,46 +298,54 @@ class RVeiw2 extends StatelessWidget {
                                             MainAxisAlignment.end,
                                         children: [
                                           IconButton(
-                                              onPressed: () {
-                                                dialogOfAddNotFinalToBlock4544(
-                                                    context,
-                                                    fractions
-                                                        .where((element) =>
-                                                            element.stagenum ==
-                                                            e)
-                                                        .toList());
-                                              },
-                                              icon: const Icon(
-                                                Icons.add,
-                                                size: 30,
-                                                color: Colors.deepOrangeAccent,
-                                              )).permition(context, UserPermition.Rshow_bottomOFNotfinl)
+                                                  onPressed: () {
+                                                    dialogOfAddNotFinalToBlock4544(
+                                                        context,
+                                                        fractions
+                                                            .where((element) =>
+                                                                element
+                                                                    .stagenum ==
+                                                                e)
+                                                            .toList());
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.add,
+                                                    size: 30,
+                                                    color:
+                                                        Colors.deepOrangeAccent,
+                                                  ))
+                                              .permition(
+                                                  context,
+                                                  UserPermition
+                                                      .Rshow_bottomOFNotfinl)
                                         ],
                                       )
                                     ],
                                   )),
                                 ),
-                             
                               ].reversed.toList(),
                             ),
                           )).toList(),
                     ),
-                
-                 ],
+                  ],
                 ),
               ),
             )),
-        
           ],
         );
       },
     );
   }
 
-  Iterable<FractionModel> fractons_cutted_on_Rstage_rscossor(List<FractionModel> fractions, FractionModel f) => fractions.where((element) => element.stagenum == f.stagenum && element.item.color == f.item.color && element.item.type == f.item.type && element.item.W == f.item.W && element.item.L == f.item.L && element.item.H == f.item.H);
-
- 
-
+  Iterable<FractionModel> fractons_cutted_on_Rstage_rscossor(
+          List<FractionModel> fractions, FractionModel f) =>
+      fractions.where((element) =>
+          element.stagenum == f.stagenum &&
+          element.item.color == f.item.color &&
+          element.item.type == f.item.type &&
+          element.item.W == f.item.W &&
+          element.item.L == f.item.L &&
+          element.item.H == f.item.H);
 
   int totalOfFinalProdcut(
           List<FinalProductModel> finalproducts, FinalProductModel f) =>
@@ -316,9 +359,8 @@ class RVeiw2 extends StatelessWidget {
               element.hight == f.hight)
           .map((e) => e.amount)
           .reduce((value, element) => value + element);
- 
-  int totalOfsubfractions(
-          List<SubFraction> subfractions, SubFraction f) =>
+
+  int totalOfsubfractions(List<SubFraction> subfractions, SubFraction f) =>
       subfractions
           .where((v) =>
               v.Rstagenum == f.Rstagenum &&
@@ -327,7 +369,8 @@ class RVeiw2 extends StatelessWidget {
               v.item.density == f.item.density &&
               v.item.W == f.item.W &&
               v.item.L == f.item.L &&
-              v.item.H == f.item.H).toList()
+              v.item.H == f.item.H)
+          .toList()
           .length;
 }
 
@@ -349,8 +392,7 @@ class scissorNameAndNum extends StatelessWidget {
           color: const Color.fromARGB(255, 175, 132, 132)),
       child: Text(
         "      مقص دائرى ( $Rscissor )     ",
-        style:
-            const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );
   }
@@ -386,8 +428,7 @@ class HeaderOfThable extends StatelessWidget {
               color: const Color.fromARGB(255, 170, 164, 164)),
           child: const Center(
               child: Text(" الوارد ",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold))),
+                  style: TextStyle(fontWeight: FontWeight.bold))),
         ),
         Container(
           height: 40,
@@ -397,8 +438,7 @@ class HeaderOfThable extends StatelessWidget {
               color: const Color.fromARGB(255, 170, 164, 164)),
           child: const Center(
               child: Text(" الصادر ",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold))),
+                  style: TextStyle(fontWeight: FontWeight.bold))),
         ),
         Container(
           height: 40,
@@ -408,8 +448,7 @@ class HeaderOfThable extends StatelessWidget {
               color: const Color.fromARGB(255, 170, 164, 164)),
           child: const Center(
               child: Text("دون التام",
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold))),
+                  style: TextStyle(fontWeight: FontWeight.bold))),
         ),
       ].reversed.toList(),
     );

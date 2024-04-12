@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
@@ -47,12 +48,13 @@ showmyAlertDialog141422(BuildContext context, BlockFirebasecontroller myType,
                                         f.item.H == e.item.H &&
                                         f.item.L == e.item.L)
                                     .take(vm.amountcontroller.text.to_int())) {
-                                  myType.add_on_A_scissor(
-                                    lastStage: lastStage,
-                                    context: context,
-                                    fractiond: element,
-                                    Ascissor: Acissor,
-                                  );
+                                  context
+                                      .read<Fractions_Controller>()
+                                      .cut_Fraction_on_A_scissor(
+                                        lastStage: lastStage,
+                                        fractiond: element,
+                                        Ascissor: Acissor,
+                                      );
                                 }
                               }
                               Navigator.pop(context);
@@ -125,7 +127,7 @@ showmyAlertDialog141422(BuildContext context, BlockFirebasecontroller myType,
 
 dialogOfAddNotFinalToBlock454422(
     BuildContext context,
-    //الفرد المقصوصه على هذا المقص فى هئا الدور 
+    //الفرد المقصوصه على هذا المقص فى هئا الدور
     List<FractionModel> fractions) {
   H1VeiwModel vm = H1VeiwModel();
   return showDialog(
@@ -154,8 +156,8 @@ dialogOfAddNotFinalToBlock454422(
                 onPressed: () {
                   for (var e in fractions) {
                     context
-                        .read<BlockFirebasecontroller>()
-                        .add_Not_final_ToFractionA(
+                        .read<Fractions_Controller>()
+                        .add_Not_final_ToFraction_cutted_on_A(
                             fractiond: e,
                             type: context.read<ObjectBoxController>().initial2,
                             Ascissord: e.Ascissor,

@@ -2,6 +2,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
@@ -57,11 +58,13 @@ showmyAlertDialog1_for_ading_fractions414(BuildContext context,
                                         f.item.H == e.item.H &&
                                         f.item.L == e.item.L)
                                     .take(vm.amountcontroller.text.to_int())) {
-                                  myType.add_on_R_scissor(
-                                    lastStage: lastStage,
-                                    fractiond: element,
-                                    Rscissor: scissor,
-                                  );
+                                  context
+                                      .read<Fractions_Controller>()
+                                      .cut_Fraction_on_R_scissor(
+                                        lastStage: lastStage,
+                                        fractiond: element,
+                                        Rscissor: scissor,
+                                      );
                                 }
                               }
                               Navigator.pop(context);
@@ -238,8 +241,8 @@ dialogOfAddNotFinalToBlock4544(BuildContext context,
                 onPressed: () {
                   for (var e in fractions) {
                     context
-                        .read<BlockFirebasecontroller>()
-                        .add_Not_final_ToFractionR(
+                        .read<Fractions_Controller>()
+                        .add_Not_final_ToFraction_cutted_On_R(
                             fractiond: e,
                             type: context.read<ObjectBoxController>().initial2,
                             Rscissord: e.Rscissor,
@@ -442,8 +445,9 @@ deletefractons_cutted_FromRscissr(
                               onPressed: () {
                                 for (var element in fractions) {
                                   context
-                                      .read<BlockFirebasecontroller>()
-                                      .remove_from_R_scissor(fraction: element);
+                                      .read<Fractions_Controller>()
+                                      .remove_cuttedFraction_from_R_scissor(
+                                          fraction: element);
                                 }
                                 Navigator.pop(context);
                               },
