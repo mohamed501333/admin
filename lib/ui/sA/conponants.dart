@@ -1,21 +1,22 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
-import 'package:jason_company/controllers/ObjectBoxController.dart';
-import 'package:jason_company/controllers/bFractionsController.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
+
+import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
-import 'package:jason_company/ui/sH/H1_veiwModel.dart';
-import 'package:jason_company/ui/sR/Rscissor_view.dart';
-import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
+import 'package:jason_company/ui/final_product_imported/Widgets.dart';
+import 'package:jason_company/ui/sA/Ascissor_Viewmodel.dart';
+
 import 'package:provider/provider.dart';
 
-showmyAlertDialog141422(BuildContext context, BlockFirebasecontroller myType,
-    int Acissor, int lastStage) {
-  Rscissor_veiwModel vm = Rscissor_veiwModel();
-  List<FractionModel> fractionsNotCutOnRscissor =
-      vm.getfractions_Underoperation(context, myType.blocks);
+dialog_CuttSubfractions_ON_A(BuildContext context,
+    SubFractions_Controller subfractioncontroller, int Acissor, int lastStage) {
+  AscissorViewModel vm = AscissorViewModel();
+  List<SubFraction> subfractionsUnderOperation =
+      vm.getSubfractions_Underoperation(subfractioncontroller);
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -33,13 +34,13 @@ showmyAlertDialog141422(BuildContext context, BlockFirebasecontroller myType,
                 const Text("من"),
                 SingleChildScrollView(
                   child: Column(
-                    children: fractionsNotCutOnRscissor
-                        .filter_Fractios___()
+                    children: subfractionsUnderOperation
+                        .filtersubfractions()
                         .map(
                           (e) => GestureDetector(
                             onTap: () {
                               if (vm.amountcontroller.text.isNotEmpty) {
-                                for (var element in fractionsNotCutOnRscissor
+                                for (var element in subfractionsUnderOperation
                                     .where((f) =>
                                         f.item.W == e.item.W &&
                                         f.item.type == e.item.type &&
@@ -49,12 +50,9 @@ showmyAlertDialog141422(BuildContext context, BlockFirebasecontroller myType,
                                         f.item.L == e.item.L)
                                     .take(vm.amountcontroller.text.to_int())) {
                                   context
-                                      .read<Fractions_Controller>()
-                                      .cut_Fraction_on_A_scissor(
-                                        lastStage: lastStage,
-                                        fractiond: element,
-                                        Ascissor: Acissor,
-                                      );
+                                      .read<SubFractions_Controller>()
+                                      .cut_subfractions_on_A(
+                                          element, Acissor, lastStage);
                                 }
                               }
                               Navigator.pop(context);
@@ -78,13 +76,13 @@ showmyAlertDialog141422(BuildContext context, BlockFirebasecontroller myType,
                               child: Row(
                                 children: [
                                   Text(
-                                    "${e.item.W.removeTrailingZeros}*${e.item.L}*${e.item.H.removeTrailingZeros} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
+                                    "${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}*${e.item.H.removeTrailingZeros} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
                                     style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    fractionsNotCutOnRscissor
+                                    subfractionsUnderOperation
                                         .where((element) =>
                                             element.item.color ==
                                                 e.item.color &&
@@ -125,49 +123,65 @@ showmyAlertDialog141422(BuildContext context, BlockFirebasecontroller myType,
       });
 }
 
-dialogOfAddNotFinalToBlock454422(
-    BuildContext context,
-    //الفرد المقصوصه على هذا المقص فى هئا الدور
-    List<FractionModel> fractions) {
-  H1VeiwModel vm = H1VeiwModel();
-  return showDialog(
+Dialog_forAddingFinalProductTo_A(
+    BuildContext context, int Ascissor, int stageOfA) {
+  AscissorViewModel vm = AscissorViewModel();
+
+  showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('اضافة هوالك الى هذا الدور'),
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          title: const Text('اضافة منتج تام'),
           content: SizedBox(
+            width: MediaQuery.of(context).size.width,
             height: 200,
-            child: Column(children: [
-              const DropDdowen0023(),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 2, vertical: 18),
-                child: CustomTextFormField(
-                    hint: " وزن دون التام",
-                    width: 120,
-                    validator: Validation.validateothers,
-                    controller: vm.wightcontroller),
+            child: SingleChildScrollView(
+              child: Form(
+                key: vm.formKey,
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomTextFormField(
+                        keybordtupe: TextInputType.name,
+                        width: MediaQuery.of(context).size.width * .40,
+                        hint: "ملاحظات ",
+                        controller: vm.notes,
+                      ),
+                      Column(
+                        children: [
+                          CustomTextFormField(
+                            width: MediaQuery.of(context).size.width * .23,
+                            hint: "عدد",
+                            controller: vm.amountcontroller,
+                            validator: Validation.validateothers,
+                          ),
+                          const Text(
+                            "من",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SearchForSize(),
+                ]),
               ),
-            ]),
+            ),
           ),
           actions: [
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
-                  for (var e in fractions) {
-                    context
-                        .read<Fractions_Controller>()
-                        .add_Not_final_ToFraction_cutted_on_A(
-                            fractiond: e,
-                            type: context.read<ObjectBoxController>().initial2,
-                            Ascissord: e.Ascissor,
-                            wight: vm.wightcontroller.text.to_double() /
-                                fractions.length);
+                  if (vm.formKey.currentState!.validate()) {
+                    vm.incert_finalProduct_from_cutingUnit_A;
+                    Navigator.pop(context);
                   }
-
-                  Navigator.pop(context);
                 },
-                child: const Text('تم')),
+                child: const Text('ok')),
           ],
         );
       });

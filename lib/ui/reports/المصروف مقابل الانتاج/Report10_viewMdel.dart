@@ -16,11 +16,12 @@ class Rscissor_viewmodel {
   double volOfResults(List<FinalProductModel> f, BlockModel e) {
     var i = f
         .where((element) =>
-                element.density == e.item.density && element.type == e.item.type
+                element.item.density == e.item.density &&
+                element.item.type == e.item.type
             //  &&
             // element.color == e.color
             )
-        .map((e) => e.amount * e.lenth * e.hight * e.width / 1000000);
+        .map((e) => e.item.amount * e.item.L * e.item.W * e.item.H / 1000000);
     return i.isEmpty ? 0 : i.reduce((a, b) => a + b);
   }
 
@@ -30,7 +31,8 @@ class Rscissor_viewmodel {
   }
 
   double TotalvolOfResults(List<FinalProductModel> f) {
-    var i = f.map((e) => e.amount * e.lenth * e.hight * e.width / 1000000);
+    var i =
+        f.map((e) => e.item.amount * e.item.L * e.item.W * e.item.H / 1000000);
     return i.isEmpty ? 0 : i.reduce((a, b) => a + b);
   }
 }

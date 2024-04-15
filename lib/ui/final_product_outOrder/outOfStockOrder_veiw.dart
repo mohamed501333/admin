@@ -8,7 +8,6 @@ import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwMode
 import 'package:jason_company/ui/final_product_outOrder/wid.dart';
 import 'package:jason_company/ui/recources/color_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:jason_company/ui/recources/enums.dart';
 
 class outOfStockOrder extends StatelessWidget {
   outOfStockOrder({super.key});
@@ -20,22 +19,8 @@ class outOfStockOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
       builder: (context, finalproducts, child) {
-        List<FinalProductModel> scorce = finalproducts.finalproducts
-            .where((e) =>
-                e.actions.if_action_exist(
-                    finalProdcutAction.archive_final_prodcut.getactionTitle) ==
-                false)
-            .where((e) =>
-                e.actions.if_action_exist(finalProdcutAction
-                        .recive_Done_Form_FinalProdcutStock.getactionTitle) ==
-                    true ||
-                e.actions.if_action_exist(finalProdcutAction
-                        .incert_finalProduct_from_Others.getactionTitle) ==
-                    true ||
-                e.actions.if_action_exist(finalProdcutAction.out_order.getactionTitle) ==
-                    true ||
-                e.actions.if_action_exist(finalProdcutAction.createInvoice.getactionTitle) == true)
-            .toList();
+        List<FinalProductModel> scorce =
+            vm.getfinalprodcuts_recevedFromStock(finalproducts.finalproducts);
 
         return Scaffold(
           appBar: AppBar(
@@ -69,57 +54,55 @@ class outOfStockOrder extends StatelessWidget {
                   onChanged: (value) {
                     finals.clear();
                     finals = vm.sourcesearshing(scorce, value);
-
                     finalproducts.Refresh_Ui();
                   },
                 ),
                 Column(
-                  children: finals
-                      // .take(33)
-                      .map((i) => vm.get_total(scorce, i) == 0
-                          ? const SizedBox()
-                          : Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              decoration: BoxDecoration(
-                                  color: Colors.blue[50],
-                                  border: Border.all(width: .5)),
-                              child: ListTile(
-                                trailing: Text(
-                                  "${vm.get_total(scorce, i)}",
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: ColorManager.red),
-                                ),
-                                title: Row(
-                                  children: [
-                                    Text("${i.density}" "ك"),
-                                    const SizedBox(
-                                      width: 9,
-                                    ),
-                                    Text(i.color),
-                                    const SizedBox(
-                                      width: 9,
-                                    ),
-                                    Text(i.type.toString()),
-                                    const SizedBox(
-                                      width: 9,
-                                    ),
-                                    Text("${i.lenth.removeTrailingZeros}"
-                                        "*"
-                                        "${i.width.removeTrailingZeros}"
-                                        "*"
-                                        " ${i.hight.removeTrailingZeros}"),
-                                    const SizedBox(
-                                      width: 9,
-                                    ),
-                                    OutOrder(
-                                        item: i, total: vm.get_total(scorce, i))
-                                  ],
-                                ),
+                  children: finals.map((i) {
+                    var a = scorce.countOf(i);
+                    return a == 0
+                        ? const SizedBox()
+                        : Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.blue[50],
+                                border: Border.all(width: .5)),
+                            child: ListTile(
+                              trailing: Text(
+                                "$a",
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: ColorManager.red),
                               ),
-                            ))
-                      .toList(),
+                              title: Row(
+                                children: [
+                                  Text("${i.item.density}" "ك"),
+                                  const SizedBox(
+                                    width: 9,
+                                  ),
+                                  Text(i.item.color),
+                                  const SizedBox(
+                                    width: 9,
+                                  ),
+                                  Text(i.item.type.toString()),
+                                  const SizedBox(
+                                    width: 9,
+                                  ),
+                                  Text("${i.item.L.removeTrailingZeros}"
+                                      "*"
+                                      "${i.item.W.removeTrailingZeros}"
+                                      "*"
+                                      " ${i.item.H.removeTrailingZeros}"),
+                                  const SizedBox(
+                                    width: 9,
+                                  ),
+                                  OutOrder(item: i, total: a)
+                                ],
+                              ),
+                            ),
+                          );
+                  }).toList(),
                 ),
               ],
             ),

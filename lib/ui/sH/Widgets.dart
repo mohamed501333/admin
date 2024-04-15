@@ -272,7 +272,9 @@ class TheTable0001 extends StatelessWidget {
                                         onTap: () {
                                           context
                                               .read<BlockFirebasecontroller>()
-                                              .UnCutBlock_FromH(block: user);
+                                              .UnCutBlock_FromH(
+                                                  context: context,
+                                                  block: user);
                                         },
                                         child: const Icon(
                                           Icons.delete,
@@ -282,28 +284,28 @@ class TheTable0001 extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(vm
+                                        child: Text(vm2
                                             .percentage(user)
                                             .removeTrailingZeros))),
 
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(vm
-                                            .difrence(user)
+                                        child: Text(vm2
+                                            .difrence(context, user)
                                             .toStringAsFixed(2)))),
 
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(vm
+                                        child: Text(vm2
                                             .wight_of_notfinal(user)
                                             .toStringAsFixed(2)))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
-                                        child: Text(vm
-                                            .wight_of_fractions(user)
+                                        child: Text(vm2
+                                            .wight_of_fractions(context, user)
                                             .toStringAsFixed(2)))),
                                 Container(
                                     padding: const EdgeInsets.all(2),
@@ -395,7 +397,8 @@ class TheTable0001 extends StatelessWidget {
                                   ],
                                 ),
                                 Column(
-                                  children: user.fractions
+                                  children: vm2
+                                      .getFractinsOFABlock(context, user)
                                       .map(
                                         (e) => Container(
                                             padding: const EdgeInsets.all(2),
@@ -671,6 +674,8 @@ class NewVeiw extends StatelessWidget {
                     .where((element) => element.Hscissor == 0)
                     .toList()
                 : blockswithNO_Notfinals;
+        H1VeiwModel vm = H1VeiwModel();
+
         return Expanded(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -744,12 +749,16 @@ class NewVeiw extends StatelessWidget {
                                         context, user, Hscissor);
                                   },
                                   child: SizedBox(
-                                    child: user.fractions.isEmpty
+                                    child: vm
+                                            .getFractinsOFABlock(context, user)
+                                            .isEmpty
                                         ? const Center(
                                             child: Text("اضافة نواتج"),
                                           )
                                         : Column(
-                                            children: user.fractions
+                                            children: vm
+                                                .getFractinsOFABlock(
+                                                    context, user)
                                                 .map(
                                                   (e) => Text(
                                                       "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),

@@ -60,11 +60,12 @@ class Chemicals_controller extends ChangeNotifier {
     notifyListeners();
   }
 
-  firstDateOfData() {
-    var v = Chemicals.where((e) => e.actions.if_action_exist(
+  DateTime firstDateOfData() {
+    List<DateTime> v = Chemicals.where((e) => e.actions.if_action_exist(
             ChemicalAction.creat_new_ChemicalAction_item.getTitle))
         .map((e) => e.actions.get_Date_of_action(
-            ChemicalAction.creat_new_ChemicalAction_item.getTitle));
+            ChemicalAction.creat_new_ChemicalAction_item.getTitle))
+        .toList();
     return v.isEmpty ? DateTime(2101) : v.min;
   }
 

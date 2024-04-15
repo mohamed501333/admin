@@ -1,29 +1,19 @@
 // ignore_for_file: non_constant_identifier_names, empty_catches, file_names, camel_case_types
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 
 class Fractions_Controller extends ChangeNotifier {
   get_Fractions_data() async {
-    try {
-      await FirebaseDatabase.instance
-          .ref("fractions")
-          .onValue
-          .first
-          .then((value) async {
-        await getInitialData(value.snapshot);
-      });
-
-      FirebaseDatabase.instance
-          .ref("fractions")
-          .onChildChanged
-          .listen((vv) async {
-        await refrech(vv);
-      });
-    } catch (e) {}
+    await FirebaseDatabase.instance
+        .ref("fractions")
+        .onValue
+        .listen((event) async {
+      await getInitialData(event.snapshot);
+    });
   }
 
   getInitialData(DataSnapshot v) async {
@@ -43,13 +33,15 @@ class Fractions_Controller extends ChangeNotifier {
             .if_action_exist(FractionActon.archive_fraction.getTitle) ==
         true));
     notifyListeners();
-    print("get initial data of fractions");
+    if (kDebugMode) {
+      print("get initial data of fractions");
+    }
   }
 
   refrech(DatabaseEvent vv) async {
     FractionModel newvalue =
-        FractionModel.fromJson(vv.snapshot.value as String);
-
+        FractionModel.fromJson(vv.snapshot.children.last.value as String);
+    print(newvalue.fraction_ID);
 //--------------------------------------------------
     all.removeWhere((element) => element.fraction_ID == newvalue.fraction_ID);
     all.add(newvalue);
@@ -58,7 +50,8 @@ class Fractions_Controller extends ChangeNotifier {
     fractions
         .removeWhere((element) => element.fraction_ID == newvalue.fraction_ID);
 
-    if (newvalue.actions.block_action_Stutus(BlockAction.archive_block) ==
+    if (newvalue.actions
+            .if_action_exist(FractionActon.archive_fraction.getTitle) ==
         false) {
       fractions.add(newvalue);
     } else {
@@ -66,39 +59,12 @@ class Fractions_Controller extends ChangeNotifier {
     }
 
     notifyListeners();
-    print("refrech datata of block blocks in listen");
+    print("refrech datata of fractions");
   }
 
   List<FractionModel> all = [];
   List<FractionModel> fractions = [];
   List<FractionModel> archived_fractions = [];
-
-  // c() {
-  // print(99999);
-  // for (var el in blocks.where((element) => element.fractions.isNotEmpty)) {
-  //        el.fractions.clear();
-  //   FirebaseDatabase.instance.ref("blocks/${el.Block_Id}").set(el.toJson());
-  // }
-  // }
-
-  c() {
-    // if (all.isNotEmpty) {
-    //   for (var element in all) {
-    //     element.item.volume =
-    //         element.item.H * element.item.L * element.item.W / 1000000;
-    //     element.item.wight = element.item.H *
-    //         element.item.L *
-    //         element.item.W *
-    //         element.item.density /
-    //         1000000;
-    //   }
-    //   var s = {};
-    //   s.addEntries(
-    //       all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
-
-    //   FirebaseDatabase.instance.ref("blocks").set(s);
-    // }
-  }
 
   Refresh_the_UI() {
     notifyListeners();
@@ -121,10 +87,7 @@ class Fractions_Controller extends ChangeNotifier {
         s.addEntries(all.map(
             (el) => MapEntry("${el.fraction_ID}", el.toJson().toString())));
 
-        FirebaseDatabase.instance
-            .ref("fractions")
-            .set(s)
-            .whenComplete(() => get_Fractions_data());
+        FirebaseDatabase.instance.ref("fractions").set(s);
       }
     } catch (e) {}
   }
@@ -165,7 +128,6 @@ class Fractions_Controller extends ChangeNotifier {
       FirebaseDatabase.instance
           .ref("fractions/${fractiond.fraction_ID}")
           .set(fractiond.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 
@@ -183,7 +145,6 @@ class Fractions_Controller extends ChangeNotifier {
       FirebaseDatabase.instance
           .ref("fractions/${fraction.fraction_ID}")
           .set(fraction.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 
@@ -197,9 +158,8 @@ class Fractions_Controller extends ChangeNotifier {
 
     try {
       FirebaseDatabase.instance
-          .ref("blocks/${fractiond.fraction_ID}")
+          .ref("fractions/${fractiond.fraction_ID}")
           .set(fractiond.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 
@@ -224,7 +184,7 @@ class Fractions_Controller extends ChangeNotifier {
     fractiond.underOperation = false;
     try {
       FirebaseDatabase.instance
-          .ref("blocks/${fractiond.fraction_ID}")
+          .ref("fractions/${fractiond.fraction_ID}")
           .set(fractiond.toJson());
     } catch (e) {}
   }
@@ -248,7 +208,7 @@ class Fractions_Controller extends ChangeNotifier {
     fractiond.underOperation = false;
     try {
       FirebaseDatabase.instance
-          .ref("blocks/${fractiond.fraction_ID}")
+          .ref("fractions/${fractiond.fraction_ID}")
           .set(fractiond.toJson());
     } catch (e) {}
   }

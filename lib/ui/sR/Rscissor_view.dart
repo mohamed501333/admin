@@ -2,6 +2,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:provider/provider.dart';
 
@@ -24,16 +25,19 @@ class RVeiw2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<BlockFirebasecontroller, final_prodcut_controller,
-        SubFractions_Controller>(
-      builder: (context, blocks, finalprodcuts, SubFractions, child) {
+    return Consumer4<BlockFirebasecontroller, final_prodcut_controller,
+        SubFractions_Controller, Fractions_Controller>(
+      builder: (context, blocks, finalprodcuts, SubFractions,
+          fractrioncontroller, child) {
         List<FractionModel> fractions =
-            vm.getFractions_Cutted_On_Rscissor_today(blocks, Rscissor);
-        List<SubFraction> subfraction = SubFractions.subfractions;
+            vm.getFractions_Cutted_On_Rscissor_today(
+                fractrioncontroller, Rscissor);
+        List<SubFraction> subfraction =
+            vm.get_SUBfraction_Cutted_On_Rscissor(SubFractions, Rscissor);
         List<FinalProductModel> finalproducts =
             vm.getDataOF_finalProdcutOF_scissor(context, Rscissor);
         List<int> AllStages =
-            vm.getAllStages(fractions, Rscissor, finalproducts);
+            vm.getAllStages(fractions, Rscissor, finalproducts, subfraction);
         int lastStage = AllStages.isEmpty ? 0 : AllStages.first;
 
         return Column(
@@ -70,7 +74,10 @@ class RVeiw2 extends StatelessWidget {
                         IconButton(
                                 onPressed: () {
                                   showmyAlertDialog1_for_ading_fractions414(
-                                      context, blocks, Rscissor, lastStage + 1);
+                                      context,
+                                      fractrioncontroller,
+                                      Rscissor,
+                                      lastStage + 1);
                                 },
                                 icon: const Icon(
                                   Icons.add,
@@ -105,7 +112,6 @@ class RVeiw2 extends StatelessWidget {
                                 ),
                                 //الوارد
                                 Container(
-                                  // height: 40,
                                   width:
                                       MediaQuery.of(context).size.width * .59,
                                   decoration: const BoxDecoration(
@@ -162,7 +168,7 @@ class RVeiw2 extends StatelessWidget {
                                                   onPressed: () {
                                                     showmyAlertDialog1_for_ading_fractions414(
                                                         context,
-                                                        blocks,
+                                                        fractrioncontroller,
                                                         Rscissor,
                                                         e);
                                                   },
@@ -184,7 +190,7 @@ class RVeiw2 extends StatelessWidget {
                                 //الصادر
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * .59,
+                                      MediaQuery.of(context).size.width * .61,
                                   decoration: const BoxDecoration(
                                       border: Border.symmetric(
                                           vertical: BorderSide()),
@@ -195,8 +201,8 @@ class RVeiw2 extends StatelessWidget {
                                     children: [
                                       Column(
                                         children: finalproducts
-                                            .where((element) =>
-                                                element.stageOfR == e)
+                                            .where(
+                                                (element) => element.stage == e)
                                             .toList()
                                             .filteronfinalproduct()
                                             .map((f) => Row(
@@ -204,15 +210,17 @@ class RVeiw2 extends StatelessWidget {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                        "${f.color} ${f.type} ك${f.density.removeTrailingZeros}"),
+                                                        "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
                                                     Text(
-                                                        "  ${f.lenth.removeTrailingZeros}*${f.width.removeTrailingZeros}*${f.hight.removeTrailingZeros} من "),
+                                                        "  ${f.item.L.removeTrailingZeros}*${f.item.W.removeTrailingZeros}*${f.item.H.removeTrailingZeros} من "),
                                                     Text(
                                                         "${totalOfFinalProdcut(finalproducts, f)} "),
                                                   ],
                                                 ))
                                             .toList(),
                                       ),
+
+                                      //الشغل المرحله الاخرى
                                       Column(
                                         children: subfraction
                                             .where((element) =>
@@ -224,12 +232,29 @@ class RVeiw2 extends StatelessWidget {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        delete_SUBfractons_cutted_FromRscissr(
+                                                            context,
+                                                            subfractions_cuttedon_R(
+                                                                subfraction,
+                                                                w));
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.delete,
+                                                        size: 20,
+                                                      ),
+                                                      color: Colors.red,
+                                                    ).permition(
+                                                        context,
+                                                        UserPermition
+                                                            .can_delete_fractons_cutted_on_R),
                                                     Text(
                                                         "${w.item.color} ${w.item.type} ك${w.item.density.removeTrailingZeros}"),
                                                     Text(
                                                         "  ${w.item.L.removeTrailingZeros}*${w.item.W.removeTrailingZeros}*${w.item.H.removeTrailingZeros} من "),
                                                     Text(
-                                                        "${totalOfsubfractions(subfraction, w)} "),
+                                                        "${subfractions_cuttedon_R(subfraction, w).length} "),
                                                   ],
                                                 ))
                                             .toList(),
@@ -351,16 +376,17 @@ class RVeiw2 extends StatelessWidget {
           List<FinalProductModel> finalproducts, FinalProductModel f) =>
       finalproducts
           .where((element) =>
-              element.stageOfR == f.stageOfR &&
-              element.color == f.color &&
-              element.type == f.type &&
-              element.width == f.width &&
-              element.lenth == f.lenth &&
-              element.hight == f.hight)
-          .map((e) => e.amount)
+              element.stage == f.stage &&
+              element.item.color == f.item.color &&
+              element.item.type == f.item.type &&
+              element.item.W == f.item.W &&
+              element.item.L == f.item.L &&
+              element.item.H == f.item.H)
+          .map((e) => e.item.amount)
           .reduce((value, element) => value + element);
 
-  int totalOfsubfractions(List<SubFraction> subfractions, SubFraction f) =>
+  List<SubFraction> subfractions_cuttedon_R(
+          List<SubFraction> subfractions, SubFraction f) =>
       subfractions
           .where((v) =>
               v.Rstagenum == f.Rstagenum &&
@@ -370,8 +396,7 @@ class RVeiw2 extends StatelessWidget {
               v.item.W == f.item.W &&
               v.item.L == f.item.L &&
               v.item.H == f.item.H)
-          .toList()
-          .length;
+          .toList();
 }
 
 class scissorNameAndNum extends StatelessWidget {

@@ -211,7 +211,8 @@ class details_of_finalProdcut extends StatelessWidget {
                         onTap: () {
                           mytype.deletefinalProudut(mytype.finalproducts
                               .where((element) =>
-                                  element.id == row.getCells().first.value)
+                                  element.finalProdcut_ID ==
+                                  row.getCells().first.value)
                               .first);
                         },
                         child: Container(
@@ -270,15 +271,16 @@ class EmployeeDataSource2233 extends DataGridSource {
   }) {
     data = coumingData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<int>(columnName: 'id', value: e.id),
+              DataGridCell<int>(columnName: 'id', value: e.finalProdcut_ID),
               DataGridCell<String>(
                   columnName: 'size',
                   value:
-                      "${e.hight.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.lenth.removeTrailingZeros}"),
-              DataGridCell<String>(columnName: 'color', value: e.color),
-              DataGridCell<double>(columnName: 'density', value: e.density),
-              DataGridCell<String>(columnName: 'type', value: e.type),
-              DataGridCell<int>(columnName: 'amount', value: e.amount),
+                      "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
+              DataGridCell<String>(columnName: 'color', value: e.item.color),
+              DataGridCell<double>(
+                  columnName: 'density', value: e.item.density),
+              DataGridCell<String>(columnName: 'type', value: e.item.type),
+              DataGridCell<int>(columnName: 'amount', value: e.item.amount),
               DataGridCell<String>(
                   columnName: 'customer',
                   value: context
@@ -472,11 +474,11 @@ class EmployeeDataSource2233 extends DataGridSource {
             List<String> b = i.replaceAll("*", " ").split(" ");
             context
                 .read<final_prodcut_controller>()
-                .edit_cell_size(u.id, column.columnName, b);
+                .edit_cell_size(u.finalProdcut_ID, column.columnName, b);
           } else {
             context
                 .read<final_prodcut_controller>()
-                .edit_cell(u.id, column.columnName, value);
+                .edit_cell(u.finalProdcut_ID, column.columnName, value);
             submitCell();
           }
         },

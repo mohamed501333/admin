@@ -4,12 +4,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
@@ -18,22 +18,8 @@ import 'package:jason_company/ui/recources/enums.dart';
 
 class Rscissor_veiwModel extends BaseViewModel {
   List<FractionModel> getFractions_Cutted_On_Rscissor_today(
-      BlockFirebasecontroller myType, int Rscissor) {
-    return myType.blocks
-        .expand((e) => e.fractions.where((element) =>
-            element.Rscissor == Rscissor &&
-            element.actions
-                    .get_Date_of_action(
-                        FractionActon.cut_fraction_OnRscissor.getTitle)
-                    .formatt() ==
-                DateTime.now().formatt()))
-        .toList();
-  }
-
-  List<SubFraction> getsubfraction_Cutted_On_Rscissor(
-      BlockFirebasecontroller myType, int Rscissor) {
-    return myType.blocks
-        .expand((e) => e.fractions.expand((element) => element.SubFractions))
+      Fractions_Controller fractrioncontroller, int Rscissor) {
+    return fractrioncontroller.fractions
         .where((element) =>
             element.Rscissor == Rscissor &&
             element.actions
@@ -44,40 +30,49 @@ class Rscissor_veiwModel extends BaseViewModel {
         .toList();
   }
 
+  List<SubFraction> get_SUBfraction_Cutted_On_Rscissor(
+      SubFractions_Controller Subfractrioncontroller, int Rscissor) {
+    return Subfractrioncontroller.subfractions
+        .where((element) =>
+            element.Rscissor == Rscissor &&
+            element.actions
+                    .get_Date_of_action(
+                        subfractionAction.create_new_subfraction.getTitle)
+                    .formatt() ==
+                DateTime.now().formatt())
+        .toList();
+  }
+
   List<FractionModel> getFractions_Cutted_On_Ascissor(
-      BlockFirebasecontroller myType, int Ascissor) {
-    return myType.blocks
-        .expand((e) => e.fractions.where((element) =>
+      Fractions_Controller fractrioncontroller, int Ascissor) {
+    return fractrioncontroller.fractions
+        .where((element) =>
             element.Ascissor == Ascissor &&
             element.actions
                     .get_Date_of_action(
                         FractionActon.cut_fraction_OnAscissor.getTitle)
                     .formatt() ==
-                DateTime.now().formatt()))
+                DateTime.now().formatt())
         .toList();
   }
 
   List<FractionModel> getfractions_Underoperation(
-      BuildContext context, List<BlockModel> blocks) {
-    return blocks
-        .map((e) => e.fractions)
-        .expand((element) => element)
+      Fractions_Controller fractrioncontroller) {
+    return fractrioncontroller.fractions
         .where((element) => element.underOperation == true)
         .toList();
   }
 
   List<int> getAllStages(List<FractionModel> fractions, int Rscissor,
-      List<FinalProductModel> finalproducts) {
+      List<FinalProductModel> finalproducts, List<SubFraction> subfractions) {
     List<int> allStagesOf_fractions =
         fractions.map((e) => e.stagenum).toSet().toList();
 
-    List<int> allStagesOf_subfraction = get_subfractions(fractions, Rscissor)
-        .map((e) => e.Rstagenum)
-        .toSet()
-        .toList();
+    List<int> allStagesOf_subfraction =
+        subfractions.map((e) => e.Rstagenum).toSet().toList();
 
     List<int> allStagesOf_finalproduct =
-        finalproducts.map((e) => e.stageOfR).toSet().toList();
+        finalproducts.map((e) => e.stage).toSet().toList();
 
     List<int> all = [];
     all.addAll(allStagesOf_fractions);
@@ -91,54 +86,53 @@ class Rscissor_veiwModel extends BaseViewModel {
         .toList();
   }
 
-  List<SubFraction> get_subfractions(
-      List<FractionModel> fractions, int Rscissor) {
-    return fractions
-        .expand((element) => element.SubFractions)
-        .where((element) => element.Rscissor == Rscissor)
-        .toList();
-  }
-
-  incert_finalProduct_from_cutingUnitR2324(
-      BuildContext context, int stageOFR, int Rscissor) {
-    OrderController my = context.read<OrderController>();
-    if (my.order != null && my.item != null) {
-      double volume = my.item!.widti *
-          my.item!.lenth *
-          my.item!.hight *
+  incert_finalProduct_from_cutingUnit(
+      BuildContext context, int stage, int scissor) {
+    OrderController orderController = context.read<OrderController>();
+    if (orderController.order != null && orderController.item != null) {
+      double volume = orderController.item!.widti *
+          orderController.item!.lenth *
+          orderController.item!.hight *
           int.parse(amountcontroller.text) /
           1000000;
       context
           .read<final_prodcut_controller>()
           .incert_finalProduct_from_cutingUnit(FinalProductModel(
+            block_ID: 0,
+            fraction_ID: 0,
+            sapa_ID: "",
+            sapa_desc: "",
+            subfraction_ID: 0,
             invoiceNum: 0,
-            price: 0.0,
             worker: "",
-            stageOfR: stageOFR,
-            isfinal: true,
+            stage: stage,
             notes: notes.text,
-            cuting_order_number: my.order!.serial,
+            cuting_order_number: orderController.order!.serial,
             actions: [
               finalProdcutAction.incert_finalProduct_from_cutingUnit.add
             ],
-            id: DateTime.now().millisecondsSinceEpoch,
-            color: my.item!.color,
-            density: my.item!.density,
-            type: my.item!.type,
-            amount: int.parse(amountcontroller.text),
-            scissor: Rscissor + 3,
-            width: my.item!.widti,
-            lenth: my.item!.lenth,
-            hight: my.item!.hight,
-            customer: my.order!.customer,
-            volume: my.item!.widti * my.item!.lenth * my.item!.hight / 1000000,
-            whight: volume * my.item!.density,
+            finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
+            item: FinalProdcutItme(
+                L: orderController.item!.lenth,
+                W: orderController.item!.widti,
+                H: orderController.item!.hight,
+                density: orderController.item!.density,
+                volume: volume.toStringAsFixed(2).to_double(),
+                theowight: volume.toStringAsFixed(2).to_double() *
+                    orderController.item!.density,
+                realowight: 0.0,
+                color: orderController.item!.color,
+                type: orderController.item!.type,
+                amount: int.parse(amountcontroller.text),
+                priceforamount: 0.0),
+            scissor: scissor + 3,
+            customer: orderController.order!.customer,
           ));
       amountcontroller.clear();
       notes.clear();
-      my.order = null;
-      my.item = null;
-      my.Refrsh_ui();
+      orderController.order = null;
+      orderController.item = null;
+      orderController.Refrsh_ui();
       context.read<dropDowenContoller>().Refrsh_ui();
     }
   }
@@ -155,28 +149,35 @@ class Rscissor_veiwModel extends BaseViewModel {
       context
           .read<final_prodcut_controller>()
           .incert_finalProduct_from_cutingUnit(FinalProductModel(
+            block_ID: 0,
+            fraction_ID: 0,
+            sapa_ID: "",
+            sapa_desc: "",
+            subfraction_ID: 0,
             invoiceNum: 0,
-            price: 0.0,
             worker: "",
-            stageOfR: stageOFR,
-            isfinal: true,
+            stage: stageOFR,
             notes: notes.text,
             cuting_order_number: my.order!.serial,
             actions: [
               finalProdcutAction.incert_finalProduct_from_cutingUnit.add
             ],
-            id: DateTime.now().millisecondsSinceEpoch,
-            color: my.item!.color,
-            density: my.item!.density,
-            type: my.item!.type,
-            amount: int.parse(amountcontroller.text),
+            finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
+            item: FinalProdcutItme(
+                L: my.item!.lenth,
+                W: my.item!.widti,
+                H: my.item!.hight,
+                density: my.item!.density,
+                volume: volume.toStringAsFixed(2).to_double(),
+                theowight:
+                    volume.toStringAsFixed(2).to_double() * my.item!.density,
+                realowight: 0.0,
+                color: my.item!.color,
+                type: my.item!.type,
+                amount: int.parse(amountcontroller.text),
+                priceforamount: 0.0),
             scissor: Rscissor + 3,
-            width: my.item!.widti,
-            lenth: my.item!.lenth,
-            hight: my.item!.hight,
             customer: my.order!.customer,
-            volume: my.item!.widti * my.item!.lenth * my.item!.hight / 1000000,
-            whight: volume * my.item!.density,
           ));
       amountcontroller.clear();
       notes.clear();
@@ -191,7 +192,7 @@ class Rscissor_veiwModel extends BaseViewModel {
       BuildContext context, int Rscissor) {
     return context
         .read<final_prodcut_controller>()
-        .SumTheTOw()
+        .finalproducts
         .where((element) =>
             element.scissor == Rscissor + 3 &&
             element.actions
@@ -206,6 +207,8 @@ class Rscissor_veiwModel extends BaseViewModel {
       int StageOfR, List<FractionModel> fractions) {
     return fractions
         .where((element) => element.stagenum == StageOfR)
+        .toList()
+        .filter_Fractios___()
         .map((e) => BLockDetailsOf(
             sapadescriotion: e.sapa_desc,
             sapaId: e.sapa_ID,
@@ -232,33 +235,35 @@ class Rscissor_veiwModel extends BaseViewModel {
         W: w,
         H: h,
         density: sapadetails.density,
-        volume: volume,
-        wight: wight,
+        volume: volume.toStringAsFixed(2).to_double(),
+        wight: wight.toStringAsFixed(2).to_double(),
         color: sapadetails.color,
         type: sapadetails.type,
         price: 0);
 
-    var subfraction = SubFraction(
-        subfraction_ID: DateTime.now().microsecondsSinceEpoch,
-        fraction_ID: 0,
-        sapa_ID: sapadetails.sapaId,
-        block_ID: 0,
-        sapa_desc: sapadetails.sapadescriotion,
-        item: item,
-        underOperation: true,
-        Ascissor: 0,
-        Hscissor: 0,
-        Rscissor: Rscissor,
-        quality: 0,
-        notfinals: [],
-        Rstagenum: sapadetails.stageOfR,
-        Astagenum: 0,
-        Hstagenum: 0,
-        note: "",
-        actions: [subfractionAction.create_new_subfraction.add]);
+    List<SubFraction> permanent = [];
+    for (var i = 0; i < quantity.toInt(); i++) {
+      permanent.add(SubFraction(
+          subfraction_ID: DateTime.now().microsecondsSinceEpoch + i,
+          fraction_ID: 0,
+          sapa_ID: sapadetails.sapaId,
+          block_ID: 0,
+          sapa_desc: sapadetails.sapadescriotion,
+          item: item,
+          underOperation: true,
+          Ascissor: 0,
+          Hscissor: 0,
+          Rscissor: Rscissor,
+          quality: 0,
+          notfinals: [],
+          Rstagenum: sapadetails.stageOfR,
+          Astagenum: 0,
+          Hstagenum: 0,
+          note: "",
+          actions: [subfractionAction.create_new_subfraction.add]));
+    }
 
-    context.read<SubFractions_Controller>().addSubfractionslist(
-        List.generate(quantity.toInt(), (index) => subfraction));
+    context.read<SubFractions_Controller>().addSubfractionslist(permanent);
 
     amountcontroller.clear();
     lenthcontroller.clear();

@@ -8,6 +8,8 @@ import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
+import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
@@ -15,6 +17,7 @@ import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
 import 'package:jason_company/controllers/purchesController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
+import 'package:jason_company/controllers/stockCheckController.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/controllers/zupdate.dart';
 import 'package:jason_company/setings/login.dart';
@@ -39,14 +42,12 @@ void main() async {
           appId: "1:106186917009:android:fcd892c86b7d3e3447ab30",
           messagingSenderId: "106186917009 ",
           projectId: "janson-11f24"));
-          await FirebaseMessaging.instance.setAutoInitEnabled(true);
-          final notificationSettings = await FirebaseMessaging.instance.requestPermission(provisional: true);
-          
-
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
 
   FirebaseDatabase.instance.ref();
 
   FirebaseDatabase.instance.setPersistenceEnabled(true);
+
   database = await Database.create();
   runApp(const MyApp());
 }
@@ -107,6 +108,15 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => PurchesController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Fractions_Controller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => SubFractions_Controller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => StokCheck_Controller(),
           ),
         ],
         child: MaterialApp(

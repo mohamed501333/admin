@@ -11,7 +11,6 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
 import 'package:provider/provider.dart';
 
-
 class CuttingOrderViewModel extends BaseViewModel {
   String date(DateTime d) {
     return DateFormat("yyyy-MM-dd").format(d);
@@ -26,15 +25,20 @@ class CuttingOrderViewModel extends BaseViewModel {
           datecreated: DateTime.now(),
           id: DateTime.now().millisecondsSinceEpoch,
           serial: context.read<OrderController>().orders.length + 1,
-          customer:context.read<Customer_controller>().customers.firstWhere((element) => element.name==context.read<Customer_controller>().initialForRaido).serial.toString()
-              ,
+          customer: context
+              .read<Customer_controller>()
+              .customers
+              .firstWhere((element) =>
+                  element.name ==
+                  context.read<Customer_controller>().initialForRaido)
+              .serial
+              .toString(),
           actions: [],
           items: temp);
       context.read<OrderController>().add_order(order);
       context.read<ObjectBoxController>().get();
       clearfields();
       temp.clear();
-
     }
   }
 
@@ -62,13 +66,13 @@ class CuttingOrderViewModel extends BaseViewModel {
         .finalproducts
         .where((e) =>
             e.cuting_order_number == order.serial &&
-            e.lenth == item.lenth &&
-            e.width == item.widti &&
-            e.type == item.type &&
-            e.density == item.density &&
-            e.color == item.color &&
-            e.hight == item.hight)
-        .map((e) => e.amount);
+            e.item.L == item.lenth &&
+            e.item.W == item.widti &&
+            e.item.type == item.type &&
+            e.item.density == item.density &&
+            e.item.color == item.color &&
+            e.item.H == item.hight)
+        .map((e) => e.item.amount);
     var b;
 
     if (a.isNotEmpty) {
@@ -84,13 +88,13 @@ class CuttingOrderViewModel extends BaseViewModel {
         .finalproducts
         .where((e) =>
             e.cuting_order_number == order.serial &&
-            e.lenth == item.lenth &&
-            e.width == item.widti &&
-            e.hight == item.hight &&
-            e.type == item.type &&
-            e.density == item.density &&
-            e.color == item.color )
-        .map((e) => e.amount);
+            e.item.L == item.lenth &&
+            e.item.W == item.widti &&
+            e.item.H == item.hight &&
+            e.item.type == item.type &&
+            e.item.density == item.density &&
+            e.item.color == item.color)
+        .map((e) => e.item.amount);
     var b;
 
     if (a.isNotEmpty) {
@@ -106,13 +110,13 @@ class CuttingOrderViewModel extends BaseViewModel {
         .finalproducts
         .where((e) =>
             e.cuting_order_number == order.serial &&
-            e.lenth == item.lenth &&
-            e.width == item.widti &&
-            e.type == item.type &&
-            e.density == item.density &&
-            e.color == item.color &&
-            e.hight == item.hight)
-        .map((e) => e.amount);
+            e.item.L == item.lenth &&
+            e.item.W == item.widti &&
+            e.item.type == item.type &&
+            e.item.density == item.density &&
+            e.item.color == item.color &&
+            e.item.H == item.hight)
+        .map((e) => e.item.amount);
     var TotalDone;
 
     if (done.isNotEmpty) {

@@ -2,6 +2,7 @@
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -110,7 +111,8 @@ class EmployeeDataSourcee extends DataGridSource {
                       e, coumingData, scissor)),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
+                  value:
+                      "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
               DataGridCell<String>(columnName: 'color', value: e.item.color),
               DataGridCell<double>(columnName: 'denety', value: e.item.density),
               DataGridCell<String>(columnName: 'type', value: e.item.type),
@@ -222,6 +224,7 @@ class TheTable23 extends StatelessWidget {
   final int scissor;
   final List<BlockModel> blocks;
   HReportsViewModel vm = HReportsViewModel();
+  Fractions_Controller fractioncontroller = Fractions_Controller();
 
   @override
   Widget build(BuildContext context) {
@@ -235,11 +238,7 @@ class TheTable23 extends StatelessWidget {
             1: FlexColumnWidth(1),
             2: FlexColumnWidth(.3),
           },
-          children: blocks
-              .expand((e) => e.fractions)
-              .toList()
-              .filter_Fractios___()
-              .map((e) {
+          children: fractioncontroller.fractions.filter_Fractios___().map((e) {
             x++;
 
             return TableRow(
@@ -252,9 +251,7 @@ class TheTable23 extends StatelessWidget {
                       child: Text(
                         vm
                             .total_amount_for_single_siz__fractions(
-                                e,
-                                blocks.expand((e) => e.fractions).toList(),
-                                scissor)
+                                e, fractioncontroller.fractions, scissor)
                             .toString(),
                       )),
                   Container(

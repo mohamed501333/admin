@@ -3,12 +3,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/bFractionsController.dart';
+import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/final_product_imported/Widgets.dart';
@@ -18,10 +18,10 @@ import 'package:jason_company/ui/sR/Rscissor_view.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
 
 showmyAlertDialog1_for_ading_fractions414(BuildContext context,
-    BlockFirebasecontroller myType, int scissor, int lastStage) {
+    Fractions_Controller fractrioncontroller, int scissor, int lastStage) {
   Rscissor_veiwModel vm = Rscissor_veiwModel();
   List<FractionModel> fractionsNotCutOnRscissor =
-      vm.getfractions_Underoperation(context, myType.blocks);
+      vm.getfractions_Underoperation(fractrioncontroller);
   print(fractionsNotCutOnRscissor.length);
   showDialog(
       context: context,
@@ -200,8 +200,8 @@ showmyAlertDialog_forAddingFinalProductToRscissor(BuildContext context,
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                 onPressed: () {
                   if (vm.formKey.currentState!.validate()) {
-                    vm.incert_finalProduct_from_cutingUnitR2324(
-                        context, stageOfR, Rscissor);
+                    vm.incert_finalProduct_from_cutingUnit(
+                        context, stageOfR, Rscissor + 3);
                     Navigator.pop(context);
                   }
                 },
@@ -261,11 +261,11 @@ dialogOfAddNotFinalToBlock4544(BuildContext context,
 //شغل مرحله اخرى تحت التشغيل(غير تام)'
 class AddUnderOperation extends StatelessWidget {
   AddUnderOperation({
-    Key? key,
+    super.key,
     required this.fractions,
     required this.stateOfR,
     required this.Rscissor,
-  }) : super(key: key);
+  });
 
   Rscissor_veiwModel vm = Rscissor_veiwModel();
   final List<FractionModel> fractions;
@@ -402,6 +402,8 @@ class DropDdowenForList_of_blocks_In_Rstage extends StatelessWidget {
                 .read<ObjectBoxController>()
                 .selectedValueOfBLockDetailsOf,
             items: data
+                .toSet()
+                .toList()
                 .map((e) => DropdownMenuItem(
                       value: e,
                       child: Text(e.sapadescriotion.toString()),
@@ -448,6 +450,59 @@ deletefractons_cutted_FromRscissr(
                                       .read<Fractions_Controller>()
                                       .remove_cuttedFraction_from_R_scissor(
                                           fraction: element);
+                                }
+                                Navigator.pop(context);
+                              },
+                              child: const Text('حذف')),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.blue)),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('الغاء')),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ));
+}
+
+delete_SUBfractons_cutted_FromRscissr(
+    BuildContext context, List<SubFraction> subfraction) {
+  showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+            scrollable: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            content: SizedBox(
+              height: 50,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.red)),
+                              onPressed: () {
+                                for (var element in subfraction) {
+                                  context
+                                      .read<SubFractions_Controller>()
+                                      .delete_SUBfraction(element);
                                 }
                                 Navigator.pop(context);
                               },

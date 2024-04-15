@@ -7,6 +7,7 @@ import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
 import 'package:provider/provider.dart';
 
 extension Permition on Widget {
@@ -247,13 +248,25 @@ extension sdfdsf on List<SubFraction> {
 }
 
 extension Filter on List<FinalProductModel> {
+  int countOf(FinalProductModel e) {
+    var a = where((element) =>
+        element.item.L == e.item.L &&
+        element.item.W == e.item.W &&
+        element.item.H == e.item.H &&
+        element.item.color == e.item.color &&
+        element.item.type == e.item.type &&
+        element.item.density == e.item.density).map((e) => e.item.amount);
+
+    return a.isEmpty ? 0 : a.reduce((a, b) => a + b);
+  }
+
   List<FinalProductModel> filterItemsPasedOnDensites(
       BuildContext context, List<String> densities) {
     List<FinalProductModel> l = [];
     if (densities.isNotEmpty) {
       for (var f in densities) {
         for (var i in this) {
-          if (i.density.toString() == f) {
+          if (i.item.density.toString() == f) {
             l.add(i);
           }
         }
@@ -270,7 +283,7 @@ extension Filter on List<FinalProductModel> {
     if (colors.isNotEmpty) {
       for (var f in colors) {
         for (var i in this) {
-          if (i.color.toString() == f) {
+          if (i.item.color.toString() == f) {
             l.add(i);
           }
         }
@@ -287,7 +300,7 @@ extension Filter on List<FinalProductModel> {
     if (types.isNotEmpty) {
       for (var f in types) {
         for (var i in this) {
-          if (i.type.toString() == f) {
+          if (i.item.type.toString() == f) {
             l.add(i);
           }
         }
@@ -318,14 +331,14 @@ extension Filter on List<FinalProductModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].hight == nonRepetitive[j].hight &&
-            this[i].width == nonRepetitive[j].width &&
-            this[i].lenth == nonRepetitive[j].lenth &&
-            this[i].color == nonRepetitive[j].color &&
-            this[i].type == nonRepetitive[j].type &&
+        if (this[i].item.H == nonRepetitive[j].item.H &&
+            this[i].item.W == nonRepetitive[j].item.W &&
+            this[i].item.L == nonRepetitive[j].item.L &&
+            this[i].item.color == nonRepetitive[j].item.color &&
+            this[i].item.type == nonRepetitive[j].item.type &&
             this[i].customer == nonRepetitive[j].customer &&
             this[i].scissor == nonRepetitive[j].scissor &&
-            this[i].density == nonRepetitive[j].density) {
+            this[i].item.density == nonRepetitive[j].item.density) {
           repeated = true;
         }
       }
@@ -341,12 +354,12 @@ extension Filter on List<FinalProductModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].hight == nonRepetitive[j].hight &&
-            this[i].width == nonRepetitive[j].width &&
-            this[i].lenth == nonRepetitive[j].lenth &&
-            this[i].color == nonRepetitive[j].color &&
-            this[i].type == nonRepetitive[j].type &&
-            this[i].density == nonRepetitive[j].density) {
+        if (this[i].item.H == nonRepetitive[j].item.H &&
+            this[i].item.W == nonRepetitive[j].item.W &&
+            this[i].item.L == nonRepetitive[j].item.L &&
+            this[i].item.color == nonRepetitive[j].item.color &&
+            this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.density == nonRepetitive[j].item.density) {
           repeated = true;
         }
       }
@@ -362,8 +375,8 @@ extension Filter on List<FinalProductModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].type == nonRepetitive[j].type &&
-            this[i].density == nonRepetitive[j].density) {
+        if (this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.density == nonRepetitive[j].item.density) {
           repeated = true;
         }
       }
@@ -395,11 +408,11 @@ extension Filter on List<FinalProductModel> {
     for (var i = 0; i < length; i++) {
       bool repeated = false;
       for (var j = 0; j < nonRepetitive.length; j++) {
-        if (this[i].density == nonRepetitive[j].density &&
-            this[i].type == nonRepetitive[j].type &&
-            this[i].lenth == nonRepetitive[j].lenth &&
-            this[i].width == nonRepetitive[j].width &&
-            this[i].hight == nonRepetitive[j].hight) {
+        if (this[i].item.density == nonRepetitive[j].item.density &&
+            this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.L == nonRepetitive[j].item.L &&
+            this[i].item.W == nonRepetitive[j].item.W &&
+            this[i].item.H == nonRepetitive[j].item.H) {
           repeated = true;
         }
       }
@@ -603,6 +616,10 @@ extension C3 on List<ActionModel> {
         .first
         .who;
   }
+
+  String get_Who_Of(String action) {
+    return where((element) => element.action == action).first.who;
+  }
   //get fraction date for this action
 
   DateTime get_Date_of_action(String action) {
@@ -632,6 +649,19 @@ extension A1 on List<BlockModel> {
           .toList()
           .sortedBy<num>((element) => element.number)
           .reversed
+          .toList();
+
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+  }
+
+  List<BlockModel> search2(String value) {
+    if (value.isEmpty) {
+      return this;
+    } else {
+      return where((user) => user.number.toString().contains(value))
+          .toList()
+          .sortedBy<num>((element) => element.number)
           .toList();
 
       // we use the toLowerCase() method to make it case-insensitive
@@ -794,9 +824,70 @@ extension A1 on List<BlockModel> {
 }
 
 extension G5 on List<Itme> {
+  List<Itme> filterRepeats() {
+    List<Itme> nonRepetitive = [];
+    for (var i = 0; i < length; i++) {
+      bool repeated = false;
+      for (var j = 0; j < nonRepetitive.length; j++) {
+        if (this[i].L == nonRepetitive[j].L &&
+            this[i].W == nonRepetitive[j].W &&
+            this[i].H == nonRepetitive[j].H &&
+            this[i].color == nonRepetitive[j].color &&
+            this[i].type == nonRepetitive[j].type &&
+            this[i].density == nonRepetitive[j].density) {
+          repeated = true;
+        }
+      }
+      if (!repeated) {
+        nonRepetitive.add(this[i]);
+      }
+    }
+    return nonRepetitive;
+  }
+
+  int countOf(Itme e) {
+    return where((element) =>
+        element.L == e.L &&
+        element.W == e.W &&
+        element.H == e.H &&
+        element.color == e.color &&
+        element.type == e.type &&
+        element.density == e.density).length;
+  }
+
   double volume() {
     return isEmpty
         ? 0
         : map((e) => e.H * e.L * e.W / 1000000).reduce((a, b) => a + b);
+  }
+}
+
+extension R4 on List<StockCheckModel> {
+  List<StockCheckModel> beweenTowDates(int from, int to) {
+    return where((element) =>
+        element.actions
+                .get_Date_of_action(
+                    StockCheckAction.creat_new_StockCheck.getTitle)
+                .formatToInt() >=
+            from &&
+        element.actions
+                .get_Date_of_action(
+                    StockCheckAction.creat_new_StockCheck.getTitle)
+                .formatToInt() <=
+            to).toList();
+  }
+
+  List<StockCheckModel> getIdentCalOf(FinalProdcutBalanceModel e) {
+    return where((element) =>
+            element.item.L == e.L &&
+            element.item.W == e.W &&
+            element.item.H == e.H &&
+            element.item.density == e.density &&
+            element.item.type == e.type &&
+            element.item.color == e.color)
+        .sortedBy<num>((element) => element.actions
+            .get_Date_of_action(StockCheckAction.creat_new_StockCheck.getTitle)
+            .formatToInt())
+        .toList();
   }
 }

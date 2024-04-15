@@ -1,32 +1,33 @@
 // ignore_for_file: non_constant_identifier_names, empty_catches, file_names
-
 import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 
 class BlockFirebasecontroller extends ChangeNotifier {
   get_blocks_data() async {
-    try {
-      // await FirebaseDatabase.instance.ref("blocks").get().then((v) async {
-      //   await getInitialData(v);
-      // });
-      await FirebaseDatabase.instance
-          .ref("blocks")
-          .onValue
-          .first
-          .then((value) async {
-        await getInitialData(value.snapshot);
-      });
+    await FirebaseDatabase.instance
+        .ref("blocks")
+        .onValue
+        .first
+        .then((value) async {
+      await getInitialData(value.snapshot);
+    });
 
-      FirebaseDatabase.instance.ref("blocks").onChildChanged.listen((vv) async {
-        await refrech(vv);
-      });
-    } catch (e) {}
+    FirebaseDatabase.instance.ref("blocks").onChildChanged.listen((vv) {
+      print("onChildChanged");
+      refrech(vv);
+    });
+    // FirebaseDatabase.instance.ref("blocks").onChildAdded.listen((vv) async {
+    //   print("onChildAdded");
+    //   await refrech(vv);
+    // });
   }
 
   getInitialData(DataSnapshot v) async {
@@ -56,8 +57,19 @@ class BlockFirebasecontroller extends ChangeNotifier {
     all.removeWhere((element) => element.Block_Id == newvalue.Block_Id);
     all.add(newvalue);
 //--------------------------------------------------
-
+    // blocks.clear();
+    // blocks.addAll(all.where((element) =>
+    //     element.actions
+    //         .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+    //     false));
+    // archived_blocks.clear();
+    // archived_blocks.addAll(all.where((element) =>
+    //     element.actions
+    //         .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+    //     true));
     blocks.removeWhere((element) => element.Block_Id == newvalue.Block_Id);
+    archived_blocks
+        .removeWhere((element) => element.Block_Id == newvalue.Block_Id);
 
     if (newvalue.actions.block_action_Stutus(BlockAction.archive_block) ==
         false) {
@@ -67,7 +79,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     }
 
     notifyListeners();
-    print("refrech datata of block blocks in listen");
+    print("refrech datata of blocks");
   }
 
   List<BlockModel> all = [];
@@ -86,13 +98,15 @@ class BlockFirebasecontroller extends ChangeNotifier {
   c() {
     // if (all.isNotEmpty) {
     //   for (var element in all) {
-    //     element.item.volume =
-    //         element.item.H * element.item.L * element.item.W / 1000000;
-    //     element.item.wight = element.item.H *
-    //         element.item.L *
-    //         element.item.W *
-    //         element.item.density /
-    //         1000000;
+    // element.item.volume =
+    //     element.item.H * element.item.L * element.item.W / 1000000;
+    // element.item.wight = element.item.H *
+    //     element.item.L *
+    //     element.item.W *
+    //     element.item.density /
+    //     1000000;
+    //     element.notFinals.clear();
+    //     element.fractions.clear();
     //   }
     //   var s = {};
     //   s.addEntries(
@@ -128,6 +142,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
   String searchinconsumed = "";
   String searchin_H = "";
+  String searchin_blockstock = "";
   int amountofView = 5;
   int amountofViewForMinVeiwIn_H = 5;
   bool veiwCuttedAndimpatyNotfinals = false;
@@ -159,24 +174,18 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
   deleteblock(BlockModel block) {
     block.actions.add(BlockAction.archive_block.add);
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
-    } catch (e) {}
+    FirebaseDatabase.instance
+        .ref("blocks/${block.Block_Id}")
+        .set(block.toJson());
   }
 
   undeleteblock(BlockModel block) {
     int index = block.actions.indexWhere((element) =>
         element.action == BlockAction.archive_block.getactionTitle);
     block.actions.removeAt(index);
-
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
-      notifyListeners();
-    } catch (e) {}
+    FirebaseDatabase.instance
+        .ref("blocks/${block.Block_Id}")
+        .set(block.toJson());
   }
 
   consumeblock(BlockModel block, String outto) {
@@ -186,7 +195,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
       FirebaseDatabase.instance
           .ref("blocks/${block.Block_Id}")
           .set(block.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 
@@ -196,35 +204,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
     block.actions.removeAt(index);
     block.actions.add(BlockAction.unconsume_block.add);
 
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
-      notifyListeners();
-    } catch (e) {}
-  }
-
-  finishblock(BlockModel block) {
-    block.actions.add(BlockAction.cut_block_on_H.add);
-
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
-      notifyListeners();
-    } catch (e) {}
-  }
-
-  unfinishblock(BlockModel block) {
-    int index = block.actions.indexWhere((element) =>
-        element.action == BlockAction.cut_block_on_H.getactionTitle);
-    block.actions.removeAt(index);
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
-      notifyListeners();
-    } catch (e) {}
+    FirebaseDatabase.instance
+        .ref("blocks/${block.Block_Id}")
+        .set(block.toJson());
   }
 
   Cut_block({
@@ -241,32 +223,32 @@ class BlockFirebasecontroller extends ChangeNotifier {
       {required BlockModel block, required NotFinal notFinal}) {
     block.notFinals.add(notFinal);
 
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
-      notifyListeners();
-    } catch (e) {}
+    FirebaseDatabase.instance
+        .ref("blocks/${block.Block_Id}")
+        .set(block.toJson());
   }
 
   UnCutBlock_FromH({
+    required BuildContext context,
     required BlockModel block,
   }) {
+    Fractions_Controller fractioncontroller = Fractions_Controller();
+    H1VeiwModel vm = H1VeiwModel();
     int index = block.actions.indexWhere((element) =>
         element.action == BlockAction.cut_block_on_H.getactionTitle);
     block.actions.removeAt(index);
     block.actions.add(BlockAction.UN_cut_block_on_H.add);
 
     block.Hscissor = 0;
-    block.fractions.clear();
+    // clear the fractions
+    vm.getFractinsOFABlock(context, block).forEach((element) {
+      fractioncontroller.deletefractions(element);
+    });
     block.notFinals.clear();
 
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
-      notifyListeners();
-    } catch (e) {}
+    FirebaseDatabase.instance
+        .ref("blocks/${block.Block_Id}")
+        .set(block.toJson());
   }
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz

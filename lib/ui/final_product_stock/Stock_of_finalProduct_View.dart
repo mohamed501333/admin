@@ -8,6 +8,7 @@ import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwModel.dart';
 import 'package:jason_company/ui/recources/color_manager.dart';
 import 'package:jason_company/ui/final_product_stock/Stock_of_finalProduct_ViewModel.dart';
 import 'package:jason_company/ui/final_product_stock/widgets.dart';
@@ -18,27 +19,14 @@ class FinalProductStockView extends StatelessWidget {
   FinalProductStockView({super.key});
 
   stockOfFinalProductsViewModel vm = stockOfFinalProductsViewModel();
+  outOfStockOrderveiwModel vm2 = outOfStockOrderveiwModel();
 
   @override
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
       builder: (context, finalproducts, child) {
-        List<FinalProductModel> scorce = finalproducts.finalproducts
-            .where((e) =>
-                e.actions.if_action_exist(
-                    finalProdcutAction.archive_final_prodcut.getactionTitle) ==
-                false)
-            .where((e) =>
-                e.actions.if_action_exist(finalProdcutAction
-                        .recive_Done_Form_FinalProdcutStock.getactionTitle) ==
-                    true ||
-                e.actions.if_action_exist(finalProdcutAction
-                        .incert_finalProduct_from_Others.getactionTitle) ==
-                    true ||
-                e.actions.if_action_exist(finalProdcutAction.out_order.getactionTitle) ==
-                    true ||
-                e.actions.if_action_exist(finalProdcutAction.createInvoice.getactionTitle) == true)
-            .toList();
+        List<FinalProductModel> scorce =
+            vm2.getfinalprodcuts_recevedFromStock(finalproducts.finalproducts);
         return Scaffold(
           appBar: AppBar(
             actions: [

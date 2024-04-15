@@ -40,12 +40,6 @@ class _H1VeiwState extends State<H1Veiw> {
   Widget build(BuildContext context) {
     return Consumer<BlockFirebasecontroller>(
       builder: (context, b, child) {
-        // List<BlockModel> blocks = b.blocks
-        //     .where((element) =>
-        //         element.actions.if_action_exist(
-        //             BlockAction.consume_block.getactionTitle) ==
-        //         true)
-        //     .toList();
         return Form(
           key: vm.formKey,
           child: Column(
@@ -87,24 +81,6 @@ class _H1VeiwState extends State<H1Veiw> {
               ),
               const SearchForBlockIN_H(),
               NewVeiw(Hscissor: widget.scissor)
-
-              // fields(vm: vm, b: blocks),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //     Results(vm: vm),
-              //     Chips(
-              //       vm: vm,
-              //       b: blocks,
-              //       scissor: widget.scissor,
-              //     ),
-              //     buttoms(
-              //       vm: vm,
-              //       b: blocks,
-              //       scissor: widget.scissor,
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         );
@@ -290,9 +266,7 @@ class buttoms extends StatelessWidget {
     return Column(
       children: [
         ElevatedButton(
-            onPressed: () {
-         
-            },
+            onPressed: () {},
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(

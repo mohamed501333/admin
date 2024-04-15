@@ -27,20 +27,17 @@ class HeaderOftable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Table(
       columnWidths: const {
-        0: FlexColumnWidth(1),
+        0: FlexColumnWidth(.8),
         1: FlexColumnWidth(3),
         2: FlexColumnWidth(3),
         3: FlexColumnWidth(3),
         4: FlexColumnWidth(2),
-        5: FlexColumnWidth(1),
-        6: FlexColumnWidth(1),
-        7: FlexColumnWidth(1),
-        8: FlexColumnWidth(2),
+        5: FlexColumnWidth(.8),
+        6: FlexColumnWidth(.8),
+        7: FlexColumnWidth(.8),
+        8: FlexColumnWidth(2.2),
         9: FlexColumnWidth(1),
-        10: FlexColumnWidth(1),
-        11: FlexColumnWidth(2),
-        12: FlexColumnWidth(.8),
-        13: FlexColumnWidth(.7),
+        10: FlexColumnWidth(.8),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -66,25 +63,16 @@ class HeaderOftable extends StatelessWidget {
                   child: const Center(child: Text('ملاحظات'))),
               Container(
                   padding: const EdgeInsets.all(0),
-                  child: const Center(child: Text('مقص'))),
-              Container(
-                  padding: const EdgeInsets.all(0),
                   child: const Center(child: Text('دور'))),
               Container(
                   padding: const EdgeInsets.all(0),
-                  child: const Center(child: Text('كثافه'))),
+                  child: const Center(child: Text('مقص'))),
               Container(
                   padding: const EdgeInsets.all(4),
                   child: const Center(child: Text('عميل'))),
               Container(
-                  padding: const EdgeInsets.all(0),
-                  child: const Center(child: Text('النوع'))),
-              Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('لون'))),
-              Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Center(child: Center(child: Text('مقاس')))),
+                  child: const Center(child: Center(child: Text('بيان')))),
               Container(
                   padding: const EdgeInsets.all(4),
                   child: const Center(child: Text('عدد'))),
@@ -178,7 +166,7 @@ class DropDdowenFor_scissors extends StatelessWidget {
                     Mytype.initioalFor_Scissors = v;
                     List<int> x = context
                         .read<final_prodcut_controller>()
-                        .initalData
+                        .all
                         .where((element) =>
                             element.actions.if_action_exist(finalProdcutAction
                                     .archive_final_prodcut.getactionTitle) ==
@@ -190,7 +178,7 @@ class DropDdowenFor_scissors extends StatelessWidget {
                                     .formatt() ==
                                 DateTime.now().formatt() &&
                             element.scissor == Mytype.initioalFor_Scissors)
-                        .map((e) => e.stageOfR)
+                        .map((e) => e.stage)
                         .toSet()
                         .toList()
                         .sortedBy<num>((element) => element);
@@ -234,10 +222,11 @@ class Buttoms extends StatelessWidget {
     );
   }
 }
+
 //مقاسات شاذه خارخ الاوردر
 class AddUnregular extends StatelessWidget {
   AddUnregular({super.key});
-  
+
   FinalProductStockViewModel vm = FinalProductStockViewModel();
 
   @override
@@ -437,8 +426,6 @@ class AddUnregular extends StatelessWidget {
   }
 }
 
-
-
 class SearchForSize extends StatelessWidget {
   SearchForSize({super.key});
   FinalProductStockViewModel vm = FinalProductStockViewModel();
@@ -452,12 +439,13 @@ class SearchForSize extends StatelessWidget {
         List<OrderModel> orders = myType.orders
             .where((v) =>
                 v.actions.if_action_exist(OrderAction.order_colosed.getTitle) ==
-                false&&
-                v.actions.if_action_exist(OrderAction.order_aproved_from_calculation.getTitle) ==
-                true&&
-                v.actions.if_action_exist(OrderAction.order_aproved_from_control.getTitle) ==
-                true
-                )
+                    false &&
+                v.actions.if_action_exist(
+                        OrderAction.order_aproved_from_calculation.getTitle) ==
+                    true &&
+                v.actions.if_action_exist(
+                        OrderAction.order_aproved_from_control.getTitle) ==
+                    true)
             .toList()
             .sortedBy<num>((element) => element.serial)
             .reversed

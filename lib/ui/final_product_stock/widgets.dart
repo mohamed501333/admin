@@ -215,7 +215,7 @@ class HistoryOfAdingToStock extends StatelessWidget {
                     .incert_finalProduct_from_Others.getactionTitle) ==
                 true)
             .sortedBy<num>(
-              (element) => element.id,
+              (element) => element.finalProdcut_ID,
             )
             .toList();
         return Scaffold(
@@ -248,21 +248,21 @@ class HistoryOfAdingToStock extends StatelessWidget {
                                     ))),
                             Container(
                                 padding: const EdgeInsets.all(2),
-                                child: Text(user.density.toString())),
+                                child: Text(user.item.density.toString())),
                             Container(
                                 padding: const EdgeInsets.all(2),
                                 child: Text(user.customer.toString())),
                             Container(
                                 padding: const EdgeInsets.all(1),
-                                child: Text(user.type.toString())),
+                                child: Text(user.item.type.toString())),
                             Container(
                                 padding: const EdgeInsets.all(4),
                                 child: Text(
-                                    "${user.hight.removeTrailingZeros}*${user.width.removeTrailingZeros}*${user.lenth.removeTrailingZeros}")),
+                                    "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}")),
                             Container(
                                 padding: const EdgeInsets.all(4),
                                 child: Text(
-                                  user.amount.toString(),
+                                  user.item.amount.toString(),
                                   style: const TextStyle(
                                       color: Color.fromARGB(255, 221, 2, 75)),
                                 )),

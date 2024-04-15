@@ -7,8 +7,10 @@ class ReportsViewModel {
   double total_finalprodut(
       List<FinalProductModel> blocks, FinalProductModel block) {
     return blocks
-        .where((e) => e.density == block.density && e.type == block.type)
-        .map((e) => (e.hight * e.lenth * e.width / 1000000) * e.amount)
+        .where((e) =>
+            e.item.density == block.item.density &&
+            e.item.type == block.item.type)
+        .map((e) => (e.item.H * e.item.L * e.item.W / 1000000) * e.item.amount)
         .reduce((a, b) => a + b);
   }
 
@@ -17,15 +19,15 @@ class ReportsViewModel {
     return finalproducts
         .where(
           (f) =>
-              e.color == f.color &&
+              e.item.color == f.item.color &&
               e.customer == f.customer &&
-              e.density == f.density &&
-              e.hight == f.hight &&
-              e.width == f.width &&
-              e.lenth == f.lenth &&
-              e.type == f.type,
+              e.item.density == f.item.density &&
+              e.item.H == f.item.H &&
+              e.item.W == f.item.W &&
+              e.item.L == f.item.L &&
+              e.item.type == f.item.type,
         )
-        .map((e) => e.amount)
+        .map((e) => e.item.amount)
         .reduce((value, element) => value + element);
   }
 
@@ -34,16 +36,16 @@ class ReportsViewModel {
     return finalproducts
         .where(
           (f) =>
-              e.color == f.color &&
+              e.item.color == f.item.color &&
               e.customer == f.customer &&
-              e.density == f.density &&
-              e.hight == f.hight &&
-              e.width == f.width &&
-              e.lenth == f.lenth &&
+              e.item.density == f.item.density &&
+              e.item.H == f.item.H &&
+              e.item.W == f.item.W &&
+              e.item.L == f.item.L &&
               e.scissor == f.scissor &&
-              e.type == f.type,
+              e.item.type == f.item.type,
         )
-        .map((e) => e.amount)
+        .map((e) => e.item.amount)
         .reduce((value, element) => value + element);
   }
 }

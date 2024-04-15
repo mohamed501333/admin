@@ -162,36 +162,4 @@ class BlocksStockViewModel extends BaseViewModel {
         );
     context.read<SettingController>().inceasenumber();
   }
-
-  double wight_of_fractions(BlockModel block) {
-    return block.fractions.isNotEmpty
-        ? block.fractions
-            .map((e) =>
-                e.item.W * e.item.L * e.item.L * e.item.density / 1000000)
-            .reduce((a, b) => a + b)
-            .removeTrailingZeros
-            .to_double()
-        : 0;
-  }
-
-  double wight_of_notfinal(BlockModel block) {
-    var notfinalsOfBlock = block.notFinals.map((e) => e);
-    return notfinalsOfBlock.isNotEmpty
-        ? notfinalsOfBlock
-            .map((e) => e.wight)
-            .reduce((a, b) => a + b)
-            .removeTrailingZeros
-            .to_double()
-        : 0;
-  }
-
-  double difrence(BlockModel block) {
-    return block.item.wight -
-        wight_of_fractions(block) -
-        wight_of_notfinal(block);
-  }
-
-  double percentage(BlockModel block) {
-    return 100 * wight_of_notfinal(block) / block.item.wight;
-  }
 }

@@ -82,6 +82,7 @@ enum finalProdcutAction {
   recive_Done_Form_FinalProdcutStock,
   incert_finalProduct_from_Others,
   createInvoice,
+  incert_From_StockChekRefresh
 }
 
 extension fsfs on finalProdcutAction {
@@ -122,11 +123,18 @@ extension fsfs on finalProdcutAction {
             action: "createInvoice",
             who: SringsManager.myemail,
             when: DateTime.now());
+      case finalProdcutAction.incert_From_StockChekRefresh:
+        return ActionModel(
+            action: "incert_From_StockChekRefresh",
+            who: SringsManager.myemail,
+            when: DateTime.now());
     }
   }
 
   String get getactionTitle {
     switch (this) {
+      case finalProdcutAction.incert_From_StockChekRefresh:
+        return "incert_From_StockChekRefresh";
       case finalProdcutAction.incert_finalProduct_from_cutingUnit:
         return "incert_finalProduct_from_cutingUnit";
       case finalProdcutAction.out_order:
@@ -251,6 +259,45 @@ extension Xdf5 on InvoiceAction {
         return "creat_invoice";
       case InvoiceAction.archive_invoice:
         return "archive_invoice";
+    }
+  }
+}
+
+enum StockCheckAction {
+  creat_new_StockCheck,
+  refrechDone,
+  archive_StockCheck,
+}
+
+extension DD34 on StockCheckAction {
+  ActionModel get add {
+    switch (this) {
+      case StockCheckAction.creat_new_StockCheck:
+        return ActionModel(
+            action: "creat_new_StockCheck",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case StockCheckAction.archive_StockCheck:
+        return ActionModel(
+            action: "archive_StockCheck",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case StockCheckAction.refrechDone:
+        return ActionModel(
+            action: "refrechDone",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+    }
+  }
+
+  String get getTitle {
+    switch (this) {
+      case StockCheckAction.refrechDone:
+        return "refrechDone";
+      case StockCheckAction.creat_new_StockCheck:
+        return "creat_new_StockCheck";
+      case StockCheckAction.archive_StockCheck:
+        return "archive_StockCheck";
     }
   }
 }
@@ -789,6 +836,9 @@ enum UserPermition {
   show_A1,
   Hide_sizeofblock_formmainviewin_H,
 
+  show_stcokCheck_moldule,
+  can_get_data_of_stcokCheck,
+
   delete_in_finalprodcut_details,
   allow_edit_in_details_finalProdcut,
   allow_edit_in_details_blocks,
@@ -1005,11 +1055,19 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "اخفاء مقاس البلوك فى المقص الراسى");
       case UserPermition.can_get_data_of_subfractions:
         return UserpermitionTittle(tittle: "can_get_data_of_subfractions");
+      case UserPermition.can_get_data_of_stcokCheck:
+        return UserpermitionTittle(tittle: "can_get_data_of_stcokCheck");
+      case UserPermition.show_stcokCheck_moldule:
+        return UserpermitionTittle(tittle: "اظهار موديول الجرد");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_stcokCheck_moldule:
+        return "اظهار موديول الجرد";
+      case UserPermition.can_get_data_of_stcokCheck:
+        return "can_get_data_of_stcokCheck";
       case UserPermition.Hide_sizeofblock_formmainviewin_H:
         return "اخفاء مقاس البلوك فى المقص الراسى";
       case UserPermition.can_get_data_of_subfractions:
@@ -1017,7 +1075,7 @@ extension QQ on UserPermition {
       case UserPermition.can_delete_fractons_cutted_on_R:
         return "امكانية حذف الفرد المقصوصه على الدائرى";
       case UserPermition.show_total_in_finalproduct:
-        return "اخفاء الاجمالى فى وارد المخزن من المقصات";
+        return "اظهار الاجمالى فى وارد المخزن من المقصات";
 
       case UserPermition.incert_underoperation:
         return "ٌRاضافة شغل مرحله اخرى";

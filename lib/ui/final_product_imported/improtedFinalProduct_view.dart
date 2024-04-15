@@ -53,7 +53,7 @@ class _FinalProductViewState extends State<FinalProductView> {
                     ))
                 .permition(
                     context, UserPermition.show_date_in_finalProduct_imported),
-        
+
             // AddUnregular().permition(context,
             //     UserPermition.incert_unregular_in_importedfinal_prodcut),
           ],
@@ -95,28 +95,25 @@ class TheTable extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             reverse: true,
             child: SizedBox(
-              width: 1150,
+              width: 850,
               child: ListView(
                 children: [
                   const HeaderOftable(),
                   Table(
                     columnWidths: const {
-                      0: FlexColumnWidth(1),
+                      0: FlexColumnWidth(.8),
                       1: FlexColumnWidth(3),
                       2: FlexColumnWidth(3),
                       3: FlexColumnWidth(3),
                       4: FlexColumnWidth(2),
-                      5: FlexColumnWidth(1),
-                      6: FlexColumnWidth(1),
-                      7: FlexColumnWidth(1),
-                      8: FlexColumnWidth(2),
+                      5: FlexColumnWidth(.8),
+                      6: FlexColumnWidth(.8),
+                      7: FlexColumnWidth(.8),
+                      8: FlexColumnWidth(2.2),
                       9: FlexColumnWidth(1),
-                      10: FlexColumnWidth(1),
-                      11: FlexColumnWidth(2),
-                      12: FlexColumnWidth(.8),
-                      13: FlexColumnWidth(.7),
+                      10: FlexColumnWidth(.8),
                     },
-                    children: finalproducts.SumTheTOw()
+                    children: finalproducts.finalproducts
                         .where((element) => element.actions.if_action_exist(
                             finalProdcutAction
                                 .incert_finalProduct_from_cutingUnit
@@ -128,17 +125,15 @@ class TheTable extends StatelessWidget {
                                     .getactionTitle)) ==
                             chosenDate)
                         .sortedBy<num>(
-                          (element) => element.id,
+                          (element) => element.finalProdcut_ID,
                         )
                         .map((user) {
                           x++;
                           return TableRow(
                               decoration: BoxDecoration(
-                                color: user.isfinal == false
-                                    ? const Color.fromARGB(255, 139, 3, 24)
-                                    : x % 2 == 0
-                                        ? Colors.teal[50]
-                                        : Colors.amber[50],
+                                color: x % 2 == 0
+                                    ? Colors.teal[50]
+                                    : Colors.amber[50],
                               ),
                               children: [
                                 //المسح
@@ -169,12 +164,10 @@ class TheTable extends StatelessWidget {
                                                     .final_prodcut_DidQalityCheck
                                                     .getactionTitle) ==
                                                 true &&
-                                            user.isfinal == true &&
                                             permitionss(
                                                 context,
                                                 UserPermition
-                                                    .can_aprove_from_recive_from_final_prodcut) &&
-                                            user.isfinal == true
+                                                    .can_aprove_from_recive_from_final_prodcut)
                                         ? showmyAlertDialog2333323242(
                                             context, vm, user, "stock")
                                         : DoNothingAction();
@@ -338,48 +331,58 @@ class TheTable extends StatelessWidget {
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
+                                        child: Text(user.stage.toString()))),
+
+                                Container(
+                                    padding: const EdgeInsets.all(2),
+                                    child: Center(
                                         child: Text(user.scissor.toString()))),
-
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child: Text(user.stageOfR.toString()))),
-
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child: Text(user.density.toString()))),
 
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(user.customer.toString()))),
 
-                                Container(
-                                    padding: const EdgeInsets.all(1),
-                                    child: Center(
-                                        child: Text(user.type.toString()))),
-
-                                Container(
-                                    padding: const EdgeInsets.all(0),
-                                    child: Center(child: Text(user.color))),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}",
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        "${user.item.color} ${user.item.type} ك${user.item.density.removeTrailingZeros}",
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                ),
 
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: Center(
                                       child: Text(
-                                          "${user.hight.removeTrailingZeros}*${user.width.removeTrailingZeros}*${user.lenth.removeTrailingZeros}"),
-                                    )),
-
-                                Container(
-                                    padding: const EdgeInsets.all(4),
-                                    child: Center(
-                                      child: Text(
-                                        user.amount.toString(),
+                                        user.item.amount.toString(),
                                         style: const TextStyle(
                                             color: Color.fromARGB(
                                                 255, 221, 2, 75)),
-                                      ).permition(context, UserPermition.show_total_in_finalproduct),
+                                      ).permition(
+                                          context,
+                                          UserPermition
+                                              .show_total_in_finalproduct),
                                     )),
 
                                 Container(

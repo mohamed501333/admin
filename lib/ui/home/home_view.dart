@@ -197,7 +197,7 @@ class HomeView extends StatelessWidget {
                     ontap: () {
                       context.gonext(context, Stockcheck());
                     },
-                  ).permition(context, UserPermition.not_working),
+                  ).permition(context, UserPermition.show_stcokCheck_moldule),
                 ],
               ),
               Row(

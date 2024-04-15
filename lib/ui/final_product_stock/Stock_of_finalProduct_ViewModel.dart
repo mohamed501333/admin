@@ -19,8 +19,15 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
                 .where((element) => element.customer == e.customer)
                 .toList()
                 .filter_density_type_size()
-                .map((e) => ItemModel(e.density, e.type, e.lenth, e.width,
-                    e.hight, get_total(finalproducts, e), e.customer, e.color))
+                .map((e) => ItemModel(
+                    e.item.density,
+                    e.item.type,
+                    e.item.L,
+                    e.item.W,
+                    e.item.H,
+                    get_total(finalproducts, e),
+                    e.customer,
+                    e.item.color))
                 .toList()))
         .toList();
   }
@@ -29,13 +36,13 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
   get_total(List<FinalProductModel> finalproducts, FinalProductModel e) {
     return finalproducts
         .where((element) =>
-            element.density == e.density &&
+            element.item.density == e.item.density &&
             element.customer == e.customer &&
-            element.type == e.type &&
-            element.width == e.width &&
-            element.hight == e.hight &&
-            element.lenth == e.lenth)
-        .map((e) => e.amount)
+            element.item.type == e.item.type &&
+            element.item.W == e.item.W &&
+            element.item.H == e.item.H &&
+            element.item.L == e.item.L)
+        .map((e) => e.item.amount)
         .reduce((a, b) => a + b);
   }
 
@@ -48,25 +55,32 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
     context
         .read<final_prodcut_controller>()
         .incert_finalProduct_from_Others(FinalProductModel(
-          volume: voluem,
-          whight: voluem * double.parse(densitycontroller.text),
+          block_ID: 0,
+          fraction_ID: 0,
+          sapa_ID: "",
+          sapa_desc: "",
+          subfraction_ID: 0,
+          item: FinalProdcutItme(
+              L: double.parse(lenthcontroller.text),
+              W: double.parse(widthcontroller.text),
+              H: double.parse(hightncontroller.text),
+              density: double.parse(densitycontroller.text),
+              volume: voluem.toStringAsFixed(2).to_double(),
+              theowight: voluem.toStringAsFixed(2).to_double() *
+                  double.parse(densitycontroller.text),
+              realowight: 0.0,
+              color: colercontroller.text,
+              type: typecontroller.text,
+              amount: int.parse(amountcontroller.text),
+              priceforamount: 0.0),
           invoiceNum: 0,
-          price: 0,
           worker: "",
-          stageOfR: 0,
-          isfinal: true,
+          stage: 0,
           notes: notes.text,
           cuting_order_number: 0,
           actions: [],
-          id: DateTime.now().millisecondsSinceEpoch,
-          color: colercontroller.text,
-          density: double.parse(densitycontroller.text),
-          type: typecontroller.text,
-          amount: int.parse(amountcontroller.text),
+          finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
           scissor: int.tryParse(scissorcontroller.text) ?? 0,
-          width: double.parse(widthcontroller.text),
-          lenth: double.parse(lenthcontroller.text),
-          hight: double.parse(hightncontroller.text),
           customer: companycontroller.text,
         ));
   }
@@ -90,25 +104,32 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
       context
           .read<final_prodcut_controller>()
           .incert_finalProduct_from_Others(FinalProductModel(
-            volume: voluem,
-            whight: voluem * itemData.density,
+            block_ID: 0,
+            fraction_ID: 0,
+            sapa_ID: "",
+            sapa_desc: "",
+            subfraction_ID: 0,
+            item: FinalProdcutItme(
+                L: itemData.lenth,
+                W: itemData.width,
+                H: itemData.hight,
+                density: itemData.density,
+                volume: voluem.toStringAsFixed(2).to_double(),
+                theowight:
+                    voluem.toStringAsFixed(2).to_double() * itemData.density,
+                realowight: 0.0,
+                color: itemData.color,
+                type: itemData.type,
+                amount: int.parse(amountcontroller.text),
+                priceforamount: 0.0),
             invoiceNum: 0,
-            price: 0.0,
             worker: "",
-            stageOfR: 0,
-            isfinal: true,
+            stage: 0,
             notes: notes.text,
             cuting_order_number: 0,
             actions: [],
-            id: DateTime.now().millisecondsSinceEpoch,
-            color: itemData.color,
-            density: itemData.density,
-            type: itemData.type,
-            amount: int.parse(amountcontroller.text),
+            finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
             scissor: int.tryParse(scissorcontroller.text) ?? 0,
-            width: itemData.width,
-            lenth: itemData.lenth,
-            hight: itemData.hight,
             customer: headerData.name,
           ));
       clearfields();

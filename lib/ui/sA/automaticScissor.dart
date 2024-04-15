@@ -3,235 +3,392 @@
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:jason_company/ui/sA/conponants.dart';
-import 'package:provider/provider.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/validation.dart';
+import 'package:jason_company/controllers/bSubfractions.dart';
+import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:jason_company/ui/commen/textformfield.dart';
+import 'package:jason_company/ui/final_product_imported/Widgets.dart';
+import 'package:jason_company/ui/sA/Ascissor_Viewmodel.dart';
+import 'package:jason_company/ui/sA/conponants.dart';
+import 'package:jason_company/ui/sR/Rscissor_view.dart';
+import 'package:provider/provider.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
 
 class RVeiw23 extends StatelessWidget {
   RVeiw23({
     super.key,
-    required this.Ascissor, 
+    required this.Ascissor,
   });
   final int Ascissor;
   Rscissor_veiwModel vm = Rscissor_veiwModel();
+  AscissorViewModel vm2 = AscissorViewModel();
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BlockFirebasecontroller>(
-      builder: (context, myType, child) {
-        List<FractionModel> fractions =vm.getFractions_Cutted_On_Ascissor(myType, Ascissor);
-        List<int> AllStages = fractions
-            .map((e) => e.stagenum)
+    return Consumer2<final_prodcut_controller, SubFractions_Controller>(
+      builder:
+          (context, finalprodcutcontroller, subfractionecontroller, child) {
+        List<SubFraction> subfractionsCuttedON_A =
+            vm2.getSubfractions_cuttedOn_A(subfractionecontroller, 1);
+        List<FinalProductModel> finalProdcuts_cuttedON_A = vm2
+            .get_finalprodcuts_cuttedON_A(finalprodcutcontroller.finalproducts);
+        List<int> AllStages = subfractionsCuttedON_A
+            .map((e) => e.Astagenum)
             .toSet()
             .toList()
             .sortedBy<num>((element) => element)
             .reversed
             .toList();
         int lastStage = AllStages.isEmpty ? 0 : AllStages.first;
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(5),
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                    border: Border.all(),
-                    color: const Color.fromARGB(255, 175, 132, 132)),
-                child: const Text(
-                  "      المقص الاونوماتيك      ",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16),
+        return Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  border: Border.all(),
+                  color: const Color.fromARGB(255, 175, 132, 132)),
+              child: const Text(
+                "      المقص الاونوماتيك      ",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              reverse: true,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 2,
+                child: ListView(
+                  children: [
+                    const HeaderOfThable(),
+                    // ازرار الدور
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.add,
+                              size: 40,
+                              color: Color.fromARGB(255, 64, 124, 255),
+                            ))
+                        // .permition(context,
+                        //     UserPermition.Rshow_bottomOFfinalproduct),
+                        ,
+                        IconButton(
+                            onPressed: () {
+                              dialog_CuttSubfractions_ON_A(
+                                  context,
+                                  subfractionecontroller,
+                                  Ascissor,
+                                  lastStage + 1);
+                            },
+                            icon: const Icon(
+                              Icons.add,
+                              size: 40,
+                              color: Color.fromARGB(255, 39, 123, 3),
+                            ))
+                        // .permition(
+                        //     context, UserPermition.Rshow_bottomOFFractions),
+                      ],
+                    ),
+
+                    Column(
+                      children: AllStages.map((stage) => Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(),
+                                color:
+                                    const Color.fromARGB(255, 231, 223, 223)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                //رقم الدور
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * .11,
+                                  child: Center(
+                                      child: Text(
+                                    textAlign: TextAlign.center,
+                                    "$stage",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                                //الوارد
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * .59,
+                                  decoration: const BoxDecoration(
+                                      border: Border.symmetric(
+                                          vertical: BorderSide()),
+                                      color:
+                                          Color.fromARGB(255, 231, 223, 223)),
+                                  child: Center(
+                                      child: Column(
+                                    children: [
+                                      Column(
+                                        children: subfractionsCuttedON_A
+                                            .where((element) =>
+                                                element.Astagenum == stage)
+                                            .toList()
+                                            .filtersubfractions()
+                                            .map((f) => Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    IconButton(
+                                                      onPressed: () {},
+                                                      icon: const Icon(
+                                                        Icons.delete,
+                                                        size: 24,
+                                                      ),
+                                                      color: Colors.red,
+                                                    ),
+                                                    Text(
+                                                        "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
+                                                    Text(
+                                                        "  ${f.item.L.removeTrailingZeros}*${f.item.W.removeTrailingZeros}*${f.item.H.removeTrailingZeros} من "),
+                                                    Text(
+                                                        "${vm2.getSubfractions_cuttedOn_A_OFAstage(subfractionsCuttedON_A, stage).map((e) => e.item).toList().countOf(f.item)} "),
+                                                  ],
+                                                ))
+                                            .toList(),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                              onPressed: () {
+                                                //TODO برمحة زر اضافة سبفراكشن فى الدور
+                                              },
+                                              icon: const Icon(
+                                                Icons.add,
+                                                size: 30,
+                                                color: Colors.deepOrangeAccent,
+                                              ))
+                                        ],
+                                      )
+                                    ],
+                                  )),
+                                ),
+
+                                //الصادر
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * .61,
+                                  decoration: const BoxDecoration(
+                                      border: Border.symmetric(
+                                          vertical: BorderSide()),
+                                      color:
+                                          Color.fromARGB(255, 231, 223, 223)),
+                                  child: Center(
+                                      child: Column(
+                                    children: [
+                                      //انتاج المقص من الممنتد التام
+                                      Column(
+                                        children: finalProdcuts_cuttedON_A
+                                            .where((element) =>
+                                                element.stage == stage)
+                                            .toList()
+                                            .filteronfinalproduct()
+                                            .map((f) => Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                        "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
+                                                    Text(
+                                                        "  ${f.item.L.removeTrailingZeros}*${f.item.W.removeTrailingZeros}*${f.item.H.removeTrailingZeros} من "),
+                                                    Text(
+                                                        "${finalProdcuts_cuttedON_A.countOf(f)} "),
+                                                  ],
+                                                ))
+                                            .toList(),
+                                      ),
+
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                              onPressed: () {
+                                                Rscissor_veiwModel vm =
+                                                    Rscissor_veiwModel();
+
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        contentPadding:
+                                                            EdgeInsets.zero,
+                                                        clipBehavior: Clip
+                                                            .antiAliasWithSaveLayer,
+                                                        title: const Text(
+                                                            'اضافة منتج تام'),
+                                                        content: SizedBox(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          height: 200,
+                                                          child:
+                                                              SingleChildScrollView(
+                                                            child: Form(
+                                                              key: vm.formKey,
+                                                              child: Column(
+                                                                  children: [
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceAround,
+                                                                      children: [
+                                                                        CustomTextFormField(
+                                                                          keybordtupe:
+                                                                              TextInputType.name,
+                                                                          width:
+                                                                              MediaQuery.of(context).size.width * .40,
+                                                                          hint:
+                                                                              "ملاحظات ",
+                                                                          controller:
+                                                                              vm.notes,
+                                                                        ),
+                                                                        Column(
+                                                                          children: [
+                                                                            CustomTextFormField(
+                                                                              width: MediaQuery.of(context).size.width * .23,
+                                                                              hint: "عدد",
+                                                                              controller: vm.amountcontroller,
+                                                                              validator: Validation.validateothers,
+                                                                            ),
+                                                                            const Text(
+                                                                              "من",
+                                                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    SearchForSize(),
+                                                                  ]),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        actions: [
+                                                          ElevatedButton(
+                                                              style: ElevatedButton
+                                                                  .styleFrom(
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .green),
+                                                              onPressed: () {
+                                                                if (vm.formKey
+                                                                    .currentState!
+                                                                    .validate()) {
+                                                                  vm.incert_finalProduct_from_cutingUnit(
+                                                                      context,
+                                                                      stage,
+                                                                      7);
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                }
+                                                              },
+                                                              child: const Text(
+                                                                  'ok')),
+                                                        ],
+                                                      );
+                                                    });
+                                              },
+                                              icon: const Icon(
+                                                Icons.add,
+                                                size: 30,
+                                                color: Colors.deepOrangeAccent,
+                                              ))
+                                        ],
+                                      )
+                                    ],
+                                  )),
+                                ),
+                                // دون التام
+                                // SizedBox(
+                                //   width:
+                                //       MediaQuery.of(context).size.width * .29,
+                                //   child: Center(
+                                //       child: Column(
+                                //     children: [
+                                //       Column(
+                                //         children: fractions
+                                //             .where((element) =>
+                                //                 element.stagenum == e)
+                                //             .expand((s) => s.notfinals)
+                                //             .toList()
+                                //             .filter_notfinals___()
+                                //             .map((f) => Row(
+                                //                   mainAxisAlignment:
+                                //                       MainAxisAlignment.center,
+                                //                   children: [
+                                //                     SizedBox(
+                                //                       width:
+                                //                           MediaQuery.of(context)
+                                //                                   .size
+                                //                                   .width *
+                                //                               .29,
+                                //                       child: Text(
+                                //                         "${f.type} kg ${fractions.where((element) => element.stagenum == e).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).toStringAsFixed(2)}",
+                                //                       ),
+                                //                     ),
+                                //                   ],
+                                //                 ))
+                                //             .toList(),
+                                //       ),
+                                //       Row(
+                                //         mainAxisAlignment:
+                                //             MainAxisAlignment.end,
+                                //         children: [
+                                //           IconButton(
+                                //                   onPressed: () {
+                                //                     dialogOfAddNotFinalToBlock4544(
+                                //                         context,
+                                //                         fractions
+                                //                             .where((element) =>
+                                //                                 element
+                                //                                     .stagenum ==
+                                //                                 e)
+                                //                             .toList());
+                                //                   },
+                                //                   icon: const Icon(
+                                //                     Icons.add,
+                                //                     size: 30,
+                                //                     color:
+                                //                         Colors.deepOrangeAccent,
+                                //                   ))
+                                //               .permition(
+                                //                   context,
+                                //                   UserPermition
+                                //                       .Rshow_bottomOFNotfinl)
+                                //         ],
+                                //       )
+                                //     ],
+                                //   )),
+                                // ),
+                              ].reversed.toList(),
+                            ),
+                          )).toList(),
+                    ),
+                  ],
                 ),
               ),
-              const Header(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        showmyAlertDialog141422(
-                            context, myType, Ascissor, lastStage + 1);
-                      },
-                      icon: const Icon(
-                        Icons.add,
-                        size: 40,
-                        color: Colors.deepOrangeAccent,
-                      ))
-                ],
-              ),
-              Column(
-                children: AllStages.map((e) => Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(),
-                          color: const Color.fromARGB(255, 231, 223, 223)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .11,
-                            child: Center(
-                                child: Text(
-                              textAlign: TextAlign.center,
-                              "$e",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            )),
-                          ),
-                          Container(
-                            // height: 40,
-                            width: MediaQuery.of(context).size.width * .59,
-                            decoration: const BoxDecoration(
-                                border:
-                                    Border.symmetric(vertical: BorderSide()),
-                                color: Color.fromARGB(255, 231, 223, 223)),
-                            child: Center(
-                                child: Column(
-                              children: [
-                                Column(
-                                  children: fractions
-                                      .where((element) => element.stagenum == e)
-                                      .toList()
-                                      .filter_Fractios___()
-                                      .map((f) => Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                  "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
-                                              Text(
-                                                  "  ${f.item.L.removeTrailingZeros}*${f.item.W.removeTrailingZeros}*${f.item.H.removeTrailingZeros} من "),
-                                              Text(
-                                                  "${fractions.where((element) => element.stagenum == f.stagenum && element.item.color == f.item.color && element.item.type == f.item.type && element.item.W == f.item.W && element.item.L == f.item.L && element.item.H == f.item.H).length} "),
-                                            ],
-                                          ))
-                                      .toList(),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          showmyAlertDialog141422(
-                                              context, myType, Ascissor, e);
-                                        },
-                                        icon: const Icon(
-                                          Icons.add,
-                                          size: 30,
-                                          color: Colors.deepOrangeAccent,
-                                        ))
-                                  ],
-                                )
-                              ],
-                            )),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .29,
-                            child: Center(
-                                child: Column(
-                              children: [
-                                Column(
-                                  children: fractions
-                                      .where((element) => element.stagenum == e)
-                                      .expand((s) => s.notfinals)
-                                      .toList()
-                                      .filter_notfinals___()
-                                      .map((f) => Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    .29,
-                                                child: Text(
-                                                  "${f.type} kg ${fractions.where((element) => element.stagenum == e).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).toStringAsFixed(2)}",
-                                                ),
-                                              ),
-                                            ],
-                                          ))
-                                      .toList(),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          dialogOfAddNotFinalToBlock454422(
-                                              context,
-                                              fractions
-                                                  .where((element) =>
-                                                      element.stagenum == e)
-                                                  .toList());
-                                        },
-                                        icon: const Icon(
-                                          Icons.add,
-                                          size: 30,
-                                          color: Colors.deepOrangeAccent,
-                                        ))
-                                  ],
-                                )
-                              ],
-                            )),
-                          ),
-                        ].reversed.toList(),
-                      ),
-                    )).toList(),
-              ),
-            ],
-          ),
+            )),
+          ],
         );
       },
-    );
-  }
-}
-
-class Header extends StatelessWidget {
-  const Header({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width * .11,
-          height: 40,
-          decoration: BoxDecoration(
-              border: Border.all(),
-              color: const Color.fromARGB(255, 170, 164, 164)),
-          child: const Center(
-              child: Text(
-            "الدور",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          )),
-        ),
-        Container(
-          height: 40,
-          width: MediaQuery.of(context).size.width * .60,
-          decoration: BoxDecoration(
-              border: Border.all(),
-              color: const Color.fromARGB(255, 170, 164, 164)),
-          child: const Center(
-              child: Text(" الوارد ",
-                  style: TextStyle(fontWeight: FontWeight.bold))),
-        ),
-        Container(
-          height: 40,
-          width: MediaQuery.of(context).size.width * .29,
-          decoration: BoxDecoration(
-              border: Border.all(),
-              color: const Color.fromARGB(255, 170, 164, 164)),
-          child: const Center(
-              child: Text("دون التام",
-                  style: TextStyle(fontWeight: FontWeight.bold))),
-        ),
-      ].reversed.toList(),
     );
   }
 }

@@ -226,9 +226,9 @@ class EmployeeDataSource extends DataGridSource {
       required this.finalproducts}) {
     _employeeData = employeeData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(columnName: 'نوع', value: e.type),
-              DataGridCell<double>(columnName: 'كثافه', value: e.density),
-              DataGridCell<String>(columnName: 'لون', value: e.color),
+              DataGridCell<String>(columnName: 'نوع', value: e.item.type),
+              DataGridCell<double>(columnName: 'كثافه', value: e.item.density),
+              DataGridCell<String>(columnName: 'لون', value: e.item.color),
               DataGridCell<String>(columnName: 'عميل', value: e.customer),
               DataGridCell<int>(
                   columnName: 'كميه',
@@ -236,7 +236,7 @@ class EmployeeDataSource extends DataGridSource {
               DataGridCell<String>(
                   columnName: 'مقاس',
                   value:
-                      "${e.hight.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.lenth.removeTrailingZeros}"),
+                      "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
             ]))
         .toList();
   }
@@ -368,11 +368,11 @@ class TheTable23 extends StatelessWidget {
                           padding: const EdgeInsets.all(4), child: Text("$x")),
                       Container(
                           padding: const EdgeInsets.all(4),
-                          child: Text(e.density.toString())),
+                          child: Text(e.item.density.toString())),
                       Container(
                           padding: const EdgeInsets.all(4),
                           child: Text(
-                            e.type,
+                            e.item.type,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 221, 2, 75)),
                           )),

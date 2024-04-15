@@ -17,24 +17,19 @@ class outOfStockOrderveiwModel extends BaseViewModel {
     var x = finalproducts;
     return x
         .filter_density_type_size()
-        .where((element) => (element.lenth.removeTrailingZeros +
-                element.width.removeTrailingZeros +
-                element.hight.removeTrailingZeros)
+        .where((element) => (element.item.L.removeTrailingZeros +
+                element.item.W.removeTrailingZeros +
+                element.item.H.removeTrailingZeros)
             .contains(enterkeyword))
         .toList();
   }
 
-//ارجاع اجمالى العدد لكل مقاس
-  get_total(List<FinalProductModel> finalproducts, FinalProductModel e) {
-    return finalproducts
-        .where((element) =>
-            element.density == e.density &&
-            element.type == e.type &&
-            element.width == e.width &&
-            element.hight == e.hight &&
-            element.lenth == e.lenth)
-        .map((e) => e.amount)
-        .reduce((a, b) => a + b);
+  getfinalprodcuts_recevedFromStock(List<FinalProductModel> finalproducts) {
+    finalproducts.removeWhere((element) =>
+        element.actions.if_action_exist(finalProdcutAction
+            .recive_Done_Form_FinalProdcutStock.getactionTitle) ==
+        false);
+    return finalproducts;
   }
 
   //صرف المنتح التام
@@ -42,32 +37,39 @@ class outOfStockOrderveiwModel extends BaseViewModel {
     if (formKey.currentState!.validate() &&
         total > 0 &&
         total >= int.parse(amountcontroller.text)) {
-      double volume = item.width *
-          item.lenth *
-          item.hight *
+      double volume = item.item.W *
+          item.item.L *
+          item.item.H *
           int.parse(amountcontroller.text);
       context
           .read<final_prodcut_controller>()
           .finalProdcut_out_order(FinalProductModel(
-            volume: volume,
-            whight: volume * item.density,
+            block_ID: 0,
+            fraction_ID: 0,
+            sapa_ID: "",
+            sapa_desc: "",
+            subfraction_ID: 0,
+            item: FinalProdcutItme(
+                L: item.item.L,
+                W: item.item.W,
+                H: item.item.H,
+                density: item.item.density,
+                volume: volume.toStringAsFixed(2).to_double(),
+                theowight:
+                    volume.toStringAsFixed(2).to_double() * item.item.density,
+                realowight: 0.0,
+                color: item.item.color,
+                type: item.item.type,
+                amount: -int.parse(amountcontroller.text),
+                priceforamount: 0.0),
             invoiceNum: 0,
-            price: 0.0,
             worker: "",
-            stageOfR: 0,
-            isfinal: true,
+            stage: 0,
             notes: notes.text,
             cuting_order_number: 0,
             actions: [],
-            id: DateTime.now().millisecondsSinceEpoch,
-            color: item.color,
-            density: item.density,
-            type: item.type,
-            amount: -int.parse(amountcontroller.text),
+            finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
             scissor: int.tryParse(scissorcontroller.text) ?? 0,
-            width: item.width,
-            lenth: item.lenth,
-            hight: item.hight,
             customer: item.customer,
           ));
       clearfields();
@@ -91,16 +93,16 @@ class outOfStockOrderveiwModel extends BaseViewModel {
                 false)
             .map((e) => InvoiceItem(
                 price: 0.0,
-                amount: e.amount,
-                lenth: e.lenth,
-                width: e.width,
-                hight: e.hight,
+                amount: e.item.amount,
+                lenth: e.item.L,
+                width: e.item.W,
+                hight: e.item.H,
                 wight: double.parse(
-                        "${e.amount * -1 * e.lenth * e.width * e.hight * e.density / 1000000}")
+                        "${e.item.amount * -1 * e.item.L * e.item.W * e.item.H * e.item.density / 1000000}")
                     .removeTrailingZeros
                     .to_double(),
-                color: e.color,
-                density: e.density,
+                color: e.item.color,
+                density: e.item.density,
                 customer: customerName.text))
             .toList();
         var invoice = Invoice(

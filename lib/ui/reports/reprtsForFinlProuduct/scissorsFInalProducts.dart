@@ -166,9 +166,9 @@ class EmployeeDataSource extends DataGridSource {
       required this.finalproducts}) {
     _employeeData = employeeData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(columnName: 'نوع', value: e.type),
-              DataGridCell<double>(columnName: 'كثافه', value: e.density),
-              DataGridCell<String>(columnName: 'لون', value: e.color),
+              DataGridCell<String>(columnName: 'نوع', value: e.item.type),
+              DataGridCell<double>(columnName: 'كثافه', value: e.item.density),
+              DataGridCell<String>(columnName: 'لون', value: e.item.color),
               DataGridCell<int>(columnName: 'مقص', value: e.scissor),
               DataGridCell<int>(
                   columnName: 'كميه',
@@ -176,7 +176,7 @@ class EmployeeDataSource extends DataGridSource {
               DataGridCell<String>(
                   columnName: 'مقاس',
                   value:
-                      "${e.hight.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.lenth.removeTrailingZeros}"),
+                      "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
             ]))
         .toList();
   }

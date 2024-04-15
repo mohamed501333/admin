@@ -8,22 +8,9 @@ import 'package:jason_company/ui/recources/enums.dart';
 
 class SubFractions_Controller extends ChangeNotifier {
   get_SubFractions_data() async {
-    try {
-      await FirebaseDatabase.instance
-          .ref("subfractions")
-          .onValue
-          .first
-          .then((value) async {
-        await getInitialData(value.snapshot);
-      });
-
-      FirebaseDatabase.instance
-          .ref("subfractions")
-          .onChildChanged
-          .listen((vv) async {
-        await refrech(vv);
-      });
-    } catch (e) {}
+    FirebaseDatabase.instance.ref("subfractions").onValue.listen((event) async {
+      await getInitialData(event.snapshot);
+    });
   }
 
   getInitialData(DataSnapshot v) async {
@@ -43,7 +30,7 @@ class SubFractions_Controller extends ChangeNotifier {
             .if_action_exist(subfractionAction.archive_subfraction.getTitle) ==
         true));
     notifyListeners();
-    print("get initial data of fractions");
+    print("get initial data of subfractions");
   }
 
   refrech(DatabaseEvent vv) async {
@@ -67,7 +54,7 @@ class SubFractions_Controller extends ChangeNotifier {
     }
 
     notifyListeners();
-    print("refrech datata of block blocks in listen");
+    print("refrech datata of subfraction");
   }
 
   List<SubFraction> all = [];
@@ -87,27 +74,26 @@ class SubFractions_Controller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  addSubfractionslist(List<SubFraction> subfractions) async {
+  addSubfractionslist(List<SubFraction> suba) async {
     try {
-      if (all.isNotEmpty) {
-        all.addAll(subfractions);
-        var s = {};
-        s.addEntries(all.map(
-            (el) => MapEntry("${el.subfraction_ID}", el.toJson().toString())));
+      // if (all.isNotEmpty) {
+      all.addAll(suba);
+      var s = {};
+      s.addEntries(all.map(
+          (el) => MapEntry("${el.subfraction_ID}", el.toJson().toString())));
 
-        FirebaseDatabase.instance
-            .ref("subfractions")
-            .set(s)
-            .whenComplete(() => get_SubFractions_data());
-      }
+      FirebaseDatabase.instance.ref("subfractions").set(s);
+      // }
     } catch (e) {}
   }
 
-  deletefraction(SubFraction subfraction) {
+  delete_SUBfraction(SubFraction subfraction) {
     subfraction.actions.add(subfractionAction.archive_subfraction.add);
+    subfraction.Rscissor = 0;
+    subfraction.Rstagenum = 0;
     try {
       FirebaseDatabase.instance
-          .ref("subfractions/${subfraction.fraction_ID}")
+          .ref("subfractions/${subfraction.subfraction_ID}")
           .set(subfraction.toJson());
     } catch (e) {}
   }
@@ -122,6 +108,18 @@ class SubFractions_Controller extends ChangeNotifier {
           .ref("subfractions/${subfraction.subfraction_ID}")
           .set(subfraction.toJson());
       notifyListeners();
+    } catch (e) {}
+  }
+
+  cut_subfractions_on_A(SubFraction subfractionn, int Ascissor, int Astagenum) {
+    subfractionn.Ascissor = Ascissor;
+    subfractionn.Astagenum = Astagenum;
+    subfractionn.underOperation = false;
+    subfractionn.actions.add(subfractionAction.cut_subfraction_on_A.add);
+    try {
+      FirebaseDatabase.instance
+          .ref("subfractions/${subfractionn.subfraction_ID}")
+          .set(subfractionn.toJson());
     } catch (e) {}
   }
 }

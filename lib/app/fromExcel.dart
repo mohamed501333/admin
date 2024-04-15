@@ -70,31 +70,38 @@ class _bulkUploadState extends State<bulkUpload> {
                     context
                         .read<final_prodcut_controller>()
                         .incert_finalProduct_from_Others(FinalProductModel(
-                            id: DateTime.now().microsecondsSinceEpoch +
-                                e[4].toString().to_int(),
-                            color: e[6],
-                            isfinal: true,
-                            density: e[3].toString().to_double(),
-                            type: e[7].toString(),
-                            amount: e[4].toString().to_int(),
+                            block_ID: 0,
+                            fraction_ID: 0,
+                            sapa_ID: "",
+                            sapa_desc: "",
+                            subfraction_ID: 0,
+                            finalProdcut_ID:
+                                DateTime.now().microsecondsSinceEpoch +
+                                    e[4].toString().to_int(),
+                            item: FinalProdcutItme(
+                                L: e[0].toString().to_double(),
+                                W: e[1].toString().to_double(),
+                                H: e[2].toString().to_double(),
+                                density: e[3].toString().to_double(),
+                                volume: e[4].toString().to_double() *
+                                    e[1].toString().to_double() *
+                                    e[0].toString().to_double() *
+                                    e[2].toString().to_double() /
+                                    1000000,
+                                theowight: e[3].toString().to_double() *
+                                    e[4].toString().to_double() *
+                                    e[1].toString().to_double() *
+                                    e[0].toString().to_double() *
+                                    e[2].toString().to_double() /
+                                    1000000,
+                                realowight: 0.0,
+                                color: e[6],
+                                type: e[7].toString(),
+                                amount: e[4].toString().to_int(),
+                                priceforamount: 0.0),
                             scissor: 0,
-                            stageOfR: 0,
+                            stage: 0,
                             invoiceNum: 0,
-                            width: e[1].toString().to_double(),
-                            lenth: e[0].toString().to_double(),
-                            hight: e[2].toString().to_double(),
-                            volume: e[4].toString().to_double() *
-                                e[1].toString().to_double() *
-                                e[0].toString().to_double() *
-                                e[2].toString().to_double() /
-                                1000000,
-                            whight: e[3].toString().to_double() *
-                                e[4].toString().to_double() *
-                                e[1].toString().to_double() *
-                                e[0].toString().to_double() *
-                                e[2].toString().to_double() /
-                                1000000,
-                            price: 0,
                             customer: e[5],
                             worker: "",
                             notes: e[8],

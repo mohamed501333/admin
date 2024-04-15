@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
@@ -134,18 +134,17 @@ class _Report2ForRState extends State<Report2ForR> {
   List<int> allstage(
       List<FractionModel> fractions, List<FinalProductModel> finalProdcuts) {
     List<int> allStages = fractions.map((e) => e.stagenum).toList() +
-        finalProdcuts.map((e) => e.stageOfR).toList();
+        finalProdcuts.map((e) => e.stage).toList();
     return allStages;
   }
 
   List<FractionModel> frac(
       BuildContext context, int scissor, String chosenDate) {
-    List<FractionModel> fractions = context
-        .read<BlockFirebasecontroller>()
-        .blocks
-        .expand((element) => element.fractions)
+    Fractions_Controller fractrioncontroller = Fractions_Controller();
+
+    List<FractionModel> fractions = fractrioncontroller.fractions
         .where((element) =>
-        element.Rscissor==scissor&&
+            element.Rscissor == scissor &&
             element.actions
                     .get_Date_of_action(
                         FractionActon.cut_fraction_OnRscissor.getTitle)
@@ -159,12 +158,12 @@ class _Report2ForRState extends State<Report2ForR> {
       int scissor, BuildContext context, String chosenDate) {
     List<FinalProductModel> finalProdcuts = context
         .read<final_prodcut_controller>()
-        .initalData
+        .finalproducts
         .where((element) =>
             element.actions.if_action_exist(
                     finalProdcutAction.archive_final_prodcut.getactionTitle) ==
                 false &&
-            element.stageOfR != 0 &&
+            element.stage != 0 &&
             element.scissor - 3 == scissor &&
             element.actions
                     .get_Date_of_action(finalProdcutAction
@@ -280,9 +279,9 @@ class Details extends StatelessWidget {
                       Column(
                         children: fractions
                             .where((element) => element.stagenum == k)
-                             .expand((s) => s.notfinals)
-                                      .toList()
-                                      .filter_notfinals___()
+                            .expand((s) => s.notfinals)
+                            .toList()
+                            .filter_notfinals___()
                             .toList()
                             .map((f) => Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -291,9 +290,7 @@ class Details extends StatelessWidget {
                                       width: MediaQuery.of(context).size.width *
                                           .29,
                                       child: Text(
-                                        
-                                        "${f.type} kg ${fractions.where((element) => element.stagenum == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}"
-                                        ,
+                                        "${f.type} kg ${fractions.where((element) => element.stagenum == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
                                       ),
                                     ),
                                   ],
@@ -385,9 +382,9 @@ class Details extends StatelessWidget {
                 //دون التام
                 Column(
                   children: fractions
-                   .expand((s) => s.notfinals)
-                                      .toList()
-                                      .filter_notfinals___()
+                      .expand((s) => s.notfinals)
+                      .toList()
+                      .filter_notfinals___()
                       .toList()
                       .map((f) => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -395,9 +392,7 @@ class Details extends StatelessWidget {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * .29,
                                 child: Text(""
-                                "${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}"
-                                 
-                                ),
+                                    "${f.type} kg ${fractions.expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}"),
                               ),
                             ],
                           ))
@@ -432,8 +427,7 @@ class Details extends StatelessWidget {
                     child: Center(
                       child: Text(
                           "kg "
-                           "${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? 0 : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}"
-                           ,
+                          "${fractions.expand((s) => s.notfinals).map((e) => e.wight).isEmpty ? 0 : fractions.expand((s) => s.notfinals).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}",
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 17)),
                     ),

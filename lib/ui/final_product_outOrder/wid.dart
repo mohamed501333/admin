@@ -150,9 +150,9 @@ class HistoryOfLoaded extends StatelessWidget {
                       4: FlexColumnWidth(2),
                     },
                     children: finalproducts.finalproducts
-                        .where((e) => e.amount < 0)
+                        .where((e) => e.item.amount < 0)
                         .toList()
-                        .sortedBy<num>((element) => element.id)
+                        .sortedBy<num>((element) => element.finalProdcut_ID)
                         .reversed
                         .map((user) {
                       return TableRow(
@@ -178,21 +178,21 @@ class HistoryOfLoaded extends StatelessWidget {
                                     ))),
                             Container(
                                 padding: const EdgeInsets.all(2),
-                                child: Text(user.density.toString())),
+                                child: Text(user.item.density.toString())),
                             Container(
                                 padding: const EdgeInsets.all(2),
                                 child: Text(user.customer.toString())),
                             Container(
                                 padding: const EdgeInsets.all(1),
-                                child: Text(user.type.toString())),
+                                child: Text(user.item.type.toString())),
                             Container(
                                 padding: const EdgeInsets.all(4),
                                 child: Text(
-                                    "${user.hight.removeTrailingZeros}*${user.width.removeTrailingZeros}*${user.lenth.removeTrailingZeros}")),
+                                    "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}")),
                             Container(
                                 padding: const EdgeInsets.all(4),
                                 child: Text(
-                                  user.amount.toString(),
+                                  user.item.amount.toString(),
                                   style: const TextStyle(
                                       color: Color.fromARGB(255, 221, 2, 75)),
                                 )),
@@ -221,12 +221,12 @@ class InvoiceM extends StatelessWidget {
       builder: (context, finalproducts, child) {
         List<FinalProductModel> sorce = finalproducts.finalproducts
             .where((e) =>
-                e.amount < 0 &&
+                e.item.amount < 0 &&
                 e.actions.if_action_exist(
                         finalProdcutAction.createInvoice.getactionTitle) ==
                     false)
             .toList()
-            .sortedBy<num>((element) => element.id)
+            .sortedBy<num>((element) => element.finalProdcut_ID)
             .toList();
         return Scaffold(
           floatingActionButton: FloatingActionButton(
@@ -236,7 +236,7 @@ class InvoiceM extends StatelessWidget {
               vm.addInvoice(
                   context,
                   finalproducts.finalproducts
-                      .where((e) => e.amount < 0)
+                      .where((e) => e.item.amount < 0)
                       .toList());
             },
             child: const Icon(Icons.check, color: Colors.white, size: 28),
@@ -386,21 +386,21 @@ class InvoiceM extends StatelessWidget {
                                       ))),
                               Container(
                                   padding: const EdgeInsets.all(2),
-                                  child: Text(user.density.toString())),
+                                  child: Text(user.item.density.toString())),
                               Container(
                                   padding: const EdgeInsets.all(2),
                                   child: Text(user.customer.toString())),
                               Container(
                                   padding: const EdgeInsets.all(1),
-                                  child: Text(user.type.toString())),
+                                  child: Text(user.item.type.toString())),
                               Container(
                                   padding: const EdgeInsets.all(4),
                                   child: Text(
-                                      "${user.hight.removeTrailingZeros}*${user.width.removeTrailingZeros}*${user.lenth.removeTrailingZeros}")),
+                                      "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}")),
                               Container(
                                   padding: const EdgeInsets.all(4),
                                   child: Text(
-                                    user.amount.toString(),
+                                    user.item.amount.toString(),
                                     style: const TextStyle(
                                         color: Color.fromARGB(255, 221, 2, 75)),
                                   )),

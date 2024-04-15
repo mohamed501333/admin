@@ -29,7 +29,7 @@ class CuttingOrderView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('اوامر التشغيل'),
         actions: [
-            TextButton(
+          TextButton(
               onPressed: () {
                 context.gonext(context, AddNewCuttingOrder());
               },
@@ -47,8 +47,6 @@ class CuttingOrderView extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 )),
               )).permition(context, UserPermition.incert_in_cutting_order),
-       
-      
           IconButton(
               onPressed: () {
                 context.gonext(context, HistoryPage());
@@ -58,10 +56,6 @@ class CuttingOrderView extends StatelessWidget {
       ),
       body: Column(
         children: [
-       
-
-
-
           TheTable001(
             vm: vm,
           )
@@ -167,7 +161,7 @@ class HistoryForOrders extends StatelessWidget {
                   const HeaderOftable001(),
                   Table(
                     columnWidths: const {
-               0: FlexColumnWidth(1),
+                      0: FlexColumnWidth(1),
                       1: FlexColumnWidth(1),
                       2: FlexColumnWidth(3),
                       3: FlexColumnWidth(3),
@@ -198,7 +192,7 @@ class HistoryForOrders extends StatelessWidget {
                                     : Colors.amber[50],
                               ),
                               children: [
-                        //طباعة امر الشغل
+                                //طباعة امر الشغل
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
@@ -229,7 +223,8 @@ class HistoryForOrders extends StatelessWidget {
                                         },
                                         child: const Icon(
                                           Icons.delete,
-                                          color: Color.fromARGB(255, 255, 255, 255),
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255),
                                         ))).permition(context,
                                     UserPermition.can_close_in_cutting_order),
                                 Center(
@@ -237,9 +232,7 @@ class HistoryForOrders extends StatelessWidget {
                                 ),
                                 //موافقة الكنترول
                                 GestureDetector(
-                                  onTap: () {
-                     
-                                  },
+                                  onTap: () {},
                                   child: Container(
                                       padding: const EdgeInsets.all(2),
                                       child: Column(
@@ -279,9 +272,7 @@ class HistoryForOrders extends StatelessWidget {
                                 ),
                                 //موافقة الحسابات
                                 GestureDetector(
-                                  onTap: () {
-                      
-                                  },
+                                  onTap: () {},
                                   child: Container(
                                       padding: const EdgeInsets.all(2),
                                       child: Column(
@@ -362,7 +353,8 @@ class HistoryForOrders extends StatelessWidget {
                                 Center(
                                   child: Container(
                                       padding: const EdgeInsets.only(bottom: 3),
-                                      child: Text(order.dateTOOrder.formatt(),
+                                      child: Text(
+                                        order.dateTOOrder.formatt(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 12,
@@ -423,7 +415,7 @@ class HistoryForOrders extends StatelessWidget {
                                       )
                                       .toList(),
                                 ),
-                                // المتبقى                      
+                                // المتبقى
                                 Column(
                                   children: order.items
                                       .map(
@@ -436,9 +428,14 @@ class HistoryForOrders extends StatelessWidget {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Text((item.Qantity- vm.Total_done_of_cutting_order(
-                                                          context, order, item)).removeTrailingZeros
-                                                 , style: const TextStyle(
+                                                Text(
+                                                  (item.Qantity -
+                                                          vm.Total_done_of_cutting_order(
+                                                              context,
+                                                              order,
+                                                              item))
+                                                      .removeTrailingZeros,
+                                                  style: const TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black,
@@ -632,7 +629,6 @@ class HistoryForOrders extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       )),
                                 ),
-                                
                               ]);
                         })
                         .toList()
@@ -799,33 +795,40 @@ class HeaderOftable00122 extends StatelessWidget {
 }
 
 class AddNewCuttingOrder extends StatelessWidget {
-   AddNewCuttingOrder({super.key});
-    CuttingOrderViewModel vm = CuttingOrderViewModel();
+  AddNewCuttingOrder({super.key});
+  CuttingOrderViewModel vm = CuttingOrderViewModel();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
-      body:    Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Fields001(vm: vm),
-              
-              RowScroll(vm: vm),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Buttoms001(
-                    vm: vm,
-                  ),
-                  Buttoms003(vm: vm),
-                  Buttoms002(vm: vm),
-                ],
-              ),
-            ],
-          ),
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Fields001(vm: vm),
+            RowScroll(vm: vm),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Buttoms001(
+                  vm: vm,
+                ),
+                Buttoms003(vm: vm),
+                Buttoms002(vm: vm),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

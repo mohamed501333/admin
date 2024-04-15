@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
@@ -22,6 +23,14 @@ class H1VeiwModel extends BaseViewModel {
             e.serial == context.read<ObjectBoxController>().serialforH)
         .toList()[0];
     return m;
+  }
+
+  List<FractionModel> getFractinsOFABlock(BuildContext context, BlockModel b) {
+    return context
+        .read<Fractions_Controller>()
+        .fractions
+        .where((element) => element.block_ID == b.Block_Id)
+        .toList();
   }
 
   validate_if_ExistforH(List<BlockModel> b, BuildContext context) {
@@ -173,7 +182,9 @@ class H1VeiwModel extends BaseViewModel {
       } else {
         blockToCutted.Hscissor = scissor;
         blockToCutted.actions.add(BlockAction.cut_block_on_H.add);
-        blockToCutted.fractions.addAll(permanentFractons);
+        context
+            .read<Fractions_Controller>()
+            .addfractionslist(permanentFractons);
 
         await context
             .read<BlockFirebasecontroller>()
@@ -215,4 +226,37 @@ class H1VeiwModel extends BaseViewModel {
 //delete fraction and unfinish block
   void delete(List<FractionModel> fractions, FractionModel fraction,
       BuildContext context) {}
+
+  double wight_of_fractions(BuildContext context, BlockModel block) {
+    var f = getFractinsOFABlock(context, block);
+    return f.isNotEmpty
+        ? f
+            .map((e) =>
+                e.item.W * e.item.L * e.item.L * e.item.density / 1000000)
+            .reduce((a, b) => a + b)
+            .removeTrailingZeros
+            .to_double()
+        : 0;
+  }
+
+  double wight_of_notfinal(BlockModel block) {
+    var notfinalsOfBlock = block.notFinals.map((e) => e);
+    return notfinalsOfBlock.isNotEmpty
+        ? notfinalsOfBlock
+            .map((e) => e.wight)
+            .reduce((a, b) => a + b)
+            .removeTrailingZeros
+            .to_double()
+        : 0;
+  }
+
+  double difrence(BuildContext context, BlockModel block) {
+    return block.item.wight -
+        wight_of_fractions(context, block) -
+        wight_of_notfinal(block);
+  }
+
+  double percentage(BlockModel block) {
+    return 100 * wight_of_notfinal(block) / block.item.wight;
+  }
 }

@@ -11,105 +11,94 @@ import 'package:provider/provider.dart';
 
 class final_prodcut_controller extends ChangeNotifier {
   get_finalProdcut_data(BuildContext context) {
-    print("get data");
+    FirebaseDatabase.instance.ref("finalproducts").onValue.first.then((value) {
+      getInitialData(value.snapshot, context);
+    });
 
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts")
-          .orderByKey()
-          .onValue
-          .listen((event) {
-        finalproducts.clear();
-        initalData.clear();
-        isfinal_false.clear();
-        if (event.snapshot.value != null) {
-          Map<Object?, Object?> map =
-              event.snapshot.value as Map<Object?, Object?>;
-          for (var item in map.values.toList()) {
-            initalData.add(FinalProductModel.fromJson(item.toString()));
-          }
-          finalproducts.addAll(initalData.where((element) =>
-              element.actions.if_action_exist(finalProdcutAction
-                      .archive_final_prodcut.getactionTitle) ==
-                  false &&
-              element.isfinal == true));
-          all.addAll(initalData.where((element) =>
-              element.actions.if_action_exist(finalProdcutAction
-                      .archive_final_prodcut.getactionTitle) ==
-                  false &&
-              element.isfinal == true));
-          //
-          isfinal_false.addAll(initalData.where((element) =>
-              element.actions.if_action_exist(finalProdcutAction
-                      .archive_final_prodcut.getactionTitle) ==
-                  false &&
-              element.isfinal == false));
-        }
-        print("get data of final prodctu");
+    FirebaseDatabase.instance.ref("finalproducts").onChildChanged.listen((vv) {
+      refrech(vv);
+    });
 
-        notifyListeners();
-        context.read<OrderController>().Refrsh_ui();
-      });
-    } catch (e) {}
+    // FirebaseDatabase.instance.ref("finalproducts").onChildAdded.listen((f) {
+    //   refrech(f);
+    // });
   }
 
   c() {
-    // print("5555555");
-    // for (var el in initalData) {
-    //   el = FinalProductModel(
-    //       id: el.id,
-    //       color: el.color,
-    //       isfinal: el.isfinal,
-    //       density: el.density,
-    //       type: el.type,
-    //       amount: el.amount,
-    //       scissor: el.scissor,
-    //       stageOfR: el.stageOfR,
-    //       invoiceNum: el.invoiceNum,
-    //       width: el.width,
-    //       lenth: el.lenth,
-    //       hight: el.hight,
-    //       volume: el.width * el.hight * el.lenth * el.amount / 1000000,
-    //       whight:
-    //           el.density * el.width * el.hight * el.lenth * el.amount / 1000000,
-    //       price: el.price,
-    //       customer: el.customer,
-    //       worker: el.worker,
-    //       notes: el.notes,
-    //       cuting_order_number: el.cuting_order_number,
-    //       actions: el.actions);
+    // if (all.isNotEmpty) {
+    //   for (var element
+    //       in all.where((element) => element.item.type.contains('سوفت'))) {
+    //     element.item.type = "سوفت";
+    //   }
+    //   for (var element
+    //       in all.where((element) => element.item.type.contains('هارد'))) {
+    //     element.item.type = "هارد";
+    //   }
+    //   var s = {};
+    //   s.addEntries(all.map(
+    //       (el) => MapEntry("${el.finalProdcut_ID}", el.toJson().toString())));
 
-    //   FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(el.toJson());
+    //   FirebaseDatabase.instance.ref("finalproducts").set(s);
     // }
   }
 
-  // cd() {
-  //   print("5555555");
-  //   for (var el in finalproducts) {
-  //     while (el.actions
-  //             .where((element) => element.action == "createInvoice")
-  //             .toList()
-  //             .length >=
-  //         2) {
-  //       el.actions.removeWhere((element) => element.action == "createInvoice");
-  //     }
+  getInitialData(DataSnapshot v, BuildContext context) async {
+    all.clear();
+    Archived_finalproducts.clear();
+    finalproducts.clear();
+    for (var item in v.children) {
+      all.add(FinalProductModel.fromJson(item.value.toString()));
+    }
 
-  //     FirebaseDatabase.instance.ref("finalproducts/${el.id}").set(el.toJson());
-  //   }
-  // }
+    finalproducts.addAll(all.where((element) =>
+        element.actions.if_action_exist(
+            finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+        false));
+    Archived_finalproducts.addAll(all.where((element) =>
+        element.actions.if_action_exist(
+            finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+        true));
+    notifyListeners();
+    context.read<OrderController>().Refrsh_ui();
 
-  List<FinalProductModel> finalproducts = [];
+    print("get initial data of finalproduts");
+  }
+
+  refrech(DatabaseEvent vv) async {
+    FinalProductModel newvalue =
+        FinalProductModel.fromJson(vv.snapshot.value as String);
+    print(newvalue);
+
+//--------------------------------------------------
+    all.removeWhere(
+        (element) => element.finalProdcut_ID == newvalue.finalProdcut_ID);
+    all.add(newvalue);
+//--------------------------------------------------
+
+    finalproducts.removeWhere(
+        (element) => element.finalProdcut_ID == newvalue.finalProdcut_ID);
+
+    if (newvalue.actions.if_action_exist(
+            finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+        false) {
+      finalproducts.add(newvalue);
+    } else {
+      Archived_finalproducts.add(newvalue);
+    }
+
+    notifyListeners();
+    print("refresh datata of finalprodcuts");
+  }
+
   List<FinalProductModel> all = [];
-  List<FinalProductModel> search = [];
-  List<FinalProductModel> initalData = [];
-  List<FinalProductModel> isfinal_false = [];
-  List<FinalProductModel> SumTheTOw() => isfinal_false + finalproducts;
+  List<FinalProductModel> finalproducts = [];
+  List<FinalProductModel> Archived_finalproducts = [];
 
   deletefinalProudut(FinalProductModel user) {
     user.actions.add(finalProdcutAction.archive_final_prodcut.add);
     try {
       FirebaseDatabase.instance
-          .ref("finalproducts/${user.id}")
+          .ref("finalproducts/${user.finalProdcut_ID}")
           .set(user.toJson());
       notifyListeners();
     } catch (e) {}
@@ -120,7 +109,9 @@ class final_prodcut_controller extends ChangeNotifier {
       x.invoiceNum = invoiceNum;
       x.actions.add(finalProdcutAction.createInvoice.add);
       try {
-        FirebaseDatabase.instance.ref("finalproducts/${x.id}").set(x.toJson());
+        FirebaseDatabase.instance
+            .ref("finalproducts/${x.finalProdcut_ID}")
+            .set(x.toJson());
       } catch (e) {}
       notifyListeners();
     }
@@ -131,16 +122,15 @@ class final_prodcut_controller extends ChangeNotifier {
 
     try {
       FirebaseDatabase.instance
-          .ref("finalproducts/${user.id}")
+          .ref("finalproducts/${user.finalProdcut_ID}")
           .set(user.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 
   incert_finalProduct_from_cutingUnit(FinalProductModel user) {
     try {
       FirebaseDatabase.instance
-          .ref("finalproducts/${user.id}")
+          .ref("finalproducts/${user.finalProdcut_ID}")
           .set(user.toJson());
     } catch (e) {}
   }
@@ -149,9 +139,16 @@ class final_prodcut_controller extends ChangeNotifier {
     user.actions.add(finalProdcutAction.incert_finalProduct_from_Others.add);
     try {
       FirebaseDatabase.instance
-          .ref("finalproducts/${user.id}")
+          .ref("finalproducts/${user.finalProdcut_ID}")
           .set(user.toJson());
-      notifyListeners();
+    } catch (e) {}
+  }
+
+  incert_finalProduct(FinalProductModel user) {
+    try {
+      FirebaseDatabase.instance
+          .ref("finalproducts/${user.finalProdcut_ID}")
+          .set(user.toJson());
     } catch (e) {}
   }
 
@@ -159,47 +156,48 @@ class final_prodcut_controller extends ChangeNotifier {
     user.actions.add(finalProdcutAction.out_order.add);
     try {
       FirebaseDatabase.instance
-          .ref("finalproducts/${user.id}")
+          .ref("finalproducts/${user.finalProdcut_ID}")
           .set(user.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 
   edit_cell(int id, String cell, String newvalue) {
     FinalProductModel user =
-        finalproducts.where((element) => element.id == id).first;
+        finalproducts.where((element) => element.finalProdcut_ID == id).first;
 
     user.actions.add(ActionModel(
         action: "edit $cell",
         who: FirebaseAuth.instance.currentUser!.email ?? "",
         when: DateTime.now()));
-    cell == "amount" ? user.amount = newvalue.to_int() : DoNothingAction();
-    cell == "type" ? user.type = newvalue : DoNothingAction();
-    cell == "density" ? user.density = newvalue.to_double() : DoNothingAction();
-    cell == "color" ? user.color = newvalue : DoNothingAction();
+    cell == "amount" ? user.item.amount = newvalue.to_int() : DoNothingAction();
+    cell == "type" ? user.item.type = newvalue : DoNothingAction();
+    cell == "density"
+        ? user.item.density = newvalue.to_double()
+        : DoNothingAction();
+    cell == "color" ? user.item.color = newvalue : DoNothingAction();
     cell == "customer" ? user.customer = newvalue : DoNothingAction();
     try {
       FirebaseDatabase.instance
-          .ref("finalproducts/${user.id}")
+          .ref("finalproducts/${user.finalProdcut_ID}")
           .set(user.toJson());
     } catch (e) {}
   }
 
   edit_cell_size(int id, String cell, List<String> newvalue) {
     FinalProductModel user =
-        finalproducts.where((element) => element.id == id).first;
+        finalproducts.where((element) => element.finalProdcut_ID == id).first;
 
     user.actions.add(ActionModel(
         action: "edit $cell",
         who: FirebaseAuth.instance.currentUser!.email ?? "",
         when: DateTime.now()));
-    user.lenth = newvalue[0].to_double();
-    user.width = newvalue[1].to_double();
-    user.hight = newvalue[2].to_double();
+    user.item.L = newvalue[0].to_double();
+    user.item.W = newvalue[1].to_double();
+    user.item.H = newvalue[2].to_double();
 
     try {
       FirebaseDatabase.instance
-          .ref("finalproducts/${user.id}")
+          .ref("finalproducts/${user.finalProdcut_ID}")
           .set(user.toJson());
     } catch (e) {}
   }
@@ -210,9 +208,8 @@ class final_prodcut_controller extends ChangeNotifier {
     user.actions.add(finalProdcutAction.recive_Done_Form_FinalProdcutStock.add);
     try {
       FirebaseDatabase.instance
-          .ref("finalproducts/${user.id}")
+          .ref("finalproducts/${user.finalProdcut_ID}")
           .set(user.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 
@@ -223,6 +220,4 @@ class final_prodcut_controller extends ChangeNotifier {
   List<String> selctedcolors = [];
   List<String> selctedtybes = [];
   List<String> selctedDensities = [];
-//   List<String> filterdedNames = [];
-//   List<String> selctedNames = [];
 }

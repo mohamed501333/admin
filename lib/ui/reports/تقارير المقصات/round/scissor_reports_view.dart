@@ -116,7 +116,6 @@ class _R_Reports_viewState extends State<R_Reports_view> {
                       //     "${fractions.map((e) => e.lenth * e.wedth * e.hight / 1000000).isEmpty ? 0 : fractions.map((e) => e.lenth * e.wedth * e.hight / 1000000).reduce((value, element) => value + element).toStringAsFixed(2)}  :  اجمالى الفرد  م3 "),
                       // Text(
                       //     "${fractions.map((e) => e.lenth * e.wedth * e.hight / 1000000).isEmpty ? 0 : fractions.map((e) => e.density * e.lenth * e.wedth * e.hight / 1000000).reduce((value, element) => value + element).toStringAsFixed(2)}  :  اجمالى الفرد  كج "),
-                   
                     ],
                   ),
                 ),
@@ -145,7 +144,7 @@ class _R_Reports_viewState extends State<R_Reports_view> {
                     title: Column(
                       children: [
                         Text(
-                            "اجمالى المنتج التام م3 : ${context.read<final_prodcut_controller>().finalproducts.where((element) => element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle).formatt() == chosenDate && element.scissor - 3 == context.read<dropDowenContoller>().initioalFor_RScissorsReports).isEmpty ? 0 : context.read<final_prodcut_controller>().finalproducts.where((element) => element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle).formatt() == chosenDate && element.scissor - 3 == context.read<dropDowenContoller>().initioalFor_RScissorsReports).map((e) => e.amount * e.hight * e.lenth * e.width / 1000000).reduce((a, b) => a + b).toStringAsFixed(2)}")
+                            "اجمالى المنتج التام م3 : ${context.read<final_prodcut_controller>().finalproducts.where((element) => element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle).formatt() == chosenDate && element.scissor - 3 == context.read<dropDowenContoller>().initioalFor_RScissorsReports).isEmpty ? 0 : context.read<final_prodcut_controller>().finalproducts.where((element) => element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle).formatt() == chosenDate && element.scissor - 3 == context.read<dropDowenContoller>().initioalFor_RScissorsReports).map((e) => e.item.amount * e.item.H * e.item.L * e.item.W / 1000000).reduce((a, b) => a + b).toStringAsFixed(2)}")
                       ],
                     ),
                     children: context
@@ -185,7 +184,7 @@ class _R_Reports_viewState extends State<R_Reports_view> {
                                     Text(
                                         "عدد ${vm2.totalofSingleSizeOfsingleScissor(e, context.read<final_prodcut_controller>().finalproducts.where((element) => element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle).formatt() == chosenDate && element.scissor - 3 == context.read<dropDowenContoller>().initioalFor_RScissorsReports).toList())}"),
                                     Text(
-                                        "  ${e.lenth.removeTrailingZeros} * ${e.width.removeTrailingZeros} * ${e.hight.removeTrailingZeros}  ${e.type}"),
+                                        "  ${e.item.L.removeTrailingZeros} * ${e.item.W.removeTrailingZeros} * ${e.item.H.removeTrailingZeros}  ${e.item.type}"),
                                   ],
                                 ))
                             .toList(),

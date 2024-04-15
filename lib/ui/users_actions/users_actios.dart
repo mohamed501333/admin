@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
@@ -31,10 +32,8 @@ class _UsersActionsState extends State<UsersActions> {
         .expand((element) => element)
         .toList();
     List<ActionModel> b = context
-        .read<BlockFirebasecontroller>()
-        .all
-        .map((e) => e.fractions)
-        .expand((element) => element)
+        .read<Fractions_Controller>()
+        .fractions
         .map((e) => e.actions)
         .expand((element) => element)
         .toList();
@@ -65,7 +64,7 @@ class _UsersActionsState extends State<UsersActions> {
         .toList();
     List<ActionModel> f = context
         .read<final_prodcut_controller>()
-        .initalData
+        .finalproducts
         .map((e) => e.actions)
         .toList()
         .expand((element) => element)

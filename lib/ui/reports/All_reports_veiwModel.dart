@@ -47,7 +47,7 @@ class AllReportsViewModel {
     ReportsViewModel vm2 = ReportsViewModel();
     List<FinalProductModel> finalProduc = finalProducts
         .where((element) =>
-            element.stageOfR == stage && element.scissor == scissor + 3)
+            element.stage == stage && element.scissor == scissor + 3)
         .toList();
 
     return finalProduc
@@ -55,8 +55,8 @@ class AllReportsViewModel {
         .map((e) => NumAndDescriptionOfFinal(
             total: vm2.totalofSingleSize(e, finalProduc),
             description:
-                "${e.lenth.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.hight.removeTrailingZeros} ${e.color} ${e.type} D${e.density.removeTrailingZeros}",
-            volume: e.hight * e.lenth * e.width / 1000000))
+                "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
+            volume: e.item.H * e.item.L * e.item.W / 1000000))
         .toList();
   }
 
@@ -74,8 +74,8 @@ class AllReportsViewModel {
         .map((e) => NumAndDescriptionOfFinal(
             total: vm2.totalofSingleSize(e, finalProduc),
             description:
-                "${e.lenth.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.hight.removeTrailingZeros} ${e.color} ${e.type} D${e.density.removeTrailingZeros}",
-            volume: e.hight * e.lenth * e.width / 1000000))
+                "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros} ${e.item.color} ${e.item.type} D${e.item.density.removeTrailingZeros}",
+            volume: e.item.H * e.item.L * e.item.W / 1000000))
         .toList();
   }
 }

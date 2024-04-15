@@ -1,24 +1,44 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, non_constant_identifier_names
 
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:jason_company/controllers/stockCheckController.dart';
+import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/commen/buttoms.dart';
+import 'package:jason_company/ui/commen/textformfield.dart';
+import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/stockCheck/Reports.dart';
 import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
 import 'package:provider/provider.dart';
 
 class Stockcheck extends StatelessWidget {
   Stockcheck({super.key});
   TextEditingController textEditingController = TextEditingController();
-  TextStyle style = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+  TextStyle style = const TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+  TextStyle style2 = const TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: Color.fromARGB(255, 7, 11, 255));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Consumer<final_prodcut_controller>(
-        builder: (context, myType, child) {
+      appBar: AppBar(
+        actions: [
+          MyButton1(
+            tittle: "تقارير",
+            onpress: () {
+              context.gonext(context, Report1_stockCheck());
+            },
+          )
+        ],
+      ),
+      body: Consumer2<final_prodcut_controller, StokCheck_Controller>(
+        builder: (context, myType, sstockCheckcontroller, child) {
           Stockcheck_veiwModel vm = Stockcheck_veiwModel();
           List<FinalProdcutBalanceModel> f =
               vm.finalprodctBalance(myType.finalproducts, context);
@@ -28,8 +48,6 @@ class Stockcheck extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-
-                  
                   DropdownButton2<String>(
                       isExpanded: true,
                       hint: Center(
@@ -161,8 +179,6 @@ class Stockcheck extends StatelessWidget {
                           return item.value.toString().contains(searchValue);
                         },
                       )),
-             
-             
                   DropdownButton2<String>(
                       isExpanded: true,
                       hint: Center(
@@ -432,6 +448,7 @@ class Stockcheck extends StatelessWidget {
                       )),
                 ],
               ),
+              //header
               Center(
                 child: IntrinsicHeight(
                     child: Row(
@@ -442,7 +459,7 @@ class Stockcheck extends StatelessWidget {
                           color: Colors.blueGrey, border: Border.all()),
                       child: Center(
                         child: Text(
-                          "المقاس",
+                          "الصنف",
                           style: style,
                         ),
                       ),
@@ -463,59 +480,132 @@ class Stockcheck extends StatelessWidget {
                         child: Text("اخر جرد", style: style),
                       ),
                     ),
-               
                   ].reversed.toList(),
                 )),
               ),
+              //table
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
-                    children: f
-                        .map((e) => Center(
-                              child: IntrinsicHeight(
-                                  child: Row(
+                    children: f.map((e) {
+                      List<StockCheckModel> a =
+                          sstockCheckcontroller.stockChecks.getIdentCalOf(e);
+                      return Center(
+                        child: IntrinsicHeight(
+                            child: Row(
+                          children: [
+                            //البيان
+                            Container(
+                              width: MediaQuery.of(context).size.width * .35,
+                              decoration: BoxDecoration(border: Border.all()),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * .35,
-                                    decoration:
-                                        BoxDecoration(border: Border.all()),
-                                    child: Center(
-                                      child: Text(
-                                        "${e.L.removeTrailingZeros}*${e.W.removeTrailingZeros}*${e.H.removeTrailingZeros}",
-                                        style: style,
-                                      ),
+                                  Center(
+                                    child: Text(
+                                      "${e.H.removeTrailingZeros}*${e.W.removeTrailingZeros}*${e.L.removeTrailingZeros}",
+                                      style: style2,
                                     ),
                                   ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * .20,
-                                    decoration:
-                                        BoxDecoration(border: Border.all()),
-                                    child: Center(
-                                      child: Text(e.quantity.toString(),
-                                          style: style),
+                                  Center(
+                                    child: Text(
+                                      "${e.color} ${e.type} ك${e.density.removeTrailingZeros}",
+                                      style: style,
                                     ),
                                   ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * .4,
-                                    decoration:
-                                        BoxDecoration(border: Border.all()),
-                                    child: Center(
-                                      child: Column(
-                                        children: [
-                                          IconButton(onPressed: (){}, icon: const Icon(color: Colors.red,Icons.add)),
-                                        ],
-                                      ),
-                                    ),
+                                ],
+                              ),
+                            ),
+                            //الكميه
+                            Container(
+                              width: MediaQuery.of(context).size.width * .20,
+                              decoration: BoxDecoration(border: Border.all()),
+                              child: Column(
+                                children: [
+                                  Center(
+                                    child: Text(e.quantity.toString(),
+                                        style: style),
                                   ),
-                            
-                               
-                                ].reversed.toList(),
-                              )),
-                            ))
-                        .toList(),
+                                  IconButton(
+                                      onPressed: () {
+                                        diaog_amountIN_StockCheck(context, e);
+                                      },
+                                      icon: const Icon(
+                                          color: Colors.red, Icons.add)),
+                                ],
+                              ),
+                            ),
+                            //اخر جرد
+                            Container(
+                              width: MediaQuery.of(context).size.width * .4,
+                              decoration: BoxDecoration(border: Border.all()),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    a.isEmpty
+                                        ? const SizedBox()
+                                        : Column(
+                                            children: [
+                                              Text(a.last.actions.get_Who_Of(
+                                                  StockCheckAction
+                                                      .creat_new_StockCheck
+                                                      .getTitle)),
+                                              Text(a.last.actions
+                                                  .get_Date_of_action(
+                                                      StockCheckAction
+                                                          .creat_new_StockCheck
+                                                          .getTitle)
+                                                  .formatt2()),
+                                              Text(
+                                                  "الرصيد الدفترى: ${a.last.item.quantity}"),
+                                              Text(
+                                                  "الرصيد الفعلى: ${a.last.realamont}"),
+                                              if (a.last.item.quantity -
+                                                      a.last.realamont >
+                                                  0)
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    const Text(' : فرق '),
+                                                    Text(
+                                                      '${(a.last.item.quantity - a.last.realamont) * -1}',
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.red),
+                                                    ),
+                                                  ].reversed.toList(),
+                                                )
+                                              else if (a.last.item.quantity -
+                                                      a.last.realamont <
+                                                  0)
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    const Text(' : زياده '),
+                                                    Text(
+                                                      '${a.last.item.quantity - a.last.realamont * -1}',
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Color.fromARGB(
+                                                              255, 1, 94, 1)),
+                                                    ),
+                                                  ].reversed.toList(),
+                                                ),
+                                            ],
+                                          ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ].reversed.toList(),
+                        )),
+                      );
+                    }).toList(),
                   ),
                 ),
               )
@@ -525,4 +615,76 @@ class Stockcheck extends StatelessWidget {
       ),
     );
   }
+}
+
+diaog_amountIN_StockCheck(BuildContext context, FinalProdcutBalanceModel e) {
+  Stockcheck_veiwModel vm = Stockcheck_veiwModel();
+  return showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+            title: const Text("جرد جديد"),
+            scrollable: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            content: SizedBox(
+              height: 160,
+              child: SingleChildScrollView(
+                child: Form(
+                  key: vm.formKey,
+                  child: Column(
+                    children: [
+                      CustomTextFormField(
+                          validator: Validation.validateIFimpty,
+                          hint: "الكميه الفعليه",
+                          width: 120,
+                          controller: vm.amountcontroller),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.red)),
+                                onPressed: () {
+                                  if (vm.validate()) {
+                                    Navigator.pop(context);
+                                    context
+                                        .read<StokCheck_Controller>()
+                                        .addNewStockCheck(StockCheckModel(
+                                            stockCheck_ID: DateTime.now()
+                                                .microsecondsSinceEpoch,
+                                            item: e,
+                                            realamont: vm.amountcontroller.text
+                                                .to_int(),
+                                            actions: [
+                                              StockCheckAction
+                                                  .creat_new_StockCheck.add
+                                            ]));
+                                    vm.amountcontroller.clear();
+                                  }
+                                },
+                                child: const Text('تم')),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.blue)),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('الغاء')),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ));
 }

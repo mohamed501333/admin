@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/reports_viewmoder.dart';
@@ -65,15 +66,16 @@ class PdfBlockReport123456 {
 
 table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
     String chosenDate) {
+  Fractions_Controller fractrioncontroller = Fractions_Controller();
+
   //fractions
-  List<FractionModel> fractions = b
-      .expand((element) => element.fractions)
+  List<FractionModel> fractions = fractrioncontroller.fractions
       .where((element) =>
           element.actions
-                  .get_Date_of_action(
-                      FractionActon.cut_fraction_OnRscissor.getTitle)
-                  .formatt() ==
-              chosenDate)
+              .get_Date_of_action(
+                  FractionActon.cut_fraction_OnRscissor.getTitle)
+              .formatt() ==
+          chosenDate)
       .toList();
 //notfinals
 
@@ -111,7 +113,7 @@ table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
                       .formatt() ==
                   chosenDate &&
               element.scissor == s)
-          .map((e) => e.amount * e.hight * e.lenth * e.width / 1000000)
+          .map((e) => e.item.amount * e.item.H * e.item.L * e.item.W / 1000000)
           .reduce((a, b) => a + b)
           .toStringAsFixed(1)
           .to_double();
@@ -189,8 +191,7 @@ table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
         decoration: BoxDecoration(border: Border.all()),
         child: Center(
             child: Text(
-                 "${fractions.map((e) => e.item.L * e.item.W * e.item. H/ 1000000).isEmpty ? 0 : fractions.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg"
-                )),
+                "${fractions.map((e) => e.item.L * e.item.W * e.item.H / 1000000).isEmpty ? 0 : fractions.map((e) => e.notfinals).expand((element) => element.map((e) => e.wight)).reduce((a, b) => a + b).toStringAsFixed(1)} kg")),
       ),
     ]),
     Row(children: [
@@ -247,8 +248,7 @@ table0(List<BlockModel> b, List<FinalProductModel> finalproducts, int s,
     //                           style: const TextStyle(fontSize: 10)))),
     //             ])))
     //         .toList()),
-   
-   
+
     table2(finalproducts, s)
   ]);
 }
@@ -302,9 +302,9 @@ table2(List<FinalProductModel> finalproducts, int s) {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                 Text(
-                                    " ${e.lenth.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.hight.removeTrailingZeros}"),
+                                    " ${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
                                 Text(
-                                    " ${e.color} ${e.type} ك${e.density.removeTrailingZeros}   "),
+                                    " ${e.item.color} ${e.item.type} ك${e.item.density.removeTrailingZeros}   "),
                               ]))),
                       Container(
                           padding: const EdgeInsets.all(0),

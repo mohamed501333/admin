@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
@@ -9,6 +10,8 @@ import 'package:pdf/widgets.dart';
 class PdfForAllOfH {
   static Future<Document> generate(
       sissor, List<BlockModel> b, chosenDate) async {
+    Fractions_Controller fractrioncontroller = Fractions_Controller();
+
     var data = await rootBundle.load("assets/fonts/HacenTunisia.ttf");
     var blocks = b
         .where((element) =>
@@ -32,8 +35,7 @@ class PdfForAllOfH {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         build: (context) {
-          List<FractionModel> fractions =
-              blocks.expand((element) => element.fractions).toList();
+          List<FractionModel> fractions = fractrioncontroller.fractions;
 
           return [
             SizedBox(height: 10),
@@ -55,6 +57,8 @@ class PdfForAllOfH {
 }
 
 table0(List<BlockModel> a, String chosenDate) {
+  Fractions_Controller fractrioncontroller = Fractions_Controller();
+
   List<NotFinal> notfinals = a.expand((element) => element.notFinals).toList();
   scissor_viewmodel vm = scissor_viewmodel();
   double totalblockvolume =
@@ -65,12 +69,10 @@ table0(List<BlockModel> a, String chosenDate) {
               .reduce((value, element) => value + element)
               .toStringAsFixed(1)
               .to_double();
-  double totlresultsvolume = a.expand((e) => e.fractions).isEmpty
+  double totlresultsvolume = fractrioncontroller.fractions.isEmpty
       ? 0
-      : a
-          .map((e) => e.fractions)
-          .expand((element) =>
-              element.map((e) => e.item.L * e.item.W * e.item.H / 1000000))
+      : fractrioncontroller.fractions
+          .map((e) => e.item.L * e.item.W * e.item.H / 1000000)
           .reduce((a, b) => a + b)
           .toStringAsFixed(1)
           .to_double();
@@ -82,12 +84,10 @@ table0(List<BlockModel> a, String chosenDate) {
       : a
           .map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)
           .reduce((value, element) => value + element);
-  double resultewt = a.expand((e) => e.fractions).toList().isEmpty
+  double resultewt = fractrioncontroller.fractions.isEmpty
       ? 0
-      : a
-          .map((e) => e.fractions)
-          .expand((element) => element.map(
-              (e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000))
+      : fractrioncontroller.fractions
+          .map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)
           .reduce((a, b) => a + b);
   double diffrenceofwt = bolckswt - resultewt;
 
@@ -347,9 +347,10 @@ table2(List<FractionModel> fractions) {
 }
 
 table3(List<BlockModel> a) {
+  Fractions_Controller fractrioncontroller = Fractions_Controller();
+
   scissor_viewmodel vm = scissor_viewmodel();
-  List<FractionModel> fractions =
-      a.expand((element) => element.fractions).toList();
+  List<FractionModel> fractions = fractrioncontroller.fractions;
 
   return SizedBox(
       width: 210,
@@ -423,9 +424,10 @@ table3(List<BlockModel> a) {
 }
 
 table4(List<BlockModel> a) {
+  Fractions_Controller fractrioncontroller = Fractions_Controller();
+
   scissor_viewmodel vm = scissor_viewmodel();
-  List<FractionModel> fractions =
-      a.expand((element) => element.fractions).toList();
+  List<FractionModel> fractions = fractrioncontroller.fractions;
 
   return SizedBox(
       width: 210,

@@ -3,6 +3,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
@@ -71,11 +72,12 @@ class Report10View extends StatelessWidget {
 
   List<Itme> allUnderOperationOfFirstPeriod(List<BlockModel> allblocks,
       SettingController myType, BuildContext context) {
+    Fractions_Controller fractrioncontroller = Fractions_Controller();
+
     //---------------------------------------------------------------------------
     List<FractionModel>
         fractionsUnderOperation = //رصيد اول المده من تحت التشغيل
-        allblocks
-            .expand((r) => r.fractions)
+        fractrioncontroller.fractions
             .where((element) => element.underOperation == true)
             .toList()
             .ReturnFirstPiriodBalanceOFUnderoperationFractons(
@@ -155,17 +157,17 @@ class DetailsOfFinlProdcuts extends StatelessWidget {
             border: TableBorder.all(),
             children: finalproductsBetweenTowDates
                 .filteronfinalproduct()
-                .sortedBy<num>((element) => element.density)
+                .sortedBy<num>((element) => element.item.density)
                 .map((e) => TableRow(children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                               textDirection: TextDirection.rtl,
-                              "      ${e.color} ${e.type} ك ${e.density.removeTrailingZeros}"),
+                              "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
                           Text(
                               textDirection: TextDirection.rtl,
-                              "${e.lenth.removeTrailingZeros}*${e.width.removeTrailingZeros}*${e.hight.removeTrailingZeros}"),
+                              "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
                         ],
                       ),
                       Center(
@@ -352,7 +354,7 @@ class TableOfTotals extends StatelessWidget {
                 ),
                 Center(
                     child: Text(
-                        "${finalproductsBetweenTowDates.isEmpty ? 0 : finalproductsBetweenTowDates.map((e) => e.amount * e.lenth * e.width * e.hight / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)}")),
+                        "${finalproductsBetweenTowDates.isEmpty ? 0 : finalproductsBetweenTowDates.map((e) => e.item.amount * e.item.L * e.item.W * e.item.H / 1000000).reduce((a, b) => a + b).toStringAsFixed(1)}")),
               ].reversed.toList()),
               TableRow(
                   children: [

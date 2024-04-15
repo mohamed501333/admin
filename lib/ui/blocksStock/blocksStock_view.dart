@@ -149,6 +149,7 @@ class BlocksStock extends StatelessWidget {
                                   ].reversed.toList(),
                                 ),
                               ),
+                              const SearchForBlockIN_Blcokstock(),
                               ElevatedButton(
                                   onPressed: () {
                                     if (vm.formKey.currentState!.validate() &&
@@ -221,8 +222,7 @@ class Buttoms extends StatelessWidget {
         ),
         IconButton(
             onPressed: () {
-              context
-                  .read<BlockFirebasecontroller>();
+              context.read<BlockFirebasecontroller>();
               context.read<BlockFirebasecontroller>().Refresh_the_UI();
             },
             icon: const Icon(Icons.search)),
@@ -417,42 +417,38 @@ class TheTable extends StatelessWidget {
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
-              width: 1300,
+              width: 900,
               child: ListView(
                 children: [
                   const HeaderOftable1(),
                   Table(
                     columnWidths: const {
                       0: FlexColumnWidth(.8),
-                      1: FlexColumnWidth(1.2),
-                      2: FlexColumnWidth(1.2),
-                      3: FlexColumnWidth(1),
-                      4: FlexColumnWidth(3),
-                      5: FlexColumnWidth(3),
+                      1: FlexColumnWidth(3),
+                      2: FlexColumnWidth(3),
+                      3: FlexColumnWidth(3),
+                      4: FlexColumnWidth(1),
+                      5: FlexColumnWidth(1),
                       6: FlexColumnWidth(1),
-                      7: FlexColumnWidth(1),
-                      8: FlexColumnWidth(1),
-                      9: FlexColumnWidth(1.6),
-                      10: FlexColumnWidth(.7),
-                      11: FlexColumnWidth(.7),
-                      12: FlexColumnWidth(1),
-                      13: FlexColumnWidth(1),
-                      14: FlexColumnWidth(1.8),
-                      15: FlexColumnWidth(.8),
-                      16: FlexColumnWidth(.8),
+                      7: FlexColumnWidth(2.8),
+                      8: FlexColumnWidth(2.8),
+                      9: FlexColumnWidth(1),
                     },
-                    children: blocks.search.reversed
+                    children: blocks.blocks.reversed
                         .sortedBy<num>((element) => element.Block_Id)
                         .reversed
+                        .toList()
+                        .search2(blocks.searchin_blockstock)
                         .take(context
                             .read<SettingController>()
                             .amountofshowinaddBlock)
                         .toList()
                         .reversed
+                        .toList()
                         .map((user) {
                           return TableRow(
                               decoration: BoxDecoration(
-                                color: blocks.search
+                                color: blocks.blocks
                                                 .sortedBy<num>((element) =>
                                                     element.Block_Id)
                                                 .indexOf(user) %
@@ -462,38 +458,73 @@ class TheTable extends StatelessWidget {
                                     : Colors.amber[50],
                               ),
                               children: [
+                                //الحذف
                                 Container(
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
                                         onTap: () {
-                                          if (user.actions.if_action_exist(
-                                                  BlockAction.cut_block_on_H
-                                                      .getactionTitle) ==
-                                              false) {
-                                            context
-                                                .read<BlockFirebasecontroller>()
-                                                .deleteblock(user);
-                                          }
+                                          showDialog(
+                                              context: context,
+                                              builder: (_) => AlertDialog(
+                                                    scrollable: true,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                    ),
+                                                    content: SizedBox(
+                                                      height: 50,
+                                                      child:
+                                                          SingleChildScrollView(
+                                                        child: Column(
+                                                          children: [
+                                                            //buttons
+                                                            Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  child: ElevatedButton(
+                                                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+                                                                      onPressed: () {
+                                                                        if (user.actions.if_action_exist(BlockAction.cut_block_on_H.getactionTitle) ==
+                                                                            false) {
+                                                                          context
+                                                                              .read<BlockFirebasecontroller>()
+                                                                              .deleteblock(user);
+                                                                        }
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      child: const Text('حذف')),
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                Expanded(
+                                                                  child: ElevatedButton(
+                                                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                                                                      onPressed: () {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      child: const Text('الغاء')),
+                                                                ),
+                                                              ],
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ));
                                         },
                                         child: const Icon(
                                           Icons.delete,
                                           color: Colors.red,
                                         ))),
+
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(child: Text(user.notes))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child: Text(vm
-                                            .wight_of_notfinal(user)
-                                            .removeTrailingZeros))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child: Text(vm
-                                            .wight_of_fractions(user)
-                                            .removeTrailingZeros))),
                                 Column(
                                   children: [
                                     Container(
@@ -566,63 +597,64 @@ class TheTable extends StatelessWidget {
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(user.Hscissor.toString()))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(
-                                        user.serial.toString(),
-                                        style: const TextStyle(fontSize: 14),
-                                      ),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(user.item.type.toString(),
-                                          style: const TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w600)),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(
-                                        user.item.density.toString(),
+
+                                //البيان
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}",
                                         style: const TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w400),
+                                            fontWeight: FontWeight.w500),
                                       ),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child:
-                                            Text(user.item.color.toString()))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child:
-                                            Text(user.item.wight.toString()))),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(
-                                          "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}"),
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                      child: Text(
-                                        user.number.toString(),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        "${user.item.color} ${user.item.type} ك${user.item.density.removeTrailingZeros}",
                                         style: const TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 221, 2, 75)),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
                                       ),
+                                    ],
+                                  ),
+                                ),
+                                //الرقم و الكود
+                                Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 9),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          user.number.toString(),
+                                          style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 221, 2, 75)),
+                                        ),
+                                        Text(
+                                          user.serial.toString(),
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
                                     )),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(
                                         child: Text(
-                                            "${1 + blocks.search.sortedBy<num>((element) => element.Block_Id).indexOf(user)}"))),
+                                            "${blocks.blocks.indexOf(user) + 1}"))),
                               ]);
                         })
                         .toList()
@@ -666,87 +698,102 @@ class ArchivedTheTable extends StatelessWidget {
       children: [
         Consumer<BlockFirebasecontroller>(
           builder: (context, blocks, child) {
+            var b = blocks.archived_blocks.reversed
+                .sortedBy<num>((element) => element.actions
+                    .get_Date_of_action(
+                        BlockAction.archive_block.getactionTitle)
+                    .microsecondsSinceEpoch)
+                .reversed
+                .toList();
             return Expanded(
               flex: 4,
               child: SingleChildScrollView(
                 reverse: true,
                 scrollDirection: Axis.horizontal,
                 child: SizedBox(
-                  width: 1300,
+                  width: 900,
                   child: ListView(
                     children: [
                       const HeaderOftable1(),
                       Table(
                         columnWidths: const {
-                          0: FlexColumnWidth(.8),
-                          1: FlexColumnWidth(1.2),
-                          2: FlexColumnWidth(1.2),
-                          3: FlexColumnWidth(1),
-                          4: FlexColumnWidth(3),
-                          5: FlexColumnWidth(3),
+                          0: FlexColumnWidth(3),
+                          1: FlexColumnWidth(3),
+                          2: FlexColumnWidth(3),
+                          3: FlexColumnWidth(3),
+                          4: FlexColumnWidth(1),
+                          5: FlexColumnWidth(1),
                           6: FlexColumnWidth(1),
-                          7: FlexColumnWidth(1),
-                          8: FlexColumnWidth(1),
-                          9: FlexColumnWidth(1.6),
-                          10: FlexColumnWidth(.7),
-                          11: FlexColumnWidth(.7),
-                          12: FlexColumnWidth(1),
-                          13: FlexColumnWidth(1),
-                          14: FlexColumnWidth(1.8),
-                          15: FlexColumnWidth(.8),
-                          16: FlexColumnWidth(.8),
+                          7: FlexColumnWidth(2.8),
+                          8: FlexColumnWidth(2.8),
+                          9: FlexColumnWidth(1),
                         },
-                        children: blocks.search.reversed
-                            .sortedBy<num>((element) => element.actions
-                                .get_Date_of_action(
-                                    BlockAction.archive_block.getactionTitle)
-                                .millisecondsSinceEpoch)
-                            .reversed
+                        children: b
                             .take(context
                                 .read<SettingController>()
                                 .amountofshowinaddBlock)
                             .toList()
+                            .reversed
                             .map((user) {
                               return TableRow(
                                   decoration: BoxDecoration(
-                                    color: blocks.search
-                                                    .sortedBy<num>((element) =>
-                                                        element.Block_Id)
-                                                    .indexOf(user) %
-                                                2 ==
-                                            0
-                                        ? Colors.blue[50]
-                                        : Colors.amber[50],
+                                    color:
+                                        b.reversed.toList().indexOf(user) % 2 ==
+                                                0
+                                            ? Colors.blue[50]
+                                            : Colors.amber[50],
                                   ),
                                   children: [
-                                    Container(
-                                        padding: const EdgeInsets.all(4),
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              context
-                                                  .read<
-                                                      BlockFirebasecontroller>()
-                                                  .undeleteblock(user);
-                                            },
-                                            child: const Icon(
-                                              Icons.delete,
-                                              color: Colors.red,
-                                            ))),
+                                    Column(
+                                      children: [
+                                        Container(
+                                            padding: const EdgeInsets.all(4),
+                                            child: GestureDetector(
+                                                onTap: () {
+                                                  context
+                                                      .read<
+                                                          BlockFirebasecontroller>()
+                                                      .undeleteblock(user);
+                                                },
+                                                child: const Icon(
+                                                  Icons.unarchive_sharp,
+                                                  color: Colors.red,
+                                                ))),
+                                        Container(
+                                            padding: const EdgeInsets.all(2),
+                                            child: Icon(user.actions
+                                                    .if_action_exist(BlockAction
+                                                        .archive_block
+                                                        .getactionTitle)
+                                                ? Icons.check
+                                                : Icons.close)),
+                                        user.actions.if_action_exist(BlockAction
+                                                .archive_block.getactionTitle)
+                                            ? Text(DateFormat(
+                                                    'dd-MM-yy/hh:mm a')
+                                                .format(user.actions
+                                                    .get_Date_of_action(
+                                                        BlockAction
+                                                            .archive_block
+                                                            .getactionTitle))
+                                                .toString()
+                                                .toString()
+                                                .toString())
+                                            : const SizedBox(),
+                                        user.actions.if_action_exist(BlockAction
+                                                    .archive_block
+                                                    .getactionTitle) ==
+                                                true
+                                            ? Text(user.actions
+                                                .get_block_Who_Of(
+                                                    BlockAction.archive_block))
+                                            : const SizedBox(),
+                                      ],
+                                    ),
+
                                     Container(
                                         padding: const EdgeInsets.all(2),
                                         child: Center(child: Text(user.notes))),
-                                    Container(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Center(
-                                            child: Text(vm
-                                                .wight_of_notfinal(user)
-                                                .removeTrailingZeros))),
-                                    Container(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Center(
-                                            child: Text(vm
-                                                .wight_of_fractions(user)
-                                                .removeTrailingZeros))),
                                     Column(
                                       children: [
                                         Container(
@@ -827,64 +874,64 @@ class ArchivedTheTable extends StatelessWidget {
                                         child: Center(
                                             child: Text(
                                                 user.Hscissor.toString()))),
-                                    Container(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Center(
-                                          child: Text(
-                                            user.serial.toString(),
-                                            style:
-                                                const TextStyle(fontSize: 14),
-                                          ),
-                                        )),
-                                    Container(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Center(
-                                          child: Text(user.item.type.toString(),
-                                              style: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w600)),
-                                        )),
-                                    Container(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Center(
-                                          child: Text(
-                                            user.item.density.toString(),
+
+                                    //البيان
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}",
                                             style: const TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w400),
+                                                fontWeight: FontWeight.w500),
                                           ),
-                                        )),
-                                    Container(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Center(
-                                            child: Text(
-                                                user.item.color.toString()))),
-                                    Container(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Center(
-                                            child: Text(
-                                                user.item.wight.toString()))),
-                                    Container(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Center(
-                                          child: Text(
-                                              "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}"),
-                                        )),
-                                    Container(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Center(
-                                          child: Text(
-                                            user.number.toString(),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            "${user.item.color} ${user.item.type} ك${user.item.density.removeTrailingZeros}",
                                             style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 221, 2, 75)),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                    //الرقم و الكود
+                                    Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 9),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              user.number.toString(),
+                                              style: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 221, 2, 75)),
+                                            ),
+                                            Text(
+                                              user.serial.toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w500),
+                                            )
+                                          ],
                                         )),
                                     Container(
                                         padding: const EdgeInsets.all(2),
                                         child: Center(
                                             child: Text(
-                                                "${1 + blocks.search.sortedBy<num>((element) => element.Block_Id).indexOf(user)}"))),
+                                                "${b.reversed.toList().indexOf(user) + 1}"))),
                                   ]);
                             })
                             .toList()

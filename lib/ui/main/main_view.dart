@@ -12,6 +12,7 @@ import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
 import 'package:jason_company/controllers/purchesController.dart';
 import 'package:jason_company/controllers/scissors_controller.dart';
+import 'package:jason_company/controllers/stockCheckController.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/ui/main/componants/nav_bar.dart';
 import 'package:jason_company/controllers/main_controller.dart';
@@ -31,7 +32,12 @@ class Mainview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Users_controller>(
       builder: (context, myType, child) {
-        print("refesh home");
+        print("refesh home  Users_controller");
+
+        permitionss(context, UserPermition.can_get_data_of_stcokCheck)
+            ? context.read<StokCheck_Controller>().get_StokCheck_data()
+            : DoNothingAction();
+
         context.read<final_prodcut_controller>().c();
         permitionss(context, UserPermition.can_get_data_of_final_prodcut)
             ? context

@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/CategorysController.dart';
@@ -17,22 +19,15 @@ class HeaderOftable1 extends StatelessWidget {
     return Table(
       columnWidths: const {
         0: FlexColumnWidth(.8),
-        1: FlexColumnWidth(1.2),
-        2: FlexColumnWidth(1.2),
-        3: FlexColumnWidth(1),
-        4: FlexColumnWidth(3),
-        5: FlexColumnWidth(3),
+        1: FlexColumnWidth(3),
+        2: FlexColumnWidth(3),
+        3: FlexColumnWidth(3),
+        4: FlexColumnWidth(1),
+        5: FlexColumnWidth(1),
         6: FlexColumnWidth(1),
-        7: FlexColumnWidth(1),
-        8: FlexColumnWidth(1),
-        9: FlexColumnWidth(1.6),
-        10: FlexColumnWidth(.7),
-        11: FlexColumnWidth(.7),
-        12: FlexColumnWidth(1),
-        13: FlexColumnWidth(1),
-        14: FlexColumnWidth(1.8),
-        15: FlexColumnWidth(.8),
-        16: FlexColumnWidth(.8),
+        7: FlexColumnWidth(2.8),
+        8: FlexColumnWidth(2.8),
+        9: FlexColumnWidth(1),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -49,16 +44,6 @@ class HeaderOftable1 extends StatelessWidget {
                   child: const Center(child: Text('ملاحظات '))),
               Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('وزن الهالك'))),
-              Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Center(
-                      child: Text(
-                    'وزن النواتج',
-                    style: TextStyle(fontSize: 12),
-                  ))),
-              Container(
-                  padding: const EdgeInsets.all(4),
                   child: const Center(child: Text('تم الصرف'))),
               Container(
                   padding: const EdgeInsets.all(4),
@@ -71,33 +56,13 @@ class HeaderOftable1 extends StatelessWidget {
                   child: const Center(child: Text('وارد من'))),
               Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('المقص'))),
+                  child: const Text('م راسى')),
               Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Text('الكود',
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.bold))),
+                  child: const Center(child: Text('البيان'))),
               Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Text('النوع',
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.bold))),
-              Container(
-                  padding: const EdgeInsets.all(0),
-                  child: const Center(
-                    child: Text('الكثافه',
-                        style: TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold)),
-                  )),
-              Container(
-                  padding: const EdgeInsets.all(4), child: const Text('لون')),
-              Container(
-                  padding: const EdgeInsets.all(4), child: const Text('الوزن')),
-              Container(
-                  padding: const EdgeInsets.all(4),
-                  child: const Center(child: Text('مقاس'))),
-              Container(
-                  padding: const EdgeInsets.all(4), child: const Text('رقم')),
+                  child: const Text('رقم وكود')),
               Container(
                   padding: const EdgeInsets.all(4), child: const Text('م')),
             ])
@@ -257,4 +222,29 @@ settingthedialog(BuildContext context) {
           },
         );
       });
+}
+
+class SearchForBlockIN_Blcokstock extends StatelessWidget {
+  const SearchForBlockIN_Blcokstock({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 100,
+      child: Container(
+        color: const Color.fromARGB(96, 230, 218, 218),
+        child: TextField(
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+              icon: Icon(Icons.search), border: OutlineInputBorder()),
+          onChanged: (v) {
+            context.read<BlockFirebasecontroller>().searchin_blockstock = v;
+            context.read<BlockFirebasecontroller>().Refresh_the_UI();
+          },
+        ),
+      ),
+    );
+  }
 }
