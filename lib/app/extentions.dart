@@ -425,6 +425,21 @@ extension Filter on List<FinalProductModel> {
     return nonRepetitive;
   }
 
+  List<FinalProductModel> testFilter() {
+    List<FinalProductModel> data = this;
+    List<FinalProductModel> nonRepetitive = [];
+    for (var i in data) {
+      nonRepetitive.add(i);
+      data.removeWhere((element) =>
+          i.item.density == element.item.density &&
+          i.item.type == element.item.type &&
+          i.item.L == element.item.L &&
+          i.item.W == element.item.W &&
+          i.item.H == element.item.H);
+    }
+    return nonRepetitive;
+  }
+
   List<FinalProductModel> filter_date(BuildContext context, String chosenDate) {
     DateFormat format = DateFormat('yyyy/MM/dd');
     return where((element) =>
