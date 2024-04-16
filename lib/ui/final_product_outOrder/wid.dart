@@ -17,10 +17,9 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class OutOrder extends StatelessWidget {
-  OutOrder({super.key, required this.item, required this.total});
+  OutOrder({super.key, required this.item});
   outOfStockOrderveiwModel vm = outOfStockOrderveiwModel();
-  final FinalProductModel item;
-  final int total;
+  final FinalProdcutWithTOtal item;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -96,7 +95,7 @@ class OutOrder extends StatelessWidget {
                                                 MaterialStateProperty.all(
                                                     Colors.red)),
                                         onPressed: () {
-                                          vm.add(context, item, total);
+                                          vm.add(context, item);
                                           Navigator.pop(context);
                                         },
                                         child: const Text('أضافه')),

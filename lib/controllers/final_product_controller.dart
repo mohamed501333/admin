@@ -11,17 +11,25 @@ import 'package:provider/provider.dart';
 
 class final_prodcut_controller extends ChangeNotifier {
   get_finalProdcut_data(BuildContext context) {
-    FirebaseDatabase.instance.ref("finalproducts").onValue.first.then((value) {
+    FirebaseDatabase.instance
+        .ref("finalproducts")
+        .orderByKey()
+        .onValue
+        .first
+        .then((value) {
       getInitialData(value.snapshot, context);
-    });
+    }).then((value) => FirebaseDatabase.instance
+                .ref("finalproducts")
+                .orderByKey()
+                .startAfter("${finalproducts.last.finalProdcut_ID}")
+                .onChildAdded
+                .listen((f) async {
+              await refrech(f);
+            }));
 
     FirebaseDatabase.instance.ref("finalproducts").onChildChanged.listen((vv) {
       refrech(vv);
     });
-
-    // FirebaseDatabase.instance.ref("finalproducts").onChildAdded.listen((f) {
-    //   refrech(f);
-    // });
   }
 
   c() {
@@ -60,14 +68,11 @@ class final_prodcut_controller extends ChangeNotifier {
         true));
     notifyListeners();
     context.read<OrderController>().Refrsh_ui();
-
-    print("get initial data of finalproduts");
   }
 
   refrech(DatabaseEvent vv) async {
     FinalProductModel newvalue =
         FinalProductModel.fromJson(vv.snapshot.value as String);
-    print(newvalue);
 
 //--------------------------------------------------
     all.removeWhere(
@@ -100,7 +105,6 @@ class final_prodcut_controller extends ChangeNotifier {
       FirebaseDatabase.instance
           .ref("finalproducts/${user.finalProdcut_ID}")
           .set(user.toJson());
-      notifyListeners();
     } catch (e) {}
   }
 
@@ -113,7 +117,6 @@ class final_prodcut_controller extends ChangeNotifier {
             .ref("finalproducts/${x.finalProdcut_ID}")
             .set(x.toJson());
       } catch (e) {}
-      notifyListeners();
     }
   }
 

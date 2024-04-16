@@ -752,6 +752,7 @@ enum UserPermition {
   fields_buttoms_consumeBlock,
   show_date_in_block_out_of_stock,
   delete_in_consume_block,
+  can_edit_outTo,
 
   can_get_data_of_orders,
   show_cutting_orders,
@@ -1044,7 +1045,7 @@ extension QQ on UserPermition {
       case UserPermition.Rshow_bottomOFNotfinl:
         return UserpermitionTittle(tittle: "Rزر اضافه الى دون التام");
       case UserPermition.incert_underoperation:
-        return UserpermitionTittle(tittle: "ٌRاضافة شغل مرحله اخرى");
+        return UserpermitionTittle(tittle: "Rاضافة شغل مرحله اخرى");
       case UserPermition.show_total_in_finalproduct:
         return UserpermitionTittle(
             tittle: "اظهار الاجمالى فى وارد المخزن من المقصات");
@@ -1059,11 +1060,15 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "can_get_data_of_stcokCheck");
       case UserPermition.show_stcokCheck_moldule:
         return UserpermitionTittle(tittle: "اظهار موديول الجرد");
+      case UserPermition.can_edit_outTo:
+        return UserpermitionTittle(tittle: "امكانية تعديل جهة الصرف");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.can_edit_outTo:
+        return "امكانية تعديل جهة الصرف";
       case UserPermition.show_stcokCheck_moldule:
         return "اظهار موديول الجرد";
       case UserPermition.can_get_data_of_stcokCheck:
@@ -1078,9 +1083,9 @@ extension QQ on UserPermition {
         return "اظهار الاجمالى فى وارد المخزن من المقصات";
 
       case UserPermition.incert_underoperation:
-        return "ٌRاضافة شغل مرحله اخرى";
+        return "Rاضافة شغل مرحله اخرى";
       case UserPermition.Rshow_bottomOFfinalproduct:
-        return "ٌRزر اضافه الى الصادر";
+        return "Rزر اضافه الى الصادر";
       case UserPermition.Rshow_bottomOFFractions:
         return "Rزر اضافه الى الوراد";
       case UserPermition.Rshow_bottomOFNotfinl:

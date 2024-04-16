@@ -3,6 +3,7 @@
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
@@ -162,7 +163,7 @@ class Fieldss extends StatelessWidget {
             CustomTextFormField(
               keybordtupe: TextInputType.name,
               width: MediaQuery.of(context).size.width * .23,
-              hint: "المصنع",
+              hint: "صالة الانتاج",
               label: "صادر الى",
               controller: vm.outTo,
             ),
@@ -329,10 +330,84 @@ class TheTable0001 extends StatelessWidget {
                                         : const SizedBox(),
                                   ],
                                 ),
-                                Container(
-                                    padding: const EdgeInsets.all(2),
-                                    child: Center(
-                                        child: Text(user.OutTo.toString()))),
+                                GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => AlertDialog(
+                                              scrollable: true,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              content: SizedBox(
+                                                height: 120,
+                                                child: SingleChildScrollView(
+                                                  child: Column(
+                                                    children: [
+                                                      CustomTextFormField(
+                                                        keybordtupe:
+                                                            TextInputType.name,
+                                                        width: 120,
+                                                        hint: "صالة الانتاج",
+                                                        label: "صادر الى",
+                                                        controller: vm.outTo,
+                                                      ),
+                                                      //buttons
+                                                      Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child:
+                                                                ElevatedButton(
+                                                                    style: ButtonStyle(
+                                                                        backgroundColor:
+                                                                            MaterialStateProperty.all(Colors
+                                                                                .red)),
+                                                                    onPressed:
+                                                                        () {
+                                                                      blocks.changeOutTO(
+                                                                          user,
+                                                                          vm.outTo.text.isEmpty
+                                                                              ? "صالة الانتاج"
+                                                                              : vm.outTo.text);
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: const Text(
+                                                                        'تم')),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Expanded(
+                                                            child:
+                                                                ElevatedButton(
+                                                                    style: ButtonStyle(
+                                                                        backgroundColor:
+                                                                            MaterialStateProperty.all(Colors
+                                                                                .blue)),
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: const Text(
+                                                                        'الغاء')),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ).permition(context,
+                                                UserPermition.can_edit_outTo));
+                                  },
+                                  child: Container(
+                                      padding: const EdgeInsets.all(2),
+                                      child: Center(
+                                          child: Text(user.OutTo.toString()))),
+                                ),
                                 Container(
                                     padding: const EdgeInsets.all(2),
                                     child: Center(

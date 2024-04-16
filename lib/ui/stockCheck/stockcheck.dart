@@ -562,7 +562,7 @@ class Stockcheck extends StatelessWidget {
                                               Text(
                                                   "الرصيد الفعلى: ${a.last.realamont}"),
                                               if (a.last.item.quantity -
-                                                      a.last.realamont >
+                                                      a.last.realamont <
                                                   0)
                                                 Row(
                                                   mainAxisAlignment:
@@ -570,7 +570,7 @@ class Stockcheck extends StatelessWidget {
                                                   children: [
                                                     const Text(' : فرق '),
                                                     Text(
-                                                      '${(a.last.item.quantity - a.last.realamont) * -1}',
+                                                      '${(a.last.item.quantity - a.last.realamont)}',
                                                       style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -579,7 +579,7 @@ class Stockcheck extends StatelessWidget {
                                                   ].reversed.toList(),
                                                 )
                                               else if (a.last.item.quantity -
-                                                      a.last.realamont <
+                                                      a.last.realamont >
                                                   0)
                                                 Row(
                                                   mainAxisAlignment:
@@ -587,7 +587,7 @@ class Stockcheck extends StatelessWidget {
                                                   children: [
                                                     const Text(' : زياده '),
                                                     Text(
-                                                      '${a.last.item.quantity - a.last.realamont * -1}',
+                                                      '+${(a.last.item.quantity - a.last.realamont)}',
                                                       style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
