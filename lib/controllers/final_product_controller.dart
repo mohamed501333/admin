@@ -10,14 +10,14 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class final_prodcut_controller extends ChangeNotifier {
-  get_finalProdcut_data(BuildContext context) {
-    FirebaseDatabase.instance.ref("finalproducts").onValue.first.then((value) {
-      getInitialData(value.snapshot, context);
+  get_finalProdcut_data(BuildContext context)async {
+  FirebaseDatabase.instance.ref("finalproducts").onValue.listen((value) async{
+     await getInitialData(value.snapshot, context);
     });
 
-    FirebaseDatabase.instance.ref("finalproducts").onChildChanged.listen((vv) {
-      refrech(vv);
-    });
+    // FirebaseDatabase.instance.ref("finalproducts").onChildChanged.listen((vv) {
+    //   refrech(vv);
+    // });
 
     // FirebaseDatabase.instance.ref("finalproducts").onChildAdded.listen((f) {
     //   refrech(f);

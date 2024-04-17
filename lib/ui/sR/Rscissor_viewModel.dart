@@ -125,7 +125,7 @@ class Rscissor_veiwModel extends BaseViewModel {
                 type: orderController.item!.type,
                 amount: int.parse(amountcontroller.text),
                 priceforamount: 0.0),
-            scissor: scissor + 3,
+            scissor: scissor ,
             customer: orderController.order!.customer,
           ));
       amountcontroller.clear();

@@ -19,9 +19,7 @@ class outOfStockOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
       builder: (context, finalproducts, child) {
-        List<FinalProductModel> scorce =
-            vm.getfinalprodcuts_recevedFromStock(finalproducts.finalproducts);
-
+        List<FinalProductModel> scorce =vm.getfinalprodcuts_recevedFromStock(finalproducts.finalproducts);
         return Scaffold(
           appBar: AppBar(
             actions: [

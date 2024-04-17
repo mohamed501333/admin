@@ -79,17 +79,11 @@ class Fractions_Controller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  addfractionslist(List<FractionModel> fractions) async {
-    try {
-      if (all.isNotEmpty) {
-        all.addAll(fractions);
-        var s = {};
-        s.addEntries(all.map(
-            (el) => MapEntry("${el.fraction_ID}", el.toJson().toString())));
-
-        FirebaseDatabase.instance.ref("fractions").set(s);
-      }
-    } catch (e) {}
+  addfractionslist(List<FractionModel> fractionsss) async {
+    for (var element in fractionsss) {
+      FirebaseDatabase.instance.ref("fractions/${element.fraction_ID}").set(element.toJson());
+    }
+   
   }
 
   deletefractions(FractionModel fraction) {

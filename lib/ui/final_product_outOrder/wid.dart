@@ -218,16 +218,16 @@ class InvoiceM extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
-      builder: (context, finalproducts, child) {
-        List<FinalProductModel> sorce = finalproducts.finalproducts
+      builder: (context, finalproductscntroller, child) {
+        print("34343434343434343434");
+        List<FinalProductModel> sorce = finalproductscntroller.finalproducts
             .where((e) =>
                 e.item.amount < 0 &&
-                e.actions.if_action_exist(
-                        finalProdcutAction.createInvoice.getactionTitle) ==
-                    false)
+                e.actions.if_action_exist(finalProdcutAction.createInvoice.getactionTitle) ==false)
             .toList()
             .sortedBy<num>((element) => element.finalProdcut_ID)
-            .toList();
+            .toList();       
+
         return Scaffold(
           floatingActionButton: FloatingActionButton(
             backgroundColor: const Color.fromRGBO(82, 170, 94, 1.0),
@@ -235,7 +235,7 @@ class InvoiceM extends StatelessWidget {
             onPressed: () {
               vm.addInvoice(
                   context,
-                  finalproducts.finalproducts
+                  finalproductscntroller.finalproducts
                       .where((e) => e.item.amount < 0)
                       .toList());
             },

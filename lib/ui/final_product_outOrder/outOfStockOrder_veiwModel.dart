@@ -16,7 +16,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
       List<FinalProductModel> finalproducts, String enterkeyword) {
     var x = finalproducts;
     return x
-        .filter_density_type_size()
+        .filteronfinalproduct()
         .where((element) => (element.item.L.removeTrailingZeros +
                 element.item.W.removeTrailingZeros +
                 element.item.H.removeTrailingZeros)
@@ -40,7 +40,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
       double volume = item.item.W *
           item.item.L *
           item.item.H *
-          int.parse(amountcontroller.text);
+          int.parse(amountcontroller.text)/1000000;
       context
           .read<final_prodcut_controller>()
           .finalProdcut_out_order(FinalProductModel(
@@ -69,7 +69,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             cuting_order_number: 0,
             actions: [],
             finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
-            scissor: int.tryParse(scissorcontroller.text) ?? 0,
+            scissor:  0,
             customer: item.customer,
           ));
       clearfields();
