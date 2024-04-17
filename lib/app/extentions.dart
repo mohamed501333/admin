@@ -1,14 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
-import 'package:provider/provider.dart';
 
 extension Permition on Widget {
   Widget permition(BuildContext context, UserPermition permition) {
@@ -423,12 +425,73 @@ extension Filter on List<FinalProductModel> {
     return nonRepetitive;
   }
 
+  List<FinalProductModel> testFilter() {
+    List<FinalProductModel> data = this;
+    List<FinalProductModel> nonRepetitive = [];
+    for (var i in data) {
+      nonRepetitive.add(i);
+      data.removeWhere((element) =>
+          i.item.density == element.item.density &&
+          i.item.type == element.item.type &&
+          i.item.L == element.item.L &&
+          i.item.W == element.item.W &&
+          i.item.H == element.item.H);
+    }
+    return nonRepetitive;
+  }
+
   List<FinalProductModel> filter_date(BuildContext context, String chosenDate) {
     DateFormat format = DateFormat('yyyy/MM/dd');
     return where((element) =>
         format.format(element.actions.get_Date_of_action(finalProdcutAction
             .incert_finalProduct_from_cutingUnit.getactionTitle)) ==
         chosenDate).toList();
+  }
+
+  List<FinalProdcutWithTOtal> ReturnItmeWithTotalAndRemovewhreTotalZeto() {
+    List<FinalProdcutWithTOtal> a = filter_density_type_size()
+        .map((e) => FinalProdcutWithTOtal(
+            L: e.item.L,
+            W: e.item.W,
+            H: e.item.H,
+            density: e.item.density,
+            customer: e.customer,
+            color: e.item.color,
+            type: e.item.type,
+            amount: countOf(e)))
+        .toList();
+    a.removeWhere((element) => element.amount == 0);
+    return a;
+  }
+}
+
+class FinalProdcutWithTOtal {
+  double L;
+  double W;
+  double H;
+  double density;
+  String color;
+  String type;
+  String customer;
+  int amount;
+  FinalProdcutWithTOtal({
+    required this.L,
+    required this.W,
+    required this.H,
+    required this.density,
+    required this.color,
+    required this.type,
+    required this.customer,
+    required this.amount,
+  });
+}
+
+extension DSd on List<FinalProdcutWithTOtal> {
+  List<FinalProdcutWithTOtal> searchforSize(String searchValue) {
+    return where((element) => (element.L.removeTrailingZeros +
+            element.W.removeTrailingZeros +
+            element.H.removeTrailingZeros)
+        .contains(searchValue)).toList();
   }
 }
 

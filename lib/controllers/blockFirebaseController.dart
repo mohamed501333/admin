@@ -264,6 +264,13 @@ class BlockFirebasecontroller extends ChangeNotifier {
         .set(block.toJson());
   }
 
+  changeOutTO(BlockModel block, String value) {
+    block.OutTo = value;
+    FirebaseDatabase.instance
+        .ref("blocks/${block.Block_Id}")
+        .set(block.toJson());
+  }
+
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   var initialDateRange =
       DateTimeRange(start: DateTime(2024, 1, 1), end: DateTime.now());
