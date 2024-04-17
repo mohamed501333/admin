@@ -140,4 +140,21 @@ class Chemicals_controller extends ChangeNotifier {
     selctedFamilys.clear();
     selctedNames.clear();
   }
+
+  DateTime? pickedDateFrom;
+  DateTime? pickedDateTo;
+  List<DateTime> AllDatesOfOfData() {
+    List<DateTime> v = [];
+    v.addAll(Chemicals.where((e) => e.actions.if_action_exist(
+            ChemicalAction.creat_Out_ChemicalAction_item.getTitle))
+        .map((e) => e.actions.get_Date_of_action(
+            ChemicalAction.creat_Out_ChemicalAction_item.getTitle))
+        .toList());
+    v.addAll(Chemicals.where((e) => e.actions.if_action_exist(
+            ChemicalAction.creat_new_ChemicalAction_item.getTitle))
+        .map((e) => e.actions.get_Date_of_action(
+            ChemicalAction.creat_new_ChemicalAction_item.getTitle))
+        .toList());
+    return v.isEmpty ? [DateTime.now()] : v;
+  }
 }

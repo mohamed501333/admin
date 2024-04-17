@@ -95,10 +95,58 @@ extension Toint on String {
 }
 
 extension Fd on List<ChemicalsModel> {
-  Data_Before_Start(DateTime start){
-         List<ChemicalsModel> data=[];
-       data.addAll(where((element) => element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt()<start.formatToInt()));
-       data.addAll(where((element) => element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt()<start.formatToInt()));
+  List<ChemicalsModel> Data_Between_TowDates(DateTime from, DateTime to) {
+    List<ChemicalsModel> data = [];
+    data.addAll(where((element) =>
+        element.actions
+            .get_Date_of_action(
+                ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+            .formatToInt() <=
+        from.formatToInt()));
+    data.addAll(where((element) =>
+        element.actions
+            .get_Date_of_action(
+                ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+            .formatToInt() <=
+        from.formatToInt()));
+    data.addAll(where((element) =>
+        element.actions
+            .get_Date_of_action(
+                ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+            .formatToInt() >=
+        to.formatToInt()));
+    data.addAll(where((element) =>
+        element.actions
+            .get_Date_of_action(
+                ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+            .formatToInt() >=
+        to.formatToInt()));
+    return data;
+  }
+
+  List<ChemicalsModel> Data_Before_Start(DateTime start) {
+    List<ChemicalsModel> data = [];
+    data.addAll(where((element) =>
+        element.actions
+            .get_Date_of_action(
+                ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+            .formatToInt() <
+        start.formatToInt()));
+    data.addAll(where((element) =>
+        element.actions
+            .get_Date_of_action(
+                ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+            .formatToInt() <
+        start.formatToInt()));
+    return data;
+  }
+
+  double countOf(ChemicalsModel e) {
+    var a =
+        where((element) => element.family == e.family && element.name == e.name)
+            .map((e) => e.Totalquantity);
+
+    return a.isEmpty ? 0 : a.reduce((a, b) => a + b);
   }
 
   List<ChemicalsModel> FilterDateBetween_balance(DateTime end) {
@@ -139,18 +187,38 @@ extension Fd on List<ChemicalsModel> {
             initialDateRange.end.formatToInt()).toList();
   }
 
-  List<ChemicalsModel> filterItemsPasedOnFamilys(
-      BuildContext context, List<String> familys) {
+  List<ChemicalsModel> filterItemsPasedONnames(
+      BuildContext context, List<String> names) {
     List<ChemicalsModel> l = [];
-    for (var f in familys) {
-      for (var i in this) {
-        if (i.family == f) {
-          l.add(i);
+    if (names.isNotEmpty) {
+      for (var f in names) {
+        for (var i in this) {
+          if (i.name.toString() == f) {
+            l.add(i);
+          }
         }
       }
+      return l;
+    } else {
+      return this;
     }
+  }
 
-    return l;
+  List<ChemicalsModel> filterItemsPasedONFamilys(
+      BuildContext context, List<String> familys) {
+    List<ChemicalsModel> l = [];
+    if (familys.isNotEmpty) {
+      for (var f in familys) {
+        for (var i in this) {
+          if (i.family.toString() == f) {
+            l.add(i);
+          }
+        }
+      }
+      return l;
+    } else {
+      return this;
+    }
   }
 
   List<ChemicalsModel> filterFamilyOrName(

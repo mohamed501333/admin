@@ -115,6 +115,6 @@ class StokCheck_Controller extends ChangeNotifier {
         .map((e) => e.actions
             .get_Date_of_action(StockCheckAction.creat_new_StockCheck.getTitle))
         .toList();
-    return v.isEmpty ? [DateTime(2101)] : v;
+    return v.isEmpty ? [DateTime.now()] : v;
   }
 }
