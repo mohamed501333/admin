@@ -95,6 +95,12 @@ extension Toint on String {
 }
 
 extension Fd on List<ChemicalsModel> {
+  Data_Before_Start(DateTime start){
+         List<ChemicalsModel> data=[];
+       data.addAll(where((element) => element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt()<start.formatToInt()));
+       data.addAll(where((element) => element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt()<start.formatToInt()));
+  }
+
   List<ChemicalsModel> FilterDateBetween_balance(DateTime end) {
     return where((element) =>
         element.actions
@@ -189,7 +195,7 @@ extension Fd on List<ChemicalsModel> {
   }
 }
 
-extension sdfdsf on List<SubFraction> {
+extension ZErgh on List<SubFraction> {
   List<SubFraction> ReturnFirstPiriodBalanceOFUnderoperationSubFractons(
       DateTimeRange initialDateRange) {
     //------------------------------------------------

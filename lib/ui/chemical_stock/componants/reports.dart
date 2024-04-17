@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
 // ignore_for_file: camel_case_types, must_be_immutable
 
 import 'package:flutter/material.dart';
@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/ui/chemical_stock/ChemicalStock_viewModel.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 
 class R_FOR_onlyAvilableQuantity extends StatelessWidget {
   R_FOR_onlyAvilableQuantity({
@@ -59,8 +60,7 @@ class R_FOR_onlyAvilableQuantity extends StatelessWidget {
                           2: FlexColumnWidth(2),
                           3: FlexColumnWidth(1),
                         },
-                        border:
-                            TableBorder.all(width: 1, color: Colors.black),
+                        border: TableBorder.all(width: 1, color: Colors.black),
                         children: [
                           TableRow(
                               decoration: const BoxDecoration(
@@ -81,6 +81,73 @@ class R_FOR_onlyAvilableQuantity extends StatelessWidget {
                   .toList(),
             )
           ],
+        );
+      },
+    );
+  }
+}
+
+class R_FOR_stock_actions extends StatelessWidget {
+  const R_FOR_stock_actions({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Chemicals_controller>(
+      builder: (context, myType, child) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          reverse: true,
+          child: SizedBox(
+              width: 500,
+              child: StickyHeader(
+                header: Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(.8),
+                    1: FlexColumnWidth(3),
+                    2: FlexColumnWidth(3),
+                    3: FlexColumnWidth(2),
+                    4: FlexColumnWidth(1.8),
+                    5: FlexColumnWidth(1),
+                
+                  },
+                  children: const [
+                    TableRow(
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                        ),
+                        children: [
+                          Center(
+                            child: Text("العائله"),
+                          ),
+                          Center(
+                            child: Text("الصنف"),
+                          ),
+                          Center(
+                            child: Text("رصيد اول المده"),
+                          ),
+                          Center(
+                            child: Text("الوارد"),
+                          ),
+                          Center(
+                            child: Text("المنصرف"),
+                          ),
+                          Center(
+                            child: Text("الكميه المتوفره"),
+                          ),
+                        ])
+                  ],
+                  border: TableBorder.all(width: 1, color: Colors.black),
+                ),
+                content:SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                     ...myType.Chemicals.map((e) =>  Text("${e.id}"),)
+                    ],
+                  ),
+                )
+                ,
+              )),
         );
       },
     );

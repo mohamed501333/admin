@@ -12,26 +12,9 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class outOfStockOrderveiwModel extends BaseViewModel {
-<<<<<<< HEAD
-  List<FinalProductModel> sourcesearshing(
-      List<FinalProductModel> finalproducts, String enterkeyword) {
-    var x = finalproducts;
-    return x
-        .filteronfinalproduct()
-        .where((element) => (element.item.L.removeTrailingZeros +
-                element.item.W.removeTrailingZeros +
-                element.item.H.removeTrailingZeros)
-            .contains(enterkeyword))
-        .toList();
-  }
-
-  getfinalprodcuts_recevedFromStock(List<FinalProductModel> finalproducts) {
-    finalproducts.removeWhere((element) =>
-=======
   List<FinalProductModel> getfinalprodcuts_recevedFromStock(
       List<FinalProductModel> f) {
     f.removeWhere((element) =>
->>>>>>> 74f0c8894c5c2ac48945891caa42c37a66529c81
         element.actions.if_action_exist(finalProdcutAction
                 .incert_finalProduct_from_cutingUnit.getactionTitle) ==
             true &&
@@ -44,19 +27,10 @@ class outOfStockOrderveiwModel extends BaseViewModel {
   //صرف المنتح التام
   void add(BuildContext context, FinalProdcutWithTOtal item) {
     if (formKey.currentState!.validate() &&
-<<<<<<< HEAD
-        total > 0 &&
-        total >= int.parse(amountcontroller.text)) {
-      double volume = item.item.W *
-          item.item.L *
-          item.item.H *
-          int.parse(amountcontroller.text)/1000000;
-=======
         item.amount > 0 &&
         item.amount >= int.parse(amountcontroller.text)) {
       double volume =
           item.W * item.L * item.H * int.parse(amountcontroller.text) / 1000000;
->>>>>>> 74f0c8894c5c2ac48945891caa42c37a66529c81
       context
           .read<final_prodcut_controller>()
           .finalProdcut_out_order(FinalProductModel(

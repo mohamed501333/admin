@@ -47,21 +47,16 @@ class Chemical_view extends StatelessWidget {
       ),
       body: Consumer<dropDowenContoller>(
         builder: (context, myType, child) {
-          return Column(
-            children: [
-              BoxOFReport(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      myType.selectedreport == 'تقرير الكمية المتوفره فقط'
-                          ? R_FOR_onlyAvilableQuantity()
-                          : const SizedBox()
-                    ],
-                  ),
-                ),
-              )
-            ],
+          return Expanded(
+            child: Column(
+              children: [
+                BoxOFReport(),
+                if(myType.selectedreport == 'تقرير الكمية المتوفره فقط')
+                   R_FOR_onlyAvilableQuantity(),
+                if(myType.selectedreport == 'تقرير حركة المخزون')
+                   const R_FOR_stock_actions()
+              ],
+            ),
           );
         },
       ),

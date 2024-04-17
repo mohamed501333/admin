@@ -10,20 +10,6 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class final_prodcut_controller extends ChangeNotifier {
-<<<<<<< HEAD
-  get_finalProdcut_data(BuildContext context)async {
-  FirebaseDatabase.instance.ref("finalproducts").onValue.listen((value) async{
-     await getInitialData(value.snapshot, context);
-    });
-
-    // FirebaseDatabase.instance.ref("finalproducts").onChildChanged.listen((vv) {
-    //   refrech(vv);
-    // });
-
-    // FirebaseDatabase.instance.ref("finalproducts").onChildAdded.listen((f) {
-    //   refrech(f);
-    // });
-=======
   get_finalProdcut_data(BuildContext context) {
     FirebaseDatabase.instance
         .ref("finalproducts")
@@ -44,7 +30,6 @@ class final_prodcut_controller extends ChangeNotifier {
     FirebaseDatabase.instance.ref("finalproducts").onChildChanged.listen((vv) {
       refrech(vv);
     });
->>>>>>> 74f0c8894c5c2ac48945891caa42c37a66529c81
   }
 
   c() {
