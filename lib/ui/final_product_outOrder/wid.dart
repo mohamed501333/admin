@@ -218,7 +218,6 @@ class InvoiceM extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
       builder: (context, finalproductscntroller, child) {
-        print("34343434343434343434");
         List<FinalProductModel> sorce = finalproductscntroller.finalproducts
             .where((e) =>
                 e.item.amount < 0 &&

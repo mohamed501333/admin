@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/controllers/ChemicalsController.dart';
@@ -98,17 +99,17 @@ class R_FOR_stock_actions extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             reverse: true,
             child: SizedBox(
-                width: 500,
+                width: 600,
                 child: ListView(
                   children: [
                     Table(
                       columnWidths: const {
-                        0: FlexColumnWidth(1),
-                        1: FlexColumnWidth(1),
-                        2: FlexColumnWidth(1),
+                        0: FlexColumnWidth(.7),
+                        1: FlexColumnWidth(.6),
+                        2: FlexColumnWidth(.4),
                         3: FlexColumnWidth(1),
                         4: FlexColumnWidth(1),
-                        5: FlexColumnWidth(1),
+                        5: FlexColumnWidth(.8),
                       },
                       children: [
                         TableRow(
@@ -135,35 +136,48 @@ class R_FOR_stock_actions extends StatelessWidget {
                                 child: Text("الكميه المتوفره"),
                               ),
                             ].reversed.toList()),
-                        ...myType.Chemicals.filterItemsPasedONFamilys(
+                        ...myType.Chemicals.FilterChemicals()
+                        .filterItemsPasedONFamilys(
                                 context, myType.selctedFamilys)
                             .filterItemsPasedONnames(
                                 context, myType.selctedNames)
-                            .map((e) => TableRow(
+                            .map((e) {
+                              var a=myType.Chemicals.Data_Before_Starta_of_name(myType.pickedDateFrom!, e.name);
+                              var firstPeriod=a.isEmpty?0:a.map((e) => e.Totalquantity).reduce((a, b) => a+b);
+
+                              var b=myType.Chemicals.Data_Between_TowDates_of_name(myType.pickedDateFrom!, myType.pickedDateTo!, e.name);
+
+                              var c= b.where((element) => element.actions.if_action_exist(ChemicalAction.creat_new_ChemicalAction_item.getTitle)==true);
+                              var iN= c.isEmpty?0:c.map((e) => e.Totalquantity).reduce((a, b) => a+b);
+
+                              var d= b.where((element) => element.actions.if_action_exist(ChemicalAction.creat_Out_ChemicalAction_item.getTitle)==true);
+                              var out=d.isEmpty?0:d.map((e) => e.Totalquantity).reduce((a, b) => a+b);
+                              
+                            return  TableRow(
                                 decoration: BoxDecoration(
                                   color:
                                       const Color.fromARGB(255, 236, 235, 235),
                                 ),
-                                children: const [
+                                children:  [
                                   Center(
-                                    child: Text("العائله"),
+                                    child: Text(e.family),
                                   ),
                                   Center(
-                                    child: Text("الصنف"),
+                                    child: Text(e.name),
                                   ),
                                   Center(
-                                    child: Text("رصيد اول المده"),
+                                    child: Text("$firstPeriod"),
                                   ),
                                   Center(
-                                    child: Text("الوارد"),
+                                    child: Text("$iN"),
                                   ),
                                   Center(
-                                    child: Text("المنصرف"),
+                                    child: Text("$out"),
                                   ),
                                   Center(
-                                    child: Text("الكميه المتوفره"),
+                                    child: Text("${firstPeriod+iN+out}"),
                                   ),
-                                ].reversed.toList()))
+                                ].reversed.toList());})
                       ],
                       border: TableBorder.all(width: 1, color: Colors.black),
                     ),

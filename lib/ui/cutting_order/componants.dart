@@ -87,14 +87,11 @@ class Fields001 extends StatelessWidget {
                               lastDate: DateTime(2101));
 
                           if (pickedDate != null) {
-                            print(pickedDate);
                             String formattedDate =
                                 pickedDate.millisecondsSinceEpoch.toString();
-                            print(formattedDate);
 
                             vm.datecontroller.text = formattedDate;
                           } else {
-                            print("Date is not selected");
                           }
                         },
                         readOnly: true,

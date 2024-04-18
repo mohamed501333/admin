@@ -22,7 +22,6 @@ showmyAlertDialog1_for_ading_fractions414(BuildContext context,
   Rscissor_veiwModel vm = Rscissor_veiwModel();
   List<FractionModel> fractionsNotCutOnRscissor =
       vm.getfractions_Underoperation(fractrioncontroller);
-  print(fractionsNotCutOnRscissor.length);
   showDialog(
       context: context,
       builder: (BuildContext context) {

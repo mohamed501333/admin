@@ -95,51 +95,44 @@ extension Toint on String {
 }
 
 extension Fd on List<ChemicalsModel> {
-  List<ChemicalsModel> Data_Between_TowDates(DateTime from, DateTime to) {
+  List<ChemicalsModel> Data_Between_TowDates_of_name(DateTime from, DateTime to,String name) {
     List<ChemicalsModel> data = [];
+  
     data.addAll(where((element) =>
-        element.actions
-            .get_Date_of_action(
-                ChemicalAction.creat_new_ChemicalAction_item.getTitle)
-            .formatToInt() <=
-        from.formatToInt()));
+            element.actions.if_action_exist(ChemicalAction.creat_new_ChemicalAction_item.getTitle)==true&&
+        element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt() <=to.formatToInt()&&
+        element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt() >=from.formatToInt())
+        );
     data.addAll(where((element) =>
-        element.actions
-            .get_Date_of_action(
-                ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
-            .formatToInt() <=
-        from.formatToInt()));
-    data.addAll(where((element) =>
-        element.actions
-            .get_Date_of_action(
-                ChemicalAction.creat_new_ChemicalAction_item.getTitle)
-            .formatToInt() >=
-        to.formatToInt()));
-    data.addAll(where((element) =>
-        element.actions
-            .get_Date_of_action(
-                ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
-            .formatToInt() >=
-        to.formatToInt()));
-    return data;
+            element.actions.if_action_exist(ChemicalAction.creat_Out_ChemicalAction_item.getTitle)==true&&
+        element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt() <=to.formatToInt()&&
+        element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt() >=from.formatToInt())
+        );
+        
+    return data.where((element) => element.name==name).toList();
   }
 
-  List<ChemicalsModel> Data_Before_Start(DateTime start) {
+  List<ChemicalsModel> Data_Before_Starta_of_name(DateTime start,String name) {
     List<ChemicalsModel> data = [];
     data.addAll(where((element) =>
+          element.actions.if_action_exist( ChemicalAction.creat_new_ChemicalAction_item.getTitle)==true&&
         element.actions
             .get_Date_of_action(
                 ChemicalAction.creat_new_ChemicalAction_item.getTitle)
             .formatToInt() <
         start.formatToInt()));
-    data.addAll(where((element) =>
+    data.addAll(
+      where((element) =>
+      element.actions.if_action_exist( ChemicalAction.creat_Out_ChemicalAction_item.getTitle)==true&&
         element.actions
             .get_Date_of_action(
                 ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
             .formatToInt() <
         start.formatToInt()));
-    return data;
+    return data.where((element) => element.name==name).toList();
   }
+
+
 
   double countOf(ChemicalsModel e) {
     var a =
