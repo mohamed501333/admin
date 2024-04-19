@@ -89,8 +89,19 @@ class SubFractions_Controller extends ChangeNotifier {
 
   delete_SUBfraction(SubFraction subfraction) {
     subfraction.actions.add(subfractionAction.archive_subfraction.add);
-    subfraction.Rscissor = 0;
-    subfraction.Rstagenum = 0;
+    try {
+      FirebaseDatabase.instance
+          .ref("subfractions/${subfraction.subfraction_ID}")
+          .set(subfraction.toJson());
+    } catch (e) {}
+  }
+
+  UncutOnA_SUBfraction(SubFraction subfraction) {
+    subfraction.Ascissor = 0;
+    subfraction.Astagenum = 0;
+    subfraction.underOperation = true;
+    subfraction.actions
+        .removeWhere((element) => element.action == "cut_subfraction_on_A");
     try {
       FirebaseDatabase.instance
           .ref("subfractions/${subfraction.subfraction_ID}")
@@ -121,5 +132,24 @@ class SubFractions_Controller extends ChangeNotifier {
           .ref("subfractions/${subfractionn.subfraction_ID}")
           .set(subfractionn.toJson());
     } catch (e) {}
+  }
+
+  add_notfinals(SubFraction subfractionn, NotFinal value) {
+    subfractionn.notfinals.add(value);
+    subfractionn.actions
+        .add(subfractionAction.add_not_final_toSubfractions.add);
+
+    FirebaseDatabase.instance
+        .ref("subfractions/${subfractionn.subfraction_ID}")
+        .set(subfractionn.toJson());
+  }
+
+  remove_notfinals(SubFraction subfractionn) {
+    subfractionn.notfinals.clear();
+    subfractionn.actions
+        .add(subfractionAction.remove_not_final_fromSubfractions.add);
+    FirebaseDatabase.instance
+        .ref("subfractions/${subfractionn.subfraction_ID}")
+        .set(subfractionn.toJson());
   }
 }

@@ -111,6 +111,22 @@ extension Fd on List<ChemicalsModel> {
         
     return data.where((element) => element.name==name).toList();
   }
+  List<ChemicalsModel> Data_Between_TowDates(DateTime from, DateTime to) {
+    List<ChemicalsModel> data = [];
+  
+    data.addAll(where((element) =>
+            element.actions.if_action_exist(ChemicalAction.creat_new_ChemicalAction_item.getTitle)==true&&
+        element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt() <=to.formatToInt()&&
+        element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt() >=from.formatToInt())
+        );
+    data.addAll(where((element) =>
+            element.actions.if_action_exist(ChemicalAction.creat_Out_ChemicalAction_item.getTitle)==true&&
+        element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt() <=to.formatToInt()&&
+        element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt() >=from.formatToInt())
+        );
+        
+    return data;
+  }
 
   List<ChemicalsModel> Data_Before_Starta_of_name(DateTime start,String name) {
     List<ChemicalsModel> data = [];

@@ -1,10 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names, camel_case_types
 
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:objectbox/objectbox.dart';
-
 import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
 
 class Itme {

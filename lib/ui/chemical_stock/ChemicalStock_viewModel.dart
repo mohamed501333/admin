@@ -196,6 +196,8 @@ class ChemicalStockViewModel extends BaseViewModel {
       List<ChemicalsModel> Chemicals) {
     return Chemicals.filterFamilyOrName(selctedNames, selctedFamilys)
         .FilterChemicals()
+        .filterItemsPasedONFamilys(context, selctedFamilys)
+        .filterItemsPasedONnames(context, selctedNames)
         .map((e) => Report_1_Data(
               family: e.family,
               name: e.name,

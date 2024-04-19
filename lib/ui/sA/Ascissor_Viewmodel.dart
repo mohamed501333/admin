@@ -41,14 +41,15 @@ class AscissorViewModel extends BaseViewModel {
 
   List<FinalProductModel> get_finalprodcuts_cuttedON_A(
       List<FinalProductModel> finalprodcuts) {
-    finalprodcuts.where((element) =>
-        element.scissor == 7 &&
-        element.actions
-                .get_Date_of_action(finalProdcutAction
-                    .incert_finalProduct_from_cutingUnit.getactionTitle)
-                .formatt() ==
-            DateTime.now().formatt());
-    return finalprodcuts;
+    return finalprodcuts
+        .where((element) =>
+            element.scissor == 7 &&
+            element.actions
+                    .get_Date_of_action(finalProdcutAction
+                        .incert_finalProduct_from_cutingUnit.getactionTitle)
+                    .formatt() ==
+                DateTime.now().formatt())
+        .toList();
   }
 
   incert_finalProduct_from_cutingUnit_A(

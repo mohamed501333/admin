@@ -199,6 +199,7 @@ class RVeiw2 extends StatelessWidget {
                                   child: Center(
                                       child: Column(
                                     children: [
+                                      //المنتج
                                       Column(
                                         children: finalproducts
                                             .where(
@@ -259,6 +260,7 @@ class RVeiw2 extends StatelessWidget {
                                                 ))
                                             .toList(),
                                       ),
+                                      //button
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,

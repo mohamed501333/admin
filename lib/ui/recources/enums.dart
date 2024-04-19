@@ -633,6 +633,8 @@ enum subfractionAction {
   cut_subfraction_on_H,
   cut_subfraction_on_R,
   cut_subfraction_on_A,
+  add_not_final_toSubfractions,
+  remove_not_final_fromSubfractions
 }
 
 extension dfdff on subfractionAction {
@@ -663,11 +665,25 @@ extension dfdff on subfractionAction {
             action: "cut_subfraction_on_A",
             who: SringsManager.myemail,
             when: DateTime.now());
+      case subfractionAction.add_not_final_toSubfractions:
+        return ActionModel(
+            action: "add_not_final_toSubfractions",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case subfractionAction.remove_not_final_fromSubfractions:
+        return ActionModel(
+            action: "remove_not_final_fromSubfractions",
+            who: SringsManager.myemail,
+            when: DateTime.now());
     }
   }
 
   String get getTitle {
     switch (this) {
+      case subfractionAction.remove_not_final_fromSubfractions:
+        return "remove_not_final_fromSubfractions";
+      case subfractionAction.add_not_final_toSubfractions:
+        return "add_not_final_toSubfractions";
       case subfractionAction.cut_subfraction_on_A:
         return "cut_subfraction_on_A";
       case subfractionAction.cut_subfraction_on_R:

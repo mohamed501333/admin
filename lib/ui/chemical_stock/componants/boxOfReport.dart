@@ -230,7 +230,8 @@ class BoxOFReport extends StatelessWidget {
                             searchMatchFn: (item, searchValue) {
                               return item.value
                                   .toString()
-                                  .contains(searchValue);
+                                  .toLowerCase()
+                                  .contains(searchValue.toLowerCase());
                             },
                           )),
                       DropdownButton2<String>(
@@ -365,7 +366,8 @@ class BoxOFReport extends StatelessWidget {
                             searchMatchFn: (item, searchValue) {
                               return item.value
                                   .toString()
-                                  .contains(searchValue);
+                                  .toLowerCase()
+                                  .contains(searchValue.toLowerCase());
                             },
                           )),
                     ],

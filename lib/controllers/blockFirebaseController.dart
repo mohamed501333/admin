@@ -96,9 +96,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
   // }
 
   c() {
-    if (all.isNotEmpty) {
-      for (var element in all) {
-        element.Hscissor=0;
+    // if (all.isNotEmpty) {
+    //   for (var element in all) {
+    //     element.Hscissor=0;
     // element.item.volume =
     //     element.item.H * element.item.L * element.item.W / 1000000;
     // element.item.wight = element.item.H *
@@ -108,9 +108,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
     //     1000000;
     //     element.notFinals.clear();
     //     element.fractions.clear();
-      }
-      for (var element in all.where((element) => element.actions.get_Date_of_action(BlockAction.consume_block.getactionTitle).formatToInt()<DateTime.now().formatToInt())) {
-        element.Hscissor=15;
+    // }
+    // for (var element in all.where((element) => element.actions.get_Date_of_action(BlockAction.consume_block.getactionTitle).formatToInt()<DateTime.now().formatToInt())) {
+    //   element.Hscissor=15;
     // element.item.volume =
     //     element.item.H * element.item.L * element.item.W / 1000000;
     // element.item.wight = element.item.H *
@@ -120,13 +120,13 @@ class BlockFirebasecontroller extends ChangeNotifier {
     //     1000000;
     //     element.notFinals.clear();
     //     element.fractions.clear();
-      }
-      var s = {};
-      s.addEntries(
-          all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
+    //   }
+    //   var s = {};
+    //   s.addEntries(
+    //       all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
 
-      FirebaseDatabase.instance.ref("blocks").set(s);
-    }
+    //   FirebaseDatabase.instance.ref("blocks").set(s);
+    // }
   }
 
   void runFilter(String enteredKeyword) {
