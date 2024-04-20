@@ -54,16 +54,17 @@ class scissor_viewmodel extends BaseViewModel {
   }
 
   double total_volume_for_T_D_C_Blocks(Itme e, List<BlockModel> blocks) {
-    return blocks
+    var a = blocks
         .where(
           (f) =>
               e.color == f.item.color &&
               e.density == f.item.density &&
               e.type == f.item.type,
         )
-        .map((e) => e.item.L * e.item.H * e.item.W / 1000000)
-        .reduce((a, b) => a + b);
+        .map((e) => e.item.L * e.item.H * e.item.W / 1000000);
+    return a.isEmpty ? 0 : a.reduce((a, b) => a + b);
   }
+
   int total_Quantity_for_T_D_C_Blocks(Itme e, List<BlockModel> blocks) {
     return blocks
         .where(
@@ -71,7 +72,8 @@ class scissor_viewmodel extends BaseViewModel {
               e.color == f.item.color &&
               e.density == f.item.density &&
               e.type == f.item.type,
-        ).length;
+        )
+        .length;
   }
 
   double total_volume_for_T_D_C_fractions(Itme e, List<FractionModel> fract) {
@@ -85,6 +87,7 @@ class scissor_viewmodel extends BaseViewModel {
         .map((e) => e.item.L * e.item.H * e.item.W / 1000000)
         .reduce((a, b) => a + b);
   }
+
   int total_Quantity_for_T_D_C_fractions(Itme e, List<FractionModel> fract) {
     return fract
         .where(
@@ -92,8 +95,8 @@ class scissor_viewmodel extends BaseViewModel {
               e.color == f.item.color &&
               e.density == f.item.density &&
               e.type == f.item.type,
-        ).length;
-      
+        )
+        .length;
   }
 
   double total_amount_for_notfinals(NotFinal e, List<NotFinal> fractions) {

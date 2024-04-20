@@ -1,22 +1,37 @@
+import 'package:flutter/material.dart' as c;
 import 'package:flutter/services.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/bFractionsController.dart';
+import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
+import 'package:provider/provider.dart';
 
 class PdfForHscissor {
   static Future<Document> generate(
-      sissor, List<BlockModel> b, chosenDate) async {
+      sissor, c.BuildContext context, chosenDate) async {
     var data = await rootBundle.load("assets/fonts/HacenTunisia.ttf");
-    var blocks = b
+    List<BlockModel> blocks = context
+        .read<BlockFirebasecontroller>()
+        .blocks
         .where((element) =>
             element.Hscissor == sissor &&
             element.actions
                     .get_Date_of_action(
                         BlockAction.cut_block_on_H.getactionTitle)
+                    .formatt() ==
+                chosenDate)
+        .toList();
+    List<FractionModel> fractions = context
+        .read<Fractions_Controller>()
+        .fractions
+        .where((element) =>
+            element.Hscissor == sissor &&
+            element.actions
+                    .get_Date_of_action(FractionActon.creat_fraction.getTitle)
                     .formatt() ==
                 chosenDate)
         .toList();
@@ -49,7 +64,7 @@ class PdfForHscissor {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  table0(blocks, 3, chosenDate),
+                  table0(blocks, 3, chosenDate, fractions),
                 ]),
           ];
         },
@@ -59,10 +74,8 @@ class PdfForHscissor {
   }
 }
 
-table0(List<BlockModel> a, int s, String chosenDate) {
-  Fractions_Controller fractrioncontroller = Fractions_Controller();
-
-  List<FractionModel> fractions = fractrioncontroller.fractions;
+table0(List<BlockModel> a, int s, String chosenDate,
+    List<FractionModel> fractions) {
   List<NotFinal> notfinals = a.expand((element) => element.notFinals).toList();
   scissor_viewmodel vm = scissor_viewmodel();
   double totalblockvolume =
@@ -73,9 +86,9 @@ table0(List<BlockModel> a, int s, String chosenDate) {
               .reduce((value, element) => value + element)
               .toStringAsFixed(1)
               .to_double();
-  double totlresultsvolume = fractrioncontroller.fractions.isEmpty
+  double totlresultsvolume = fractions.isEmpty
       ? 0
-      : fractrioncontroller.fractions
+      : fractions
           .map((e) => e.item.L * e.item.W * e.item.H / 1000000)
           .reduce((a, b) => a + b)
           .toStringAsFixed(1)
@@ -88,9 +101,9 @@ table0(List<BlockModel> a, int s, String chosenDate) {
       : a
           .map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)
           .reduce((value, element) => value + element);
-  double resultewt = fractrioncontroller.fractions.isEmpty
+  double resultewt = fractions.isEmpty
       ? 0
-      : fractrioncontroller.fractions
+      : fractions
           .map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)
           .reduce((a, b) => a + b);
   double diffrenceofwt = bolckswt - resultewt;
@@ -285,7 +298,7 @@ table0(List<BlockModel> a, int s, String chosenDate) {
           ]),
         ]),
       ]),
-      table3(a), table4(a)
+      table3(a, fractions), table4(a, fractions)
     ]),
     SizedBox(width: 15),
     Column(
@@ -353,11 +366,8 @@ table2(List<FractionModel> fractions) {
       ]));
 }
 
-table3(List<BlockModel> a) {
-  Fractions_Controller fractrioncontroller = Fractions_Controller();
-
+table3(List<BlockModel> a, List<FractionModel> fractions) {
   scissor_viewmodel vm = scissor_viewmodel();
-  List<FractionModel> fractions = fractrioncontroller.fractions;
 
   return SizedBox(
       width: 250,
@@ -431,11 +441,8 @@ table3(List<BlockModel> a) {
       ]));
 }
 
-table4(List<BlockModel> a) {
-  Fractions_Controller fractrioncontroller = Fractions_Controller();
-
+table4(List<BlockModel> a, List<FractionModel> fractions) {
   scissor_viewmodel vm = scissor_viewmodel();
-  List<FractionModel> fractions = fractrioncontroller.fractions;
 
   return SizedBox(
       width: 250,

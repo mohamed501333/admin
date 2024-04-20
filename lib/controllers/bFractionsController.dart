@@ -7,12 +7,25 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 
 class Fractions_Controller extends ChangeNotifier {
-  get_Fractions_data() async {
-    await FirebaseDatabase.instance
+  get_Fractions_data() {
+    FirebaseDatabase.instance
         .ref("fractions")
+        .orderByKey()
         .onValue
-        .listen((event) async {
-      await getInitialData(event.snapshot);
+        .first
+        .then((event) {
+      getInitialData(event.snapshot);
+    }).then((value) => FirebaseDatabase.instance
+                .ref("fractions")
+                .orderByKey()
+                .startAfter("${fractions.last.fraction_ID}")
+                .onChildAdded
+                .listen((f) {
+              refrech(f);
+            }));
+
+    FirebaseDatabase.instance.ref("fractions").onChildChanged.listen((vv) {
+      refrech(vv);
     });
   }
 
@@ -40,7 +53,7 @@ class Fractions_Controller extends ChangeNotifier {
 
   refrech(DatabaseEvent vv) async {
     FractionModel newvalue =
-        FractionModel.fromJson(vv.snapshot.children.last.value as String);
+        FractionModel.fromJson(vv.snapshot.value as String);
     print(newvalue.fraction_ID);
 //--------------------------------------------------
     all.removeWhere((element) => element.fraction_ID == newvalue.fraction_ID);
@@ -71,19 +84,17 @@ class Fractions_Controller extends ChangeNotifier {
   }
 
   addfractions(FractionModel fraction) async {
-    try {
-      await FirebaseDatabase.instance
-          .ref("fractions/${fraction.fraction_ID}")
-          .set(fraction.toJson())
-          .whenComplete(() => get_Fractions_data());
-    } catch (e) {}
+    await FirebaseDatabase.instance
+        .ref("fractions/${fraction.fraction_ID}")
+        .set(fraction.toJson());
   }
 
   addfractionslist(List<FractionModel> fractionsss) async {
     for (var element in fractionsss) {
-      FirebaseDatabase.instance.ref("fractions/${element.fraction_ID}").set(element.toJson());
+      FirebaseDatabase.instance
+          .ref("fractions/${element.fraction_ID}")
+          .set(element.toJson());
     }
-   
   }
 
   deletefractions(FractionModel fraction) {

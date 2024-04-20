@@ -1,25 +1,38 @@
+import 'package:flutter/material.dart' as m;
 import 'package:flutter/services.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/bFractionsController.dart';
+import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
+import 'package:provider/provider.dart';
 
 class PdfForAllOfH {
   static Future<Document> generate(
-      sissor, List<BlockModel> b, chosenDate) async {
-    Fractions_Controller fractrioncontroller = Fractions_Controller();
-
-    var data = await rootBundle.load("assets/fonts/HacenTunisia.ttf");
-    var blocks = b
+      sissor, m.BuildContext context, chosenDate) async {
+    List<BlockModel> b = context
+        .read<BlockFirebasecontroller>()
+        .blocks
         .where((element) =>
             element.actions
                 .get_Date_of_action(BlockAction.cut_block_on_H.getactionTitle)
                 .formatt() ==
             chosenDate)
         .toList();
+    List<FractionModel> fractions = context
+        .read<Fractions_Controller>()
+        .fractions
+        .where((element) =>
+            element.actions
+                .get_Date_of_action(FractionActon.creat_fraction.getTitle)
+                .formatt() ==
+            chosenDate)
+        .toList();
+    var data = await rootBundle.load("assets/fonts/HacenTunisia.ttf");
+
     var arabicFont = Font.ttf(data);
     final pdf = Document();
     const double inch = 72.0;
@@ -35,19 +48,20 @@ class PdfForAllOfH {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         build: (context) {
-          List<FractionModel> fractions = fractrioncontroller.fractions;
-
           return [
             SizedBox(height: 10),
             Center(
                 child: Container(
                     decoration: const BoxDecoration(color: PdfColors.grey500),
-                    child: Text("يومية المقصات  الراسى $chosenDate",
+                    child: Text("يومية كل المقصات  الراسى $chosenDate",
                         style: const TextStyle(fontSize: 14)))),
             Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [table0(blocks, chosenDate), table2(fractions)]),
+                children: [
+                  table0(b, chosenDate, fractions),
+                  table2(fractions)
+                ]),
           ];
         },
       ),
@@ -56,9 +70,7 @@ class PdfForAllOfH {
   }
 }
 
-table0(List<BlockModel> a, String chosenDate) {
-  Fractions_Controller fractrioncontroller = Fractions_Controller();
-
+table0(List<BlockModel> a, String chosenDate, List<FractionModel> fractions) {
   List<NotFinal> notfinals = a.expand((element) => element.notFinals).toList();
   scissor_viewmodel vm = scissor_viewmodel();
   double totalblockvolume =
@@ -69,9 +81,9 @@ table0(List<BlockModel> a, String chosenDate) {
               .reduce((value, element) => value + element)
               .toStringAsFixed(1)
               .to_double();
-  double totlresultsvolume = fractrioncontroller.fractions.isEmpty
+  double totlresultsvolume = fractions.isEmpty
       ? 0
-      : fractrioncontroller.fractions
+      : fractions
           .map((e) => e.item.L * e.item.W * e.item.H / 1000000)
           .reduce((a, b) => a + b)
           .toStringAsFixed(1)
@@ -84,9 +96,9 @@ table0(List<BlockModel> a, String chosenDate) {
       : a
           .map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)
           .reduce((value, element) => value + element);
-  double resultewt = fractrioncontroller.fractions.isEmpty
+  double resultewt = fractions.isEmpty
       ? 0
-      : fractrioncontroller.fractions
+      : fractions
           .map((e) => e.item.density * e.item.L * e.item.W * e.item.H / 1000000)
           .reduce((a, b) => a + b);
   double diffrenceofwt = bolckswt - resultewt;
@@ -281,12 +293,13 @@ table0(List<BlockModel> a, String chosenDate) {
         ]),
       ]),
 
-      table3(a),
-      table4(a)
+      table3(a, fractions),
+      table4(a, fractions)
     ]),
   ]);
 }
 
+//الجدول الى على الشمال
 table2(List<FractionModel> fractions) {
   scissor_viewmodel vm = scissor_viewmodel();
 
@@ -346,11 +359,8 @@ table2(List<FractionModel> fractions) {
       ]));
 }
 
-table3(List<BlockModel> a) {
-  Fractions_Controller fractrioncontroller = Fractions_Controller();
-
+table3(List<BlockModel> a, List<FractionModel> fractions) {
   scissor_viewmodel vm = scissor_viewmodel();
-  List<FractionModel> fractions = fractrioncontroller.fractions;
 
   return SizedBox(
       width: 210,
@@ -423,11 +433,8 @@ table3(List<BlockModel> a) {
       ]));
 }
 
-table4(List<BlockModel> a) {
-  Fractions_Controller fractrioncontroller = Fractions_Controller();
-
+table4(List<BlockModel> a, List<FractionModel> fractions) {
   scissor_viewmodel vm = scissor_viewmodel();
-  List<FractionModel> fractions = fractrioncontroller.fractions;
 
   return SizedBox(
       width: 210,

@@ -33,7 +33,6 @@ class _H_Reports_viewState extends State<H_Reports_view> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-               
                 TextButton(
                     onPressed: () async {
                       DateTime? pickedDate = await showDatePicker(
@@ -54,13 +53,12 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                       style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     )),
-               
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
                       onTap: () {
                         permission().then((value) async {
-                          PdfForAllOfH.generate(1, myType.blocks, chosenDate)
+                          PdfForAllOfH.generate(1, context, chosenDate)
                               .then((value) => context.gonext(
                                   context,
                                   PDfpreview(
@@ -68,13 +66,11 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                                   )));
                         });
                       },
-                      child: Container(
-                        child: const Row(
-                          children: [
-                            Text("كل الراسى"),
-                            Icon(Icons.picture_as_pdf),
-                          ],
-                        ),
+                      child: const Row(
+                        children: [
+                          Text("كل الراسى"),
+                          Icon(Icons.picture_as_pdf),
+                        ],
                       )),
                 ),
                 Padding(
@@ -82,7 +78,7 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                   child: GestureDetector(
                       onTap: () {
                         permission().then((value) async {
-                          PdfForHscissor.generate(1, myType.blocks, chosenDate)
+                          PdfForHscissor.generate(1, context, chosenDate)
                               .then((value) => context.gonext(
                                   context,
                                   PDfpreview(
@@ -102,7 +98,7 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                   child: GestureDetector(
                       onTap: () {
                         permission().then((value) async {
-                          PdfForHscissor.generate(2, myType.blocks, chosenDate)
+                          PdfForHscissor.generate(2, context, chosenDate)
                               .then((value) => context.gonext(
                                   context,
                                   PDfpreview(
@@ -122,7 +118,7 @@ class _H_Reports_viewState extends State<H_Reports_view> {
                   child: GestureDetector(
                       onTap: () {
                         permission().then((value) async {
-                          PdfForHscissor.generate(3, myType.blocks, chosenDate)
+                          PdfForHscissor.generate(3, context, chosenDate)
                               .then((value) => context.gonext(
                                   context,
                                   PDfpreview(

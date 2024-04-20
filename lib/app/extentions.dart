@@ -95,60 +95,99 @@ extension Toint on String {
 }
 
 extension Fd on List<ChemicalsModel> {
-  List<ChemicalsModel> Data_Between_TowDates_of_name(DateTime from, DateTime to,String name) {
+  List<ChemicalsModel> Data_Between_TowDates_of_name(
+      DateTime from, DateTime to, String name) {
     List<ChemicalsModel> data = [];
-  
+
     data.addAll(where((element) =>
-            element.actions.if_action_exist(ChemicalAction.creat_new_ChemicalAction_item.getTitle)==true&&
-        element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt() <=to.formatToInt()&&
-        element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt() >=from.formatToInt())
-        );
+        element.actions.if_action_exist(
+                ChemicalAction.creat_new_ChemicalAction_item.getTitle) ==
+            true &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                .formatToInt() <=
+            to.formatToInt() &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                .formatToInt() >=
+            from.formatToInt()));
     data.addAll(where((element) =>
-            element.actions.if_action_exist(ChemicalAction.creat_Out_ChemicalAction_item.getTitle)==true&&
-        element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt() <=to.formatToInt()&&
-        element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt() >=from.formatToInt())
-        );
-        
-    return data.where((element) => element.name==name).toList();
+        element.actions.if_action_exist(
+                ChemicalAction.creat_Out_ChemicalAction_item.getTitle) ==
+            true &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+                .formatToInt() <=
+            to.formatToInt() &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+                .formatToInt() >=
+            from.formatToInt()));
+
+    return data.where((element) => element.name == name).toList();
   }
+
   List<ChemicalsModel> Data_Between_TowDates(DateTime from, DateTime to) {
     List<ChemicalsModel> data = [];
-  
+
     data.addAll(where((element) =>
-            element.actions.if_action_exist(ChemicalAction.creat_new_ChemicalAction_item.getTitle)==true&&
-        element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt() <=to.formatToInt()&&
-        element.actions.get_Date_of_action(ChemicalAction.creat_new_ChemicalAction_item.getTitle).formatToInt() >=from.formatToInt())
-        );
+        element.actions.if_action_exist(
+                ChemicalAction.creat_new_ChemicalAction_item.getTitle) ==
+            true &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                .formatToInt() <=
+            to.formatToInt() &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                .formatToInt() >=
+            from.formatToInt()));
     data.addAll(where((element) =>
-            element.actions.if_action_exist(ChemicalAction.creat_Out_ChemicalAction_item.getTitle)==true&&
-        element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt() <=to.formatToInt()&&
-        element.actions.get_Date_of_action(ChemicalAction.creat_Out_ChemicalAction_item.getTitle).formatToInt() >=from.formatToInt())
-        );
-        
+        element.actions.if_action_exist(
+                ChemicalAction.creat_Out_ChemicalAction_item.getTitle) ==
+            true &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+                .formatToInt() <=
+            to.formatToInt() &&
+        element.actions
+                .get_Date_of_action(
+                    ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+                .formatToInt() >=
+            from.formatToInt()));
+
     return data;
   }
 
-  List<ChemicalsModel> Data_Before_Starta_of_name(DateTime start,String name) {
+  List<ChemicalsModel> Data_Before_Starta_of_name(DateTime start, String name) {
     List<ChemicalsModel> data = [];
     data.addAll(where((element) =>
-          element.actions.if_action_exist( ChemicalAction.creat_new_ChemicalAction_item.getTitle)==true&&
+        element.actions.if_action_exist(
+                ChemicalAction.creat_new_ChemicalAction_item.getTitle) ==
+            true &&
         element.actions
-            .get_Date_of_action(
-                ChemicalAction.creat_new_ChemicalAction_item.getTitle)
-            .formatToInt() <
-        start.formatToInt()));
-    data.addAll(
-      where((element) =>
-      element.actions.if_action_exist( ChemicalAction.creat_Out_ChemicalAction_item.getTitle)==true&&
+                .get_Date_of_action(
+                    ChemicalAction.creat_new_ChemicalAction_item.getTitle)
+                .formatToInt() <
+            start.formatToInt()));
+    data.addAll(where((element) =>
+        element.actions.if_action_exist(
+                ChemicalAction.creat_Out_ChemicalAction_item.getTitle) ==
+            true &&
         element.actions
-            .get_Date_of_action(
-                ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
-            .formatToInt() <
-        start.formatToInt()));
-    return data.where((element) => element.name==name).toList();
+                .get_Date_of_action(
+                    ChemicalAction.creat_Out_ChemicalAction_item.getTitle)
+                .formatToInt() <
+            start.formatToInt()));
+    return data.where((element) => element.name == name).toList();
   }
-
-
 
   double countOf(ChemicalsModel e) {
     var a =
@@ -274,7 +313,7 @@ extension Fd on List<ChemicalsModel> {
 
 extension ZErgh on List<SubFraction> {
   List<SubFraction> ReturnFirstPiriodBalanceOFUnderoperationSubFractons(
-      DateTimeRange initialDateRange) {
+      DateTime start) {
     //------------------------------------------------
     List<SubFraction> fractionscreatedBeforeperiod = where((element) =>
         element.actions.if_action_exist(
@@ -283,7 +322,7 @@ extension ZErgh on List<SubFraction> {
                 .get_Date_of_action(
                     subfractionAction.create_new_subfraction.getTitle)
                 .formatToInt() <
-            initialDateRange.start.formatToInt()).toList();
+            start.formatToInt()).toList();
 
     List<SubFraction> fractionscuttedBeforeStart = where((element) =>
         (element.actions.if_action_exist(subfractionAction.cut_subfraction_on_R.getTitle) == true &&
@@ -291,18 +330,18 @@ extension ZErgh on List<SubFraction> {
                     .get_Date_of_action(
                         subfractionAction.cut_subfraction_on_R.getTitle)
                     .formatToInt() <
-                initialDateRange.start.formatToInt()) ||
+                start.formatToInt()) ||
         (element.actions.if_action_exist(subfractionAction.cut_subfraction_on_A.getTitle) == true &&
             element.actions
                     .get_Date_of_action(
                         subfractionAction.cut_subfraction_on_A.getTitle)
                     .formatToInt() <
-                initialDateRange.start.formatToInt()) ||
+                start.formatToInt()) ||
         (element.actions.if_action_exist(subfractionAction.cut_subfraction_on_H.getTitle) == true &&
             element.actions
                     .get_Date_of_action(subfractionAction.cut_subfraction_on_H.getTitle)
                     .formatToInt() <
-                initialDateRange.start.formatToInt())).toList();
+                start.formatToInt())).toList();
 
     List<SubFraction> firstperiocBalance = //رصيد قبل الفتره
         List.from(Set.from(fractionscreatedBeforeperiod)
@@ -399,6 +438,9 @@ extension Filter on List<FinalProductModel> {
   List<FinalProductModel> filterFinalProductDateBetween(
       DateTimeRange initialDateRange) {
     return where((element) =>
+        element.actions.if_action_exist(finalProdcutAction
+                .incert_finalProduct_from_cutingUnit.getactionTitle) ==
+            true &&
         element.actions
                 .get_Date_of_action(finalProdcutAction
                     .incert_finalProduct_from_cutingUnit.getactionTitle)
@@ -599,7 +641,8 @@ extension sdsd on List<NotFinal> {
 
 extension Filterfgddf on List<FractionModel> {
   List<FractionModel> ReturnFirstPiriodBalanceOFUnderoperationFractons(
-      DateTimeRange initialDateRange) {
+    DateTime start,
+  ) {
     //------------------------------------------------
     List<FractionModel> fractionscreatedBeforeperiod = where((element) =>
         element.actions
@@ -607,58 +650,30 @@ extension Filterfgddf on List<FractionModel> {
         element.actions
                 .get_Date_of_action(FractionActon.creat_fraction.getTitle)
                 .formatToInt() <
-            initialDateRange.start.formatToInt()).toList();
+            start.formatToInt()).toList();
     List<FractionModel> fractionscuttedBeforeStart = where((element) =>
         (element.actions.if_action_exist(FractionActon.cut_fraction_OnRscissor.getTitle) == true &&
             element.actions
                     .get_Date_of_action(
                         FractionActon.cut_fraction_OnRscissor.getTitle)
                     .formatToInt() <
-                initialDateRange.start.formatToInt()) ||
+                start.formatToInt()) ||
         (element.actions.if_action_exist(FractionActon.cut_fraction_OnAscissor.getTitle) == true &&
             element.actions
                     .get_Date_of_action(
                         FractionActon.cut_fraction_OnAscissor.getTitle)
                     .formatToInt() <
-                initialDateRange.start.formatToInt()) ||
+                start.formatToInt()) ||
         (element.actions.if_action_exist(FractionActon.cut_fraction_OnRscissor.getTitle) == true &&
             element.actions
                     .get_Date_of_action(FractionActon.cut_fraction_OnRscissor.getTitle)
                     .formatToInt() <
-                initialDateRange.start.formatToInt())).toList();
+                start.formatToInt())).toList();
 
     List<FractionModel> firstperiocBalance = //رصيد قبل الفتره
         List.from(Set.from(fractionscreatedBeforeperiod)
             .difference(Set.from(fractionscuttedBeforeStart)));
     return firstperiocBalance;
-    //------------------------------------------------
-    // var fractionscuttedINPeriod = // الغرد المقصوصه فى الغتره
-    //     where((element) =>
-    //         (element.actions.get_Date_of_action(FractionActon.cut_fraction_OnAscissor.getTitle).formatToInt() >=
-    //                 initialDateRange.start.formatToInt() &&
-    //             element.actions
-    //                     .get_Date_of_action(
-    //                         FractionActon.cut_fraction_OnAscissor.getTitle)
-    //                     .formatToInt() <
-    //                 initialDateRange.end.formatToInt()) ||
-    //         (element.actions.get_Date_of_action(FractionActon.cut_fraction_OnRscissor.getTitle).formatToInt() >=
-    //                 initialDateRange.start.formatToInt() &&
-    //             element.actions
-    //                     .get_Date_of_action(
-    //                         FractionActon.cut_fraction_OnRscissor.getTitle)
-    //                     .formatToInt() <
-    //                 initialDateRange.end.formatToInt()) ||
-    //         (element.actions.get_Date_of_action(FractionActon.cut_fraction_OnHscissor.getTitle).formatToInt() >=
-    //                 initialDateRange.start.formatToInt() &&
-    //             element.actions
-    //                     .get_Date_of_action(
-    //                         FractionActon.cut_fraction_OnHscissor.getTitle)
-    //                     .formatToInt() <
-    //                 initialDateRange.end.formatToInt())).toList();
-    // // print(fractionscuttedINPeriod.length);
-    // //------------------------------------------------
-    // return List.from(Set.from(firstperiocBalance)
-    //     .difference(Set.from(fractionscuttedINPeriod)));
   }
 
   List<FractionModel> filteronFractionModel() {
@@ -715,8 +730,6 @@ extension Filterfgddf on List<FractionModel> {
     }
     return nonRepetitive;
   }
-
-// filter date and not archive
 }
 
 extension C33r on List<NotFinal> {
@@ -966,6 +979,17 @@ extension A1 on List<BlockModel> {
       }
     }
     return nonRepetitive;
+  }
+
+  List<BlockModel> consumedAndNotCuttedBeforeStartDate(DateTime from) {
+    return where((element) =>
+        element.actions
+            .if_action_exist(BlockAction.consume_block.getactionTitle) &&
+        element.Hscissor == 0 &&
+        element.actions
+                .get_Date_of_action(BlockAction.consume_block.getactionTitle)
+                .formatToInt() <
+            from.formatToInt()).toList();
   }
 }
 

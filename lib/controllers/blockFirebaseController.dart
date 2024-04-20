@@ -24,10 +24,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
       print("onChildChanged");
       refrech(vv);
     });
-    // FirebaseDatabase.instance.ref("blocks").onChildAdded.listen((vv) async {
-    //   print("onChildAdded");
-    //   await refrech(vv);
-    // });
   }
 
   getInitialData(DataSnapshot v) async {

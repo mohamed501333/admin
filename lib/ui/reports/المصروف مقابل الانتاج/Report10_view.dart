@@ -1,7 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/ui/recources/enums.dart';
+import 'package:provider/provider.dart';
+
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/bSubfractions.dart';
@@ -11,24 +15,30 @@ import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/reports/%D8%A7%D9%84%D9%85%D8%B5%D8%B1%D9%88%D9%81%20%D9%85%D9%82%D8%A7%D8%A8%D9%84%20%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%A7%D8%AC/Report10_viewMdel.dart';
 
-import 'package:provider/provider.dart';
-
 class Report10View extends StatelessWidget {
   Report10View({super.key});
   Rscissor_viewmodel vm = Rscissor_viewmodel();
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<SettingController, BlockFirebasecontroller,
-        final_prodcut_controller>(
-      builder: (context, myType, blockscontroller, finalprodcuts, child) {
+    return Consumer5<
+        SettingController,
+        BlockFirebasecontroller,
+        final_prodcut_controller,
+        Fractions_Controller,
+        SubFractions_Controller>(
+      builder:
+          (context, myType, blockscontroller, finalprodcuts, child, f, fd) {
         List<BlockModel> allblocks = blockscontroller.blocks;
         List<Itme> allunderoberationofFirstPeriod =
-            allUnderOperationOfFirstPeriod(allblocks, myType, context);
+            allUnderOperationOfFirstPeriod(myType, context);
 
         List<BlockModel> blocksconsumedBetweenTowDates =
             allblocks.filterConsumeDateBetween(
                 DateTimeRange(start: myType.from, end: myType.to));
+        //---------------------------------------------------------------------------
+        List<Itme> totalRemian = allUnderOperationBetweenperiod(
+            myType, context, blocksconsumedBetweenTowDates);
         //---------------------------------------------------------------------------
 
         List<FinalProductModel> finalproductsBetweenTowDates =
@@ -50,18 +60,19 @@ class Report10View extends StatelessWidget {
                     DatePickerFrom(),
                   ],
                 ),
+//جدول الاجماليات
                 TableOfTotals(
-                    allunderoberationofFirstPeriod:
-                        allunderoberationofFirstPeriod,
-                    blocksconsumedBetweenTowDates:
-                        blocksconsumedBetweenTowDates,
-                    finalproductsBetweenTowDates: finalproductsBetweenTowDates,
-                    vm: vm),
+                    allunderoberationofFirstPeriod,
+                    blocksconsumedBetweenTowDates,
+                    finalproductsBetweenTowDates,
+                    vm,
+                    totalRemian),
+//اول المده تفصيلى من تحت التشغيل
                 TableOfFiretPeriodUnderOperationInDetals(
-                    allunderoberationofFirstPeriod:
-                        allunderoberationofFirstPeriod),
-                DetailsOfFinlProdcuts(
-                    finalproductsBetweenTowDates: finalproductsBetweenTowDates)
+                    allunderoberationofFirstPeriod),
+//تفصيلى الانتاج
+                DetailsOfFinlProdcuts(finalproductsBetweenTowDates),
+                TotalRemain(totalRemian)
               ],
             ),
           ),
@@ -70,18 +81,21 @@ class Report10View extends StatelessWidget {
     );
   }
 
-  List<Itme> allUnderOperationOfFirstPeriod(List<BlockModel> allblocks,
+//رصيد اول المده تحت التشغيل سواء بلوكات او فراكشن او فرد
+  List<Itme> allUnderOperationOfFirstPeriod(
       SettingController myType, BuildContext context) {
-    Fractions_Controller fractrioncontroller = Fractions_Controller();
-
+    List<BlockModel> blocksUnderOperation = context
+        .read<BlockFirebasecontroller>()
+        .blocks
+        .consumedAndNotCuttedBeforeStartDate(myType.from);
     //---------------------------------------------------------------------------
     List<FractionModel>
         fractionsUnderOperation = //رصيد اول المده من تحت التشغيل
-        fractrioncontroller.fractions
-            .where((element) => element.underOperation == true)
+        context
+            .read<Fractions_Controller>()
+            .fractions
             .toList()
-            .ReturnFirstPiriodBalanceOFUnderoperationFractons(
-                DateTimeRange(start: myType.from, end: myType.to));
+            .ReturnFirstPiriodBalanceOFUnderoperationFractons(myType.from);
     //---------------------------------------------------------------------------
 
     List<SubFraction>
@@ -89,21 +103,66 @@ class Report10View extends StatelessWidget {
         context
             .read<SubFractions_Controller>()
             .subfractions
-            .ReturnFirstPiriodBalanceOFUnderoperationSubFractons(
-                DateTimeRange(start: myType.from, end: myType.to));
+            .ReturnFirstPiriodBalanceOFUnderoperationSubFractons(myType.from);
     //---------------------------------------------------------------------------
+
     List<Itme> allunderoberationofFirstPeriod =
         fractionsUnderOperation.map((element) => element.item).toList() +
+            blocksUnderOperation.map((element) => element.item).toList() +
             subfractionsUnderoperation.map((element) => element.item).toList();
+    return allunderoberationofFirstPeriod;
+  }
+
+  //المتبقى من تحت التشغيل سواء بلوكات او فراكشن او فرد
+  List<Itme> allUnderOperationBetweenperiod(SettingController myType,
+      BuildContext context, List<BlockModel> blocksconsumedBetweenTowDates) {
+    List<BlockModel> blocksUnderOperationinperiod =
+        blocksconsumedBetweenTowDates
+            .where((element) => element.Hscissor == 0)
+            .toList();
+    //---------------------------------------------------------------------------
+    List<FractionModel> fractionsUnderOperation = context
+        .read<Fractions_Controller>()
+        .fractions
+        .where((element) => element.underOperation == true)
+        .where((element) =>
+            element.actions
+                .if_action_exist(FractionActon.creat_fraction.getTitle) &&
+            element.actions
+                    .get_Date_of_action(FractionActon.creat_fraction.getTitle)
+                    .formatToInt() <=
+                myType.to.formatToInt())
+        .toList();
+    //---------------------------------------------------------------------------
+
+    List<SubFraction> subfractionsUnderoperation = context
+        .read<SubFractions_Controller>()
+        .subfractions
+        .where((element) => element.underOperation == true)
+        .where((element) =>
+            element.actions.if_action_exist(
+                subfractionAction.create_new_subfraction.getTitle) &&
+            element.actions
+                    .get_Date_of_action(
+                        subfractionAction.create_new_subfraction.getTitle)
+                    .formatToInt() <=
+                myType.to.formatToInt())
+        .toList();
+    //---------------------------------------------------------------------------
+
+    List<Itme> allunderoberationofFirstPeriod = fractionsUnderOperation
+            .map((element) => element.item)
+            .toList() +
+        blocksUnderOperationinperiod.map((element) => element.item).toList() +
+        subfractionsUnderoperation.map((element) => element.item).toList();
     return allunderoberationofFirstPeriod;
   }
 }
 
 class DetailsOfFinlProdcuts extends StatelessWidget {
-  const DetailsOfFinlProdcuts({
-    super.key,
-    required this.finalproductsBetweenTowDates,
-  });
+  const DetailsOfFinlProdcuts(
+    this.finalproductsBetweenTowDates,
+  );
 
   final List<FinalProductModel> finalproductsBetweenTowDates;
 
@@ -121,13 +180,11 @@ class DetailsOfFinlProdcuts extends StatelessWidget {
               TableRow(
                   decoration: BoxDecoration(color: Colors.grey),
                   children: [
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("اجمالى الانتاج تفصيلى "),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("اجمالى الانتاج تفصيلى "),
+                      ],
                     ),
                   ]),
             ],
@@ -184,10 +241,9 @@ class DetailsOfFinlProdcuts extends StatelessWidget {
 }
 
 class TableOfFiretPeriodUnderOperationInDetals extends StatelessWidget {
-  const TableOfFiretPeriodUnderOperationInDetals({
-    super.key,
-    required this.allunderoberationofFirstPeriod,
-  });
+  const TableOfFiretPeriodUnderOperationInDetals(
+    this.allunderoberationofFirstPeriod,
+  );
 
   final List<Itme> allunderoberationofFirstPeriod;
 
@@ -205,13 +261,11 @@ class TableOfFiretPeriodUnderOperationInDetals extends StatelessWidget {
               TableRow(
                   decoration: BoxDecoration(color: Colors.grey),
                   children: [
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(" رصيد اول المده (تحت التشغيل) تفصيلى"),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(" رصيد اول المده (تحت التشغيل) تفصيلى"),
+                      ],
                     ),
                   ]),
             ],
@@ -268,19 +322,100 @@ class TableOfFiretPeriodUnderOperationInDetals extends StatelessWidget {
   }
 }
 
+class TotalRemain extends StatelessWidget {
+  const TotalRemain(
+    this.totalRemain,
+  );
+
+  final List<Itme> totalRemain;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 300,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Table(
+            border: TableBorder.all(),
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: const [
+              TableRow(
+                  decoration: BoxDecoration(color: Colors.grey),
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(" المتبقى (تحت التشغيل)"),
+                      ],
+                    ),
+                  ]),
+            ],
+          ),
+          Table(
+            columnWidths: const {
+              0: FlexColumnWidth(3),
+              1: FlexColumnWidth(1),
+            },
+            border: TableBorder.all(),
+            children: const [
+              TableRow(children: [
+                Center(
+                  child: Text("من"),
+                ),
+                Center(
+                  child: Text("عدد"),
+                )
+              ]),
+            ],
+          ),
+          Table(
+            columnWidths: const {
+              0: FlexColumnWidth(3),
+              1: FlexColumnWidth(1),
+            },
+            border: TableBorder.all(),
+            children: totalRemain
+                .filterRepeats()
+                .sortedBy<num>((element) => element.density)
+                .map((e) => TableRow(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                              textDirection: TextDirection.rtl,
+                              "      ${e.color} ${e.type} ك ${e.density.removeTrailingZeros}"),
+                          Text(
+                              textDirection: TextDirection.rtl,
+                              "${e.L.removeTrailingZeros}*${e.W.removeTrailingZeros}*${e.H.removeTrailingZeros}"),
+                        ],
+                      ),
+                      Center(
+                        child: Text(totalRemain.countOf(e).toString()),
+                      ),
+                    ]))
+                .toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class TableOfTotals extends StatelessWidget {
-  TableOfTotals({
-    super.key,
-    required this.allunderoberationofFirstPeriod,
-    required this.blocksconsumedBetweenTowDates,
-    required this.finalproductsBetweenTowDates,
-    required this.vm,
-  });
+  TableOfTotals(
+    this.allunderoberationofFirstPeriod,
+    this.blocksconsumedBetweenTowDates,
+    this.finalproductsBetweenTowDates,
+    this.vm,
+    this.totalRemain,
+  );
 
   final List<Itme> allunderoberationofFirstPeriod;
   final List<BlockModel> blocksconsumedBetweenTowDates;
   final List<FinalProductModel> finalproductsBetweenTowDates;
   final Rscissor_viewmodel vm;
+  final List<Itme> totalRemain;
 
   final TextStyle textStyle =
       const TextStyle(fontSize: 14, fontWeight: FontWeight.w700);
@@ -298,13 +433,11 @@ class TableOfTotals extends StatelessWidget {
               TableRow(
                   decoration: BoxDecoration(color: Colors.grey),
                   children: [
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("تقرير اجمالى  حجم"),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("تقرير اجمالى  حجم"),
+                      ],
                     ),
                   ]),
             ],
@@ -363,68 +496,10 @@ class TableOfTotals extends StatelessWidget {
                   "اجمالى المتبقى (تحت التشغيل)",
                   style: textStyle,
                 )),
-                const Center(child: Text("")),
+                Center(child: Text(totalRemain.volume().removeTrailingZeros)),
               ].reversed.toList()),
             ],
           ),
-
-          // Table(
-          //   columnWidths: const {
-          //     0: FlexColumnWidth(1),
-          //     1: FlexColumnWidth(1),
-          //     2: FlexColumnWidth(1),
-          //     3: FlexColumnWidth(2.8),
-          //   },
-          //   border: TableBorder.all(),
-          //   children: blocksconsumedBetweenTowDates
-          //       .filter_filter_type_and_density_color()
-          //       .map((e) {
-          //     var b = vm.volOfResults(finalproductsBetweenTowDates, e);
-          //     bb.add(b);
-          //     var a = vm.volOfConsumed(blocksconsumedBetweenTowDates, e);
-          //     aa.add(a);
-          //     return TableRow(
-          //         children: [
-          //       Center(
-          //         child: Text(
-          //             "${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
-          //       ),
-          //       Center(child: Text(a.toStringAsFixed(1))),
-          //       Center(child: Text(b.toStringAsFixed(1))),
-          //       Center(child: Text((a - b).toStringAsFixed(1))),
-          //     ].reversed.toList());
-          //   }).toList(),
-          // ),
-          // Table(
-          //   columnWidths: const {
-          //     0: FlexColumnWidth(1),
-          //     1: FlexColumnWidth(1),
-          //     2: FlexColumnWidth(1),
-          //     3: FlexColumnWidth(2.8),
-          //   },
-          //   border: TableBorder.all(),
-          //   children: [
-          //     TableRow(
-          //         decoration: const BoxDecoration(color: Colors.grey),
-          //         children: [
-          //           const Center(child: Text("الاجمالى")),
-          //           Center(
-          //               child: Text(
-          //                   "${aa.isEmpty ? 0 : aa.reduce((a, b) => a + b).toStringAsFixed(1)} ")),
-          //           Center(
-          //               child: Text(
-          //                   "${bb.isEmpty ? 0 : bb.reduce((a, b) => a + b).toStringAsFixed(1)} ")),
-          //           Center(
-          //               child: Text(((aa.isEmpty
-          //                       ? 0
-          //                       : aa.reduce((a, b) => a + b) -
-          //                           (bb.isEmpty
-          //                               ? 0
-          //                               : bb.reduce((a, b) => a + b))))
-          //                   .toStringAsFixed(1))),
-          //         ].reversed.toList()),
-          //   ],
-          // ),
         ],
       ),
     );
