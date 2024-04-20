@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/fromExcel.dart';
 import 'package:jason_company/app/functions.dart';
-import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwModel.dart';
@@ -49,7 +48,7 @@ class FinalProductStockView extends StatelessWidget {
                   .map(
                     (e) => ExpansionTile(
                         title: Text(
-                          " (${e.name}) ${context.read<Customer_controller>().customers.where((element) => element.serial.toString() == e.name).first.name}",
+                          " (${e.name}) ",
                           style: const TextStyle(
                               fontSize: 16.0, fontWeight: FontWeight.w500),
                         ),
