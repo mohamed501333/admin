@@ -223,4 +223,24 @@ class final_prodcut_controller extends ChangeNotifier {
   List<String> selctedcolors = [];
   List<String> selctedtybes = [];
   List<String> selctedDensities = [];
+  List<String> selctedsizes = [];
+  String? selectedreport;
+  DateTime? pickedDateFrom;
+  DateTime? pickedDateTo;
+  List<DateTime> AllDatesOfOfData() {
+    List<DateTime> a = finalproducts
+        .where((e) => e.actions.if_action_exist(
+            finalProdcutAction.incert_finalProduct_from_Others.getactionTitle))
+        .map((e) => e.actions.get_Date_of_action(
+            finalProdcutAction.incert_finalProduct_from_Others.getactionTitle))
+        .toList();
+    List<DateTime> b = finalproducts
+        .where((e) => e.actions.if_action_exist(finalProdcutAction
+            .incert_finalProduct_from_cutingUnit.getactionTitle))
+        .map((e) => e.actions.get_Date_of_action(finalProdcutAction
+            .incert_finalProduct_from_cutingUnit.getactionTitle))
+        .toList();
+    var v = a + b;
+    return v.isEmpty ? [DateTime.now()] : v;
+  }
 }

@@ -550,6 +550,27 @@ extension Filter on List<FinalProductModel> {
     return nonRepetitive;
   }
 
+  List<FinalProductModel> filter_density_typ_color_size() {
+    List<FinalProductModel> nonRepetitive = [];
+    for (var i = 0; i < length; i++) {
+      bool repeated = false;
+      for (var j = 0; j < nonRepetitive.length; j++) {
+        if (this[i].item.density == nonRepetitive[j].item.density &&
+            this[i].item.type == nonRepetitive[j].item.type &&
+            this[i].item.color == nonRepetitive[j].item.color &&
+            this[i].item.L == nonRepetitive[j].item.L &&
+            this[i].item.W == nonRepetitive[j].item.W &&
+            this[i].item.H == nonRepetitive[j].item.H) {
+          repeated = true;
+        }
+      }
+      if (!repeated) {
+        nonRepetitive.add(this[i]);
+      }
+    }
+    return nonRepetitive;
+  }
+
   List<FinalProductModel> testFilter() {
     List<FinalProductModel> data = this;
     List<FinalProductModel> nonRepetitive = [];
@@ -574,7 +595,7 @@ extension Filter on List<FinalProductModel> {
   }
 
   List<FinalProdcutWithTOtal> ReturnItmeWithTotalAndRemovewhreTotalZeto() {
-    List<FinalProdcutWithTOtal> a = filter_density_type_size()
+    List<FinalProdcutWithTOtal> a = filter_density_typ_color_size()
         .map((e) => FinalProdcutWithTOtal(
             L: e.item.L,
             W: e.item.W,

@@ -58,7 +58,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             cuting_order_number: 0,
             actions: [],
             finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
-            scissor:  0,
+            scissor: 0,
             customer: item.customer,
           ));
       clearfields();

@@ -15,10 +15,11 @@ class Stockcheck_veiwModel extends BaseViewModel {
     var l = context.read<final_prodcut_controller>();
     return finalproducts
         .filteronfinalproduct()
+        .where((e) => finalproducts.countOf(e) > 0)
+        .toList()
         .filterItemsPasedOnDensites(context, l.selctedDensities)
         .filterItemsPasedOntypes(context, l.selctedtybes)
         .filterItemsPasedOncolors(context, l.selctedcolors)
-        .where((e) => finalproducts.countOf(e) > 0)
         .map((g) => FinalProdcutBalanceModel(
             color: g.item.color,
             type: g.item.type,
