@@ -14,7 +14,12 @@ class FinalprodcutsReportsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scafold(b);
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        children: [BoxOFReportForfinalProdcutsReport()],
+      ),
+    );
   }
 }
 
@@ -27,15 +32,14 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> items = [
       'الكميه المتوفره فقط',
-      'يومية الانتاج ',
-      'تقرير الاصناف الغير مجروده',
-      'تقرير الاصناف الزائده',
-      'تقرير الاصناف الناقصه ',
+      'تقرير حركة المخزون ',
+      'تقرير الوارد فقط',
+      'تقرير المنصرف فقط',
     ];
     //value of report type
 
     return Container(
-      height: MediaQuery.of(context).size.height * .25,
+      height: MediaQuery.of(context).size.height * .33,
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           gradient: const LinearGradient(
@@ -93,543 +97,705 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
                   ),
                 ),
               ),
-              //كل الانواع
-              DropdownButton2<String>(
-                  isExpanded: true,
-                  hint: Center(
-                    child: Text(
-                      'كل الالوان',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                  ),
-                  items:
-                      f.map((e) => e.item.color).toSet().toList().map((item) {
-                    return DropdownMenuItem(
-                      value: item,
-                      //disable default onTap to avoid closing menu when selecting an item
-                      enabled: false,
-                      child: StatefulBuilder(
-                        builder: (context, menuSetState) {
-                          final isSelected =
-                              myType.selctedcolors.contains(item);
-                          return InkWell(
-                            onTap: () {
-                              isSelected
-                                  ? myType.selctedcolors.remove(item)
-                                  : myType.selctedcolors.add(item);
-
-                              //This rebuilds the StatefulWidget to update the button's text
-                              myType.Refresh_Ui();
-                              //This rebuilds the dropdownMenu Widget to update the check mark
-                              menuSetState(() {});
-                            },
-                            child: Container(
-                              height: double.infinity,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Row(
-                                children: [
-                                  if (isSelected)
-                                    const Icon(Icons.check_box_outlined)
-                                  else
-                                    const Icon(Icons.check_box_outline_blank),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      item,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  }).toList(),
-                  //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
-                  value: myType.selctedcolors.isEmpty
-                      ? null
-                      : myType.selctedcolors.last,
-                  onChanged: (value) {},
-                  selectedItemBuilder: (context) {
-                    return f.map((e) => e.item.color).toSet().toList().map(
-                      (item) {
-                        return Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            myType.selctedcolors.join(', '),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            maxLines: 1,
-                          ),
-                        );
-                      },
-                    ).toList();
-                  },
-                  buttonStyleData: ButtonStyleData(
-                    decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(6)),
-                        color: const Color.fromARGB(255, 204, 225, 241)),
-                    padding: const EdgeInsets.only(left: 16, right: 8),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * .3,
-                  ),
-                  dropdownStyleData: const DropdownStyleData(
-                    maxHeight: 200,
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    height: 40,
-                    padding: EdgeInsets.zero,
-                  ),
-                  dropdownSearchData: DropdownSearchData(
-                    searchController: textEditingController,
-                    searchInnerWidgetHeight: 50,
-                    searchInnerWidget: Container(
-                      height: 50,
-                      padding: const EdgeInsets.only(
-                        top: 8,
-                        bottom: 4,
-                        right: 8,
-                        left: 8,
-                      ),
-                      child: TextFormField(
-                        expands: true,
-                        maxLines: null,
-                        controller: textEditingController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 8,
-                          ),
-                          hintText: 'Search for an item...',
-                          hintStyle: const TextStyle(fontSize: 12),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+              Row(
+                children: [
+                  DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: Center(
+                        child: Text(
+                          'كل الالوان',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).hintColor,
                           ),
                         ),
                       ),
-                    ),
-                    searchMatchFn: (item, searchValue) {
-                      return item.value.toString().contains(searchValue);
-                    },
-                  )),
-              //كل الالوان
-              DropdownButton2<String>(
-                  isExpanded: true,
-                  hint: Center(
-                    child: Text(
-                      'كل الانواع',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                  ),
-                  items: f.map((e) => e.item.type).toSet().toList().map((item) {
-                    return DropdownMenuItem(
-                      value: item,
-                      //disable default onTap to avoid closing menu when selecting an item
-                      enabled: false,
-                      child: StatefulBuilder(
-                        builder: (context, menuSetState) {
-                          final isSelected = myType.selctedtybes.contains(item);
-                          return InkWell(
-                            onTap: () {
-                              isSelected
-                                  ? myType.selctedtybes.remove(item)
-                                  : myType.selctedtybes.add(item);
+                      items: f
+                          .map((e) => e.item.color)
+                          .toSet()
+                          .toList()
+                          .map((item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          //disable default onTap to avoid closing menu when selecting an item
+                          enabled: false,
+                          child: StatefulBuilder(
+                            builder: (context, menuSetState) {
+                              final isSelected =
+                                  myType.selctedcolors.contains(item);
+                              return InkWell(
+                                onTap: () {
+                                  isSelected
+                                      ? myType.selctedcolors.remove(item)
+                                      : myType.selctedcolors.add(item);
 
-                              //This rebuilds the StatefulWidget to update the button's text
-                              myType.Refresh_Ui();
-                              //This rebuilds the dropdownMenu Widget to update the check mark
-                              menuSetState(() {});
-                            },
-                            child: Container(
-                              height: double.infinity,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Row(
-                                children: [
-                                  if (isSelected)
-                                    const Icon(Icons.check_box_outlined)
-                                  else
-                                    const Icon(Icons.check_box_outline_blank),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      item,
-                                      style: const TextStyle(
-                                        fontSize: 14,
+                                  //This rebuilds the StatefulWidget to update the button's text
+                                  myType.Refresh_Ui();
+                                  //This rebuilds the dropdownMenu Widget to update the check mark
+                                  menuSetState(() {});
+                                },
+                                child: Container(
+                                  height: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Row(
+                                    children: [
+                                      if (isSelected)
+                                        const Icon(Icons.check_box_outlined)
+                                      else
+                                        const Icon(
+                                            Icons.check_box_outline_blank),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  }).toList(),
-                  //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
-                  value: myType.selctedtybes.isEmpty
-                      ? null
-                      : myType.selctedtybes.last,
-                  onChanged: (value) {},
-                  selectedItemBuilder: (context) {
-                    return f.toSet().toList().map(
-                      (item) {
-                        return Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            myType.selctedtybes.join(', '),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            maxLines: 1,
+                                ),
+                              );
+                            },
                           ),
                         );
+                      }).toList(),
+                      //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
+                      value: myType.selctedcolors.isEmpty
+                          ? null
+                          : myType.selctedcolors.last,
+                      onChanged: (value) {},
+                      selectedItemBuilder: (context) {
+                        return f.map((e) => e.item.color).toSet().toList().map(
+                          (item) {
+                            return Container(
+                              alignment: AlignmentDirectional.center,
+                              child: Text(
+                                myType.selctedcolors.join(', '),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                maxLines: 1,
+                              ),
+                            );
+                          },
+                        ).toList();
                       },
-                    ).toList();
-                  },
-                  buttonStyleData: ButtonStyleData(
-                    decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(6)),
-                        color: const Color.fromARGB(255, 204, 225, 241)),
-                    padding: const EdgeInsets.only(left: 16, right: 8),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * .3,
-                  ),
-                  dropdownStyleData: const DropdownStyleData(
-                    maxHeight: 200,
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    height: 40,
-                    padding: EdgeInsets.zero,
-                  ),
-                  dropdownSearchData: DropdownSearchData(
-                    searchController: textEditingController,
-                    searchInnerWidgetHeight: 50,
-                    searchInnerWidget: Container(
-                      height: 50,
-                      padding: const EdgeInsets.only(
-                        top: 8,
-                        bottom: 4,
-                        right: 8,
-                        left: 8,
+                      buttonStyleData: ButtonStyleData(
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(6)),
+                            color: const Color.fromARGB(255, 204, 225, 241)),
+                        padding: const EdgeInsets.only(left: 16, right: 8),
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * .3,
                       ),
-                      child: TextFormField(
-                        expands: true,
-                        maxLines: null,
-                        controller: textEditingController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 8,
+                      dropdownStyleData: const DropdownStyleData(
+                        maxHeight: 200,
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        height: 40,
+                        padding: EdgeInsets.zero,
+                      ),
+                      dropdownSearchData: DropdownSearchData(
+                        searchController: textEditingController,
+                        searchInnerWidgetHeight: 50,
+                        searchInnerWidget: Container(
+                          height: 50,
+                          padding: const EdgeInsets.only(
+                            top: 8,
+                            bottom: 4,
+                            right: 8,
+                            left: 8,
                           ),
-                          hintText: 'Search for an item...',
-                          hintStyle: const TextStyle(fontSize: 12),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                          child: TextFormField(
+                            expands: true,
+                            maxLines: null,
+                            controller: textEditingController,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText: 'Search for an item...',
+                              hintStyle: const TextStyle(fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                        searchMatchFn: (item, searchValue) {
+                          return item.value.toString().contains(searchValue);
+                        },
+                      )),
+                  DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: Center(
+                        child: Text(
+                          'كل الانواع',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).hintColor,
                           ),
                         ),
                       ),
-                    ),
-                    searchMatchFn: (item, searchValue) {
-                      return item.value.toString().contains(searchValue);
-                    },
-                  )),
-              //كل الكثافات
-              DropdownButton2<String>(
-                  isExpanded: true,
-                  hint: Center(
-                    child: Text(
-                      'كل الكثافات',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                  ),
-                  items: f
-                      .map((e) => e.item.density.toString())
-                      .toSet()
-                      .toList()
-                      .sortedBy((element) => element)
-                      .map((item) {
-                    return DropdownMenuItem(
-                      value: item,
-                      //disable default onTap to avoid closing menu when selecting an item
-                      enabled: false,
-                      child: StatefulBuilder(
-                        builder: (context, menuSetState) {
-                          final isSelected =
-                              myType.selctedDensities.contains(item);
-                          return InkWell(
-                            onTap: () {
-                              isSelected
-                                  ? myType.selctedDensities.remove(item)
-                                  : myType.selctedDensities.add(item);
+                      items: f
+                          .map((e) => e.item.type)
+                          .toSet()
+                          .toList()
+                          .map((item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          //disable default onTap to avoid closing menu when selecting an item
+                          enabled: false,
+                          child: StatefulBuilder(
+                            builder: (context, menuSetState) {
+                              final isSelected =
+                                  myType.selctedtybes.contains(item);
+                              return InkWell(
+                                onTap: () {
+                                  isSelected
+                                      ? myType.selctedtybes.remove(item)
+                                      : myType.selctedtybes.add(item);
 
-                              //This rebuilds the StatefulWidget to update the button's text
-                              myType.Refresh_Ui();
-                              //This rebuilds the dropdownMenu Widget to update the check mark
-                              menuSetState(() {});
-                            },
-                            child: Container(
-                              height: double.infinity,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Row(
-                                children: [
-                                  if (isSelected)
-                                    const Icon(Icons.check_box_outlined)
-                                  else
-                                    const Icon(Icons.check_box_outline_blank),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      item,
-                                      style: const TextStyle(
-                                        fontSize: 14,
+                                  //This rebuilds the StatefulWidget to update the button's text
+                                  myType.Refresh_Ui();
+                                  //This rebuilds the dropdownMenu Widget to update the check mark
+                                  menuSetState(() {});
+                                },
+                                child: Container(
+                                  height: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Row(
+                                    children: [
+                                      if (isSelected)
+                                        const Icon(Icons.check_box_outlined)
+                                      else
+                                        const Icon(
+                                            Icons.check_box_outline_blank),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  }).toList(),
-                  //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
-                  value: myType.selctedDensities.isEmpty
-                      ? null
-                      : myType.selctedDensities.last,
-                  onChanged: (value) {},
-                  selectedItemBuilder: (context) {
-                    return f.map((e) => e.item.density).toSet().toList().map(
-                      (item) {
-                        return Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            myType.selctedDensities.join(', '),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            maxLines: 1,
+                                ),
+                              );
+                            },
                           ),
                         );
+                      }).toList(),
+                      //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
+                      value: myType.selctedtybes.isEmpty
+                          ? null
+                          : myType.selctedtybes.last,
+                      onChanged: (value) {},
+                      selectedItemBuilder: (context) {
+                        return f.toSet().toList().map(
+                          (item) {
+                            return Container(
+                              alignment: AlignmentDirectional.center,
+                              child: Text(
+                                myType.selctedtybes.join(', '),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                maxLines: 1,
+                              ),
+                            );
+                          },
+                        ).toList();
                       },
-                    ).toList();
-                  },
-                  buttonStyleData: ButtonStyleData(
-                    decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(6)),
-                        color: const Color.fromARGB(255, 204, 225, 241)),
-                    padding: const EdgeInsets.only(left: 16, right: 8),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * .33,
-                  ),
-                  dropdownStyleData: const DropdownStyleData(
-                    maxHeight: 200,
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    height: 40,
-                    padding: EdgeInsets.zero,
-                  ),
-                  dropdownSearchData: DropdownSearchData(
-                    searchController: textEditingController,
-                    searchInnerWidgetHeight: 50,
-                    searchInnerWidget: Container(
-                      height: 50,
-                      padding: const EdgeInsets.only(
-                        top: 8,
-                        bottom: 4,
-                        right: 8,
-                        left: 8,
+                      buttonStyleData: ButtonStyleData(
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(6)),
+                            color: const Color.fromARGB(255, 204, 225, 241)),
+                        padding: const EdgeInsets.only(left: 16, right: 8),
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * .3,
                       ),
-                      child: TextFormField(
-                        expands: true,
-                        maxLines: null,
-                        controller: textEditingController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 8,
+                      dropdownStyleData: const DropdownStyleData(
+                        maxHeight: 200,
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        height: 40,
+                        padding: EdgeInsets.zero,
+                      ),
+                      dropdownSearchData: DropdownSearchData(
+                        searchController: textEditingController,
+                        searchInnerWidgetHeight: 50,
+                        searchInnerWidget: Container(
+                          height: 50,
+                          padding: const EdgeInsets.only(
+                            top: 8,
+                            bottom: 4,
+                            right: 8,
+                            left: 8,
                           ),
-                          hintText: 'Search for an item...',
-                          hintStyle: const TextStyle(fontSize: 12),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                          child: TextFormField(
+                            expands: true,
+                            maxLines: null,
+                            controller: textEditingController,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText: 'Search for an item...',
+                              hintStyle: const TextStyle(fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                        searchMatchFn: (item, searchValue) {
+                          return item.value.toString().contains(searchValue);
+                        },
+                      )),
+                  //كل الكثافات
+                  DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: Center(
+                        child: Text(
+                          'كل الكثافات',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).hintColor,
                           ),
                         ),
                       ),
-                    ),
-                    searchMatchFn: (item, searchValue) {
-                      return item.value.toString().contains(searchValue);
-                    },
-                  )),
-              //كل المقاسات
-              DropdownButton2<String>(
-                  isExpanded: true,
-                  hint: Center(
-                    child: Text(
-                      'كل المقاسات',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                  ),
-                  items: f
-                      .map((e) => "${e.item.L}*${e.item.W}*${e.item.H}")
-                      .toSet()
-                      .toList()
-                      .sortedBy((element) => element)
-                      .map((item) {
-                    return DropdownMenuItem(
-                      value: item,
-                      //disable default onTap to avoid closing menu when selecting an item
-                      enabled: false,
-                      child: StatefulBuilder(
-                        builder: (context, menuSetState) {
-                          final isSelected = myType.selctedsizes.contains(item);
-                          return InkWell(
-                            onTap: () {
-                              isSelected
-                                  ? myType.selctedsizes.remove(item)
-                                  : myType.selctedsizes.add(item);
+                      items: f
+                          .map((e) => e.item.density.toString())
+                          .toSet()
+                          .toList()
+                          .sortedBy((element) => element)
+                          .map((item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          //disable default onTap to avoid closing menu when selecting an item
+                          enabled: false,
+                          child: StatefulBuilder(
+                            builder: (context, menuSetState) {
+                              final isSelected =
+                                  myType.selctedDensities.contains(item);
+                              return InkWell(
+                                onTap: () {
+                                  isSelected
+                                      ? myType.selctedDensities.remove(item)
+                                      : myType.selctedDensities.add(item);
 
-                              //This rebuilds the StatefulWidget to update the button's text
-                              myType.Refresh_Ui();
-                              //This rebuilds the dropdownMenu Widget to update the check mark
-                              menuSetState(() {});
-                            },
-                            child: Container(
-                              height: double.infinity,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Row(
-                                children: [
-                                  if (isSelected)
-                                    const Icon(Icons.check_box_outlined)
-                                  else
-                                    const Icon(Icons.check_box_outline_blank),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      item,
-                                      style: const TextStyle(
-                                        fontSize: 14,
+                                  //This rebuilds the StatefulWidget to update the button's text
+                                  myType.Refresh_Ui();
+                                  //This rebuilds the dropdownMenu Widget to update the check mark
+                                  menuSetState(() {});
+                                },
+                                child: Container(
+                                  height: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Row(
+                                    children: [
+                                      if (isSelected)
+                                        const Icon(Icons.check_box_outlined)
+                                      else
+                                        const Icon(
+                                            Icons.check_box_outline_blank),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  }).toList(),
-                  //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
-                  value: myType.selctedsizes.isEmpty
-                      ? null
-                      : myType.selctedsizes.last,
-                  onChanged: (value) {},
-                  selectedItemBuilder: (context) {
-                    return f
-                        .map((e) => "${e.item.L}*${e.item.W}*${e.item.H}")
-                        .toSet()
-                        .toList()
-                        .map(
-                      (item) {
-                        return Container(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            myType.selctedsizes.join(', '),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            maxLines: 1,
+                                ),
+                              );
+                            },
                           ),
                         );
+                      }).toList(),
+                      //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
+                      value: myType.selctedDensities.isEmpty
+                          ? null
+                          : myType.selctedDensities.last,
+                      onChanged: (value) {},
+                      selectedItemBuilder: (context) {
+                        return f
+                            .map((e) => e.item.density)
+                            .toSet()
+                            .toList()
+                            .map(
+                          (item) {
+                            return Container(
+                              alignment: AlignmentDirectional.center,
+                              child: Text(
+                                myType.selctedDensities.join(', '),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                maxLines: 1,
+                              ),
+                            );
+                          },
+                        ).toList();
                       },
-                    ).toList();
-                  },
-                  buttonStyleData: ButtonStyleData(
-                    decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(6)),
-                        color: const Color.fromARGB(255, 204, 225, 241)),
-                    padding: const EdgeInsets.only(left: 16, right: 8),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * .33,
-                  ),
-                  dropdownStyleData: const DropdownStyleData(
-                    maxHeight: 200,
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    height: 40,
-                    padding: EdgeInsets.zero,
-                  ),
-                  dropdownSearchData: DropdownSearchData(
-                    searchController: textEditingController,
-                    searchInnerWidgetHeight: 50,
-                    searchInnerWidget: Container(
-                      height: 50,
-                      padding: const EdgeInsets.only(
-                        top: 8,
-                        bottom: 4,
-                        right: 8,
-                        left: 8,
+                      buttonStyleData: ButtonStyleData(
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(6)),
+                            color: const Color.fromARGB(255, 204, 225, 241)),
+                        padding: const EdgeInsets.only(left: 16, right: 8),
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * .33,
                       ),
-                      child: TextFormField(
-                        expands: true,
-                        maxLines: null,
-                        controller: textEditingController,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 8,
+                      dropdownStyleData: const DropdownStyleData(
+                        maxHeight: 200,
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        height: 40,
+                        padding: EdgeInsets.zero,
+                      ),
+                      dropdownSearchData: DropdownSearchData(
+                        searchController: textEditingController,
+                        searchInnerWidgetHeight: 50,
+                        searchInnerWidget: Container(
+                          height: 50,
+                          padding: const EdgeInsets.only(
+                            top: 8,
+                            bottom: 4,
+                            right: 8,
+                            left: 8,
                           ),
-                          hintText: 'Search for an item...',
-                          hintStyle: const TextStyle(fontSize: 12),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                          child: TextFormField(
+                            expands: true,
+                            maxLines: null,
+                            controller: textEditingController,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText: 'Search for an item...',
+                              hintStyle: const TextStyle(fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                        searchMatchFn: (item, searchValue) {
+                          return item.value.toString().contains(searchValue);
+                        },
+                      )),
+                ],
+              ),
+              Row(
+                children: [
+                  DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: Center(
+                        child: Text(
+                          'كل العملاء',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).hintColor,
                           ),
                         ),
                       ),
-                    ),
-                    searchMatchFn: (item, searchValue) {
-                      return item.value.toString().contains(searchValue);
-                    },
-                  )),
+                      items: f
+                          .map((e) => e.customer.customername(context))
+                          .toSet()
+                          .toList()
+                          .map((item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          //disable default onTap to avoid closing menu when selecting an item
+                          enabled: false,
+                          child: StatefulBuilder(
+                            builder: (context, menuSetState) {
+                              final isSelected =
+                                  myType.selctedcustomers.contains(item);
+                              return InkWell(
+                                onTap: () {
+                                  isSelected
+                                      ? myType.selctedcustomers.remove(item)
+                                      : myType.selctedcustomers.add(item);
+
+                                  //This rebuilds the StatefulWidget to update the button's text
+                                  myType.Refresh_Ui();
+                                  //This rebuilds the dropdownMenu Widget to update the check mark
+                                  menuSetState(() {});
+                                },
+                                child: Container(
+                                  height: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Row(
+                                    children: [
+                                      if (isSelected)
+                                        const Icon(Icons.check_box_outlined)
+                                      else
+                                        const Icon(
+                                            Icons.check_box_outline_blank),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }).toList(),
+                      //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
+                      value: myType.selctedcustomers.isEmpty
+                          ? null
+                          : myType.selctedcustomers.last,
+                      onChanged: (value) {},
+                      selectedItemBuilder: (context) {
+                        return f.toSet().toList().map(
+                          (item) {
+                            return Container(
+                              alignment: AlignmentDirectional.center,
+                              child: Text(
+                                myType.selctedcustomers.join(', '),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                maxLines: 1,
+                              ),
+                            );
+                          },
+                        ).toList();
+                      },
+                      buttonStyleData: ButtonStyleData(
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(6)),
+                            color: const Color.fromARGB(255, 204, 225, 241)),
+                        padding: const EdgeInsets.only(left: 16, right: 8),
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * .5,
+                      ),
+                      dropdownStyleData: const DropdownStyleData(
+                        maxHeight: 200,
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        height: 40,
+                        padding: EdgeInsets.zero,
+                      ),
+                      dropdownSearchData: DropdownSearchData(
+                        searchController: textEditingController,
+                        searchInnerWidgetHeight: 50,
+                        searchInnerWidget: Container(
+                          height: 50,
+                          padding: const EdgeInsets.only(
+                            top: 8,
+                            bottom: 4,
+                            right: 8,
+                            left: 8,
+                          ),
+                          child: TextFormField(
+                            expands: true,
+                            maxLines: null,
+                            controller: textEditingController,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText: 'Search for an item...',
+                              hintStyle: const TextStyle(fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                        searchMatchFn: (item, searchValue) {
+                          return item.value.toString().contains(searchValue);
+                        },
+                      )),
+                  DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: Center(
+                        child: Text(
+                          'كل المقاسات',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Theme.of(context).hintColor,
+                          ),
+                        ),
+                      ),
+                      items: f
+                          .map((e) =>
+                              "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}")
+                          .toSet()
+                          .toList()
+                          .sortedBy((element) => element)
+                          .map((item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          //disable default onTap to avoid closing menu when selecting an item
+                          enabled: false,
+                          child: StatefulBuilder(
+                            builder: (context, menuSetState) {
+                              final isSelected =
+                                  myType.selctedsizes.contains(item);
+                              return InkWell(
+                                onTap: () {
+                                  isSelected
+                                      ? myType.selctedsizes.remove(item)
+                                      : myType.selctedsizes.add(item);
+
+                                  //This rebuilds the StatefulWidget to update the button's text
+                                  myType.Refresh_Ui();
+                                  //This rebuilds the dropdownMenu Widget to update the check mark
+                                  menuSetState(() {});
+                                },
+                                child: Container(
+                                  height: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Row(
+                                    children: [
+                                      if (isSelected)
+                                        const Icon(Icons.check_box_outlined)
+                                      else
+                                        const Icon(
+                                            Icons.check_box_outline_blank),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }).toList(),
+                      //Use last selected item as the current value so if we've limited menu height, it scroll to last item.
+                      value: myType.selctedsizes.isEmpty
+                          ? null
+                          : myType.selctedsizes.last,
+                      onChanged: (value) {},
+                      selectedItemBuilder: (context) {
+                        return f
+                            .map((e) =>
+                                "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}")
+                            .toSet()
+                            .toList()
+                            .map(
+                          (item) {
+                            return Container(
+                              alignment: AlignmentDirectional.center,
+                              child: Text(
+                                myType.selctedsizes.join(', '),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                maxLines: 1,
+                              ),
+                            );
+                          },
+                        ).toList();
+                      },
+                      buttonStyleData: ButtonStyleData(
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(6)),
+                            color: const Color.fromARGB(255, 204, 225, 241)),
+                        padding: const EdgeInsets.only(left: 16, right: 8),
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * .4,
+                      ),
+                      dropdownStyleData: const DropdownStyleData(
+                        maxHeight: 200,
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        height: 40,
+                        padding: EdgeInsets.zero,
+                      ),
+                      dropdownSearchData: DropdownSearchData(
+                        searchController: textEditingController,
+                        searchInnerWidgetHeight: 50,
+                        searchInnerWidget: Container(
+                          height: 50,
+                          padding: const EdgeInsets.only(
+                            top: 8,
+                            bottom: 4,
+                            right: 8,
+                            left: 8,
+                          ),
+                          child: TextFormField(
+                            expands: true,
+                            maxLines: null,
+                            controller: textEditingController,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              hintText: 'Search for an item...',
+                              hintStyle: const TextStyle(fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                        searchMatchFn: (item, searchValue) {
+                          return item.value
+                              .toString()
+                              .replaceAll(RegExp('[^0-9]'), '')
+                              .contains(searchValue);
+                        },
+                      )),
+                ],
+              ),
               //التاريخ
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,

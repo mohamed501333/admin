@@ -4,6 +4,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/functions.dart';
@@ -85,6 +86,14 @@ extension Sdd on List<int> {
 }
 
 extension Toint on String {
+  String customername(BuildContext context) {
+    return context
+        .read<Customer_controller>()
+        .customers
+        .firstWhere((element) => element.serial == to_int())
+        .name;
+  }
+
   int to_int() {
     return int.tryParse(this) ?? 0;
   }

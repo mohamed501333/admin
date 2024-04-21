@@ -224,6 +224,7 @@ class final_prodcut_controller extends ChangeNotifier {
   List<String> selctedtybes = [];
   List<String> selctedDensities = [];
   List<String> selctedsizes = [];
+  List<String> selctedcustomers = [];
   String? selectedreport;
   DateTime? pickedDateFrom;
   DateTime? pickedDateTo;
