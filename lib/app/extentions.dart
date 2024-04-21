@@ -296,7 +296,6 @@ extension Fd on List<ChemicalsModel> {
     if (selctedFamilys.isNotEmpty) {
       for (var g in selctedFamilys) {
         s.addAll(f.where((element) => element.family == g).toList());
-        print(g);
       }
     }
     return s;
@@ -595,11 +594,12 @@ extension Filter on List<FinalProductModel> {
     return nonRepetitive;
   }
 
-  List<FinalProductModel> filter_date(BuildContext context, String chosenDate) {
+  List<FinalProductModel> Data_form_CuttingUnit_today(BuildContext context, String chosenDate) {
     DateFormat format = DateFormat('yyyy/MM/dd');
     return where((element) =>
-        format.format(element.actions.get_Date_of_action(finalProdcutAction
-            .incert_finalProduct_from_cutingUnit.getactionTitle)) ==
+    element.actions.if_action_exist(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle)==true&&
+        format.format(element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle)) 
+        ==
         chosenDate).toList();
   }
 

@@ -15,10 +15,13 @@ class Fractions_Controller extends ChangeNotifier {
         .first
         .then((event) {
       getInitialData(event.snapshot);
-    }).then((value) => FirebaseDatabase.instance
+    }).whenComplete(() => FirebaseDatabase.instance
                 .ref("fractions")
                 .orderByKey()
-                .startAfter("${fractions.last.fraction_ID}")
+                .startAfter("${
+                  fractions.isNotEmpty?
+                  fractions.last.fraction_ID:0
+                  }")
                 .onChildAdded
                 .listen((f) {
               refrech(f);

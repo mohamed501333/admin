@@ -48,7 +48,7 @@ class RVeiw2 extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               reverse: true,
               child: SizedBox(
-                width: MediaQuery.of(context).size.width * 2,
+                width: MediaQuery.of(context).size.width * 1.6,
                 child: ListView(
                   children: [
                     const HeaderOfThable(),
@@ -101,7 +101,7 @@ class RVeiw2 extends StatelessWidget {
                                 //رقم الدور
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * .11,
+                                      MediaQuery.of(context).size.width * .05,
                                   child: Center(
                                       child: Text(
                                     textAlign: TextAlign.center,
@@ -113,7 +113,7 @@ class RVeiw2 extends StatelessWidget {
                                 //الوارد
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * .59,
+                                      MediaQuery.of(context).size.width * .58,
                                   decoration: const BoxDecoration(
                                       border: Border.symmetric(
                                           vertical: BorderSide()),
@@ -128,35 +128,92 @@ class RVeiw2 extends StatelessWidget {
                                                 element.stagenum == e)
                                             .toList()
                                             .filter_Fractios___()
-                                            .map((f) => Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    IconButton(
-                                                      onPressed: () {
-                                                        deletefractons_cutted_FromRscissr(
-                                                            context,
-                                                            fractons_cutted_on_Rstage_rscossor(
-                                                                    fractions,
-                                                                    f)
-                                                                .toList());
-                                                      },
-                                                      icon: const Icon(
-                                                        Icons.delete,
-                                                        size: 24,
-                                                      ),
-                                                      color: Colors.red,
-                                                    ).permition(
-                                                        context,
-                                                        UserPermition
-                                                            .can_delete_fractons_cutted_on_R),
-                                                    Text(
-                                                        "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
-                                                    Text(
-                                                        "  ${f.item.L.removeTrailingZeros}*${f.item.W.removeTrailingZeros}*${f.item.H.removeTrailingZeros} من "),
-                                                    Text(
-                                                        "${fractons_cutted_on_Rstage_rscossor(fractions, f).length} "),
-                                                  ],
+                                            .map((f) => GestureDetector(
+                                                  onTap: () {
+                                                    
+                                                          showDialog(
+                                                              context: context,
+                                                              builder: (_) =>
+                                                                  AlertDialog(
+                                                                    scrollable:
+                                                                        true,
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                    ),
+                                                                    content:
+                                                                        SizedBox(
+                                                                      height:
+                                                                          120,
+                                                                      child:
+                                                                          SingleChildScrollView(
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            const Text("هل تريد حذف"),
+                                                                            Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              children: [
+                                                                                Text("${fractions.first.item.color} ${fractions.first.item.type} ك${fractions.first.item.density.removeTrailingZeros}"),
+                                                                                Text("  ${fractions.first.item.L.removeTrailingZeros}*${fractions.first.item.W.removeTrailingZeros}*${fractions.first.item.H.removeTrailingZeros} من "),
+                                                                                Text("${fractions.map((e) => e.item).toList().countOf(fractions.first.item)} "),
+                                                                              ],
+                                                                            ),
+                                                                            Row(
+                                                                              children: [
+                                                                                Expanded(
+                                                                                  child: ElevatedButton(
+                                                                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+                                                                                      onPressed: () {
+                                                                                        if (fractions.first.notfinals.isEmpty) {
+                                                                                          deletefractons_cutted_FromRscissr(context, fractons_cutted_on_Rstage_rscossor(fractions, f).toList());
+                                                                                          Navigator.pop(context);
+                                                                                        } else {
+                                                                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(seconds: 7), content: Text('لا يمكن حذف بسبب اضافة دون تام')));
+                                                                                        }
+                                                                                      },
+                                                                                      child: const Text('حذف')),
+                                                                                ).permition(
+                                                          context,
+                                                          UserPermition
+                                                              .can_delete_fractons_cutted_on_R),
+                                                                                const SizedBox(
+                                                                                  width: 5,
+                                                                                ),
+                                                                                Expanded(
+                                                                                  child: ElevatedButton(
+                                                                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                                                                                      onPressed: () {
+                                                                                        Navigator.pop(context);
+                                                                                      },
+                                                                                      child: const Text('الغاء')),
+                                                                                ),
+                                                                              ],
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ));
+                                                      
+                                                      
+                                                  },
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                  
+                                                      Text(
+                                                          "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
+                                                      Text(
+                                                          "  ${f.item.L.removeTrailingZeros}*${f.item.W.removeTrailingZeros}*${f.item.H.removeTrailingZeros} من "),
+                                                      Text(
+                                                          "${fractons_cutted_on_Rstage_rscossor(fractions, f).length} "),
+                                                    ],
+                                                  ),
                                                 ))
                                             .toList(),
                                       ),
@@ -190,7 +247,7 @@ class RVeiw2 extends StatelessWidget {
                                 //الصادر
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * .61,
+                                      MediaQuery.of(context).size.width * .58,
                                   decoration: const BoxDecoration(
                                       border: Border.symmetric(
                                           vertical: BorderSide()),
@@ -291,7 +348,7 @@ class RVeiw2 extends StatelessWidget {
                                 // دون التام
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * .29,
+                                      MediaQuery.of(context).size.width * .32,
                                   child: Center(
                                       child: Column(
                                     children: [
@@ -436,7 +493,7 @@ class HeaderOfThable extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: MediaQuery.of(context).size.width * .11,
+          width: MediaQuery.of(context).size.width * .12,
           height: 40,
           decoration: BoxDecoration(
               border: Border.all(),
@@ -449,7 +506,7 @@ class HeaderOfThable extends StatelessWidget {
         ),
         Container(
           height: 40,
-          width: MediaQuery.of(context).size.width * .62,
+          width: MediaQuery.of(context).size.width * .50,
           decoration: BoxDecoration(
               border: Border.all(),
               color: const Color.fromARGB(255, 170, 164, 164)),
@@ -459,7 +516,7 @@ class HeaderOfThable extends StatelessWidget {
         ),
         Container(
           height: 40,
-          width: MediaQuery.of(context).size.width * .62,
+          width: MediaQuery.of(context).size.width * .50,
           decoration: BoxDecoration(
               border: Border.all(),
               color: const Color.fromARGB(255, 170, 164, 164)),
@@ -469,7 +526,7 @@ class HeaderOfThable extends StatelessWidget {
         ),
         Container(
           height: 40,
-          width: MediaQuery.of(context).size.width * .31,
+          width: MediaQuery.of(context).size.width * .32,
           decoration: BoxDecoration(
               border: Border.all(),
               color: const Color.fromARGB(255, 170, 164, 164)),

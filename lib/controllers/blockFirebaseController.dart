@@ -83,22 +83,23 @@ class BlockFirebasecontroller extends ChangeNotifier {
   List<BlockModel> archived_blocks = [];
   List<BlockModel> search = [];
 
-  // c() {
-  // print(99999);
-  // for (var el in blocks.where((element) => element.fractions.isNotEmpty)) {
-  //        el.fractions.clear();
-  //   FirebaseDatabase.instance.ref("blocks/${el.Block_Id}").set(el.toJson());
-  // }
-  // }
 
   c() {
     // if (all.isNotEmpty) {
-    // for (var element in all.where((element) => element.actions.get_Date_of_action(BlockAction.consume_block.getactionTitle).formatToInt()==DateTime.now().formatToInt()&&element.Hscissor==15)) {
-    //   element.Hscissor=0;
+    // for (var element in all.where((element) =>
+    //  element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)==true&&
+    //  element.actions.get_Date_of_action(BlockAction.consume_block.getactionTitle).formatToInt()<DateTime.now().formatToInt())) {
+    //   element.Hscissor=15;
     //   }
     //   var s = {};
     //   s.addEntries(all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
     //   FirebaseDatabase.instance.ref("blocks").set(s);
+    //      FirebaseDatabase.instance
+    //     .ref("blocks")
+    //     .onValue
+    //     .first
+    //     .then((value)  {
+    //    getInitialData(value.snapshot);});
     // }
   }
   
