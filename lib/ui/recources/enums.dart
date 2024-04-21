@@ -779,6 +779,7 @@ enum UserPermition {
   can_print_in_cutting_order,
   can_close_in_cutting_order,
   delete_in_cutting_order,
+  full_Red_of_cuttingOrder,
 
   can_get_data_of_final_prodcut,
   show_finalProdcut_stock,
@@ -1078,11 +1079,14 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "اظهار موديول الجرد");
       case UserPermition.can_edit_outTo:
         return UserpermitionTittle(tittle: "امكانية تعديل جهة الصرف");
-    }
+      case UserPermition.full_Red_of_cuttingOrder:
+       return UserpermitionTittle(tittle: "امر التشغيل احمر ب الكامل حال عدم الموافقه");    }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.full_Red_of_cuttingOrder:
+        return "امر التشغيل احمر ب الكامل حال عدم الموافقه";
       case UserPermition.can_edit_outTo:
         return "امكانية تعديل جهة الصرف";
       case UserPermition.show_stcokCheck_moldule:

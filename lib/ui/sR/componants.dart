@@ -423,57 +423,12 @@ class DropDdowenForList_of_blocks_In_Rstage extends StatelessWidget {
 
 deletefractons_cutted_FromRscissr(
     BuildContext context, List<FractionModel> fractions) {
-  showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-            scrollable: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            content: SizedBox(
-              height: 50,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    //buttons
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.red)),
-                              onPressed: () {
-                                for (var element in fractions) {
+   for (var element in fractions) {
                                   context
                                       .read<Fractions_Controller>()
                                       .remove_cuttedFraction_from_R_scissor(
                                           fraction: element);
                                 }
-                                Navigator.pop(context);
-                              },
-                              child: const Text('حذف')),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.blue)),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('الغاء')),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ));
 }
 
 delete_SUBfractons_cutted_FromRscissr(

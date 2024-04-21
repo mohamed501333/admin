@@ -293,9 +293,9 @@ class TheTable001 extends StatelessWidget {
                                             false ||
                                         order.actions.if_action_exist(OrderAction
                                                 .order_aproved_from_calculation
-                                                .getTitle) ==
-                                            false
-                                    ? Colors.red
+                                                .getTitle) ==false
+                                    ? 
+                                    permitionssForOne(context, UserPermition.full_Red_of_cuttingOrder)==true?Colors.black:Colors.red
                                     : x % 2 == 0
                                         ? Colors.blue[50]
                                         : Colors.amber[50],

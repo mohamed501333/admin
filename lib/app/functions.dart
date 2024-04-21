@@ -94,3 +94,14 @@ bool permitionss(BuildContext context, UserPermition permition) {
     return false;
   }
 }
+bool permitionssForOne(BuildContext context, UserPermition permition) {
+  List<Users> users = context.read<Users_controller>().users.where((element) =>element.uidemail == FirebaseAuth.instance.currentUser!.email)
+      .toList();
+  if (users.isNotEmpty) {
+    return users.first.permitions
+            .map((e) => e.tittle)
+            .contains(permition.getTitle) ;
+  } else {
+    return false;
+  }
+}

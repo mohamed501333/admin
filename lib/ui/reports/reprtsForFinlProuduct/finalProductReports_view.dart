@@ -70,8 +70,7 @@ class FinalProductReportsview extends StatelessWidget {
         ),
         body: Consumer<final_prodcut_controller>(
           builder: (context, finalproducts, child) {
-            const textstyle =
-                TextStyle(fontWeight: FontWeight.bold, fontSize: 13);
+            const textstyle =TextStyle(fontWeight: FontWeight.bold, fontSize: 13);
             return Column(
               children: [
                 Results(chosenDate: chosenDate),
@@ -89,25 +88,7 @@ class FinalProductReportsview extends StatelessWidget {
                         key: mkey,
                         source: EmployeeDataSource(
                             context: context,
-                            employeeData: finalproducts.finalproducts
-                                .where((element) =>
-                                    element.actions.if_action_exist(
-                                        finalProdcutAction
-                                            .incert_finalProduct_from_cutingUnit
-                                            .getactionTitle) ==
-                                    true)
-                                .toList()
-                                .filter_date(context, chosenDate)
-                                .filteronfinalproduct(),
-                            finalproducts: finalproducts.finalproducts
-                                .where((element) =>
-                                    element.actions.if_action_exist(
-                                        finalProdcutAction
-                                            .incert_finalProduct_from_cutingUnit
-                                            .getactionTitle) ==
-                                    true)
-                                .toList()
-                                .filter_date(context, chosenDate)),
+                            employeeData: finalproducts.finalproducts.Data_form_CuttingUnit_today(context, chosenDate),),
                         columnWidthMode: ColumnWidthMode.fill,
                         columns: <GridColumn>[
                           GridColumn(
@@ -218,13 +199,12 @@ Future<void> createAndopenPdf(
 class EmployeeDataSource extends DataGridSource {
   ReportsViewModel vm = ReportsViewModel();
   BuildContext context;
-  List<FinalProductModel> finalproducts;
 
   EmployeeDataSource(
       {required List<FinalProductModel> employeeData,
       required this.context,
-      required this.finalproducts}) {
-    _employeeData = employeeData
+    }) {
+    _employeeData = employeeData.filteronfinalproduct()
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'نوع', value: e.item.type),
               DataGridCell<double>(columnName: 'كثافه', value: e.item.density),
@@ -232,7 +212,7 @@ class EmployeeDataSource extends DataGridSource {
               DataGridCell<String>(columnName: 'عميل', value: e.customer),
               DataGridCell<int>(
                   columnName: 'كميه',
-                  value: vm.totalofSingleSize(e, finalproducts)),
+                  value: employeeData.countOf(e)),
               DataGridCell<String>(
                   columnName: 'مقاس',
                   value:
