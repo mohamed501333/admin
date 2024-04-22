@@ -19,20 +19,21 @@ class FinalprodcutsReportsView extends StatelessWidget {
       body: Consumer<final_prodcut_controller>(
         builder: (context, myType, child) {
           return Column(
-        children: [
-          BoxOFReportForfinalProdcutsReport(),
-          if(myType.selectedreport=='تقرير المنصرف فقط')
-          const FinalprodcutReport1()
-          
-          ],
-      ) ;
+            children: [
+              BoxOFReportForfinalProdcutsReport(),
+              if (myType.selectedreport == 'تقرير المنصرف فقط')
+                const FinalprodcutReport1(),
+              if (myType.selectedreport == 'تقرير الوارد فقط')
+                const FinalprodcutReport2(),
+              if (myType.selectedreport == 'الكميه المتوفره فقط')
+                const FinalprodcutReport3()
+            ],
+          );
         },
       ),
     );
   }
 }
-
-
 
 class FinalprodcutReport1 extends StatelessWidget {
   const FinalprodcutReport1({super.key});
@@ -40,180 +41,192 @@ class FinalprodcutReport1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
-      builder: (context, finalprodcuts,child) {
-             List<FinalProductModel> finalproductsBetweenTowDates =
-            finalprodcuts.finalproducts.filterFinalProduct_out_DateBetween(
+      builder: (context, finalprodcuts, child) {
+        List<FinalProductModel> finalproductsBetweenTowDates = finalprodcuts
+            .finalproducts
+            .filterFinalProduct_out_DateBetween(
                 finalprodcuts.pickedDateFrom!, finalprodcuts.pickedDateTo!)
-                .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
-                .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities).
-                filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
-                .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
-                .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes)
-                ;
+            .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
+            .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
+            .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
+            .filterItemsPasedOnCustomers(
+                context, finalprodcuts.selctedcustomers)
+            .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
         return Expanded(
           child: SingleChildScrollView(
             child: SizedBox(
-                  width: 300,
-                  child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Table(
-                border: TableBorder.all(),
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: const [
-                  TableRow(
-                      decoration: BoxDecoration(color: Colors.grey),
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+              width: 300,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Table(
+                    border: TableBorder.all(),
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: const [
+                      TableRow(
+                          decoration: BoxDecoration(color: Colors.grey),
                           children: [
-                            Text("اجمالى المصروف  "),
-                          ],
-                        ),
-                      ]),
-                ],
-              ),
-              Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(3),
-                  1: FlexColumnWidth(1),
-                },
-                border: TableBorder.all(),
-                children: const [
-                  TableRow(children: [
-                    Center(
-                      child: Text("من"),
-                    ),
-                    Center(
-                      child: Text("عدد"),
-                    )
-                  ]),
-                ],
-              ),
-              Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(3),
-                  1: FlexColumnWidth(1),
-                },
-                border: TableBorder.all(),
-                children: finalproductsBetweenTowDates
-                    .filteronfinalproduct()
-                    .sortedBy<num>((element) => element.item.density)
-                    .map((e) => TableRow(children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                  textDirection: TextDirection.rtl,
-                                  "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
-                              Text(
-                                  textDirection: TextDirection.rtl,
-                                  "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
-                            ],
-                          ),
-                          Center(
-                            child: Text(
-                                finalproductsBetweenTowDates.countOf(e).toString(),style: const TextStyle(color: Colors.red),),
-                          ),
-                        ]))
-                    .toList(),
-              ),
-            ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("اجمالى المصروف  "),
+                              ],
+                            ),
+                          ]),
+                    ],
                   ),
-                ),
+                  Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(3),
+                      1: FlexColumnWidth(1),
+                    },
+                    border: TableBorder.all(),
+                    children: const [
+                      TableRow(children: [
+                        Center(
+                          child: Text("من"),
+                        ),
+                        Center(
+                          child: Text("عدد"),
+                        )
+                      ]),
+                    ],
+                  ),
+                  Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(3),
+                      1: FlexColumnWidth(1),
+                    },
+                    border: TableBorder.all(),
+                    children: finalproductsBetweenTowDates
+                        .filteronfinalproduct()
+                        .sortedBy<num>((element) => element.item.density)
+                        .map((e) => TableRow(children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      textDirection: TextDirection.rtl,
+                                      "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
+                                  Text(
+                                      textDirection: TextDirection.rtl,
+                                      "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                                ],
+                              ),
+                              Center(
+                                child: Text(
+                                  finalproductsBetweenTowDates
+                                      .countOf(e)
+                                      .toString(),
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ]))
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       },
     );
   }
 }
+
 class FinalprodcutReport2 extends StatelessWidget {
   const FinalprodcutReport2({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
-      builder: (context, finalprodcuts,child) {
-             List<FinalProductModel> finalproductsBetweenTowDates =
-            finalprodcuts.finalproducts.filterFinalProduct_IN_DateBetween(
+      builder: (context, finalprodcuts, child) {
+        List<FinalProductModel> finalproductsBetweenTowDates = finalprodcuts
+            .finalproducts
+            .filterFinalProduct_IN_DateBetween(
                 finalprodcuts.pickedDateFrom!, finalprodcuts.pickedDateTo!)
-                .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
-                .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities).
-                filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
-                .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
-                .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes)
-                ;
+            .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
+            .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
+            .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
+            .filterItemsPasedOnCustomers(
+                context, finalprodcuts.selctedcustomers)
+            .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
         return Expanded(
           child: SingleChildScrollView(
             child: SizedBox(
-                  width: 300,
-                  child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Table(
-                border: TableBorder.all(),
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: const [
-                  TableRow(
-                      decoration: BoxDecoration(color: Colors.grey),
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+              width: 300,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Table(
+                    border: TableBorder.all(),
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: const [
+                      TableRow(
+                          decoration: BoxDecoration(color: Colors.grey),
                           children: [
-                            Text("اجمالى المصروف  "),
-                          ],
-                        ),
-                      ]),
-                ],
-              ),
-              Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(3),
-                  1: FlexColumnWidth(1),
-                },
-                border: TableBorder.all(),
-                children: const [
-                  TableRow(children: [
-                    Center(
-                      child: Text("من"),
-                    ),
-                    Center(
-                      child: Text("عدد"),
-                    )
-                  ]),
-                ],
-              ),
-              Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(3),
-                  1: FlexColumnWidth(1),
-                },
-                border: TableBorder.all(),
-                children: finalproductsBetweenTowDates
-                    .filteronfinalproduct()
-                    .sortedBy<num>((element) => element.item.density)
-                    .map((e) => TableRow(children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                  textDirection: TextDirection.rtl,
-                                  "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
-                              Text(
-                                  textDirection: TextDirection.rtl,
-                                  "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
-                            ],
-                          ),
-                          Center(
-                            child: Text(
-                                finalproductsBetweenTowDates.countOf(e).toString(),style: const TextStyle(color: Colors.red),),
-                          ),
-                        ]))
-                    .toList(),
-              ),
-            ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("اجمالى الوارد  "),
+                              ],
+                            ),
+                          ]),
+                    ],
                   ),
-                ),
+                  Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(3),
+                      1: FlexColumnWidth(1),
+                    },
+                    border: TableBorder.all(),
+                    children: const [
+                      TableRow(children: [
+                        Center(
+                          child: Text("من"),
+                        ),
+                        Center(
+                          child: Text("عدد"),
+                        )
+                      ]),
+                    ],
+                  ),
+                  Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(3),
+                      1: FlexColumnWidth(1),
+                    },
+                    border: TableBorder.all(),
+                    children: finalproductsBetweenTowDates
+                        .filteronfinalproduct()
+                        .sortedBy<num>((element) => element.item.density)
+                        .map((e) => TableRow(children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      textDirection: TextDirection.rtl,
+                                      "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
+                                  Text(
+                                      textDirection: TextDirection.rtl,
+                                      "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                                ],
+                              ),
+                              Center(
+                                child: Text(
+                                  finalproductsBetweenTowDates
+                                      .countOf(e)
+                                      .toString(),
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 11, 134, 0)),
+                                ),
+                              ),
+                            ]))
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       },
@@ -221,8 +234,102 @@ class FinalprodcutReport2 extends StatelessWidget {
   }
 }
 
+class FinalprodcutReport3 extends StatelessWidget {
+  const FinalprodcutReport3({super.key});
 
-
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<final_prodcut_controller>(
+      builder: (context, finalprodcuts, child) {
+        List<FinalProductModel> finalproductsBetweenTowDates = finalprodcuts
+            .finalproducts
+            .data_until_date(finalprodcuts.pickedDateTo!)
+            .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
+            .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
+            .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
+            .filterItemsPasedOnCustomers(
+                context, finalprodcuts.selctedcustomers)
+            .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
+        return Expanded(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              width: 300,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Table(
+                    border: TableBorder.all(),
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: const [
+                      TableRow(
+                          decoration: BoxDecoration(color: Colors.grey),
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("الكميه المتوفره فقط "),
+                              ],
+                            ),
+                          ]),
+                    ],
+                  ),
+                  Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(3),
+                      1: FlexColumnWidth(1),
+                    },
+                    border: TableBorder.all(),
+                    children: const [
+                      TableRow(children: [
+                        Center(
+                          child: Text("من"),
+                        ),
+                        Center(
+                          child: Text("عدد"),
+                        )
+                      ]),
+                    ],
+                  ),
+                  Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(3),
+                      1: FlexColumnWidth(1),
+                    },
+                    border: TableBorder.all(),
+                    children: finalproductsBetweenTowDates
+                            .ReturnItmeWithTotalAndRemovewhreTotalZeto()
+                        .sortedBy<num>((element) => element.density)
+                        .map((e) => TableRow(children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      textDirection: TextDirection.rtl,
+                                      "      ${e.color} ${e.type} ك ${e.density.removeTrailingZeros}"),
+                                  Text(
+                                      textDirection: TextDirection.rtl,
+                                      "${e.L.removeTrailingZeros}*${e.W.removeTrailingZeros}*${e.H.removeTrailingZeros}"),
+                                ],
+                              ),
+                              Center(
+                                child: Text(
+                                  e.amount.toString(),
+                                  style: const TextStyle(
+                                      color: Color.fromARGB(255, 11, 134, 0)),
+                                ),
+                              ),
+                            ]))
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
 
 class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
   BoxOFReportForfinalProdcutsReport({super.key});
@@ -231,6 +338,8 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<final_prodcut_controller>().pickedDateFrom = DateTime.now();
+    context.read<final_prodcut_controller>().pickedDateTo = DateTime.now();
     final List<String> items = [
       'الكميه المتوفره فقط',
       'تقرير حركة المخزون ',
@@ -254,13 +363,17 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
           border: Border.all(width: 2, color: Colors.teal),
           borderRadius: BorderRadius.circular(5)),
       child: Consumer<final_prodcut_controller>(
-        builder: (context, myType,child) {
-    myType.pickedDateFrom = DateTime.now();
-    myType.pickedDateTo = DateTime.now();
-
-          List<FinalProductModel> f =
-              myType.finalproducts.filterFinalProduct_out_DateBetween(
-                myType.pickedDateFrom!,myType.pickedDateTo!).filteronfinalproduct();
+        builder: (context, myType, child) {
+          List<FinalProductModel> f = myType.selectedreport ==
+                  'الكميه المتوفره فقط'
+              ? myType.finalproducts
+                  .filterFinalProduct_out_DateBetween(
+                      myType.pickedDateFrom!, myType.pickedDateTo!)
+                  .filteronfinalproduct()
+              : myType.finalproducts
+                  .filterFinalProduct_out_DateBetween(
+                      myType.pickedDateFrom!, myType.pickedDateTo!)
+                  .filteronfinalproduct();
 
           return Column(
             children: [
@@ -1003,12 +1116,13 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
                 ],
               ),
               //التاريخ
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  DatepickerTo4(),
-                  DatepickerFrom4(),
+                  const DatepickerTo4(),
+                  if (myType.selectedreport != 'الكميه المتوفره فقط')
+                    const DatepickerFrom4(),
                 ],
               ),
             ],
@@ -1018,6 +1132,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
     );
   }
 }
+
 class DatepickerFrom4 extends StatelessWidget {
   const DatepickerFrom4({super.key});
 
@@ -1069,6 +1184,7 @@ class DatepickerFrom4 extends StatelessWidget {
     );
   }
 }
+
 class DatepickerTo4 extends StatelessWidget {
   const DatepickerTo4({super.key});
 

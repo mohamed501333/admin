@@ -14,7 +14,7 @@ class Stockcheck_veiwModel extends BaseViewModel {
       List<FinalProductModel> finalproducts, BuildContext context) {
     var l = context.read<final_prodcut_controller>();
     return finalproducts
-        .filteronfinalproduct()
+        .filter_density_typ_color_size()
         .where((e) => finalproducts.countOf(e) > 0)
         .toList()
         .filterItemsPasedOnDensites(context, l.selctedDensities)

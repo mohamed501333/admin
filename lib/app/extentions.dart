@@ -442,6 +442,7 @@ extension Filter on List<FinalProductModel> {
       return this;
     }
   }
+
   List<FinalProductModel> filterItemsPasedOnCustomers(
       BuildContext context, List<String> customers) {
     List<FinalProductModel> l = [];
@@ -458,14 +459,15 @@ extension Filter on List<FinalProductModel> {
       return this;
     }
   }
- 
+
   List<FinalProductModel> filterItemsPasedOnsizes(
       BuildContext context, List<String> sizes) {
     List<FinalProductModel> l = [];
     if (sizes.isNotEmpty) {
       for (var f in sizes) {
         for (var i in this) {
-          if ("${i.item.L.removeTrailingZeros}*${i.item.W.removeTrailingZeros}*${i.item.H.removeTrailingZeros}" == f) {
+          if ("${i.item.L.removeTrailingZeros}*${i.item.W.removeTrailingZeros}*${i.item.H.removeTrailingZeros}" ==
+              f) {
             l.add(i);
           }
         }
@@ -493,27 +495,25 @@ extension Filter on List<FinalProductModel> {
                 .formatToInt() <=
             initialDateRange.end.formatToInt()).toList();
   }
- 
- 
+
   List<FinalProductModel> filterFinalProduct_out_DateBetween(
-      DateTime start,DateTime end) {
+      DateTime start, DateTime end) {
     return where((element) =>
-        element.actions.if_action_exist(finalProdcutAction
-                .out_order.getactionTitle) ==
+        element.actions
+                .if_action_exist(finalProdcutAction.out_order.getactionTitle) ==
             true &&
         element.actions
-                .get_Date_of_action(finalProdcutAction
-                    .out_order.getactionTitle)
+                .get_Date_of_action(finalProdcutAction.out_order.getactionTitle)
                 .formatToInt() >=
             start.formatToInt() &&
         element.actions
-                .get_Date_of_action(finalProdcutAction
-                    .out_order.getactionTitle)
+                .get_Date_of_action(finalProdcutAction.out_order.getactionTitle)
                 .formatToInt() <=
             end.formatToInt()).toList();
   }
+
   List<FinalProductModel> filterFinalProduct_IN_DateBetween(
-      DateTime start,DateTime end) {
+      DateTime start, DateTime end) {
     return where((element) =>
         element.actions.if_action_exist(finalProdcutAction
                 .incert_finalProduct_from_cutingUnit.getactionTitle) ==
@@ -663,13 +663,16 @@ extension Filter on List<FinalProductModel> {
     return nonRepetitive;
   }
 
-  List<FinalProductModel> Data_form_CuttingUnit_today(BuildContext context, String chosenDate) {
+  List<FinalProductModel> Data_form_CuttingUnit_today(
+      BuildContext context, String chosenDate) {
     DateFormat format = DateFormat('yyyy/MM/dd');
     return where((element) =>
-    element.actions.if_action_exist(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle)==true&&
-        format.format(element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle)) 
-        ==
-        chosenDate).toList();
+        element.actions.if_action_exist(finalProdcutAction
+                .incert_finalProduct_from_cutingUnit.getactionTitle) ==
+            true &&
+        format.format(element.actions.get_Date_of_action(finalProdcutAction
+                .incert_finalProduct_from_cutingUnit.getactionTitle)) ==
+            chosenDate).toList();
   }
 
   List<FinalProdcutWithTOtal> ReturnItmeWithTotalAndRemovewhreTotalZeto() {
@@ -684,8 +687,30 @@ extension Filter on List<FinalProductModel> {
             type: e.item.type,
             amount: countOf(e)))
         .toList();
-    a.removeWhere((element) => element.amount == 0);
+    a.removeWhere((element) => element.amount <= 0);
     return a;
+  }
+
+  List<FinalProductModel> data_until_date(DateTime to) {
+    return where((element) =>
+        (element.actions.if_action_exist(finalProdcutAction.recive_Done_Form_FinalProdcutStock.getactionTitle) == true &&
+            element.actions
+                    .get_Date_of_action(finalProdcutAction
+                        .recive_Done_Form_FinalProdcutStock.getactionTitle)
+                    .formatToInt() <=
+                to.formatToInt()) ||
+        (element.actions.if_action_exist(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle) == true &&
+            element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle).formatToInt() <=
+                to.formatToInt()) ||
+        (element.actions.if_action_exist(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) == true &&
+            element.actions.get_Date_of_action(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle).formatToInt() <=
+                to.formatToInt()) ||
+        (element.actions.if_action_exist(finalProdcutAction.out_order.getactionTitle) ==
+                true &&
+            element.actions
+                    .get_Date_of_action(finalProdcutAction.out_order.getactionTitle)
+                    .formatToInt() <=
+                to.formatToInt())).toList();
   }
 }
 

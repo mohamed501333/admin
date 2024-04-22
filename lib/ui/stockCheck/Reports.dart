@@ -394,7 +394,7 @@ class ButtomOfRefreshQuantity extends StatelessWidget {
                                                 .incert_finalProduct(FinalProductModel(
                                                     finalProdcut_ID: DateTime
                                                             .now()
-                                                        .microsecondsSinceEpoch,
+                                                        .millisecondsSinceEpoch,
                                                     block_ID: 0,
                                                     fraction_ID: 0,
                                                     subfraction_ID: 0,
