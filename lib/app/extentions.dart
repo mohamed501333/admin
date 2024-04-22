@@ -442,6 +442,39 @@ extension Filter on List<FinalProductModel> {
       return this;
     }
   }
+  List<FinalProductModel> filterItemsPasedOnCustomers(
+      BuildContext context, List<String> customers) {
+    List<FinalProductModel> l = [];
+    if (customers.isNotEmpty) {
+      for (var f in customers) {
+        for (var i in this) {
+          if (i.customer.customername(context).toString() == f) {
+            l.add(i);
+          }
+        }
+      }
+      return l;
+    } else {
+      return this;
+    }
+  }
+ 
+  List<FinalProductModel> filterItemsPasedOnsizes(
+      BuildContext context, List<String> sizes) {
+    List<FinalProductModel> l = [];
+    if (sizes.isNotEmpty) {
+      for (var f in sizes) {
+        for (var i in this) {
+          if ("${i.item.L.removeTrailingZeros}*${i.item.W.removeTrailingZeros}*${i.item.H.removeTrailingZeros}" == f) {
+            l.add(i);
+          }
+        }
+      }
+      return l;
+    } else {
+      return this;
+    }
+  }
 
   List<FinalProductModel> filterFinalProductDateBetween(
       DateTimeRange initialDateRange) {
@@ -459,6 +492,42 @@ extension Filter on List<FinalProductModel> {
                     .incert_finalProduct_from_cutingUnit.getactionTitle)
                 .formatToInt() <=
             initialDateRange.end.formatToInt()).toList();
+  }
+ 
+ 
+  List<FinalProductModel> filterFinalProduct_out_DateBetween(
+      DateTime start,DateTime end) {
+    return where((element) =>
+        element.actions.if_action_exist(finalProdcutAction
+                .out_order.getactionTitle) ==
+            true &&
+        element.actions
+                .get_Date_of_action(finalProdcutAction
+                    .out_order.getactionTitle)
+                .formatToInt() >=
+            start.formatToInt() &&
+        element.actions
+                .get_Date_of_action(finalProdcutAction
+                    .out_order.getactionTitle)
+                .formatToInt() <=
+            end.formatToInt()).toList();
+  }
+  List<FinalProductModel> filterFinalProduct_IN_DateBetween(
+      DateTime start,DateTime end) {
+    return where((element) =>
+        element.actions.if_action_exist(finalProdcutAction
+                .incert_finalProduct_from_cutingUnit.getactionTitle) ==
+            true &&
+        element.actions
+                .get_Date_of_action(finalProdcutAction
+                    .incert_finalProduct_from_cutingUnit.getactionTitle)
+                .formatToInt() >=
+            start.formatToInt() &&
+        element.actions
+                .get_Date_of_action(finalProdcutAction
+                    .incert_finalProduct_from_cutingUnit.getactionTitle)
+                .formatToInt() <=
+            end.formatToInt()).toList();
   }
 
   List<FinalProductModel> filteronfinalproductwithcsissor() {

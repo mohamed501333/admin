@@ -16,12 +16,213 @@ class FinalprodcutsReportsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [BoxOFReportForfinalProdcutsReport()],
+      body: Consumer<final_prodcut_controller>(
+        builder: (context, myType, child) {
+          return Column(
+        children: [
+          BoxOFReportForfinalProdcutsReport(),
+          if(myType.selectedreport=='تقرير المنصرف فقط')
+          const FinalprodcutReport1()
+          
+          ],
+      ) ;
+        },
       ),
     );
   }
 }
+
+
+
+class FinalprodcutReport1 extends StatelessWidget {
+  const FinalprodcutReport1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<final_prodcut_controller>(
+      builder: (context, finalprodcuts,child) {
+             List<FinalProductModel> finalproductsBetweenTowDates =
+            finalprodcuts.finalproducts.filterFinalProduct_out_DateBetween(
+                finalprodcuts.pickedDateFrom!, finalprodcuts.pickedDateTo!)
+                .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
+                .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities).
+                filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
+                .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
+                .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes)
+                ;
+        return Expanded(
+          child: SingleChildScrollView(
+            child: SizedBox(
+                  width: 300,
+                  child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Table(
+                border: TableBorder.all(),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: const [
+                  TableRow(
+                      decoration: BoxDecoration(color: Colors.grey),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("اجمالى المصروف  "),
+                          ],
+                        ),
+                      ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: const [
+                  TableRow(children: [
+                    Center(
+                      child: Text("من"),
+                    ),
+                    Center(
+                      child: Text("عدد"),
+                    )
+                  ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: finalproductsBetweenTowDates
+                    .filteronfinalproduct()
+                    .sortedBy<num>((element) => element.item.density)
+                    .map((e) => TableRow(children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                            ],
+                          ),
+                          Center(
+                            child: Text(
+                                finalproductsBetweenTowDates.countOf(e).toString(),style: const TextStyle(color: Colors.red),),
+                          ),
+                        ]))
+                    .toList(),
+              ),
+            ],
+                  ),
+                ),
+          ),
+        );
+      },
+    );
+  }
+}
+class FinalprodcutReport2 extends StatelessWidget {
+  const FinalprodcutReport2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<final_prodcut_controller>(
+      builder: (context, finalprodcuts,child) {
+             List<FinalProductModel> finalproductsBetweenTowDates =
+            finalprodcuts.finalproducts.filterFinalProduct_IN_DateBetween(
+                finalprodcuts.pickedDateFrom!, finalprodcuts.pickedDateTo!)
+                .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
+                .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities).
+                filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
+                .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
+                .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes)
+                ;
+        return Expanded(
+          child: SingleChildScrollView(
+            child: SizedBox(
+                  width: 300,
+                  child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Table(
+                border: TableBorder.all(),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: const [
+                  TableRow(
+                      decoration: BoxDecoration(color: Colors.grey),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("اجمالى المصروف  "),
+                          ],
+                        ),
+                      ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: const [
+                  TableRow(children: [
+                    Center(
+                      child: Text("من"),
+                    ),
+                    Center(
+                      child: Text("عدد"),
+                    )
+                  ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: finalproductsBetweenTowDates
+                    .filteronfinalproduct()
+                    .sortedBy<num>((element) => element.item.density)
+                    .map((e) => TableRow(children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                            ],
+                          ),
+                          Center(
+                            child: Text(
+                                finalproductsBetweenTowDates.countOf(e).toString(),style: const TextStyle(color: Colors.red),),
+                          ),
+                        ]))
+                    .toList(),
+              ),
+            ],
+                  ),
+                ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+
+
 
 class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
   BoxOFReportForfinalProdcutsReport({super.key});
@@ -53,9 +254,14 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
           border: Border.all(width: 2, color: Colors.teal),
           borderRadius: BorderRadius.circular(5)),
       child: Consumer<final_prodcut_controller>(
-        builder: (context, myType, child) {
+        builder: (context, myType,child) {
+    myType.pickedDateFrom = DateTime.now();
+    myType.pickedDateTo = DateTime.now();
+
           List<FinalProductModel> f =
-              myType.finalproducts.filteronfinalproduct();
+              myType.finalproducts.filterFinalProduct_out_DateBetween(
+                myType.pickedDateFrom!,myType.pickedDateTo!).filteronfinalproduct();
+
           return Column(
             children: [
               //نوع التقرير
@@ -812,7 +1018,6 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
     );
   }
 }
-
 class DatepickerFrom4 extends StatelessWidget {
   const DatepickerFrom4({super.key});
 
@@ -864,7 +1069,6 @@ class DatepickerFrom4 extends StatelessWidget {
     );
   }
 }
-
 class DatepickerTo4 extends StatelessWidget {
   const DatepickerTo4({super.key});
 

@@ -85,22 +85,28 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
 
   c() {
-    // if (all.isNotEmpty) {
+    if (all.isNotEmpty) {
     // for (var element in all.where((element) =>
     //  element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)==true&&
     //  element.actions.get_Date_of_action(BlockAction.consume_block.getactionTitle).formatToInt()<DateTime.now().formatToInt())) {
     //   element.Hscissor=15;
     //   }
-    //   var s = {};
-    //   s.addEntries(all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
-    //   FirebaseDatabase.instance.ref("blocks").set(s);
-    //      FirebaseDatabase.instance
-    //     .ref("blocks")
-    //     .onValue
-    //     .first
-    //     .then((value)  {
-    //    getInitialData(value.snapshot);});
-    // }
+    for (var element in all.where((element) =>element.serial=="D28h21-4-2024"&&element.item.density==33.0)) {
+      element.item.density=28.0;
+      element.item.color="ابيض";
+      element.item.type="هارد";
+      element.discreption="D28h-white-160";
+      }
+      var s = {};
+      s.addEntries(all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
+      FirebaseDatabase.instance.ref("blocks").set(s);
+         FirebaseDatabase.instance
+        .ref("blocks")
+        .onValue
+        .first
+        .then((value)  {
+       getInitialData(value.snapshot);});
+    }
   }
   
 
