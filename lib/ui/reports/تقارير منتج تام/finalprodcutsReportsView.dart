@@ -16,20 +16,28 @@ class FinalprodcutsReportsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Consumer<final_prodcut_controller>(
-        builder: (context, myType, child) {
-          return Column(
-            children: [
-              BoxOFReportForfinalProdcutsReport(),
-              if (myType.selectedreport == 'تقرير المنصرف فقط')
-                const FinalprodcutReport1(),
-              if (myType.selectedreport == 'تقرير الوارد فقط')
-                const FinalprodcutReport2(),
-              if (myType.selectedreport == 'الكميه المتوفره فقط')
-                const FinalprodcutReport3()
-            ],
-          );
-        },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BoxOFReportForfinalProdcutsReport(),
+            Consumer<final_prodcut_controller>(
+              builder: (context, myType, child) {
+                return Column(
+                  children: [
+            
+                    
+                    if (myType.selectedreport == 'تقرير المنصرف فقط')
+                      const FinalprodcutReport1(),
+                    if (myType.selectedreport == 'تقرير الوارد فقط')
+                      const FinalprodcutReport2(),
+                    if (myType.selectedreport == 'الكميه المتوفره فقط')
+                      const FinalprodcutReport3()
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -52,81 +60,77 @@ class FinalprodcutReport1 extends StatelessWidget {
             .filterItemsPasedOnCustomers(
                 context, finalprodcuts.selctedcustomers)
             .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
-        return Expanded(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: 300,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Table(
-                    border: TableBorder.all(),
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: const [
-                      TableRow(
-                          decoration: BoxDecoration(color: Colors.grey),
+        return SizedBox(
+          width: 300,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Table(
+                border: TableBorder.all(),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: const [
+                  TableRow(
+                      decoration: BoxDecoration(color: Colors.grey),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("اجمالى المصروف  "),
-                              ],
-                            ),
-                          ]),
-                    ],
-                  ),
-                  Table(
-                    columnWidths: const {
-                      0: FlexColumnWidth(3),
-                      1: FlexColumnWidth(1),
-                    },
-                    border: TableBorder.all(),
-                    children: const [
-                      TableRow(children: [
-                        Center(
-                          child: Text("من"),
+                            Text("اجمالى المصروف  "),
+                          ],
                         ),
-                        Center(
-                          child: Text("عدد"),
-                        )
                       ]),
-                    ],
-                  ),
-                  Table(
-                    columnWidths: const {
-                      0: FlexColumnWidth(3),
-                      1: FlexColumnWidth(1),
-                    },
-                    border: TableBorder.all(),
-                    children: finalproductsBetweenTowDates
-                        .filteronfinalproduct()
-                        .sortedBy<num>((element) => element.item.density)
-                        .map((e) => TableRow(children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      textDirection: TextDirection.rtl,
-                                      "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
-                                  Text(
-                                      textDirection: TextDirection.rtl,
-                                      "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
-                                ],
-                              ),
-                              Center(
-                                child: Text(
-                                  finalproductsBetweenTowDates
-                                      .countOf(e)
-                                      .toString(),
-                                  style: const TextStyle(color: Colors.red),
-                                ),
-                              ),
-                            ]))
-                        .toList(),
-                  ),
                 ],
               ),
-            ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: const [
+                  TableRow(children: [
+                    Center(
+                      child: Text("من"),
+                    ),
+                    Center(
+                      child: Text("عدد"),
+                    )
+                  ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: finalproductsBetweenTowDates
+                    .filteronfinalproduct()
+                    .sortedBy<num>((element) => element.item.density)
+                    .map((e) => TableRow(children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                            ],
+                          ),
+                          Center(
+                            child: Text(
+                              finalproductsBetweenTowDates
+                                  .countOf(e)
+                                  .toString(),
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ]))
+                    .toList(),
+              ),
+            ],
           ),
         );
       },
@@ -151,82 +155,78 @@ class FinalprodcutReport2 extends StatelessWidget {
             .filterItemsPasedOnCustomers(
                 context, finalprodcuts.selctedcustomers)
             .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
-        return Expanded(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: 300,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Table(
-                    border: TableBorder.all(),
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: const [
-                      TableRow(
-                          decoration: BoxDecoration(color: Colors.grey),
+        return SizedBox(
+          width: 300,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Table(
+                border: TableBorder.all(),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: const [
+                  TableRow(
+                      decoration: BoxDecoration(color: Colors.grey),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("اجمالى الوارد  "),
-                              ],
-                            ),
-                          ]),
-                    ],
-                  ),
-                  Table(
-                    columnWidths: const {
-                      0: FlexColumnWidth(3),
-                      1: FlexColumnWidth(1),
-                    },
-                    border: TableBorder.all(),
-                    children: const [
-                      TableRow(children: [
-                        Center(
-                          child: Text("من"),
+                            Text("اجمالى الوارد  "),
+                          ],
                         ),
-                        Center(
-                          child: Text("عدد"),
-                        )
                       ]),
-                    ],
-                  ),
-                  Table(
-                    columnWidths: const {
-                      0: FlexColumnWidth(3),
-                      1: FlexColumnWidth(1),
-                    },
-                    border: TableBorder.all(),
-                    children: finalproductsBetweenTowDates
-                        .filteronfinalproduct()
-                        .sortedBy<num>((element) => element.item.density)
-                        .map((e) => TableRow(children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      textDirection: TextDirection.rtl,
-                                      "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
-                                  Text(
-                                      textDirection: TextDirection.rtl,
-                                      "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
-                                ],
-                              ),
-                              Center(
-                                child: Text(
-                                  finalproductsBetweenTowDates
-                                      .countOf(e)
-                                      .toString(),
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 11, 134, 0)),
-                                ),
-                              ),
-                            ]))
-                        .toList(),
-                  ),
                 ],
               ),
-            ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: const [
+                  TableRow(children: [
+                    Center(
+                      child: Text("من"),
+                    ),
+                    Center(
+                      child: Text("عدد"),
+                    )
+                  ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: finalproductsBetweenTowDates
+                    .filteronfinalproduct()
+                    .sortedBy<num>((element) => element.item.density)
+                    .map((e) => TableRow(children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                            ],
+                          ),
+                          Center(
+                            child: Text(
+                              finalproductsBetweenTowDates
+                                  .countOf(e)
+                                  .toString(),
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 11, 134, 0)),
+                            ),
+                          ),
+                        ]))
+                    .toList(),
+              ),
+            ],
           ),
         );
       },
@@ -250,80 +250,76 @@ class FinalprodcutReport3 extends StatelessWidget {
             .filterItemsPasedOnCustomers(
                 context, finalprodcuts.selctedcustomers)
             .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
-        return Expanded(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: 300,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Table(
-                    border: TableBorder.all(),
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: const [
-                      TableRow(
-                          decoration: BoxDecoration(color: Colors.grey),
+        return SizedBox(
+          width: 300,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Table(
+                border: TableBorder.all(),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: const [
+                  TableRow(
+                      decoration: BoxDecoration(color: Colors.grey),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("الكميه المتوفره فقط "),
-                              ],
-                            ),
-                          ]),
-                    ],
-                  ),
-                  Table(
-                    columnWidths: const {
-                      0: FlexColumnWidth(3),
-                      1: FlexColumnWidth(1),
-                    },
-                    border: TableBorder.all(),
-                    children: const [
-                      TableRow(children: [
-                        Center(
-                          child: Text("من"),
+                            Text("الكميه المتوفره فقط "),
+                          ],
                         ),
-                        Center(
-                          child: Text("عدد"),
-                        )
                       ]),
-                    ],
-                  ),
-                  Table(
-                    columnWidths: const {
-                      0: FlexColumnWidth(3),
-                      1: FlexColumnWidth(1),
-                    },
-                    border: TableBorder.all(),
-                    children: finalproductsBetweenTowDates
-                            .ReturnItmeWithTotalAndRemovewhreTotalZeto()
-                        .sortedBy<num>((element) => element.density)
-                        .map((e) => TableRow(children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      textDirection: TextDirection.rtl,
-                                      "      ${e.color} ${e.type} ك ${e.density.removeTrailingZeros}"),
-                                  Text(
-                                      textDirection: TextDirection.rtl,
-                                      "${e.L.removeTrailingZeros}*${e.W.removeTrailingZeros}*${e.H.removeTrailingZeros}"),
-                                ],
-                              ),
-                              Center(
-                                child: Text(
-                                  e.amount.toString(),
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 11, 134, 0)),
-                                ),
-                              ),
-                            ]))
-                        .toList(),
-                  ),
                 ],
               ),
-            ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: const [
+                  TableRow(children: [
+                    Center(
+                      child: Text("من"),
+                    ),
+                    Center(
+                      child: Text("عدد"),
+                    )
+                  ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: finalproductsBetweenTowDates
+                        .ReturnItmeWithTotalAndRemovewhreTotalZeto()
+                    .sortedBy<num>((element) => element.density)
+                    .map((e) => TableRow(children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "      ${e.color} ${e.type} ك ${e.density.removeTrailingZeros}"),
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "${e.L.removeTrailingZeros}*${e.W.removeTrailingZeros}*${e.H.removeTrailingZeros}"),
+                            ],
+                          ),
+                          Center(
+                            child: Text(
+                              e.amount.toString(),
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 11, 134, 0)),
+                            ),
+                          ),
+                        ]))
+                    .toList(),
+              ),
+            ],
           ),
         );
       },
@@ -364,16 +360,40 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
           borderRadius: BorderRadius.circular(5)),
       child: Consumer<final_prodcut_controller>(
         builder: (context, myType, child) {
-          List<FinalProductModel> f = myType.selectedreport ==
-                  'الكميه المتوفره فقط'
-              ? myType.finalproducts
-                  .filterFinalProduct_out_DateBetween(
-                      myType.pickedDateFrom!, myType.pickedDateTo!)
-                  .filteronfinalproduct()
-              : myType.finalproducts
-                  .filterFinalProduct_out_DateBetween(
-                      myType.pickedDateFrom!, myType.pickedDateTo!)
-                  .filteronfinalproduct();
+          List<FinalProductModel> f = [];
+                  
+                  if (myType.selectedreport =='الكميه المتوفره فقط') {
+                    f=myType.finalproducts
+            .data_until_date(myType.pickedDateTo!)
+            .filterItemsPasedOncolors(context, myType.selctedcolors)
+            .filterItemsPasedOnDensites(context, myType.selctedDensities)
+            .filterItemsPasedOntypes(context, myType.selctedtybes)
+            .filterItemsPasedOnCustomers(
+                context, myType.selctedcustomers)
+            .filterItemsPasedOnsizes(context, myType.selctedsizes);;
+                  }
+                  if (myType.selectedreport =='تقرير الوارد فقط') {
+                    f=myType.finalproducts
+            .filterFinalProduct_IN_DateBetween(
+                myType.pickedDateFrom!, myType.pickedDateTo!)
+            .filterItemsPasedOncolors(context, myType.selctedcolors)
+            .filterItemsPasedOnDensites(context, myType.selctedDensities)
+            .filterItemsPasedOntypes(context, myType.selctedtybes)
+            .filterItemsPasedOnCustomers(
+                context, myType.selctedcustomers)
+            .filterItemsPasedOnsizes(context, myType.selctedsizes);
+                  }
+                  if (myType.selectedreport =='تقرير المنصرف فقط') {
+                    f= myType.finalproducts
+            .filterFinalProduct_out_DateBetween(
+                myType.pickedDateFrom!, myType.pickedDateTo!)
+            .filterItemsPasedOncolors(context, myType.selctedcolors)
+            .filterItemsPasedOnDensites(context, myType.selctedDensities)
+            .filterItemsPasedOntypes(context, myType.selctedtybes)
+            .filterItemsPasedOnCustomers(
+                context, myType.selctedcustomers)
+            .filterItemsPasedOnsizes(context, myType.selctedsizes);
+                  }
 
           return Column(
             children: [
@@ -416,6 +436,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
                   ),
                 ),
               ),
+              
               Row(
                 children: [
                   DropdownButton2<String>(
@@ -831,6 +852,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
                       )),
                 ],
               ),
+            
               Row(
                 children: [
                   DropdownButton2<String>(
