@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/cutting_order/cutting_ordera_viewModer.dart';
+import '../../app/extentions.dart';
+import '../../models/moderls.dart';
+import 'cutting_ordera_viewModer.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 

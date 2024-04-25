@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/controllers/non_final_controller.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/base/base_view_mode.dart';
+import '../../app/extentions.dart';
+import '../../controllers/non_final_controller.dart';
+import '../../models/moderls.dart';
+import '../base/base_view_mode.dart';
 import 'package:provider/provider.dart';
 
 class NotFinalViewModer extends BaseViewModel {

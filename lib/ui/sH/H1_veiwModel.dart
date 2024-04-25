@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
@@ -182,7 +183,9 @@ class H1VeiwModel extends BaseViewModel {
       } else {
         blockToCutted.Hscissor = scissor;
         blockToCutted.actions.add(BlockAction.cut_block_on_H.add);
-        context.read<Fractions_Controller>().addfractionslist(permanentFractons);
+        context
+            .read<Fractions_Controller>()
+            .addfractionslist(permanentFractons);
         await context
             .read<BlockFirebasecontroller>()
             .Cut_block(block: blockToCutted);

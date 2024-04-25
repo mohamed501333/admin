@@ -2,6 +2,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
 import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:provider/provider.dart';
@@ -130,82 +131,76 @@ class RVeiw2 extends StatelessWidget {
                                             .filter_Fractios___()
                                             .map((f) => GestureDetector(
                                                   onTap: () {
-                                                    
-                                                          showDialog(
-                                                              context: context,
-                                                              builder: (_) =>
-                                                                  AlertDialog(
-                                                                    scrollable:
-                                                                        true,
-                                                                    shape:
-                                                                        RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
-                                                                    ),
-                                                                    content:
-                                                                        SizedBox(
-                                                                      height:
-                                                                          120,
+                                                    showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (_) => AlertDialog(
+                                                                  scrollable:
+                                                                      true,
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20),
+                                                                  ),
+                                                                  content:
+                                                                      SizedBox(
+                                                                    height: 120,
+                                                                    child:
+                                                                        SingleChildScrollView(
                                                                       child:
-                                                                          SingleChildScrollView(
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            const Text("هل تريد حذف"),
-                                                                            Row(
-                                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                                              children: [
-                                                                                Text("${fractions.first.item.color} ${fractions.first.item.type} ك${fractions.first.item.density.removeTrailingZeros}"),
-                                                                                Text("  ${fractions.first.item.L.removeTrailingZeros}*${fractions.first.item.W.removeTrailingZeros}*${fractions.first.item.H.removeTrailingZeros} من "),
-                                                                                Text("${fractions.map((e) => e.item).toList().countOf(fractions.first.item)} "),
-                                                                              ],
-                                                                            ),
-                                                                            Row(
-                                                                              children: [
-                                                                                Expanded(
-                                                                                  child: ElevatedButton(
-                                                                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
-                                                                                      onPressed: () {
-                                                                                        if (fractions.first.notfinals.isEmpty) {
-                                                                                          deletefractons_cutted_FromRscissr(context, fractons_cutted_on_Rstage_rscossor(fractions, f).toList());
-                                                                                          Navigator.pop(context);
-                                                                                        } else {
-                                                                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(seconds: 7), content: Text('لا يمكن حذف بسبب اضافة دون تام')));
-                                                                                        }
-                                                                                      },
-                                                                                      child: const Text('حذف')),
-                                                                                ).permition(
-                                                          context,
-                                                          UserPermition
-                                                              .can_delete_fractons_cutted_on_R),
-                                                                                const SizedBox(
-                                                                                  width: 5,
-                                                                                ),
-                                                                                Expanded(
-                                                                                  child: ElevatedButton(
-                                                                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)),
-                                                                                      onPressed: () {
+                                                                          Column(
+                                                                        children: [
+                                                                          const Text(
+                                                                              "هل تريد حذف"),
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            children: [
+                                                                              Text("${fractions.first.item.color} ${fractions.first.item.type} ك${fractions.first.item.density.removeTrailingZeros}"),
+                                                                              Text("  ${fractions.first.item.L.removeTrailingZeros}*${fractions.first.item.W.removeTrailingZeros}*${fractions.first.item.H.removeTrailingZeros} من "),
+                                                                              Text("${fractions.map((e) => e.item).toList().countOf(fractions.first.item)} "),
+                                                                            ],
+                                                                          ),
+                                                                          Row(
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: ElevatedButton(
+                                                                                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+                                                                                    onPressed: () {
+                                                                                      if (fractions.first.notfinals.isEmpty) {
+                                                                                        deletefractons_cutted_FromRscissr(context, fractons_cutted_on_Rstage_rscossor(fractions, f).toList());
                                                                                         Navigator.pop(context);
-                                                                                      },
-                                                                                      child: const Text('الغاء')),
-                                                                                ),
-                                                                              ],
-                                                                            )
-                                                                          ],
-                                                                        ),
+                                                                                      } else {
+                                                                                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(duration: Duration(seconds: 7), content: Text('لا يمكن حذف بسبب اضافة دون تام')));
+                                                                                      }
+                                                                                    },
+                                                                                    child: const Text('حذف')),
+                                                                              ).permition(context, UserPermition.can_delete_fractons_cutted_on_R),
+                                                                              const SizedBox(
+                                                                                width: 5,
+                                                                              ),
+                                                                              Expanded(
+                                                                                child: ElevatedButton(
+                                                                                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                                                                                    onPressed: () {
+                                                                                      Navigator.pop(context);
+                                                                                    },
+                                                                                    child: const Text('الغاء')),
+                                                                              ),
+                                                                            ],
+                                                                          )
+                                                                        ],
                                                                       ),
                                                                     ),
-                                                                  ));
-                                                      
-                                                      
+                                                                  ),
+                                                                ));
                                                   },
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                  
                                                       Text(
                                                           "${f.item.color} ${f.item.type} ك${f.item.density.removeTrailingZeros}"),
                                                       Text(

@@ -2,6 +2,7 @@
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_core/theme.dart';

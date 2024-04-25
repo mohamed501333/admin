@@ -2,10 +2,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:jason_company/controllers/purchesController.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/base/base_view_mode.dart';
-import 'package:jason_company/ui/recources/enums.dart';
+import '../../controllers/purchesController.dart';
+import '../../models/moderls.dart';
+import '../base/base_view_mode.dart';
+import '../recources/enums.dart';
 
 class PurchesViewMolel extends BaseViewModel {
   List<PurcheItem> permanentWidget = [];

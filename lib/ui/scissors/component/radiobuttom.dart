@@ -1,6 +1,6 @@
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
-import 'package:jason_company/controllers/scissors_controller.dart';
+import '../../../controllers/scissors_controller.dart';
 import 'package:provider/provider.dart';
 
 class Radiobuttom extends StatelessWidget {
@@ -17,9 +17,9 @@ class Radiobuttom extends StatelessWidget {
       elevation: 0,
       absoluteZeroSpacing: true,
       unSelectedColor: Theme.of(context).canvasColor,
-      buttonLables: const ['H1', 'H2', 'H3', 'R1', 'R2', 'R3','A1'],
+      buttonLables: const ['H1', 'H2', 'H3', 'R1', 'R2', 'R3', 'A1'],
       // ignore: prefer_const_literals_to_create_immutables
-      buttonValues: [0, 1, 2, 3, 4, 5,6],
+      buttonValues: [0, 1, 2, 3, 4, 5, 6],
       radioButtonValue: (value) =>
           Provider.of<ScissorsController>(context, listen: false)
               .changeIndexOfRadioButoon(value),

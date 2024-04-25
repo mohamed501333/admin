@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
 import 'package:provider/provider.dart';

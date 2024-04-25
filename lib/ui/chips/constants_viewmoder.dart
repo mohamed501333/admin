@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/controllers/ObjectBoxController.dart';
-import 'package:jason_company/main.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/base/base_view_mode.dart';
+import '../../app/extentions.dart';
+import '../../controllers/ObjectBoxController.dart';
+import '../../main.dart';
+import '../../models/moderls.dart';
+import '../base/base_view_mode.dart';
 import 'package:provider/provider.dart';
 
 class ConstantsViewModel extends BaseViewModel {

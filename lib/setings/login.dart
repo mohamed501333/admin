@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/main.dart';
-import 'package:jason_company/ui/main/main_view.dart';
+import '../app/extentions.dart';
+import '../main.dart';
+import '../ui/main/main_view.dart';
 
 class MyloginPage extends StatefulWidget {
   const MyloginPage({super.key});
   @override
   State<MyloginPage> createState() => _MyStatefulWidgetState();
 }
+
 class _MyStatefulWidgetState extends State<MyloginPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -102,7 +103,7 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
                       onPressed: () {
                         FirebaseAuth.instance.signOut().then((value) {
                           setState(() {});
-                          context.gonextAnsRemove(context,  MyApp());
+                          context.gonextAnsRemove(context, MyApp());
                         });
                       },
                     )),

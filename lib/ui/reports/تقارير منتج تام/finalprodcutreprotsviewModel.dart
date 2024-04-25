@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jason_company/controllers/final_product_controller.dart';
-import 'package:jason_company/ui/base/base_view_mode.dart';
-import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
+import '../../../controllers/final_product_controller.dart';
+import '../../base/base_view_mode.dart';
+import '../../stockCheck/stockchek_veiwModel.dart';
 import 'package:provider/provider.dart';
 
 class FinalProdcutsViewModel extends BaseViewModel {

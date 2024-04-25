@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
-import 'package:jason_company/app/extentions.dart';
+import '../../../../app/extentions.dart';
 
-import 'package:jason_company/models/moderls.dart';
+import '../../../../models/moderls.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
@@ -135,17 +135,20 @@ Widget dataa(List<BlockModel> blocks) {
                     Container(
                       width: 40,
                       decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(child: Text(e.item.L.removeTrailingZeros.toString())),
+                      child: Center(
+                          child: Text(e.item.L.removeTrailingZeros.toString())),
                     ),
                     Container(
                       width: 40,
                       decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(child: Text(e.item.W.removeTrailingZeros.toString())),
+                      child: Center(
+                          child: Text(e.item.W.removeTrailingZeros.toString())),
                     ),
                     Container(
                       width: 40,
                       decoration: BoxDecoration(border: Border.all(width: 1)),
-                      child: Center(child: Text(e.item.H.removeTrailingZeros.toString())),
+                      child: Center(
+                          child: Text(e.item.H.removeTrailingZeros.toString())),
                     ),
                     Container(
                       width: 115,

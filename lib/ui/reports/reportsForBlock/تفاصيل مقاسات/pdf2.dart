@@ -1,9 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/services.dart';
-import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/extentions/blockExtentions.dart';
+import '../../../../app/extentions.dart';
 
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/Bolck_reports_viewModel.dart';
+import '../../../../models/moderls.dart';
+import '../Bolck_reports_viewModel.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 

@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/controllers/stockCheckController.dart';
+import '../../app/extentions.dart';
+import '../../controllers/stockCheckController.dart';
 
 import 'package:provider/provider.dart';
 

@@ -3,6 +3,7 @@
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -219,7 +220,8 @@ class EmployeeDataSource extends DataGridSource {
                   value: vm.total_amount_for_single_siz__(e, coumingData)),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
+                  value:
+                      "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
               DataGridCell<String>(columnName: 'color', value: e.item.color),
               DataGridCell<double>(columnName: 'denety', value: e.item.density),
               DataGridCell<String>(columnName: 'type', value: e.item.type),
@@ -445,7 +447,8 @@ class EmployeeDataSource22 extends DataGridSource {
                   value: vm.total_amount_for_single_siz__(e, coumingData)),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
+                  value:
+                      "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
               DataGridCell<String>(columnName: 'color', value: e.item.color),
               DataGridCell<double>(columnName: 'denety', value: e.item.density),
               DataGridCell<String>(columnName: 'type', value: e.item.type),

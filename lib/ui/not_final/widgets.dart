@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jason_company/app/validation.dart';
-import 'package:jason_company/ui/commen/textformfield.dart';
-import 'package:jason_company/ui/not_final/not_final_viewModer.dart';
+import '../../app/validation.dart';
+import '../commen/textformfield.dart';
+import 'not_final_viewModer.dart';
 
 showAlertDialog(
     BuildContext context, NotFinalViewModer vm, int i, String type) {

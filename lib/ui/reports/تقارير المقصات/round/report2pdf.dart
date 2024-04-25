@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/services.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/reports/All_reports_veiwModel.dart';
+import '../../../../app/extentions.dart';
+import '../../../../models/moderls.dart';
+import '../../All_reports_veiwModel.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
@@ -119,7 +119,8 @@ newMethod(
                                     context,
                                     scissor,
                                     fractions
-                                        .where((element) => element.stagenum == k)
+                                        .where(
+                                            (element) => element.stagenum == k)
                                         .toList())
                                 .map((e) => Padding(
                                     padding: const EdgeInsets.all(1),
@@ -182,7 +183,8 @@ newMethod(
                                               MainAxisAlignment.center,
                                           children: [
                                             SizedBox(
-                                              child: Text(""
+                                              child: Text(
+                                                ""
                                                 // ${f.type} kg ${fractions.where((element) => element.stage == k).expand((s) => s.notfinals).where((element) => element.type == f.type).map((e) => e.wight).reduce((n, m) => n + m).removeTrailingZeros}
                                                 ,
                                               ),

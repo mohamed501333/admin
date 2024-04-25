@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart' as c;
 import 'package:flutter/services.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/controllers/bFractionsController.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/recources/enums.dart';
-import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
+import '../../../../app/extentions.dart';
+import '../../../../controllers/bFractionsController.dart';
+import '../../../../controllers/blockFirebaseController.dart';
+import '../../../../models/moderls.dart';
+import '../../../recources/enums.dart';
+import '../../%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:provider/provider.dart';

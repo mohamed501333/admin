@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D9%85%D9%86%D8%AA%D8%AC%20%D8%AA%D8%A7%D9%85/finalprodcutreprotsviewModel.dart';
@@ -24,8 +25,6 @@ class FinalprodcutsReportsView extends StatelessWidget {
               builder: (context, myType, child) {
                 return Column(
                   children: [
-            
-                    
                     if (myType.selectedreport == 'تقرير المنصرف فقط')
                       const FinalprodcutReport1(),
                     if (myType.selectedreport == 'تقرير الوارد فقط')
@@ -43,6 +42,7 @@ class FinalprodcutsReportsView extends StatelessWidget {
   }
 }
 
+//المنصرف
 class FinalprodcutReport1 extends StatelessWidget {
   const FinalprodcutReport1({super.key});
 
@@ -138,6 +138,7 @@ class FinalprodcutReport1 extends StatelessWidget {
   }
 }
 
+//الوارد
 class FinalprodcutReport2 extends StatelessWidget {
   const FinalprodcutReport2({super.key});
 
@@ -234,6 +235,7 @@ class FinalprodcutReport2 extends StatelessWidget {
   }
 }
 
+//الكمية المتوفره
 class FinalprodcutReport3 extends StatelessWidget {
   const FinalprodcutReport3({super.key});
 
@@ -361,39 +363,37 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
       child: Consumer<final_prodcut_controller>(
         builder: (context, myType, child) {
           List<FinalProductModel> f = [];
-                  
-                  if (myType.selectedreport =='الكميه المتوفره فقط') {
-                    f=myType.finalproducts
-            .data_until_date(myType.pickedDateTo!)
-            .filterItemsPasedOncolors(context, myType.selctedcolors)
-            .filterItemsPasedOnDensites(context, myType.selctedDensities)
-            .filterItemsPasedOntypes(context, myType.selctedtybes)
-            .filterItemsPasedOnCustomers(
-                context, myType.selctedcustomers)
-            .filterItemsPasedOnsizes(context, myType.selctedsizes);;
-                  }
-                  if (myType.selectedreport =='تقرير الوارد فقط') {
-                    f=myType.finalproducts
-            .filterFinalProduct_IN_DateBetween(
-                myType.pickedDateFrom!, myType.pickedDateTo!)
-            .filterItemsPasedOncolors(context, myType.selctedcolors)
-            .filterItemsPasedOnDensites(context, myType.selctedDensities)
-            .filterItemsPasedOntypes(context, myType.selctedtybes)
-            .filterItemsPasedOnCustomers(
-                context, myType.selctedcustomers)
-            .filterItemsPasedOnsizes(context, myType.selctedsizes);
-                  }
-                  if (myType.selectedreport =='تقرير المنصرف فقط') {
-                    f= myType.finalproducts
-            .filterFinalProduct_out_DateBetween(
-                myType.pickedDateFrom!, myType.pickedDateTo!)
-            .filterItemsPasedOncolors(context, myType.selctedcolors)
-            .filterItemsPasedOnDensites(context, myType.selctedDensities)
-            .filterItemsPasedOntypes(context, myType.selctedtybes)
-            .filterItemsPasedOnCustomers(
-                context, myType.selctedcustomers)
-            .filterItemsPasedOnsizes(context, myType.selctedsizes);
-                  }
+
+          if (myType.selectedreport == 'الكميه المتوفره فقط') {
+            f = myType.finalproducts
+                .data_until_date(myType.pickedDateTo!)
+                .filterItemsPasedOncolors(context, myType.selctedcolors)
+                .filterItemsPasedOnDensites(context, myType.selctedDensities)
+                .filterItemsPasedOntypes(context, myType.selctedtybes)
+                .filterItemsPasedOnCustomers(context, myType.selctedcustomers)
+                .filterItemsPasedOnsizes(context, myType.selctedsizes);
+            ;
+          }
+          if (myType.selectedreport == 'تقرير الوارد فقط') {
+            f = myType.finalproducts
+                .filterFinalProduct_IN_DateBetween(
+                    myType.pickedDateFrom!, myType.pickedDateTo!)
+                .filterItemsPasedOncolors(context, myType.selctedcolors)
+                .filterItemsPasedOnDensites(context, myType.selctedDensities)
+                .filterItemsPasedOntypes(context, myType.selctedtybes)
+                .filterItemsPasedOnCustomers(context, myType.selctedcustomers)
+                .filterItemsPasedOnsizes(context, myType.selctedsizes);
+          }
+          if (myType.selectedreport == 'تقرير المنصرف فقط') {
+            f = myType.finalproducts
+                .filterFinalProduct_out_DateBetween(
+                    myType.pickedDateFrom!, myType.pickedDateTo!)
+                .filterItemsPasedOncolors(context, myType.selctedcolors)
+                .filterItemsPasedOnDensites(context, myType.selctedDensities)
+                .filterItemsPasedOntypes(context, myType.selctedtybes)
+                .filterItemsPasedOnCustomers(context, myType.selctedcustomers)
+                .filterItemsPasedOnsizes(context, myType.selctedsizes);
+          }
 
           return Column(
             children: [
@@ -436,7 +436,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
                   ),
                 ),
               ),
-              
+
               Row(
                 children: [
                   DropdownButton2<String>(
@@ -852,7 +852,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
                       )),
                 ],
               ),
-            
+
               Row(
                 children: [
                   DropdownButton2<String>(

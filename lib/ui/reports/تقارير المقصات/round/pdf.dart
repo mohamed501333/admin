@@ -1,9 +1,10 @@
 import 'package:flutter/services.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/controllers/bFractionsController.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/recources/enums.dart';
-import 'package:jason_company/ui/reports/reprtsForFinlProuduct/reports_viewmoder.dart';
+import '../../../../app/extentions.dart';
+import '../../../../app/extentions/finalProdcutExtentions.dart';
+import '../../../../controllers/bFractionsController.dart';
+import '../../../../models/moderls.dart';
+import '../../../recources/enums.dart';
+import '../../reprtsForFinlProuduct/reports_viewmoder.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 

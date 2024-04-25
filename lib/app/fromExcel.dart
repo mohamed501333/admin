@@ -5,10 +5,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle, Uint8List;
 import 'package:csv/csv.dart';
-import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/controllers/final_product_controller.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/recources/enums.dart';
+import 'extentions.dart';
+import '../controllers/final_product_controller.dart';
+import '../models/moderls.dart';
+import '../ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class bulkUpload extends StatefulWidget {

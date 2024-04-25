@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jason_company/controllers/main_controller.dart';
-import 'package:jason_company/ui/main/main_viewModel.dart';
+import '../../../controllers/main_controller.dart';
+import '../main_viewModel.dart';
 import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {

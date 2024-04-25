@@ -4,29 +4,29 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:jason_company/controllers/CategorysController.dart';
-import 'package:jason_company/controllers/ChemicalsController.dart';
-import 'package:jason_company/controllers/Customer_controller.dart';
-import 'package:jason_company/controllers/Order_controller.dart';
-import 'package:jason_company/controllers/bFractionsController.dart';
-import 'package:jason_company/controllers/bSubfractions.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
-import 'package:jason_company/controllers/dropDowen_controller.dart';
-import 'package:jason_company/controllers/final_product_controller.dart';
-import 'package:jason_company/controllers/invoice_controller.dart';
-import 'package:jason_company/controllers/non_final_controller.dart';
-import 'package:jason_company/controllers/purchesController.dart';
-import 'package:jason_company/controllers/setting_controller.dart';
-import 'package:jason_company/controllers/stockCheckController.dart';
-import 'package:jason_company/controllers/users_controllers.dart';
-import 'package:jason_company/controllers/zupdate.dart';
-import 'package:jason_company/setings/login.dart';
+import 'controllers/CategorysController.dart';
+import 'controllers/ChemicalsController.dart';
+import 'controllers/Customer_controller.dart';
+import 'controllers/Order_controller.dart';
+import 'controllers/bFractionsController.dart';
+import 'controllers/bSubfractions.dart';
+import 'controllers/blockFirebaseController.dart';
+import 'controllers/dropDowen_controller.dart';
+import 'controllers/final_product_controller.dart';
+import 'controllers/invoice_controller.dart';
+import 'controllers/non_final_controller.dart';
+import 'controllers/purchesController.dart';
+import 'controllers/setting_controller.dart';
+import 'controllers/stockCheckController.dart';
+import 'controllers/users_controllers.dart';
+import 'controllers/zupdate.dart';
+import 'setings/login.dart';
 import 'package:provider/provider.dart';
-import 'package:jason_company/controllers/ObjectBoxController.dart';
-import 'package:jason_company/controllers/main_controller.dart';
-import 'package:jason_company/controllers/scissors_controller.dart';
-import 'package:jason_company/dataScorse/objectBox_helper.dart';
-import 'package:jason_company/ui/main/main_view.dart';
+import 'controllers/ObjectBoxController.dart';
+import 'controllers/main_controller.dart';
+import 'controllers/scissors_controller.dart';
+import 'dataScorse/objectBox_helper.dart';
+import 'ui/main/main_view.dart';
 
 DateFormat format = DateFormat('yyyy/MM/dd');
 DateFormat formatwitTime = DateFormat('yyyy-MM-dd/hh:mm a');
@@ -42,7 +42,7 @@ void main() async {
           appId: "1:106186917009:android:fcd892c86b7d3e3447ab30",
           messagingSenderId: "106186917009 ",
           projectId: "janson-11f24"));
-          
+
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
 
   FirebaseDatabase.instance.ref();

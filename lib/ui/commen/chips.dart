@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jason_company/controllers/ObjectBoxController.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
+import '../../controllers/ObjectBoxController.dart';
+import '../../models/moderls.dart';
+import '../blocksStock/outofStock_viewmoder.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
