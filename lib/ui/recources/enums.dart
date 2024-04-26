@@ -773,6 +773,7 @@ enum UserPermition {
   can_get_data_of_orders,
   show_cutting_orders,
   show_cusotmer_name_in_cutting_order,
+  show_cutting_order_notifications,
   incert_in_cutting_order,
   can_aprove_from_controll,
   can_aprove_from_calculation,
@@ -1080,11 +1081,17 @@ extension QQ on UserPermition {
       case UserPermition.can_edit_outTo:
         return UserpermitionTittle(tittle: "امكانية تعديل جهة الصرف");
       case UserPermition.full_Red_of_cuttingOrder:
-       return UserpermitionTittle(tittle: "امر التشغيل احمر ب الكامل حال عدم الموافقه");    }
+        return UserpermitionTittle(
+            tittle: "امر التشغيل احمر ب الكامل حال عدم الموافقه");
+      case UserPermition.show_cutting_order_notifications:
+        return UserpermitionTittle(tittle: "عرض اشعارات اوامر التشغيل");
+    }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.show_cutting_order_notifications:
+        return "عرض اشعارات اوامر التشغيل";
       case UserPermition.full_Red_of_cuttingOrder:
         return "امر التشغيل احمر ب الكامل حال عدم الموافقه";
       case UserPermition.can_edit_outTo:

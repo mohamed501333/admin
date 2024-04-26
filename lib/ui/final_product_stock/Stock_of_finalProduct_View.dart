@@ -3,6 +3,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
 import 'package:jason_company/app/fromExcel.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
@@ -24,8 +25,8 @@ class FinalProductStockView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
       builder: (context, finalproducts, child) {
-        List<FinalProductModel> scorce =
-            vm2.getfinalprodcuts_recevedFromStock(finalproducts.finalproducts);
+        List<FinalProductModel> scorce = finalproducts.finalproducts
+            .Removefinalprodcuts_NOTrecevedFromStock();
         return Scaffold(
           appBar: AppBar(
             actions: [

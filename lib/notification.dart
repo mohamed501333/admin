@@ -1,16 +1,18 @@
+// // ignore_for_file: constant_identifier_names, library_private_types_in_public_api
+
 // import 'package:flutter/material.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:flutter/services.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // import 'package:http/http.dart' as http;
-// class Constants{
 
-//   static final String BASE_URL = 'https://fcm.googleapis.com/fcm/send';
-//   static final String KEY_SERVER = 'AAAAYCBPdG0:APA91bGRehkDsZXbxbcE17TbBcTz1Kau91duFBgIgsOukMhWb8T6eiGpm3v-rKptVGwTKIKYvQ9Ej80WPli7XWuLok6VV3fjgxSmQqCIupofe_hvkHe6i7XJLq5lUN_VsAnf3jQHGn9W';
-//   static final String SENDER_ID = '412858938477';
-
-// }
+class Constants {
+  static const String BASE_URL = 'https://fcm.googleapis.com/fcm/send';
+  static const String KEY_SERVER =
+      'AAAAGLk7xJE:APA91bEUBE5A6Urimdobgk1tixMi40nxm75qJpNc2jcJZw6F3KTr6LT4EFOEDeOkCxtxfpWNm_rgM6FT3c6RmdUIfNFk8Au2Jgsx3AnP_Ou3hpWBAWazfQddJKSgb-erBTOOhLSZzCxF';
+  static const String SENDER_ID = '106186917009';
+}
 
 // const AndroidNotificationChannel channel = AndroidNotificationChannel(
 //     'high_importance_channel', // id
@@ -18,8 +20,7 @@
 //     // 'This channel is used for important notifications.', // description
 //     importance: Importance.high,
 //     playSound: true,
-//     description: AutofillHints.gender
-//     );
+//     description: AutofillHints.gender);
 
 // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 //     FlutterLocalNotificationsPlugin();
@@ -29,59 +30,15 @@
 //   print('A bg message just showesd up :  ${message.messageId}');
 // }
 
-// Future<void> main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp();
-//   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-//   await flutterLocalNotificationsPlugin
-//       .resolvePlatformSpecificImplementation<
-//           AndroidFlutterLocalNotificationsPlugin>()
-//       ?.createNotificationChannel(channel);
+// class MyHomePauuge extends StatefulWidget {
+//    MyHomePauuge({super.key});
 
-//   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-//     alert: true,
-//     badge: true,
-//     sound: true,
-//   );
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   static const MaterialColor blue2 = MaterialColor(
-//     0xFF509A77,
-//     <int, Color>{
-//       50: Color(0xFFE1FCEF),
-//       100: Color(0xFFBCFDDF),
-//       200: Color(0xFF8EFAC7),
-//       300: Color(0xFF63F6B1),
-//       400: Color(0xFF42F5A0),
-//       500: Color(0xFF509A77),
-//       600: Color(0xFF1DE586),
-//       700: Color(0xFF18D079),
-//       800: Color(0xFF14BD6D),
-//       900: Color(0xFF0CA05A),
-//     },
-//   );
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: MyHomePage(),
-//     );
-//   }
-// }
-
-// class MyHomePage extends StatefulWidget {
 //   @override
 //   _MyHomePageState createState() => _MyHomePageState();
 // }
 
-// class _MyHomePageState extends State<MyHomePage> {
+// class _MyHomePageState extends State<MyHomePauuge> {
 //   int _counter = 0;
 
 //   late TextEditingController _textToken;
@@ -121,8 +78,7 @@
 //             notification!.title,
 //             notification.body,
 //             NotificationDetails(
-//               android: AndroidNotificationDetails(
-//                   channel.id, channel.name, channel.description,
+//               android: AndroidNotificationDetails(channel.id, channel.name,
 //                   color: Colors.blue,
 //                   playSound: true,
 //                   icon: '@mipmap/ic_launcher'),
@@ -131,67 +87,63 @@
 //     });
 //   }
 
-
-
-
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: Text('Test Notifications'),
+//         title: const Text('Test Notifications'),
 //       ),
 //       body: Padding(
-//         padding: EdgeInsets.symmetric(horizontal: 16),
+//         padding: const EdgeInsets.symmetric(horizontal: 16),
 //         child: SingleChildScrollView(
 //           child: Column(
 //             children: [
-//               SizedBox(height: 50),
+//               const SizedBox(height: 50),
 //               Row(
 //                 children: [
 //                   Expanded(
 //                     child: TextField(
 //                       controller: _textToken,
-//                       decoration: InputDecoration(
+//                       decoration: const InputDecoration(
 //                           enabled: false,
 //                           labelText: "My Token for this Device"),
 //                     ),
 //                   ),
-//                   SizedBox(width: 8),
-//                   Container(
+//                   const SizedBox(width: 8),
+//                   SizedBox(
 //                     width: 50,
 //                     height: 50,
 //                     child: IconButton(
-//                       icon: Icon(Icons.copy),
+//                       icon: const Icon(Icons.copy),
 //                       onPressed: () {
-//                         Clipboard.setData(
-//                             new ClipboardData(text: _textToken.text));
+//                         Clipboard.setData(ClipboardData(text: _textToken.text));
 //                       },
 //                     ),
 //                   )
 //                 ],
 //               ),
-//               SizedBox(height: 8),
+//               const SizedBox(height: 8),
 //               TextButton(
 //                 onPressed: () async {
 //                   _textToken.text = await token();
 //                 },
-//                 child: Text('Get Token'),
+//                 child: const Text('Get Token'),
 //               ),
 //               TextField(
 //                 controller: _textTitle,
-//                 decoration: InputDecoration(labelText: "Enter Title"),
+//                 decoration: const InputDecoration(labelText: "Enter Title"),
 //               ),
-//               SizedBox(height: 8),
+//               const SizedBox(height: 8),
 //               TextField(
 //                 controller: _textBody,
-//                 decoration: InputDecoration(labelText: "Enter Body"),
+//                 decoration: const InputDecoration(labelText: "Enter Body"),
 //               ),
-//               SizedBox(height: 8),
+//               const SizedBox(height: 8),
 //               TextField(
 //                 controller: _textSetToken,
-//                 decoration: InputDecoration(labelText: "Enter Token"),
+//                 decoration: const InputDecoration(labelText: "Enter Token"),
 //               ),
-//               SizedBox(height: 30),
+//               const SizedBox(height: 30),
 //               Row(
 //                 children: [
 //                   Expanded(
@@ -205,23 +157,25 @@
 //                           );
 //                         }
 //                       },
-//                       child: Text('Send Notification for specific Device'),
+//                       child:
+//                           const Text('Send Notification for specific Device'),
 //                     ),
 //                   ),
-//                   SizedBox(width: 8),
+//                   const SizedBox(width: 8),
 //                   Expanded(
 //                     child: TextButton(
 //                       onPressed: () {
-//                         if (check())
-//                         pushNotificationsGroupDevice(
-//                           title: _textTitle.text,
-//                           body: _textBody.text,
-//                         );
+//                         if (check()) {
+//                           pushNotificationsGroupDevice(
+//                             title: _textTitle.text,
+//                             body: _textBody.text,
+//                           );
+//                         }
 //                       },
-//                       child: Text('Send Notification Group Device'),
+//                       child: const Text('Send Notification Group Device'),
 //                     ),
 //                   ),
-//                   SizedBox(width: 8),
+//                   const SizedBox(width: 8),
 //                   Expanded(
 //                     child: TextButton(
 //                       onPressed: () {
@@ -232,7 +186,7 @@
 //                           );
 //                         }
 //                       },
-//                       child: Text('Send Notification All Devices'),
+//                       child: const Text('Send Notification All Devices'),
 //                     ),
 //                   ),
 //                 ],
@@ -247,9 +201,9 @@
 //           FloatingActionButton(
 //             onPressed: showNotification,
 //             tooltip: 'Increment',
-//             child: Icon(Icons.add),
+//             child: const Icon(Icons.add),
 //           ),
-//           SizedBox(
+//           const SizedBox(
 //             width: 16,
 //           ),
 //           FloatingActionButton(
@@ -262,7 +216,7 @@
 //               }
 //             },
 //             tooltip: 'Push Notifications',
-//             child: Icon(Icons.send),
+//             child: const Icon(Icons.send),
 //           )
 //         ],
 //       ),
@@ -306,7 +260,7 @@
 //         ' }'
 //         ' }';
 
-//     var response= await http.post(
+//     var response = await http.post(
 //       Uri.parse(Constants.BASE_URL),
 //       headers: <String, String>{
 //         'Content-Type': 'application/json',
@@ -360,8 +314,7 @@
 //         "Testing $_counter",
 //         "How you doin ?",
 //         NotificationDetails(
-//             android: AndroidNotificationDetails(
-//                 channel.id, channel.name, channel.description,
+//             android: AndroidNotificationDetails(channel.id, channel.name,
 //                 importance: Importance.high,
 //                 color: Colors.blue,
 //                 playSound: true,
@@ -375,166 +328,170 @@
 //     return false;
 //   }
 // }
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   print('Handling a background message ${message.messageId}');
-//   print(message.data);
-//   flutterLocalNotificationsPlugin.show(
-//       message.data.hashCode,
-//       message.data['title'],
-//       message.data['body'],
-//       NotificationDetails(
-//         android: AndroidNotificationDetails(
-//           channel.id,
-//           channel.name,
-//           channel.description,
-//         ),
-//       ));
-// }
 
-// const AndroidNotificationChannel channel = AndroidNotificationChannel(
-//   'high_importance_channel', // id
-//   'High Importance Notifications', // title
-//   'This channel is used for important notifications.', // description
-//   importance: Importance.high,
-// );
 
-// final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-//     FlutterLocalNotificationsPlugin();
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp();
+// // // import 'package:cloud_firestore/cloud_firestore.dart';
+// // // import 'package:firebase_core/firebase_core.dart';
+// // // import 'package:firebase_messaging/firebase_messaging.dart';
+// // // import 'package:flutter/material.dart';
+// // // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-//   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-//   await flutterLocalNotificationsPlugin
-//       .resolvePlatformSpecificImplementation<
-//           AndroidFlutterLocalNotificationsPlugin>()
-//       ?.createNotificationChannel(channel);
+// // // Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+// // //   await Firebase.initializeApp();
+// // //   print('Handling a background message ${message.messageId}');
+// // //   print(message.data);
+// // //   flutterLocalNotificationsPlugin.show(
+// // //       message.data.hashCode,
+// // //       message.data['title'],
+// // //       message.data['body'],
+// // //       NotificationDetails(
+// // //         android: AndroidNotificationDetails(
+// // //           channel.id,
+// // //           channel.name,
+// // //           channel.description,
+// // //         ),
+// // //       ));
+// // // }
 
-//   runApp(MyApp());
-// }
+// // // const AndroidNotificationChannel channel = AndroidNotificationChannel(
+// // //   'high_importance_channel', // id
+// // //   'High Importance Notifications', // title
+// // //   'This channel is used for important notifications.', // description
+// // //   importance: Importance.high,
+// // // );
 
-// class MyApp extends StatefulWidget {
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
+// // // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+// // //     FlutterLocalNotificationsPlugin();
 
-// class _MyAppState extends State<MyApp> {
-//   String token;
-//   List subscribed = [];
-//   List topics = [
-//     'Samsung',
-//     'Apple',
-//     'Huawei',
-//     'Nokia',
-//     'Sony',
-//     'HTC',
-//     'Lenovo'
-//   ];
-//   @override
-//   void initState() {
-//     super.initState();
-//     var initialzationSettingsAndroid =
-//         AndroidInitializationSettings('@mipmap/ic_launcher');
-//     var initializationSettings =
-//         InitializationSettings(android: initialzationSettingsAndroid);
+// // // void main() async {
+// // //   WidgetsFlutterBinding.ensureInitialized();
+// // //   await Firebase.initializeApp();
 
-//     flutterLocalNotificationsPlugin.initialize(initializationSettings);
-//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       RemoteNotification notification = message.notification;
-//       AndroidNotification android = message.notification?.android;
-//       if (notification != null && android != null) {
-//         flutterLocalNotificationsPlugin.show(
-//             notification.hashCode,
-//             notification.title,
-//             notification.body,
-//             NotificationDetails(
-//               android: AndroidNotificationDetails(
-//                 channel.id,
-//                 channel.name,
-//                 channel.description,
-//                 icon: android?.smallIcon,
-//               ),
-//             ));
-//       }
-//     });
-//     getToken();
-//     getTopics();
-//   }
+// // //   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+// // //   await flutterLocalNotificationsPlugin
+// // //       .resolvePlatformSpecificImplementation<
+// // //           AndroidFlutterLocalNotificationsPlugin>()
+// // //       ?.createNotificationChannel(channel);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//           appBar: AppBar(
-//             title: Text('appbar'),
-//           ),
-//           body: ListView.builder(
-//             itemCount: topics.length,
-//             itemBuilder: (context, index) => ListTile(
-//               title: Text(topics[index]),
-//               trailing: subscribed.contains(topics[index])
-//                   ? ElevatedButton(
-//                       onPressed: () async {
-//                         await FirebaseMessaging.instance
-//                             .unsubscribeFromTopic(topics[index]);
-//                         await FirebaseFirestore.instance
-//                             .collection('topics')
-//                             .doc(token)
-//                             .update({topics[index]: FieldValue.delete()});
-//                         setState(() {
-//                           subscribed.remove(topics[index]);
-//                         });
-//                       },
-//                       child: Text('unsubscribe'),
-//                     )
-//                   : ElevatedButton(
-//                       onPressed: () async {
-//                         await FirebaseMessaging.instance
-//                             .subscribeToTopic(topics[index]);
+// // //   runApp(MyApp());
+// // // }
 
-//                         await FirebaseFirestore.instance
-//                             .collection('topics')
-//                             .doc(token)
-//                             .set({topics[index]: 'subscribe'},
-//                                 SetOptions(merge: true));
-//                         setState(() {
-//                           subscribed.add(topics[index]);
-//                         });
-//                       },
-//                       child: Text('subscribe')),
-//             ),
-//           )),
-//     );
-//   }
+// // // class MyApp extends StatefulWidget {
+// // //   @override
+// // //   _MyAppState createState() => _MyAppState();
+// // // }
 
-//   getToken() async {
-//     token = await FirebaseMessaging.instance.getToken();
-//     setState(() {
-//       token = token;
-//     });
-//     print(token);
-//   }
+// // // class _MyAppState extends State<MyApp> {
+// // //   String token;
+// // //   List subscribed = [];
+// // //   List topics = [
+// // //     'Samsung',
+// // //     'Apple',
+// // //     'Huawei',
+// // //     'Nokia',
+// // //     'Sony',
+// // //     'HTC',
+// // //     'Lenovo'
+// // //   ];
+// // //   @override
+// // //   void initState() {
+// // //     super.initState();
+// // //     var initialzationSettingsAndroid =
+// // //         const AndroidInitializationSettings('@mipmap/ic_launcher');
+// // //     var initializationSettings =
+// // //         InitializationSettings(android: initialzationSettingsAndroid);
 
-//   getTopics() async {
-//     await FirebaseFirestore.instance
-//         .collection('topics')
-//         .get()
-//         .then((value) => value.docs.forEach((element) {
-//               if (token == element.id) {
-//                 subscribed = element.data().keys.toList();
-//               }
-//             }));
+// // //     flutterLocalNotificationsPlugin.initialize(initializationSettings);
+// // //     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+// // //       RemoteNotification notification = message.notification;
+// // //       AndroidNotification android = message.notification?.android;
+// // //       if (notification != null && android != null) {
+// // //         flutterLocalNotificationsPlugin.show(
+// // //             notification.hashCode,
+// // //             notification.title,
+// // //             notification.body,
+// // //             NotificationDetails(
+// // //               android: AndroidNotificationDetails(
+// // //                 channel.id,
+// // //                 channel.name,
+// // //                 channel.description,
+// // //                 icon: android?.smallIcon,
+// // //               ),
+// // //             ));
+// // //       }
+// // //     });
+// // //     getToken();
+// // //     getTopics();
+// // //   }
 
-//     setState(() {
-//       subscribed = subscribed;
-//     });
-//   }
-// }
+// // //   @override
+// // //   Widget build(BuildContext context) {
+// // //     return MaterialApp(
+// // //       home: Scaffold(
+// // //           appBar: AppBar(
+// // //             title: const Text('appbar'),
+// // //           ),
+// // //           body: ListView.builder(
+// // //             itemCount: topics.length,
+// // //             itemBuilder: (context, index) => ListTile(
+// // //               title: Text(topics[index]),
+// // //               trailing: subscribed.contains(topics[index])
+// // //                   ? ElevatedButton(
+// // //                       onPressed: () async {
+// // //                         await FirebaseMessaging.instance
+// // //                             .unsubscribeFromTopic(topics[index]);
+// // //                         await FirebaseFirestore.instance
+// // //                             .collection('topics')
+// // //                             .doc(token)
+// // //                             .update({topics[index]: FieldValue.delete()});
+// // //                         setState(() {
+// // //                           subscribed.remove(topics[index]);
+// // //                         });
+// // //                       },
+// // //                       child: const Text('unsubscribe'),
+// // //                     )
+// // //                   : ElevatedButton(
+// // //                       onPressed: () async {
+// // //                         await FirebaseMessaging.instance
+// // //                             .subscribeToTopic(topics[index]);
+
+// // //                         await FirebaseFirestore.instance
+// // //                             .collection('topics')
+// // //                             .doc(token)
+// // //                             .set({topics[index]: 'subscribe'},
+// // //                                 SetOptions(merge: true));
+// // //                         setState(() {
+// // //                           subscribed.add(topics[index]);
+// // //                         });
+// // //                       },
+// // //                       child: const Text('subscribe')),
+// // //             ),
+// // //           )),
+// // //     );
+// // //   }
+
+// // //   getToken() async {
+// // //     token = (await FirebaseMessaging.instance.getToken())!;
+// // //     setState(() {
+// // //       token = token;
+// // //     });
+// // //     print(token);
+// // //   }
+
+// // //   getTopics() async {
+// // //     await FirebaseFirestore.instance
+// // //         .collection('topics')
+// // //         .get()
+// // //         .then((value) => value.docs.forEach((element) {
+// // //               if (token == element.id) {
+// // //                 subscribed = element.data().keys.toList();
+// // //               }
+// // //             }));
+
+// // //     setState(() {
+// // //       subscribed = subscribed;
+// // //     });
+// // //   }
+// // // }

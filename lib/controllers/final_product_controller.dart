@@ -219,7 +219,10 @@ class final_prodcut_controller extends ChangeNotifier {
   Refresh_Ui() {
     notifyListeners();
   }
- DateTime from = DateTime.now();
+
+  String searchin_OutOFStock = "";
+
+  DateTime from = DateTime.now();
   DateTime to = DateTime.now();
   List<String> selctedcolors = [];
   List<String> selctedtybes = [];

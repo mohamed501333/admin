@@ -5,6 +5,7 @@
    <uses-permission android:name="android.permission.INTERNET" />
    <uses-permission android:name="android.ACCESS_NOTIFICATION_POLICY" />
    <uses-permission android:name="android.SCHEDULE_EXACT_ALARM" />
+   <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <application
         android:label="janssen foam"
         android:name="${applicationName}"
@@ -28,6 +29,9 @@
             <meta-data
               android:name="firebase_messaging_auto_init_enabled"
               android:value="false" />
+            <meta-data
+              android:name="firebase_messaging_auto_init_enabledddd"
+              android:value="high_importance_channel" />
             <meta-data
               android:name="firebase_analytics_collection_enabled"
               android:value="false" />

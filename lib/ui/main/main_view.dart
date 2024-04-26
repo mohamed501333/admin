@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import '../../app/functions.dart';
 import '../../controllers/CategorysController.dart';
@@ -87,6 +88,9 @@ class Mainview extends StatelessWidget {
         permitionss(context, UserPermition.can_get_data_of_chemicals)
             ? context.read<Chemicals_controller>().get_Chemicals_data()
             : DoNothingAction();
+        permitionss(context, UserPermition.show_cutting_order_notifications)
+            ? FirebaseMessaging.instance.subscribeToTopic("myTopic1")
+            : FirebaseMessaging.instance.unsubscribeFromTopic("myTopic1");
 
         return Scaffold(
           backgroundColor: ColorManager.gallery,

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import '../extentions.dart';
 import '../../models/moderls.dart';
 import 'package:flutter/material.dart';
@@ -337,6 +339,18 @@ extension Filter on List<FinalProductModel> {
                     .formatToInt() <=
                 to.formatToInt())).toList();
   }
+
+  List<FinalProductModel> Removefinalprodcuts_NOTrecevedFromStock() {
+    var f = this;
+    f.removeWhere((element) =>
+        element.actions.if_action_exist(finalProdcutAction
+                .incert_finalProduct_from_cutingUnit.getactionTitle) ==
+            true &&
+        element.actions.if_action_exist(finalProdcutAction
+                .recive_Done_Form_FinalProdcutStock.getactionTitle) ==
+            false);
+    return f;
+  }
 }
 
 class FinalProdcutWithTOtal {
@@ -361,10 +375,43 @@ class FinalProdcutWithTOtal {
 }
 
 extension DSd on List<FinalProdcutWithTOtal> {
+  double volumeOf(Itme e) {
+    var a = where((element) =>
+        element.color == e.color &&
+        element.density == e.density &&
+        element.type == e.type);
+    return a.isEmpty
+        ? 0
+        : a
+            .map((f) => f.amount * f.H * f.L * f.W / 1000000)
+            .reduce((a, b) => a + b)
+            .toStringAsFixed(1)
+            .to_double();
+  }
+
   List<FinalProdcutWithTOtal> searchforSize(String searchValue) {
-    return where((element) => (element.L.removeTrailingZeros +
-            element.W.removeTrailingZeros +
-            element.H.removeTrailingZeros)
-        .contains(searchValue)).toList();
+    if (searchValue.isEmpty) {
+      return [];
+    } else {
+      return where((element) => (element.L.removeTrailingZeros +
+              element.W.removeTrailingZeros +
+              element.H.removeTrailingZeros)
+          .contains(searchValue)).toList();
+    }
+  }
+}
+
+extension Fe on List<FinalProdcutItme> {
+  String volumeOf(Itme e) {
+    var a = where((element) =>
+        element.color == e.color &&
+        element.density == e.density &&
+        element.type == e.type);
+    return a.isEmpty
+        ? ""
+        : a
+            .map((f) => f.amount * f.H * f.L * f.W / 1000000)
+            .reduce((a, b) => a + b)
+            .toStringAsFixed(1);
   }
 }

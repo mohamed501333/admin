@@ -13,18 +13,6 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class outOfStockOrderveiwModel extends BaseViewModel {
-  List<FinalProductModel> getfinalprodcuts_recevedFromStock(
-      List<FinalProductModel> f) {
-    f.removeWhere((element) =>
-        element.actions.if_action_exist(finalProdcutAction
-                .incert_finalProduct_from_cutingUnit.getactionTitle) ==
-            true &&
-        element.actions.if_action_exist(finalProdcutAction
-                .recive_Done_Form_FinalProdcutStock.getactionTitle) ==
-            false);
-    return f;
-  }
-
   //صرف المنتح التام
   void add(BuildContext context, FinalProdcutWithTOtal item) {
     if (formKey.currentState!.validate() &&

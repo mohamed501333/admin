@@ -3,7 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:jason_company/ui/cutting_order/cutting_order_view.dart';
 import 'controllers/CategorysController.dart';
 import 'controllers/ChemicalsController.dart';
 import 'controllers/Customer_controller.dart';
@@ -34,17 +36,82 @@ DateFormat formatwitTime2 = DateFormat('yyyy-MM-dd -hh:mm a');
 DateFormat formatwitTime3 = DateFormat('hh:mm a');
 late Database database;
 
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    // 'This channel is used for important notifications.', // description
+    importance: Importance.high,
+    playSound: true,
+    sound: UriAndroidNotificationSound("default"),
+    description: AutofillHints.gender);
+
+Future<void> messagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
+final localanotification = FlutterLocalNotificationsPlugin();
+void handleMassage(RemoteMessage? massage) {
+  if (massage == null) return;
+  navigatorKey.currentState!
+      .push(MaterialPageRoute(builder: (context) => const CuttingOrderView()));
+}
+
+initPushNotification() async {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+  FirebaseMessaging.instance.subscribeToTopic("myTopic1");
+  FirebaseMessaging.instance.getInitialMessage().then(handleMassage);
+  FirebaseMessaging.onMessageOpenedApp.listen(handleMassage);
+  FirebaseMessaging.onBackgroundMessage(messagingBackgroundHandler);
+  FirebaseMessaging.onMessage.listen((event) {
+    final notificatin = event.notification;
+    if (notificatin == null) return;
+    localanotification.show(
+        notificatin.hashCode,
+        notificatin.title,
+        notificatin.body,
+        NotificationDetails(
+            android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+        )));
+  });
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           apiKey: "AIzaSyAkWHl9E0KfHcvf5Ifx0WVvEXuvk2URhhs",
           appId: "1:106186917009:android:fcd892c86b7d3e3447ab30",
-          messagingSenderId: "106186917009 ",
+          messagingSenderId: "106186917009",
           projectId: "janson-11f24"));
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
 
+  const InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  initPushNotification();
   FirebaseDatabase.instance.ref();
 
   FirebaseDatabase.instance.setPersistenceEnabled(true);
@@ -53,10 +120,10 @@ void main() async {
   runApp(const MyApp());
 }
 
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {

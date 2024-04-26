@@ -580,6 +580,24 @@ extension G5 on List<Itme> {
     return nonRepetitive;
   }
 
+  List<Itme> filter_T_D_C() {
+    List<Itme> nonRepetitive = [];
+    for (var i = 0; i < length; i++) {
+      bool repeated = false;
+      for (var j = 0; j < nonRepetitive.length; j++) {
+        if (this[i].color == nonRepetitive[j].color &&
+            this[i].type == nonRepetitive[j].type &&
+            this[i].density == nonRepetitive[j].density) {
+          repeated = true;
+        }
+      }
+      if (!repeated) {
+        nonRepetitive.add(this[i]);
+      }
+    }
+    return nonRepetitive;
+  }
+
   int countOf(Itme e) {
     return where((element) =>
         element.L == e.L &&
@@ -594,6 +612,19 @@ extension G5 on List<Itme> {
     return isEmpty
         ? 0
         : map((e) => e.H * e.L * e.W / 1000000).reduce((a, b) => a + b);
+  }
+
+  String volumeOf(Itme e) {
+    var a = where((element) =>
+        element.color == e.color &&
+        element.density == e.density &&
+        element.type == e.type);
+    return a.isEmpty
+        ? ""
+        : a
+            .map((e) => e.H * e.L * e.W / 1000000)
+            .reduce((a, b) => a + b)
+            .toStringAsFixed(1);
   }
 }
 

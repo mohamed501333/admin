@@ -3,18 +3,18 @@
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:jason_company/app/extentions/blockExtentions.dart';
-import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
-import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/app/extentions/blockExtentions.dart';
+import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
 import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/bSubfractions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/%D8%A7%D9%84%D9%85%D8%B5%D8%B1%D9%88%D9%81%20%D9%85%D9%82%D8%A7%D8%A8%D9%84%20%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%A7%D8%AC/Report10_viewMdel.dart';
 
 class Report10View extends StatelessWidget {
@@ -29,24 +29,28 @@ class Report10View extends StatelessWidget {
         final_prodcut_controller,
         Fractions_Controller,
         SubFractions_Controller>(
-      builder:
-          (context, myType, blockscontroller, finalprodcuts, child, f, fd) {
-        List<BlockModel> allblocks = blockscontroller.blocks;
+      builder: (context, settingController, blockscontroller, finalprodcuts,
+          fractionsController, subfractionscontroller, fd) {
+        //---------------------------------------------------------------------------
+        //رصيد اول المده تحت التشغيل سواء بلوكات او فراكشن او فرد
         List<Itme> allunderoberationofFirstPeriod =
-            allUnderOperationOfFirstPeriod(myType, context);
-
-        List<BlockModel> blocksconsumedBetweenTowDates =
-            allblocks.filterConsumeDateBetween(
-                DateTimeRange(start: myType.from, end: myType.to));
+            allUnderOperationOfFirstPeriod(settingController, context);
         //---------------------------------------------------------------------------
+        //المصروف خلال فتره
+        List<BlockModel> blocksconsumedBetweenTowDates = blockscontroller.blocks
+            .filterConsumeDateBetween(DateTimeRange(
+                start: settingController.from, end: settingController.to));
+        //---------------------------------------------------------------------------
+        //المتبقى من تحت التشغيل سواء بلوكات او فراكشن او فرد
         List<Itme> totalRemian = allUnderOperationBetweenperiod(
-            myType, context, blocksconsumedBetweenTowDates);
+            settingController, context, blocksconsumedBetweenTowDates);
         //---------------------------------------------------------------------------
-
-        List<FinalProductModel> finalproductsBetweenTowDates =
-            finalprodcuts.finalproducts.filterFinalProductDateBetween(
-                DateTimeRange(start: myType.from, end: myType.to));
-
+        //الانتاح خلال فتره
+        List<FinalProductModel> finalproductsBetweenTowDates = finalprodcuts
+            .finalproducts
+            .filterFinalProductDateBetween(DateTimeRange(
+                start: settingController.from, end: settingController.to));
+        //---------------------------------------------------------------------------
         return Scaffold(
           appBar: AppBar(
             title: const Text("مقارنة الانتاج بالمصروف"),
@@ -67,7 +71,11 @@ class Report10View extends StatelessWidget {
                     allunderoberationofFirstPeriod,
                     blocksconsumedBetweenTowDates,
                     finalproductsBetweenTowDates,
-                    vm,
+                    totalRemian),
+                TotalINDetails(
+                    allunderoberationofFirstPeriod,
+                    blocksconsumedBetweenTowDates,
+                    finalproductsBetweenTowDates,
                     totalRemian),
 //اول المده تفصيلى من تحت التشغيل
                 TableOfFiretPeriodUnderOperationInDetals(
@@ -409,14 +417,12 @@ class TableOfTotals extends StatelessWidget {
     this.allunderoberationofFirstPeriod,
     this.blocksconsumedBetweenTowDates,
     this.finalproductsBetweenTowDates,
-    this.vm,
     this.totalRemain,
   );
 
   final List<Itme> allunderoberationofFirstPeriod;
   final List<BlockModel> blocksconsumedBetweenTowDates;
   final List<FinalProductModel> finalproductsBetweenTowDates;
-  final Rscissor_viewmodel vm;
   final List<Itme> totalRemain;
 
   final TextStyle textStyle =
@@ -500,6 +506,115 @@ class TableOfTotals extends StatelessWidget {
                 )),
                 Center(child: Text(totalRemain.volume().removeTrailingZeros)),
               ].reversed.toList()),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TotalINDetails extends StatelessWidget {
+  const TotalINDetails(
+    this.allunderoberationofFirstPeriod,
+    this.blocksconsumedBetweenTowDates,
+    this.finalproductsBetweenTowDates,
+    this.totalRemain,
+  );
+  final List<Itme> allunderoberationofFirstPeriod;
+  final List<BlockModel> blocksconsumedBetweenTowDates;
+  final List<FinalProductModel> finalproductsBetweenTowDates;
+  final List<Itme> totalRemain;
+  final TextStyle textStyle =
+      const TextStyle(fontSize: 14, fontWeight: FontWeight.w700);
+  @override
+  Widget build(BuildContext context) {
+    List<Itme> ss = totalRemain +
+        allunderoberationofFirstPeriod +
+        finalproductsBetweenTowDates
+            .map((e) => Itme(
+                L: 0.0,
+                W: 0.0,
+                H: 0.0,
+                density: e.item.density,
+                volume: 0.0,
+                wight: 0.0,
+                color: e.item.color,
+                type: e.item.type,
+                price: 0.0))
+            .toList();
+
+    return SizedBox(
+      child: Column(
+        children: [
+          Table(
+            border: TableBorder.all(),
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: const [
+              TableRow(
+                  decoration: BoxDecoration(color: Colors.grey),
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("تقرير تفصيل  حجم"),
+                      ],
+                    ),
+                  ]),
+            ],
+          ),
+          Table(
+            columnWidths: const {
+              0: FlexColumnWidth(1.4),
+              1: FlexColumnWidth(1),
+              2: FlexColumnWidth(1.4),
+              3: FlexColumnWidth(1),
+              4: FlexColumnWidth(2.3),
+            },
+            border: TableBorder.all(),
+            children: [
+              TableRow(
+                  children: [
+                const Center(child: Text("البيان")),
+                const Center(child: Text("المصروف")),
+                const Center(
+                    child: Column(
+                  children: [
+                    Text("تحت التشغيل"),
+                    Text("اول المده"),
+                  ],
+                )),
+                const Center(child: Text("الانتاج")),
+                const Center(
+                    child: Column(
+                  children: [
+                    Text("تحت التشغيل"),
+                    Text("المتبقى"),
+                  ],
+                )),
+              ].reversed.toList()),
+              ...ss.filter_T_D_C().map((e) => TableRow(
+                      children: [
+                    Center(
+                        child: Text(
+                            textDirection: TextDirection.rtl,
+                            "${e.color} ${e.type} ك ${e.density.removeTrailingZeros}")),
+                    Center(
+                        child: Text(blocksconsumedBetweenTowDates
+                            .map((e) => e.item)
+                            .toList()
+                            .volumeOf(e)
+                            .toString())),
+                    Center(
+                        child:
+                            Text(allunderoberationofFirstPeriod.volumeOf(e))),
+                    Center(
+                        child: Text(finalproductsBetweenTowDates
+                            .map((e) => e.item)
+                            .toList()
+                            .volumeOf(e))),
+                    Center(child: Text(totalRemain.volumeOf(e))),
+                  ].reversed.toList())),
             ],
           ),
         ],

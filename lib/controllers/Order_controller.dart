@@ -5,8 +5,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/notification.dart';
 
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:http/http.dart' as http;
+import 'package:jason_company/ui/recources/strings_manager.dart';
 
 class OrderController extends ChangeNotifier {
   get_Order_data() {
@@ -55,18 +58,75 @@ class OrderController extends ChangeNotifier {
   List<OrderModel> orders = [];
   List<OrderModel> initalData = [];
 
-  add_order(OrderModel order) {
+  add_order(OrderModel order) async {
     order.actions.add(OrderAction.create_order.add);
     try {
       FirebaseDatabase.instance.ref("orders/${order.id}").set(order.toJson());
+      String dataNotifications = '{ '
+          ' "to" : "/topics/myTopic1" , '
+          ' "notification" : {'
+          ' "title":"(${order.serial})امر شغل جديد    " , '
+          ' "body":"${order.actions.get_Who_Of(OrderAction.create_order.getTitle)}" '
+          ' "sound":"default" '
+          ' } '
+          ' } ';
+
+      await http.post(
+        Uri.parse(Constants.BASE_URL),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'key= ${Constants.KEY_SERVER}',
+        },
+        body: dataNotifications,
+      );
       notifyListeners();
     } catch (e) {}
   }
 
-  addAction(OrderModel item, OrderAction action) {
+  addAction(OrderModel item, OrderAction action) async {
     item.actions.add(action.add);
     try {
       FirebaseDatabase.instance.ref("orders/${item.id}").set(item.toJson());
+
+      if (action.add.action == "order_aproved_from_calculation") {
+        String dataNotifications = '{ '
+            ' "to" : "/topics/myTopic1" , '
+            ' "notification" : {'
+            ' "title":" (${item.serial})موافقة الحسابات    " , '
+            ' "body":"${SringsManager.myemail}" '
+            ' "sound":"default" '
+            ' } '
+            ' } ';
+
+        await http.post(
+          Uri.parse(Constants.BASE_URL),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': 'key= ${Constants.KEY_SERVER}',
+          },
+          body: dataNotifications,
+        );
+      }
+      if (action.add.action == "order_aproved_from_control") {
+        String dataNotifications = '{ '
+            ' "to" : "/topics/myTopic1" , '
+            ' "notification" : {'
+            ' "title":" (${item.serial})موافقة الكنترول    " , '
+            ' "body":"${SringsManager.myemail}" '
+            ' "sound":"default" '
+            ' } '
+            ' } ';
+
+        await http.post(
+          Uri.parse(Constants.BASE_URL),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': 'key= ${Constants.KEY_SERVER}',
+          },
+          body: dataNotifications,
+        );
+      }
+
       notifyListeners();
     } catch (e) {}
   }
@@ -141,6 +201,4 @@ class OrderController extends ChangeNotifier {
   }
 
   get_blockCategory_data() {}
-
-
 }

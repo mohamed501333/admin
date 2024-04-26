@@ -71,6 +71,7 @@ dependencies:
   firebase_messaging: ^14.8.0
   firebase_analytics: ^10.10.0
   sticky_headers: ^0.3.0+2
+  http: ^1.2.1
 dev_dependencies:
   build_runner: ^2.4.6
   flutter_lints: null
