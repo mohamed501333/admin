@@ -48,8 +48,7 @@ class Report10View extends StatelessWidget {
         //الانتاح خلال فتره
         List<FinalProductModel> finalproductsBetweenTowDates = finalprodcuts
             .finalproducts
-            .filterFinalProductDateBetween(DateTimeRange(
-                start: settingController.from, end: settingController.to));
+            .filterFinalProductDateBetween(finalprodcuts.from, finalprodcuts.to);
         //---------------------------------------------------------------------------
         return Scaffold(
           appBar: AppBar(

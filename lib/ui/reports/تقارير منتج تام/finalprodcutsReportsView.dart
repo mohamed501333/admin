@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, non_constant_identifier_names
 
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -155,7 +155,7 @@ class FinalprodcutReport2 extends StatelessWidget {
             .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
             .filterItemsPasedOnCustomers(
                 context, finalprodcuts.selctedcustomers)
-            .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
+            .filterItemsPasedOnsizes(context, finalprodcuts.selctedcustomers);
         return SizedBox(
           width: 300,
           child: Column(
@@ -314,6 +314,102 @@ class FinalprodcutReport3 extends StatelessWidget {
                           Center(
                             child: Text(
                               e.amount.toString(),
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 11, 134, 0)),
+                            ),
+                          ),
+                        ]))
+                    .toList(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+//حركة المخزون
+class FinalprodcutReport4 extends StatelessWidget {
+  const FinalprodcutReport4({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<final_prodcut_controller>(
+      builder: (context, finalprodcuts, child) {
+        List<FinalProductModel> filterd_FinalPrdcut = finalprodcuts.finalproducts
+            .filterFinalProductDateBetween(finalprodcuts.from, finalprodcuts.to)
+            .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
+            .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
+            .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
+            .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
+            .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
+            //رصيد اول المده
+            var a=filterd_FinalPrdcut.data_until_date(finalprodcuts.from);
+            //الوارد
+            var b=filterd_FinalPrdcut.filterFinalProduct_IN_DateBetween(finalprodcuts.from, finalprodcuts.to);
+            //المنصرف
+            var c=filterd_FinalPrdcut.filterFinalProduct_IN_DateBetween(finalprodcuts.from, finalprodcuts.to);
+              
+              var all =a.filteronfinalproduct()+b.filteronfinalproduct()+c.filteronfinalproduct();
+        return SizedBox(
+          width: 300,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Table(
+                border: TableBorder.all(),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: const [
+                  TableRow(
+                      decoration: BoxDecoration(color: Colors.grey),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(" "),
+                          ],
+                        ),
+                      ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: const [
+                  TableRow(children: [
+                    Center(
+                      child: Text("من"),
+                    ),
+                    Center(
+                      child: Text("عدد"),
+                    )
+                  ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(3),
+                  1: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(),
+                children: all
+                    .map((e) => TableRow(children: [
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Text(
+                          //         textDirection: TextDirection.rtl,
+                          //         "      ${e.color} ${e.type} ك ${e.density.removeTrailingZeros}"),
+                          //     Text(
+                          //         textDirection: TextDirection.rtl,
+                          //         "${e.L.removeTrailingZeros}*${e.W.removeTrailingZeros}*${e.H.removeTrailingZeros}"),
+                          //   ],
+                          // ),
+                          Center(
+                            child: Text(
+                              e.customer.toString(),
                               style: const TextStyle(
                                   color: Color.fromARGB(255, 11, 134, 0)),
                             ),
