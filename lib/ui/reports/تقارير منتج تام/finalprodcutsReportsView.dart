@@ -59,8 +59,7 @@ class FinalprodcutReport1 extends StatelessWidget {
             .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
             .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
             .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
-            .filterItemsPasedOnCustomers(
-                context, finalprodcuts.selctedcustomers)
+            .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
             .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
         return SizedBox(
           width: 300,
@@ -155,9 +154,8 @@ class FinalprodcutReport2 extends StatelessWidget {
             .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
             .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
             .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
-            .filterItemsPasedOnCustomers(
-                context, finalprodcuts.selctedcustomers)
-            .filterItemsPasedOnsizes(context, finalprodcuts.selctedcustomers);
+            .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
+            .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
         return SizedBox(
           width: 300,
           child: Column(
