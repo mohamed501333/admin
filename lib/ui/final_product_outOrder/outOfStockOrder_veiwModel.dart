@@ -61,14 +61,22 @@ class outOfStockOrderveiwModel extends BaseViewModel {
         .where((element) =>
             element.actions.if_action_exist(
                 finalProdcutAction.createInvoice.getactionTitle) ==
-            false)
+            false&&
+                element.actions.if_action_exist(
+                    finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) ==
+                false
+            )
         .isNotEmpty) {
       if (formKey.currentState!.validate()) {
         List<InvoiceItem> items = finals
             .where((element) =>
                 element.actions.if_action_exist(
                     finalProdcutAction.createInvoice.getactionTitle) ==
-                false)
+                false&&
+                element.actions.if_action_exist(
+                    finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) ==
+                false
+                )
             .map((e) => InvoiceItem(
                 price: 0.0,
                 amount: e.item.amount,
@@ -103,7 +111,11 @@ class outOfStockOrderveiwModel extends BaseViewModel {
                 .where((element) =>
                     element.actions.if_action_exist(
                         finalProdcutAction.createInvoice.getactionTitle) ==
-                    false)
+                    false&&
+                element.actions.if_action_exist(
+                    finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) ==
+                false
+                    )
                 .toList(),
             invoices.sortedBy<num>((element) => element.id).last.number + 1);
 

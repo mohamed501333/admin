@@ -30,7 +30,9 @@ class FinalprodcutsReportsView extends StatelessWidget {
                     if (myType.selectedreport == 'تقرير الوارد فقط')
                       const FinalprodcutReport2(),
                     if (myType.selectedreport == 'الكميه المتوفره فقط')
-                      const FinalprodcutReport3()
+                      const FinalprodcutReport3(),
+                    if (myType.selectedreport == 'الكميه المتوفره فقط')
+                      const FinalprodcutReport4()
                   ],
                 );
               },

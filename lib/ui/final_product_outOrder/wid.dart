@@ -224,7 +224,11 @@ class InvoiceM extends StatelessWidget {
                 e.item.amount < 0 &&
                 e.actions.if_action_exist(
                         finalProdcutAction.createInvoice.getactionTitle) ==
-                    false)
+                    false&&
+                e.actions.if_action_exist(
+                        finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) ==
+                    false
+                    )
             .toList()
             .sortedBy<num>((element) => element.finalProdcut_ID)
             .toList();
