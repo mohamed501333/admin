@@ -15,6 +15,7 @@ import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmo
 import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwModel.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 
 // ignore: must_be_immutable
 class OutOrder extends StatelessWidget {

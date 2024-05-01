@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/bFractionsController.dart';
 import 'package:jason_company/controllers/bSubfractions.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
@@ -12,7 +13,6 @@ import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/final_product_imported/Widgets.dart';
-import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 import 'package:jason_company/ui/sR/Rscissor_view.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';

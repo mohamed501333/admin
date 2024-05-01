@@ -22,7 +22,8 @@ class outOfStockOrderveiwModel extends BaseViewModel {
           item.W * item.L * item.H * int.parse(amountcontroller.text) / 1000000;
       context
           .read<final_prodcut_controller>()
-          .finalProdcut_out_order(FinalProductModel(
+          .finalProdcut_out_order(
+            FinalProductModel(
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",
@@ -49,7 +50,8 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
             scissor: 0,
             customer: item.customer,
-          ));
+          )
+          );
       clearfields();
     }
   }
@@ -68,8 +70,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             )
         .isNotEmpty) {
       if (formKey.currentState!.validate()) {
-        List<InvoiceItem> items = finals
-            .where((element) =>
+        List<InvoiceItem> items = finals.where((element) =>
                 element.actions.if_action_exist(
                     finalProdcutAction.createInvoice.getactionTitle) ==
                 false&&
@@ -117,7 +118,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
                 false
                     )
                 .toList(),
-            invoices.sortedBy<num>((element) => element.id).last.number + 1);
+            invoices.map<num>((element) => element.number).max.toInt() + 1);
 
         clearfields();
       }

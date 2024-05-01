@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 
 class OutOfStockView extends StatefulWidget {
   const OutOfStockView({super.key});

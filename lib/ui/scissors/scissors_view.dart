@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import '../../app/extentions.dart';
 import '../../controllers/scissors_controller.dart';
-import '../recources/enums.dart';
 import '../sA/automaticScissor.dart';
 import '../sH/h1_veiw.dart';
 import '../sR/Rscissor_view.dart';

@@ -10,6 +10,7 @@ import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
+import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/cutting_order/cuting_order_pdf.dart';
@@ -19,6 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/cutting_order/cutting_ordera_viewModer.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 
 class Fields001 extends StatelessWidget {
   const Fields001({
@@ -246,8 +248,8 @@ class TheTable001 extends StatelessWidget {
   int x = 0;
   @override
   Widget build(BuildContext context) {
-    return Consumer<OrderController>(
-      builder: (context, orders, child) {
+    return Consumer2<OrderController,final_prodcut_controller>(
+      builder: (context, orders,finalprodcutcontroller, child) {
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(

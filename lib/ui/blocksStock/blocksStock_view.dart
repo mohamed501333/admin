@@ -11,6 +11,7 @@ import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';

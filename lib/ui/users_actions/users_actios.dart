@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/bSubfractions.dart';
 import '../../app/extentions.dart';
 import '../../controllers/Customer_controller.dart';
 import '../../controllers/Order_controller.dart';
@@ -24,7 +25,55 @@ class _UsersActionsState extends State<UsersActions> {
 
   @override
   Widget build(BuildContext context) {
-    List<ActionModel> a = context
+   
+
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          TextButton(
+              onPressed: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101));
+
+                if (pickedDate != null) {
+                  setState(() {
+                    String formattedDate = format.format(pickedDate);
+                    chosenDate = formattedDate;
+                  });
+                } else {}
+              },
+              child: Text(
+                chosenDate,
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+              ))
+        ],
+      ),
+      body: ListView(
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: returnAllactions(context)
+                  .filter_date(context, chosenDate)
+                  .sortedBy<DateTime>((element) => element.when)
+                  .reversed
+                  .map((e) => Text(
+                      "${formatwitTime.format(e.when)} >> ${e.who} >> ${e.action}"))
+                  .toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+ List<ActionModel> returnAllactions(BuildContext context){
+     List<ActionModel> a = context
         .read<BlockFirebasecontroller>()
         .all
         .map((e) => e.actions)
@@ -37,24 +86,6 @@ class _UsersActionsState extends State<UsersActions> {
         .map((e) => e.actions)
         .expand((element) => element)
         .toList();
-    // List<ActionModel> c = context
-    //     .read<BlockFirebasecontroller>()
-    //     .all
-    //     .map((e) => e.fractions)
-    //     .expand((element) => element)
-    //     .map((e) => e.notfinals)
-    //     .expand((element) => element)
-    //     .map((e) => e.actions)
-    //     .expand((element) => element)
-    //     .toList();
-    // List<ActionModel> d = context
-    //     .read<BlockFirebasecontroller>()
-    //     .all
-    //     .map((e) => e.notfinals)
-    //     .expand((element) => element)
-    //     .map((e) => e.actions)
-    //     .expand((element) => element)
-    //     .toList();
     List<ActionModel> e = context
         .read<Customer_controller>()
         .initalData
@@ -90,51 +121,12 @@ class _UsersActionsState extends State<UsersActions> {
         .toList()
         .expand((element) => element)
         .toList();
-    List<ActionModel> all = a + b + f + e + g + h + j;
-
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          TextButton(
-              onPressed: () async {
-                DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2101));
-
-                if (pickedDate != null) {
-                  setState(() {
-                    String formattedDate = format.format(pickedDate);
-                    chosenDate = formattedDate;
-                  });
-                } else {}
-              },
-              child: Text(
-                chosenDate,
-                style: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
-              ))
-        ],
-      ),
-      body: ListView(
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: all
-                  .filter_date(context, chosenDate)
-                  .sortedBy<DateTime>((element) => element.when)
-                  .reversed
-                  // .where((element) => element.action.contains("archive_"))
-                  .map((e) => Text(
-                      "${formatwitTime.format(e.when)} >> ${e.who} >> ${e.action}"))
-                  .toList(),
-            ),
-          ),
-        ],
-      ),
-    );
+    List<ActionModel> r = context
+        .read<SubFractions_Controller>()
+        .subfractions
+        .map((e) => e.actions)
+        .toList()
+        .expand((element) => element)
+        .toList();
+        return a + b + f + e + g + h + j+r;
   }
-}

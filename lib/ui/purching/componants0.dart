@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: camel_case_types, must_be_immutable
 
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';

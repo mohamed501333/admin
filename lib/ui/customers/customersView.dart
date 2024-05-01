@@ -9,7 +9,7 @@ import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/customers/customers_viewModel.dart';
-import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
 
 class Customers_view extends StatelessWidget {

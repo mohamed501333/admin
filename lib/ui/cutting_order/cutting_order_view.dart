@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, camel_case_types
 // ignore_for_file: must_be_immutable
+import 'package:jason_company/ui/recources/userpermitions.dart';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';

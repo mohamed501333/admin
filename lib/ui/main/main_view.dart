@@ -19,7 +19,7 @@ import 'componants/nav_bar.dart';
 import '../../controllers/main_controller.dart';
 import 'main_viewModel.dart';
 import '../recources/color_manager.dart';
-import '../recources/enums.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
 
 class Mainview extends StatelessWidget {

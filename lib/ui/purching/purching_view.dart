@@ -15,6 +15,8 @@ import 'package:jason_company/controllers/purchesController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/purching/componants0.dart';
 
+import '../recources/userpermitions.dart';
+
 class PurchVeiw extends StatelessWidget {
   const PurchVeiw({super.key});
 

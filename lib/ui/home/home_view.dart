@@ -18,8 +18,7 @@ import '../block_out_of_stock/outOfStock_view.dart';
 import '../not_final/not_final_view.dart';
 import '../purching/purching_view.dart';
 import '../recources/color_manager.dart';
-import '../recources/enums.dart';
-import '../recources/icons_manager.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import '../recources/strings_manager.dart';
 import '../final_product_stock/Stock_of_finalProduct_View.dart';
 import '../scissors/scissors_view.dart';
@@ -43,10 +42,10 @@ class HomeView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Item0(
-                    MediaQuery.of(context).size.width * .45,
+                    MediaQuery.of(context).size.width * .40,
                     ColorManager.prussianBlue,
                     SringsManager.itemTitle12,
-                    IconsManager.itemIcon1,
+                    1,
                     ontap: () {
                       context.gonext(context, BlocksStock());
                     },
@@ -55,7 +54,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xff1AB0B0),
                     SringsManager.itemTitle11,
-                    IconsManager.itemIcon2,
+                    2,
                     ontap: () {
                       context.gonext(context, FinalProductStockView());
                     },
@@ -69,7 +68,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.russet,
                     SringsManager.itemTitle9,
-                    IconsManager.itemIcon1,
+                    3,
                     ontap: () {
                       context.gonext(context, const OutOfStockView());
                     },
@@ -78,7 +77,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xffFF7544),
                     SringsManager.itemTitle2,
-                    IconsManager.itemIcon1,
+                    4,
                     ontap: () {
                       context.gonext(context, const FinalProductView());
                     },
@@ -93,7 +92,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.darkViolet,
                     SringsManager.itemTitle5,
-                    IconsManager.itemIcon3,
+                    5,
                     ontap: () {
                       context.gonext(context, const NotFinal());
                     },
@@ -102,7 +101,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.darkgreen,
                     SringsManager.itemTitle7,
-                    IconsManager.itemIcon1,
+                    6,
                     ontap: () {
                       context.gonext(context, outOfStockOrder());
                     },
@@ -117,7 +116,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xffFA5A7D),
                     SringsManager.itemTitle10,
-                    IconsManager.itemIcon1,
+                    7,
                     ontap: () {
                       context.gonext(context, const CuttingOrderView());
                     },
@@ -126,7 +125,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     const Color(0xff8676FE),
                     "اذون صرف منتج تام",
-                    IconsManager.itemIcon1,
+                    8,
                     ontap: () {
                       context.gonext(context, InvicesView());
                     },
@@ -140,7 +139,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.arsenic,
                     " المقصات",
-                    Icons.cut,
+                    9,
                     ontap: () {
                       context.gonext(context, const ScissorsView());
                     },
@@ -149,7 +148,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 47, 105, 42),
                     " المشتريات",
-                    Icons.cut,
+                    10,
                     ontap: () {
                       context.gonext(context, PurchVeiw());
                     },
@@ -163,7 +162,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.cobalt,
                     SringsManager.itemTitle13,
-                    IconsManager.itemIcon1,
+                    11,
                     ontap: () {
                       context.gonext(context, const MyStatefulWidget());
                     },
@@ -172,7 +171,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 157, 125, 45),
                     "الاوردرات الاونلاين",
-                    IconsManager.itemIcon1,
+                    12,
                     ontap: () {},
                   ),
                 ],
@@ -184,7 +183,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.teal,
                     "العملاء",
-                    IconsManager.itemIcon1,
+                    13,
                     ontap: () {
                       context.gonext(context, Customers_view());
                     },
@@ -193,7 +192,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.cobalt,
                     "قوائم الجرد",
-                    IconsManager.itemIcon1,
+                    14,
                     ontap: () {
                       context.gonext(context, Stockcheck());
                     },
@@ -207,14 +206,14 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.blueGrey,
                     "المراسله والطلبات",
-                    IconsManager.itemIcon1,
+                    15,
                     ontap: () {},
                   ).permition(context, UserPermition.not_working),
                   Item0(
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 137, 180, 87),
                     " الكيماويات",
-                    IconsManager.itemIcon1,
+                    16,
                     ontap: () {
                       context.gonext(context, Chemical_view());
                     },
@@ -228,14 +227,14 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.prussianBlue,
                     " الاحصائيات",
-                    IconsManager.itemIcon1,
+                    17,
                     ontap: () {},
                   ).permition(context, UserPermition.not_working),
                   Item0(
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.arsenic,
                     " الارشيف",
-                    IconsManager.itemIcon1,
+                    18,
                     ontap: () {},
                   ).permition(context, UserPermition.not_working),
                 ],
@@ -247,7 +246,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 26, 99, 70),
                     " تسجيل الاصناف",
-                    IconsManager.itemIcon1,
+                    19,
                     ontap: () {
                       context.gonext(context, BlockCategoryView());
                     },
@@ -256,7 +255,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     const Color.fromARGB(255, 99, 26, 73),
                     "ادارة العهد",
-                    IconsManager.itemIcon1,
+                    20,
                     ontap: () async {},
                   ).permition(context, UserPermition.show_Ohda_management),
                 ],
@@ -268,7 +267,7 @@ class HomeView extends StatelessWidget {
                     MediaQuery.of(context).size.width * .45,
                     ColorManager.arsenic,
                     " users actions",
-                    IconsManager.itemIcon1,
+                    21,
                     ontap: () {
                       context.gonext(context, const UsersActions());
                     },
@@ -278,7 +277,7 @@ class HomeView extends StatelessWidget {
                           MediaQuery.of(context).size.width * .45,
                           ColorManager.arsenic,
                           " dashboard ",
-                          IconsManager.itemIcon1,
+                          22,
                           ontap: () {
                             context.gonext(context, UsersDashboard());
                           },

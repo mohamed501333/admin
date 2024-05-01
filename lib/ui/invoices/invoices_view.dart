@@ -9,7 +9,7 @@ import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/inviceForFinalProdct.dart';
 import 'package:jason_company/services/pdfprevei.dart';
-import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
 
 class InvicesView extends StatefulWidget {

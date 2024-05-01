@@ -11,6 +11,7 @@ import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/final_product_imported/Widgets.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:jason_company/ui/sA/Ascissor_Viewmodel.dart';
 import 'package:jason_company/ui/sA/conponants.dart';
 import 'package:provider/provider.dart';

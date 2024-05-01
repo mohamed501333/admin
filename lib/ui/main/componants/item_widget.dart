@@ -9,7 +9,7 @@ class Item0 extends StatelessWidget {
     this.width,
     this.color,
     this.titele,
-    this.icon, {
+    this.number, {
     this.ontap,
     super.key,
   });
@@ -17,7 +17,7 @@ class Item0 extends StatelessWidget {
   double width;
   final Color color;
   final String titele;
-  final IconData icon;
+  final int number;
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +25,18 @@ class Item0 extends StatelessWidget {
       onTap: ontap,
       child: Container(
         margin: EdgeInsets.only(top: 6),
-        width: width,
-        height: 100,
+        width:  MediaQuery.of(context).size.width * .42,
+        height: 80,
         decoration:
             BoxDecoration(color: color, borderRadius: BorderRadius.circular(8)),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Icon(
-                icon,
-                color: ColorManager.white,
-                size: 36,
-              ),
+              Text("$number",style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),),
               Text(
                 titele,
                 style: TextStyle(

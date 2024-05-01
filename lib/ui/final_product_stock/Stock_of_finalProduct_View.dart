@@ -12,7 +12,7 @@ import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwMode
 import 'package:jason_company/ui/recources/color_manager.dart';
 import 'package:jason_company/ui/final_product_stock/Stock_of_finalProduct_ViewModel.dart';
 import 'package:jason_company/ui/final_product_stock/widgets.dart';
-import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
 
 class FinalProductStockView extends StatelessWidget {

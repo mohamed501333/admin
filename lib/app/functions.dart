@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/setings/login.dart';
-import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 

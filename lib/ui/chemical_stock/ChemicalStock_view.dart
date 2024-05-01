@@ -8,7 +8,7 @@ import 'package:jason_company/ui/chemical_stock/componants/boxOfReport.dart';
 import 'package:jason_company/ui/chemical_stock/componants/componants.dart';
 import 'package:jason_company/ui/chemical_stock/componants/reports.dart';
 
-import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
 
 class Chemical_view extends StatelessWidget {

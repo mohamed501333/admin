@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,7 @@ class UsersDashboard extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     showDialog(
-                        context: context,
+                       context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             content: SizedBox(
