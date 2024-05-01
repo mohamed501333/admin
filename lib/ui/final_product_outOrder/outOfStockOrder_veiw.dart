@@ -18,102 +18,104 @@ class outOfStockOrder extends StatelessWidget {
             .Removefinalprodcuts_NOTrecevedFromStock()
             .ReturnItmeWithTotalAndRemovewhreTotalZeto();
 
-        return Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 40,
-            actions: [
-              IconButton(
-                  onPressed: () => context.gonext(context, HistoryOfLoaded()),
-                  icon: const Icon(Icons.history)),
-              const SizedBox(
-                width: 20,
-              ),
-              IconButton(
-                  onPressed: () => context.gonext(context, InvoiceM()),
-                  icon: const Icon(Icons.add_shopping_cart)),
-            ],
-            title: const Center(child: Text("صرف منتج تام")),
-          ),
-          body: SingleChildScrollView(
+        var column = SingleChildScrollView(
+          child: Expanded(
             child: Column(
               children: [
-                const RadiobuttomForFInalProdcutOUtOrder(),
-                if (finalproducts.indexOfRadioButon == 1) InvoiceM(),
-                if (finalproducts.indexOfRadioButon == 0)
-                  TextField(
-                    cursorColor: Colors.black,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                        hintText: "Search",
-                        hintStyle: TextStyle(color: ColorManager.gray),
-                        border: InputBorder.none,
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: ColorManager.gray,
-                        )),
-                    onChanged: (value) {
-                      context
-                          .read<final_prodcut_controller>()
-                          .searchin_OutOFStock = value;
-                      context.read<final_prodcut_controller>().Refresh_Ui();
-                    },
-                  ),
+                TextField(
+                  cursorColor: Colors.black,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                      hintText: "Search",
+                      hintStyle: TextStyle(color: ColorManager.gray),
+                      border: InputBorder.none,
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: ColorManager.gray,
+                      )),
+                  onChanged: (value) {
+                    context
+                        .read<final_prodcut_controller>()
+                        .searchin_OutOFStock = value;
+                    context.read<final_prodcut_controller>().Refresh_Ui();
+                  },
+                ),
                 Consumer<final_prodcut_controller>(
                   builder: (context, myType, child) {
-                    return Column(
-                      children: scorce
-                          .searchforSize(context
-                              .read<final_prodcut_controller>()
-                              .searchin_OutOFStock)
-                          .map((i) {
-                            return Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              decoration: BoxDecoration(
-                                  color: Colors.blue[50],
-                                  border: Border.all(width: .5)),
-                              child: ListTile(
-                                trailing: Text(
-                                  "${i.amount}",
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: ColorManager.red),
-                                ),
-                                title: Row(
-                                  children: [
-                                    Text(
-                                        "${i.density.removeTrailingZeros}" "ك"),
-                                    const SizedBox(
-                                      width: 9,
+                    return SingleChildScrollView(
+                      child: Expanded(
+                        child: Column(
+                          children: scorce
+                              .searchforSize(context
+                                  .read<final_prodcut_controller>()
+                                  .searchin_OutOFStock)
+                              .map((i) {
+                                return Container(
+                                  margin: const EdgeInsets.only(bottom: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.blue[50],
+                                      border: Border.all(width: .5)),
+                                  child: ListTile(
+                                    trailing: Text(
+                                      "${i.amount}",
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: ColorManager.red),
                                     ),
-                                    Text(i.color),
-                                    const SizedBox(
-                                      width: 9,
+                                    title: Row(
+                                      children: [
+                                        Text("${i.density.removeTrailingZeros}"
+                                            "ك"),
+                                        const SizedBox(
+                                          width: 9,
+                                        ),
+                                        Text(i.color),
+                                        const SizedBox(
+                                          width: 9,
+                                        ),
+                                        Text(i.type.toString()),
+                                        const SizedBox(
+                                          width: 9,
+                                        ),
+                                        Text("${i.L.removeTrailingZeros}"
+                                            "*"
+                                            "${i.W.removeTrailingZeros}"
+                                            "*"
+                                            " ${i.H.removeTrailingZeros}"),
+                                        const SizedBox(
+                                          width: 9,
+                                        ),
+                                        OutOrder(item: i)
+                                      ],
                                     ),
-                                    Text(i.type.toString()),
-                                    const SizedBox(
-                                      width: 9,
-                                    ),
-                                    Text("${i.L.removeTrailingZeros}"
-                                        "*"
-                                        "${i.W.removeTrailingZeros}"
-                                        "*"
-                                        " ${i.H.removeTrailingZeros}"),
-                                    const SizedBox(
-                                      width: 9,
-                                    ),
-                                    OutOrder(item: i)
-                                  ],
-                                ),
-                              ),
-                            );
-                          })
-                          .toList()
-                          .toList(),
+                                  ),
+                                );
+                              })
+                              .toList()
+                              .toList(),
+                        ),
+                      ),
                     );
                   },
                 ),
               ],
+            ),
+          ),
+        );
+        return Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 50,
+            title: const RadiobuttomForFInalProdcutOUtOrder(),
+          ),
+          body: Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (finalproducts.indexOfRadioButon == 1) InvoiceM(),
+                  if (finalproducts.indexOfRadioButon == 0) column
+                ],
+              ),
             ),
           ),
         );

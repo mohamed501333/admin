@@ -12,7 +12,6 @@ import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
-import 'package:jason_company/ui/final_product_imported/finalProductStock_viewmodel.dart';
 import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwModel.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
@@ -130,88 +129,6 @@ class OutOrder extends StatelessWidget {
   }
 }
 
-class HistoryOfLoaded extends StatelessWidget {
-  HistoryOfLoaded({
-    super.key,
-  });
-  FinalProductStockViewModel vm = FinalProductStockViewModel();
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<final_prodcut_controller>(
-      builder: (context, finalproducts, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text("سجل "),
-          ),
-          body: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Table(
-                    columnWidths: const {
-                      4: FlexColumnWidth(2),
-                    },
-                    children: finalproducts.finalproducts
-                        .where((e) => e.item.amount < 0)
-                        .toList()
-                        .sortedBy<num>((element) => element.finalProdcut_ID)
-                        .reversed
-                        .map((user) {
-                      return TableRow(
-                          decoration: BoxDecoration(color: Colors.teal[50]),
-                          children: [
-                            Container(
-                                padding: const EdgeInsets.all(4),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      user.actions.if_action_exist(
-                                                  finalProdcutAction
-                                                      .createInvoice
-                                                      .getactionTitle) ==
-                                              false
-                                          ? context
-                                              .read<final_prodcut_controller>()
-                                              .deletefinalProudut(user)
-                                          : DoNothingAction();
-                                    },
-                                    child: const Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    ))),
-                            Container(
-                                padding: const EdgeInsets.all(2),
-                                child: Text(user.item.density.toString())),
-                            Container(
-                                padding: const EdgeInsets.all(2),
-                                child: Text(user.customer.toString())),
-                            Container(
-                                padding: const EdgeInsets.all(1),
-                                child: Text(user.item.type.toString())),
-                            Container(
-                                padding: const EdgeInsets.all(4),
-                                child: Text(
-                                    "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}")),
-                            Container(
-                                padding: const EdgeInsets.all(4),
-                                child: Text(
-                                  user.item.amount.toString(),
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 221, 2, 75)),
-                                )),
-                          ]);
-                    }).toList(),
-                    border: TableBorder.all(width: 1, color: Colors.black),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
 class InvoiceM extends StatelessWidget {
   InvoiceM({
     super.key,
@@ -234,190 +151,187 @@ class InvoiceM extends StatelessWidget {
             .sortedBy<num>((element) => element.finalProdcut_ID)
             .toList();
 
-        return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: const Color.fromRGBO(82, 170, 94, 1.0),
-            tooltip: 'Increment',
-            onPressed: () {
-              vm.addInvoice(
-                  context,
-                  finalproductscntroller.finalproducts
-                      .where((e) => e.item.amount < 0)
-                      .toList());
-            },
-            child: const Icon(Icons.check, color: Colors.white, size: 28),
-          ),
-          appBar: AppBar(
-            actions: [
-              IconButton(
+        return Form(
+          key: vm.formKey,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
                       onPressed: () {
-                        showmyAlertDialogforss(context);
+                        vm.addInvoice(
+                            context,
+                            finalproductscntroller.finalproducts
+                                .where((e) => e.item.amount < 0)
+                                .toList());
                       },
-                      icon: const Icon(Icons.settings))
-                  .permition(context, UserPermition.show_setting_in_out_order)
-            ],
-            title: const Text("تسجيل اذن "),
-          ),
-          body: Form(
-            key: vm.formKey,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                AdvancedSearch(
-                  searchItems: context
-                      .read<Customer_controller>()
-                      .customers
-                      .map((e) => e.name)
-                      .toList(),
-                  maxElementsToDisplay: 4,
-                  singleItemHeight: 50,
-                  borderColor: Colors.grey,
-                  minLettersForSearch: 1,
-                  selectedTextColor: const Color(0xFF3363D9),
-                  fontSize: 14,
-                  borderRadius: 12.0,
-                  hintText: ' ابحث عن عميل',
-                  cursorColor: Colors.blueGrey,
-                  autoCorrect: false,
-                  focusedBorderColor: Colors.blue,
-                  searchResultsBgColor: const Color(0xFAFAFA),
-                  disabledBorderColor: Colors.cyan,
-                  enabledBorderColor: Colors.black,
-                  enabled: true,
-                  caseSensitive: false,
-                  inputTextFieldBgColor: Colors.white10,
-                  clearSearchEnabled: true,
-                  itemsShownAtStart: 2,
-                  searchMode: SearchMode.CONTAINS,
-                  showListOfResults: true,
-                  unSelectedTextColor: Colors.black54,
-                  verticalPadding: 10,
-                  horizontalPadding: 10,
-                  hideHintOnTextInputFocus: true,
-                  hintTextColor: Colors.grey,
-                  onItemTap: (index, value) {
-                    vm.customerName.text = value;
-                  },
-                  onSearchClear: () {
-                    print("Cleared Search");
-                  },
-                  onSubmitted: (searchText, listOfResults) {
-                    print("Submitted: $searchText");
-                  },
-                  onEditingProgress: (searchText, listOfResults) {
-                    print("TextEdited: $searchText");
-                    print("LENGTH: ${listOfResults.length}");
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  height: 100,
-                  child: Row(
-                    children: [
-                      CustomTextFormField(
-                          label: "العميل",
-                          readOnly: true,
-                          validator: Validation.validateothers,
-                          hint: 'فارغ  ',
-                          width: 120,
-                          controller: vm.customerName),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      CustomTextFormField(
-                          validator: Validation.validateothers,
-                          hint: 'رقم العربه',
-                          width: 120,
-                          controller: vm.carnumber),
-                      context.read<SettingController>().switch1 == false
-                          ? const SizedBox()
-                          : CustomTextFormField(
-                              validator: Validation.validateothers,
-                              hint: 'رقم الاذن',
-                              width: 120,
-                              controller: vm.invoiceNum),
-                    ],
+                      child: const Text("تم")),
+                  const SizedBox(
+                    width: 15,
                   ),
-                ),
-                SizedBox(
-                  height: 100,
-                  child: Row(
-                    children: [
-                      CustomTextFormField(
-                          validator: Validation.validateothers,
-                          keybordtupe: TextInputType.name,
-                          hint: 'اسم السائق ',
-                          width: 120,
-                          controller: vm.driverName),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      CustomTextFormField(
-                          validator: Validation.validateothers,
-                          keybordtupe: TextInputType.name,
-                          hint: 'القائم بالتحميل',
-                          width: 120,
-                          controller: vm.whoLoad),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Table(
-                      columnWidths: const {
-                        4: FlexColumnWidth(2),
-                      },
-                      children: sorce.map((user) {
-                        return TableRow(
-                            decoration: BoxDecoration(color: Colors.teal[50]),
-                            children: [
-                              Container(
-                                  padding: const EdgeInsets.all(4),
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        context
-                                            .read<final_prodcut_controller>()
-                                            .deletefinalProudut(user);
-                                      },
-                                      child: const Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ))),
-                              Container(
-                                  padding: const EdgeInsets.all(2),
-                                  child: Text(user.item.density.toString())),
-                              Container(
-                                  padding: const EdgeInsets.all(2),
-                                  child: Text(user.customer.toString())),
-                              Container(
-                                  padding: const EdgeInsets.all(1),
-                                  child: Text(user.item.type.toString())),
-                              Container(
-                                  padding: const EdgeInsets.all(4),
-                                  child: Text(
-                                      "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}")),
-                              Container(
-                                  padding: const EdgeInsets.all(4),
-                                  child: Text(
-                                    user.item.amount.toString(),
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 221, 2, 75)),
-                                  )),
-                            ]);
-                      }).toList(),
-                      border: TableBorder.all(width: 1, color: Colors.black),
+                  IconButton(
+                          onPressed: () {
+                            showmyAlertDialogforss(context);
+                          },
+                          icon: const Icon(Icons.settings))
+                      .permition(
+                          context, UserPermition.show_setting_in_out_order),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              AdvancedSearch(
+                searchItems: context
+                    .read<Customer_controller>()
+                    .customers
+                    .map((e) => e.name)
+                    .toList(),
+                maxElementsToDisplay: 4,
+                singleItemHeight: 50,
+                borderColor: Colors.grey,
+                minLettersForSearch: 1,
+                selectedTextColor: const Color(0xFF3363D9),
+                fontSize: 14,
+                borderRadius: 12.0,
+                hintText: ' ابحث عن عميل',
+                cursorColor: Colors.blueGrey,
+                autoCorrect: false,
+                focusedBorderColor: Colors.blue,
+                searchResultsBgColor: const Color(0xFAFAFA),
+                disabledBorderColor: Colors.cyan,
+                enabledBorderColor: Colors.black,
+                enabled: true,
+                caseSensitive: false,
+                inputTextFieldBgColor: Colors.white10,
+                clearSearchEnabled: true,
+                itemsShownAtStart: 2,
+                searchMode: SearchMode.CONTAINS,
+                showListOfResults: true,
+                unSelectedTextColor: Colors.black54,
+                verticalPadding: 10,
+                horizontalPadding: 10,
+                hideHintOnTextInputFocus: true,
+                hintTextColor: Colors.grey,
+                onItemTap: (index, value) {
+                  vm.customerName.text = value;
+                },
+                onSearchClear: () {
+                  print("Cleared Search");
+                },
+                onSubmitted: (searchText, listOfResults) {
+                  print("Submitted: $searchText");
+                },
+                onEditingProgress: (searchText, listOfResults) {
+                  print("TextEdited: $searchText");
+                  print("LENGTH: ${listOfResults.length}");
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: 100,
+                child: Row(
+                  children: [
+                    CustomTextFormField(
+                        label: "العميل",
+                        readOnly: true,
+                        validator: Validation.validateothers,
+                        hint: 'فارغ  ',
+                        width: 120,
+                        controller: vm.customerName),
+                    const SizedBox(
+                      width: 10,
                     ),
-                  ),
+                    CustomTextFormField(
+                        validator: Validation.validateothers,
+                        hint: 'رقم العربه',
+                        width: 120,
+                        controller: vm.carnumber),
+                    context.read<SettingController>().switch1 == false
+                        ? const SizedBox()
+                        : CustomTextFormField(
+                            validator: Validation.validateothers,
+                            hint: 'رقم الاذن',
+                            width: 120,
+                            controller: vm.invoiceNum),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: 100,
+                child: Row(
+                  children: [
+                    CustomTextFormField(
+                        validator: Validation.validateothers,
+                        keybordtupe: TextInputType.name,
+                        hint: 'اسم السائق ',
+                        width: 120,
+                        controller: vm.driverName),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    CustomTextFormField(
+                        validator: Validation.validateothers,
+                        keybordtupe: TextInputType.name,
+                        hint: 'القائم بالتحميل',
+                        width: 120,
+                        controller: vm.whoLoad),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SingleChildScrollView(
+                child: Table(
+                  columnWidths: const {
+                    4: FlexColumnWidth(2),
+                  },
+                  children: sorce.map((user) {
+                    return TableRow(
+                        decoration: BoxDecoration(color: Colors.teal[50]),
+                        children: [
+                          Container(
+                              padding: const EdgeInsets.all(4),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    context
+                                        .read<final_prodcut_controller>()
+                                        .deletefinalProudut(user);
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ))),
+                          Container(
+                              padding: const EdgeInsets.all(2),
+                              child: Text(user.item.density.toString())),
+                          Container(
+                              padding: const EdgeInsets.all(2),
+                              child: Text(user.customer.toString())),
+                          Container(
+                              padding: const EdgeInsets.all(1),
+                              child: Text(user.item.type.toString())),
+                          Container(
+                              padding: const EdgeInsets.all(4),
+                              child: Text(
+                                  "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}")),
+                          Container(
+                              padding: const EdgeInsets.all(4),
+                              child: Text(
+                                user.item.amount.toString(),
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 221, 2, 75)),
+                              )),
+                        ]);
+                  }).toList(),
+                  border: TableBorder.all(width: 1, color: Colors.black),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -476,7 +390,7 @@ class RadiobuttomForFInalProdcutOUtOrder extends StatelessWidget {
     return Consumer<final_prodcut_controller>(
       builder: (context, myType, child) {
         return CustomRadioButton(
-          width: 120,
+          width: 130,
           defaultSelected: myType.indexOfRadioButon,
           elevation: 0,
           absoluteZeroSpacing: true,
@@ -487,7 +401,8 @@ class RadiobuttomForFInalProdcutOUtOrder extends StatelessWidget {
             myType.indexOfRadioButon = value;
             myType.Refresh_Ui();
           },
-          selectedColor: const Color.fromARGB(255, 103, 211, 21),
+          // ignore: prefer_const_constructors
+          selectedColor: Color.fromARGB(255, 86, 179, 15),
           buttonTextStyle: const ButtonTextStyle(
               selectedColor: Colors.white,
               unSelectedColor: Colors.black,
