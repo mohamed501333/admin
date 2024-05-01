@@ -2,6 +2,7 @@
 
 import 'package:advanced_search/advanced_search.dart';
 import 'package:collection/collection.dart';
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
@@ -225,11 +226,10 @@ class InvoiceM extends StatelessWidget {
                 e.item.amount < 0 &&
                 e.actions.if_action_exist(
                         finalProdcutAction.createInvoice.getactionTitle) ==
-                    false&&
-                e.actions.if_action_exist(
-                        finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) ==
-                    false
-                    )
+                    false &&
+                e.actions.if_action_exist(finalProdcutAction
+                        .incert_From_StockChekRefresh.getactionTitle) ==
+                    false)
             .toList()
             .sortedBy<num>((element) => element.finalProdcut_ID)
             .toList();
@@ -464,4 +464,36 @@ showmyAlertDialogforss(BuildContext context) {
           ),
         );
       });
+}
+
+class RadiobuttomForFInalProdcutOUtOrder extends StatelessWidget {
+  const RadiobuttomForFInalProdcutOUtOrder({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<final_prodcut_controller>(
+      builder: (context, myType, child) {
+        return CustomRadioButton(
+          width: 120,
+          defaultSelected: myType.indexOfRadioButon,
+          elevation: 0,
+          absoluteZeroSpacing: true,
+          unSelectedColor: Theme.of(context).canvasColor,
+          buttonLables: const ['صرف', 'تسجيل الاذن'],
+          buttonValues: const [0, 1],
+          radioButtonValue: (value) {
+            myType.indexOfRadioButon = value;
+            myType.Refresh_Ui();
+          },
+          selectedColor: const Color.fromARGB(255, 103, 211, 21),
+          buttonTextStyle: const ButtonTextStyle(
+              selectedColor: Colors.white,
+              unSelectedColor: Colors.black,
+              textStyle: TextStyle(fontSize: 16)),
+        );
+      },
+    );
+  }
 }

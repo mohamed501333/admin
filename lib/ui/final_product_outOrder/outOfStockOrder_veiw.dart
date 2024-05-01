@@ -20,6 +20,7 @@ class outOfStockOrder extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
+            toolbarHeight: 40,
             actions: [
               IconButton(
                   onPressed: () => context.gonext(context, HistoryOfLoaded()),
@@ -36,24 +37,27 @@ class outOfStockOrder extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                TextField(
-                  cursorColor: Colors.black,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      hintText: "Search",
-                      hintStyle: TextStyle(color: ColorManager.gray),
-                      border: InputBorder.none,
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: ColorManager.gray,
-                      )),
-                  onChanged: (value) {
-                    context
-                        .read<final_prodcut_controller>()
-                        .searchin_OutOFStock = value;
-                    context.read<final_prodcut_controller>().Refresh_Ui();
-                  },
-                ),
+                const RadiobuttomForFInalProdcutOUtOrder(),
+                if (finalproducts.indexOfRadioButon == 1) InvoiceM(),
+                if (finalproducts.indexOfRadioButon == 0)
+                  TextField(
+                    cursorColor: Colors.black,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                        hintText: "Search",
+                        hintStyle: TextStyle(color: ColorManager.gray),
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: ColorManager.gray,
+                        )),
+                    onChanged: (value) {
+                      context
+                          .read<final_prodcut_controller>()
+                          .searchin_OutOFStock = value;
+                      context.read<final_prodcut_controller>().Refresh_Ui();
+                    },
+                  ),
                 Consumer<final_prodcut_controller>(
                   builder: (context, myType, child) {
                     return Column(

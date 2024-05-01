@@ -248,4 +248,6 @@ class final_prodcut_controller extends ChangeNotifier {
     var v = a + b;
     return v.isEmpty ? [DateTime.now()] : v;
   }
+
+  int indexOfRadioButon = 0;
 }
