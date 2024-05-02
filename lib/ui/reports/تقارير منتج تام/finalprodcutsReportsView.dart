@@ -31,7 +31,7 @@ class FinalprodcutsReportsView extends StatelessWidget {
                       const FinalprodcutReport2(),
                     if (myType.selectedreport == 'الكميه المتوفره فقط')
                       const FinalprodcutReport3(),
-                    if (myType.selectedreport == 'الكميه المتوفره فقط')
+                    if (myType.selectedreport == 'تقرير حركة المخزون')
                       const FinalprodcutReport4()
                   ],
                 );
@@ -59,7 +59,8 @@ class FinalprodcutReport1 extends StatelessWidget {
             .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
             .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
             .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
-            .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
+            .filterItemsPasedOnCustomers(
+                context, finalprodcuts.selctedcustomers)
             .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
         return SizedBox(
           width: 300,
@@ -154,7 +155,8 @@ class FinalprodcutReport2 extends StatelessWidget {
             .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
             .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
             .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
-            .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
+            .filterItemsPasedOnCustomers(
+                context, finalprodcuts.selctedcustomers)
             .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
         return SizedBox(
           width: 300,
@@ -328,6 +330,7 @@ class FinalprodcutReport3 extends StatelessWidget {
     );
   }
 }
+
 //حركة المخزون
 class FinalprodcutReport4 extends StatelessWidget {
   const FinalprodcutReport4({super.key});
@@ -335,21 +338,23 @@ class FinalprodcutReport4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
       builder: (context, finalprodcuts, child) {
-        List<FinalProductModel> filterd_FinalPrdcut = finalprodcuts.finalproducts
-            .filterFinalProductDateBetween(finalprodcuts.from, finalprodcuts.to)
+        List<FinalProductModel> filterd_FinalPrdcut = finalprodcuts
+            .finalproducts
             .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
             .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
             .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
             .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
             .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
-            //رصيد اول المده
-            var a=filterd_FinalPrdcut.data_until_date(finalprodcuts.from);
-            //الوارد
-            var b=filterd_FinalPrdcut.filterFinalProduct_IN_DateBetween(finalprodcuts.from, finalprodcuts.to);
-            //المنصرف
-            var c=filterd_FinalPrdcut.filterFinalProduct_IN_DateBetween(finalprodcuts.from, finalprodcuts.to);
-              
-              var all =a.filteronfinalproduct()+b.filteronfinalproduct()+c.filteronfinalproduct();
+        //رصيد اول المده
+        var a = filterd_FinalPrdcut.data_until_date(finalprodcuts.pickedDateFrom!);
+        //الوارد
+        var b = filterd_FinalPrdcut.filterFinalProduct_IN_DateBetween(
+            finalprodcuts.pickedDateFrom!, finalprodcuts.pickedDateTo!);
+        //المنصرف
+        var c = filterd_FinalPrdcut.filterFinalProduct_out_DateBetween(
+            finalprodcuts.pickedDateFrom!, finalprodcuts.pickedDateTo!);
+
+        var all = b +c;
         return SizedBox(
           width: 300,
           child: Column(
@@ -365,7 +370,7 @@ class FinalprodcutReport4 extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(" "),
+                            Text("تفاصيل الحركات"),
                           ],
                         ),
                       ]),
@@ -394,24 +399,26 @@ class FinalprodcutReport4 extends StatelessWidget {
                   1: FlexColumnWidth(1),
                 },
                 border: TableBorder.all(),
-                children: all
+                children: all.sortedBy<num>((element) => element.finalProdcut_ID)
                     .map((e) => TableRow(children: [
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     Text(
-                          //         textDirection: TextDirection.rtl,
-                          //         "      ${e.color} ${e.type} ك ${e.density.removeTrailingZeros}"),
-                          //     Text(
-                          //         textDirection: TextDirection.rtl,
-                          //         "${e.L.removeTrailingZeros}*${e.W.removeTrailingZeros}*${e.H.removeTrailingZeros}"),
-                          //   ],
-                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
+                              Text(
+                                  textDirection: TextDirection.rtl,
+                                  "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                            ],
+                          ),
                           Center(
                             child: Text(
-                              e.customer.toString(),
-                              style: const TextStyle(
-                                  color: Color.fromARGB(255, 11, 134, 0)),
+                              e.item.amount.toString(),
+                              style:  TextStyle(
+                                  color: 
+                                   e.item.amount>0?const Color.fromARGB(255, 11, 134, 0):Colors.red
+                                  ),
                             ),
                           ),
                         ]))
@@ -436,7 +443,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
     context.read<final_prodcut_controller>().pickedDateTo = DateTime.now();
     final List<String> items = [
       'الكميه المتوفره فقط',
-      'تقرير حركة المخزون ',
+      'تقرير حركة المخزون',
       'تقرير الوارد فقط',
       'تقرير المنصرف فقط',
     ];
@@ -484,6 +491,15 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
             f = myType.finalproducts
                 .filterFinalProduct_out_DateBetween(
                     myType.pickedDateFrom!, myType.pickedDateTo!)
+                .filterItemsPasedOncolors(context, myType.selctedcolors)
+                .filterItemsPasedOnDensites(context, myType.selctedDensities)
+                .filterItemsPasedOntypes(context, myType.selctedtybes)
+                .filterItemsPasedOnCustomers(context, myType.selctedcustomers)
+                .filterItemsPasedOnsizes(context, myType.selctedsizes);
+          }
+          if (myType.selectedreport == 'تقرير حركة المخزون') {
+            f =
+             myType.finalproducts.filterFinalProductDateBetween(myType.pickedDateFrom!, myType.pickedDateTo!)
                 .filterItemsPasedOncolors(context, myType.selctedcolors)
                 .filterItemsPasedOnDensites(context, myType.selctedDensities)
                 .filterItemsPasedOntypes(context, myType.selctedtybes)
@@ -925,6 +941,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
                             left: 8,
                           ),
                           child: TextFormField(
+                            keyboardType: TextInputType.number,
                             expands: true,
                             maxLines: null,
                             controller: textEditingController,
@@ -1207,6 +1224,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
                             left: 8,
                           ),
                           child: TextFormField(
+                            keyboardType: TextInputType.number,
                             expands: true,
                             maxLines: null,
                             controller: textEditingController,
@@ -1324,7 +1342,9 @@ class DatepickerTo4 extends StatelessWidget {
                   DateTime? pickedDate = await showDatePicker(
                       context: context,
                       initialDate: myType.pickedDateTo!,
-                      firstDate: myType.pickedDateFrom!,
+                      firstDate: myType.selectedreport == "الكميه المتوفره فقط"
+                          ? myType.AllDatesOfOfData().min
+                          : myType.pickedDateFrom!,
                       lastDate: myType.AllDatesOfOfData().max);
 
                   if (pickedDate != null) {
