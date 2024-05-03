@@ -7,12 +7,9 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 
 class StokCheck_Controller extends ChangeNotifier {
-  get_StokCheck_data() async {
-    await FirebaseDatabase.instance
-        .ref("FstockCheck")
-        .onValue
-        .listen((value) async {
-      await getInitialData(value.snapshot);
+  get_StokCheck_data() {
+    FirebaseDatabase.instance.ref("FstockCheck").onValue.listen((value) {
+      getInitialData(value.snapshot);
     });
 
     // FirebaseDatabase.instance.ref("fractions").onValue.listen((event) {

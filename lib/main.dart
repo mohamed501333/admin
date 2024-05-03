@@ -112,7 +112,6 @@ void main() async {
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   initPushNotification();
-  FirebaseDatabase.instance.ref();
 
   FirebaseDatabase.instance.setPersistenceEnabled(true);
 

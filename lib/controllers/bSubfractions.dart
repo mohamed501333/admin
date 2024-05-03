@@ -7,9 +7,9 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 
 class SubFractions_Controller extends ChangeNotifier {
-  get_SubFractions_data() async {
-    FirebaseDatabase.instance.ref("subfractions").onValue.listen((event) async {
-      await getInitialData(event.snapshot);
+  get_SubFractions_data() {
+    FirebaseDatabase.instance.ref("subfractions").onValue.listen((event) {
+      getInitialData(event.snapshot);
     });
   }
 

@@ -11,13 +11,9 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 
 class BlockFirebasecontroller extends ChangeNotifier {
-  get_blocks_data() async {
-    await FirebaseDatabase.instance
-        .ref("blocks")
-        .onValue
-        .first
-        .then((value) async {
-      await getInitialData(value.snapshot);
+  get_blocks_data() {
+    FirebaseDatabase.instance.ref("blocks").onValue.first.then((value) {
+      getInitialData(value.snapshot);
     });
 
     FirebaseDatabase.instance.ref("blocks").onChildChanged.listen((vv) {
