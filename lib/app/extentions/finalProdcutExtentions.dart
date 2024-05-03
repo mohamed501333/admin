@@ -106,7 +106,9 @@ extension Filter on List<FinalProductModel> {
   }
 
   List<FinalProductModel> filterFinalProductDateBetween(
-     DateTime start, DateTime end,) {
+    DateTime start,
+    DateTime end,
+  ) {
     return where((element) =>
         element.actions.if_action_exist(finalProdcutAction
                 .incert_finalProduct_from_cutingUnit.getactionTitle) ==
@@ -140,26 +142,29 @@ extension Filter on List<FinalProductModel> {
   }
 
   List<FinalProductModel> filterFinalProduct_out_DateBetween_from(
-      DateTime start, DateTime end,FinalProductModel e) {
-    return where((element) => 
-    element.item.color==e.item.color&&
-    element.item.type==e.item.type&&
-    element.item.density==e.item.density&&
-    element.item.L==e.item.L&&
-    element.item.W==e.item.W&&
-    element.item.H==e.item.H
-    ). where((element) =>
-        element.actions
-                .if_action_exist(finalProdcutAction.out_order.getactionTitle) ==
-            true &&
-        element.actions
-                .get_Date_of_action(finalProdcutAction.out_order.getactionTitle)
-                .formatToInt() >=
-            start.formatToInt() &&
-        element.actions
-                .get_Date_of_action(finalProdcutAction.out_order.getactionTitle)
-                .formatToInt() <=
-            end.formatToInt()).toList();
+      DateTime start, DateTime end, FinalProductModel e) {
+    return where((element) =>
+            element.item.color == e.item.color &&
+            element.item.type == e.item.type &&
+            element.item.density == e.item.density &&
+            element.item.L == e.item.L &&
+            element.item.W == e.item.W &&
+            element.item.H == e.item.H)
+        .where((element) =>
+            element.actions.if_action_exist(
+                    finalProdcutAction.out_order.getactionTitle) ==
+                true &&
+            element.actions
+                    .get_Date_of_action(
+                        finalProdcutAction.out_order.getactionTitle)
+                    .formatToInt() >=
+                start.formatToInt() &&
+            element.actions
+                    .get_Date_of_action(
+                        finalProdcutAction.out_order.getactionTitle)
+                    .formatToInt() <=
+                end.formatToInt())
+        .toList();
   }
 
   List<FinalProductModel> filterFinalProduct_IN_DateBetween(
@@ -179,30 +184,31 @@ extension Filter on List<FinalProductModel> {
                 .formatToInt() <=
             end.formatToInt()).toList();
   }
-  
+
   List<FinalProductModel> filterFinalProduct_IN_DateBetween_from(
-      DateTime start, DateTime end,FinalProductModel e) {
-    return where((element) => 
-    element.item.color==e.item.color&&
-    element.item.type==e.item.type&&
-    element.item.density==e.item.density&&
-    element.item.L==e.item.L&&
-    element.item.W==e.item.W&&
-    element.item.H==e.item.H
-    ). where((element) =>
-        element.actions.if_action_exist(finalProdcutAction
-                .incert_finalProduct_from_cutingUnit.getactionTitle) ==
-            true &&
-        element.actions
-                .get_Date_of_action(finalProdcutAction
-                    .incert_finalProduct_from_cutingUnit.getactionTitle)
-                .formatToInt() >=
-            start.formatToInt() &&
-        element.actions
-                .get_Date_of_action(finalProdcutAction
-                    .incert_finalProduct_from_cutingUnit.getactionTitle)
-                .formatToInt() <=
-            end.formatToInt()).toList();
+      DateTime start, DateTime end, FinalProductModel e) {
+    return where((element) =>
+            element.item.color == e.item.color &&
+            element.item.type == e.item.type &&
+            element.item.density == e.item.density &&
+            element.item.L == e.item.L &&
+            element.item.W == e.item.W &&
+            element.item.H == e.item.H)
+        .where((element) =>
+            element.actions.if_action_exist(finalProdcutAction
+                    .incert_finalProduct_from_cutingUnit.getactionTitle) ==
+                true &&
+            element.actions
+                    .get_Date_of_action(finalProdcutAction
+                        .incert_finalProduct_from_cutingUnit.getactionTitle)
+                    .formatToInt() >=
+                start.formatToInt() &&
+            element.actions
+                    .get_Date_of_action(
+                        finalProdcutAction.incert_finalProduct_from_cutingUnit.getactionTitle)
+                    .formatToInt() <=
+                end.formatToInt())
+        .toList();
   }
 
   List<FinalProductModel> filteronfinalproductwithcsissor() {
@@ -362,7 +368,42 @@ extension Filter on List<FinalProductModel> {
             type: e.item.type,
             amount: countOf(e)))
         .toList();
-    a.removeWhere((element) => element.amount <= 0);
+    a.removeWhere((element) => element.amount == 0);
+    return a;
+  }
+
+  List<FinalProductModel> Remove_total_zero() {
+    List<FinalProductModel> a = filter_density_typ_color_size()
+        .map((e) => FinalProductModel(
+              customer: e.customer,
+              actions: [],
+              block_ID: 0,
+              cuting_order_number: 0,
+              finalProdcut_ID: 0,
+              fraction_ID: 0,
+              invoiceNum: 0,
+              notes: "",
+              sapa_ID: "",
+              sapa_desc: "",
+              scissor: 0,
+              stage: 0,
+              subfraction_ID: 0,
+              worker: "",
+              item: FinalProdcutItme(
+                  L: e.item.L,
+                  W: e.item.W,
+                  H: e.item.H,
+                  density: e.item.density,
+                  volume: 0.0,
+                  theowight: 0.0,
+                  realowight: 0.0,
+                  color: e.item.color,
+                  type: e.item.type,
+                  amount: countOf(e),
+                  priceforamount: 0),
+            ))
+        .toList();
+    a.removeWhere((element) => element.item.amount == 0);
     return a;
   }
 
@@ -387,34 +428,29 @@ extension Filter on List<FinalProductModel> {
                     .formatToInt() <=
                 to.formatToInt())).toList();
   }
-  
-  List<FinalProductModel> data_until_date_from(DateTime to,FinalProductModel e) {
-    return where((element) => 
-    element.item.color==e.item.color&&
-    element.item.type==e.item.type&&
-    element.item.density==e.item.density&&
-    element.item.L==e.item.L&&
-    element.item.W==e.item.W&&
-    element.item.H==e.item.H
-    ). where((element) =>
-        (element.actions.if_action_exist(finalProdcutAction.recive_Done_Form_FinalProdcutStock.getactionTitle) == true &&
-            element.actions
-                    .get_Date_of_action(finalProdcutAction
-                        .recive_Done_Form_FinalProdcutStock.getactionTitle)
-                    .formatToInt() <=
-                to.formatToInt()) ||
-        (element.actions.if_action_exist(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle) == true &&
-            element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle).formatToInt() <=
-                to.formatToInt()) ||
-        (element.actions.if_action_exist(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) == true &&
-            element.actions.get_Date_of_action(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle).formatToInt() <=
-                to.formatToInt()) ||
-        (element.actions.if_action_exist(finalProdcutAction.out_order.getactionTitle) ==
-                true &&
-            element.actions
-                    .get_Date_of_action(finalProdcutAction.out_order.getactionTitle)
-                    .formatToInt() <=
-                to.formatToInt())).toList();
+
+  List<FinalProductModel> data_until_date_from(
+      DateTime to, FinalProductModel e) {
+    return where((element) =>
+            element.item.color == e.item.color &&
+            element.item.type == e.item.type &&
+            element.item.density == e.item.density &&
+            element.item.L == e.item.L &&
+            element.item.W == e.item.W &&
+            element.item.H == e.item.H)
+        .where((element) =>
+            (element.actions.if_action_exist(finalProdcutAction.recive_Done_Form_FinalProdcutStock.getactionTitle) == true &&
+                element.actions.get_Date_of_action(finalProdcutAction.recive_Done_Form_FinalProdcutStock.getactionTitle).formatToInt() <=
+                    to.formatToInt()) ||
+            (element.actions.if_action_exist(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle) == true &&
+                element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle).formatToInt() <=
+                    to.formatToInt()) ||
+            (element.actions.if_action_exist(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) == true &&
+                element.actions.get_Date_of_action(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle).formatToInt() <=
+                    to.formatToInt()) ||
+            (element.actions.if_action_exist(finalProdcutAction.out_order.getactionTitle) == true &&
+                element.actions.get_Date_of_action(finalProdcutAction.out_order.getactionTitle).formatToInt() <= to.formatToInt()))
+        .toList();
   }
 
   List<FinalProductModel> Removefinalprodcuts_NOTrecevedFromStock() {
@@ -427,6 +463,11 @@ extension Filter on List<FinalProductModel> {
                 .recive_Done_Form_FinalProdcutStock.getactionTitle) ==
             false);
     return f;
+  }
+
+  int totalamount() {
+    var a = map((e) => e.item.amount);
+    return a.isNotEmpty ? a.reduce((x, y) => x + y) : 0;
   }
 }
 

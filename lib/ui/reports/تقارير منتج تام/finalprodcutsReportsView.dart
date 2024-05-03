@@ -338,15 +338,19 @@ class FinalprodcutReport4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
       builder: (context, finalprodcuts, child) {
+        //
         List<FinalProductModel> filterd_FinalPrdcut = finalprodcuts
             .finalproducts
             .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
             .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
             .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
-            .filterItemsPasedOnCustomers(context, finalprodcuts.selctedcustomers)
+            .filterItemsPasedOnCustomers(
+                context, finalprodcuts.selctedcustomers)
             .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
-        //رصيد اول المده
-        var a = filterd_FinalPrdcut.data_until_date(finalprodcuts.pickedDateFrom!);
+        //رصيد اول المده كيمته ليست بصفر
+        var a = filterd_FinalPrdcut
+            .data_until_date(finalprodcuts.pickedDateFrom!)
+            .Remove_total_zero();
         //الوارد
         var b = filterd_FinalPrdcut.filterFinalProduct_IN_DateBetween(
             finalprodcuts.pickedDateFrom!, finalprodcuts.pickedDateTo!);
@@ -354,12 +358,132 @@ class FinalprodcutReport4 extends StatelessWidget {
         var c = filterd_FinalPrdcut.filterFinalProduct_out_DateBetween(
             finalprodcuts.pickedDateFrom!, finalprodcuts.pickedDateTo!);
 
-        var all = b +c;
+        var all = b + c;
+        var all2 = all + a;
         return SizedBox(
           width: 300,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Table(
+                border: TableBorder.all(),
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: const [
+                  TableRow(
+                      decoration: BoxDecoration(color: Colors.grey),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("hh"),
+                          ],
+                        ),
+                      ]),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(1),
+                  2: FlexColumnWidth(1),
+                  3: FlexColumnWidth(1),
+                  4: FlexColumnWidth(3),
+                },
+                border: TableBorder.all(),
+                children: [
+                  TableRow(
+                      children: [
+                    const Center(
+                      child: Text("الصنف"),
+                    ),
+                    const Center(
+                      child: Text("رصيد اول المده"),
+                    ),
+                    const Center(
+                      child: Text("الوارد"),
+                    ),
+                    const Center(
+                      child: Text("المنصرف"),
+                    ),
+                    const Center(
+                      child: Text("الكميه المتوفره"),
+                    ),
+                  ].reversed.toList()),
+                ],
+              ),
+              Table(
+                columnWidths: const {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(1),
+                  2: FlexColumnWidth(1),
+                  3: FlexColumnWidth(1),
+                  4: FlexColumnWidth(3),
+                },
+                border: TableBorder.all(),
+                children: all2.filteronfinalproduct().map((e) {
+                  //رصيد اول المده
+                  var a = filterd_FinalPrdcut.data_until_date_from(
+                      finalprodcuts.pickedDateFrom!, e);
+                  var b = filterd_FinalPrdcut
+                      .filterFinalProduct_IN_DateBetween_from(
+                          finalprodcuts.pickedDateFrom!,
+                          finalprodcuts.pickedDateTo!,
+                          e);
+                  var c = filterd_FinalPrdcut
+                      .filterFinalProduct_out_DateBetween_from(
+                          finalprodcuts.pickedDateFrom!,
+                          finalprodcuts.pickedDateTo!,
+                          e);
+                  return TableRow(
+                      children: [
+                    //الصنف
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                            textDirection: TextDirection.rtl,
+                            "      ${e.item.color} ${e.item.type} ك ${e.item.density.removeTrailingZeros}"),
+                        Text(
+                            textDirection: TextDirection.rtl,
+                            "${e.item.L.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.H.removeTrailingZeros}"),
+                      ],
+                    ),
+                    //رصيد اول المده
+                    Center(
+                      child: Text(
+                        a.totalamount().toString(),
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 11, 134, 0)),
+                      ),
+                    ),
+                    //الوارد
+                    Center(
+                      child: Text(
+                        "${b.totalamount() == 0 ? "" : b.totalamount()}",
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 11, 134, 0)),
+                      ),
+                    ),
+                    //المنصرف
+                    Center(
+                      child: Text(
+                        "${c.totalamount() == 0 ? "" : c.totalamount()}",
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    //الكميه المتوفره
+                    Center(
+                      child: Text(
+                        "${a.totalamount() + b.totalamount() + c.totalamount()}",
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 11, 134, 0)),
+                      ),
+                    ),
+                  ].reversed.toList());
+                }).toList(),
+              ),
+
+              //تفاصيل الحراكات
               Table(
                 border: TableBorder.all(),
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -399,7 +523,8 @@ class FinalprodcutReport4 extends StatelessWidget {
                   1: FlexColumnWidth(1),
                 },
                 border: TableBorder.all(),
-                children: all.sortedBy<num>((element) => element.finalProdcut_ID)
+                children: all
+                    .sortedBy<num>((element) => element.finalProdcut_ID)
                     .map((e) => TableRow(children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -415,10 +540,10 @@ class FinalprodcutReport4 extends StatelessWidget {
                           Center(
                             child: Text(
                               e.item.amount.toString(),
-                              style:  TextStyle(
-                                  color: 
-                                   e.item.amount>0?const Color.fromARGB(255, 11, 134, 0):Colors.red
-                                  ),
+                              style: TextStyle(
+                                  color: e.item.amount > 0
+                                      ? const Color.fromARGB(255, 11, 134, 0)
+                                      : Colors.red),
                             ),
                           ),
                         ]))
@@ -469,6 +594,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
 
           if (myType.selectedreport == 'الكميه المتوفره فقط') {
             f = myType.finalproducts
+                .filteronfinalproduct()
                 .data_until_date(myType.pickedDateTo!)
                 .filterItemsPasedOncolors(context, myType.selctedcolors)
                 .filterItemsPasedOnDensites(context, myType.selctedDensities)
@@ -479,6 +605,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
           }
           if (myType.selectedreport == 'تقرير الوارد فقط') {
             f = myType.finalproducts
+                .filteronfinalproduct()
                 .filterFinalProduct_IN_DateBetween(
                     myType.pickedDateFrom!, myType.pickedDateTo!)
                 .filterItemsPasedOncolors(context, myType.selctedcolors)
@@ -489,6 +616,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
           }
           if (myType.selectedreport == 'تقرير المنصرف فقط') {
             f = myType.finalproducts
+                .filteronfinalproduct()
                 .filterFinalProduct_out_DateBetween(
                     myType.pickedDateFrom!, myType.pickedDateTo!)
                 .filterItemsPasedOncolors(context, myType.selctedcolors)
@@ -497,9 +625,22 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
                 .filterItemsPasedOnCustomers(context, myType.selctedcustomers)
                 .filterItemsPasedOnsizes(context, myType.selctedsizes);
           }
+
           if (myType.selectedreport == 'تقرير حركة المخزون') {
-            f =
-             myType.finalproducts.filterFinalProductDateBetween(myType.pickedDateFrom!, myType.pickedDateTo!)
+            //رصيد اول المده كيمته ليست بصفر
+            var a = myType.finalproducts
+                .data_until_date(myType.pickedDateFrom!)
+                .Remove_total_zero();
+            //الوارد
+            var b = myType.finalproducts.filterFinalProduct_IN_DateBetween(
+                myType.pickedDateFrom!, myType.pickedDateTo!);
+            //المنصرف
+            var c = myType.finalproducts.filterFinalProduct_out_DateBetween(
+                myType.pickedDateFrom!, myType.pickedDateTo!);
+            var all2 = b + c + a;
+
+            f = all2
+                .filteronfinalproduct()
                 .filterItemsPasedOncolors(context, myType.selctedcolors)
                 .filterItemsPasedOnDensites(context, myType.selctedDensities)
                 .filterItemsPasedOntypes(context, myType.selctedtybes)
