@@ -298,9 +298,11 @@ class InvoiceM extends StatelessWidget {
                               padding: const EdgeInsets.all(4),
                               child: GestureDetector(
                                   onTap: () {
+                                    user.actions.add(finalProdcutAction
+                                        .archive_final_prodcut.add);
                                     context
                                         .read<final_prodcut_controller>()
-                                        .deletefinalProudut(user);
+                                        .updateFinalProdcut(user);
                                   },
                                   child: const Icon(
                                     Icons.delete,

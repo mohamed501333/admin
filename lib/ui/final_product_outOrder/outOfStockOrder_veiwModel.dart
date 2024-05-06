@@ -22,8 +22,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
           item.W * item.L * item.H * int.parse(amountcontroller.text) / 1000000;
       context
           .read<final_prodcut_controller>()
-          .finalProdcut_out_order(
-            FinalProductModel(
+          .updateFinalProdcut(FinalProductModel(
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",
@@ -46,12 +45,11 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             stage: 0,
             notes: notes.text,
             cuting_order_number: 0,
-            actions: [],
+            actions: [finalProdcutAction.out_order.add],
             finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
             scissor: 0,
             customer: item.customer,
-          )
-          );
+          ));
       clearfields();
     }
   }
@@ -62,22 +60,22 @@ class outOfStockOrderveiwModel extends BaseViewModel {
     if (finals
         .where((element) =>
             element.actions.if_action_exist(
-                finalProdcutAction.createInvoice.getactionTitle) ==
-            false&&
-                element.actions.if_action_exist(
-                    finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) ==
-                false
-            )
+                    finalProdcutAction.createInvoice.getactionTitle) ==
+                false &&
+            element.actions.if_action_exist(finalProdcutAction
+                    .incert_From_StockChekRefresh.getactionTitle) ==
+                false)
         .isNotEmpty) {
       if (formKey.currentState!.validate()) {
-        List<InvoiceItem> items = finals.where((element) =>
+        List<InvoiceItem> items = finals
+            .where((element) =>
+                element.actions.if_action_exist(finalProdcutAction
+                        .createInvoice.getactionTitle) ==
+                    false &&
                 element.actions.if_action_exist(
-                    finalProdcutAction.createInvoice.getactionTitle) ==
-                false&&
-                element.actions.if_action_exist(
-                    finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) ==
-                false
-                )
+                        finalProdcutAction
+                            .incert_From_StockChekRefresh.getactionTitle) ==
+                    false)
             .map((e) => InvoiceItem(
                 price: 0.0,
                 amount: e.item.amount,
@@ -111,12 +109,11 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             finals
                 .where((element) =>
                     element.actions.if_action_exist(
-                        finalProdcutAction.createInvoice.getactionTitle) ==
-                    false&&
-                element.actions.if_action_exist(
-                    finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) ==
-                false
-                    )
+                            finalProdcutAction.createInvoice.getactionTitle) ==
+                        false &&
+                    element.actions.if_action_exist(finalProdcutAction
+                            .incert_From_StockChekRefresh.getactionTitle) ==
+                        false)
                 .toList(),
             invoices.map<num>((element) => element.number).max.toInt() + 1);
 

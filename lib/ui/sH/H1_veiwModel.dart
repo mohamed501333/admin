@@ -188,7 +188,7 @@ class H1VeiwModel extends BaseViewModel {
             .addfractionslist(permanentFractons);
         await context
             .read<BlockFirebasecontroller>()
-            .Cut_block(block: blockToCutted);
+            .updateBlock(blockToCutted);
         permanentFractons.clear();
         Navigator.of(context, rootNavigator: true).pop();
       }
@@ -196,20 +196,19 @@ class H1VeiwModel extends BaseViewModel {
   }
 
   Add_not_finalTo_block(BuildContext context, BlockModel b) {
-    context.read<BlockFirebasecontroller>().Add_not_finalTo_block(
-          notFinal: NotFinal(
-              sapa_ID: b.serial,
-              notFinal_ID: DateTime.now().microsecondsSinceEpoch,
-              fraction_ID: 0,
-              block_ID: b.Block_Id,
-              scissor: b.Hscissor,
-              stage: 0,
-              StockRequisetionOrder_ID: 0,
-              wight: wightcontroller.text.to_double(),
-              type: context.read<ObjectBoxController>().gdet(),
-              actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]),
-          block: b,
-        );
+    var notFinal = NotFinal(
+        sapa_ID: b.serial,
+        notFinal_ID: DateTime.now().microsecondsSinceEpoch,
+        fraction_ID: 0,
+        block_ID: b.Block_Id,
+        scissor: b.Hscissor,
+        stage: 0,
+        StockRequisetionOrder_ID: 0,
+        wight: wightcontroller.text.to_double(),
+        type: context.read<ObjectBoxController>().gdet(),
+        actions: [NotFinalAction.create_Not_final_cumingFrom_H.add]);
+    b.notFinals.add(notFinal);
+    context.read<BlockFirebasecontroller>().updateBlock(b);
   }
 
   @override

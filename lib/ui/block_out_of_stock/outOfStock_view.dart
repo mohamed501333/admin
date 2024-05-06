@@ -366,11 +366,15 @@ class TheTable0001 extends StatelessWidget {
                                                                                 .red)),
                                                                     onPressed:
                                                                         () {
-                                                                      blocks.changeOutTO(
-                                                                          user,
-                                                                          vm.outTo.text.isEmpty
-                                                                              ? "صالة الانتاج"
-                                                                              : vm.outTo.text);
+                                                                      user.OutTo = vm
+                                                                              .outTo
+                                                                              .text
+                                                                              .isEmpty
+                                                                          ? "صالة الانتاج"
+                                                                          : vm.outTo
+                                                                              .text;
+                                                                      blocks.updateBlock(
+                                                                          user);
                                                                       Navigator.pop(
                                                                           context);
                                                                     },

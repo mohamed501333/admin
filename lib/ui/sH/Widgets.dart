@@ -217,7 +217,6 @@ class TheTable0001 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<BlockFirebasecontroller>().runFilter("");
     return Consumer<BlockFirebasecontroller>(
       builder: (context, blocks, child) {
         int x = 0;

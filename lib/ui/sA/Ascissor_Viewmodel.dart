@@ -63,7 +63,7 @@ class AscissorViewModel extends BaseViewModel {
           1000000;
       context
           .read<final_prodcut_controller>()
-          .incert_finalProduct_from_cutingUnit(FinalProductModel(
+          .updateFinalProdcut(FinalProductModel(
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",

@@ -434,19 +434,32 @@ showmyAlertDialog2333323242(BuildContext context, FinalProductStockViewModel vm,
                       break;
 
                     case "q":
-                      context
-                          .read<final_prodcut_controller>()
-                          .quality_done(item);
+                      () {
+                        item.actions.add(finalProdcutAction
+                            .final_prodcut_DidQalityCheck.add);
+                        context
+                            .read<final_prodcut_controller>()
+                            .updateFinalProdcut(item);
+                      };
+
                       break;
                     case "stock":
-                      context
-                          .read<final_prodcut_controller>()
-                          .recevied_from_finalPrdcut_stck(item);
+                      () {
+                        item.actions.add(finalProdcutAction
+                            .recive_Done_Form_FinalProdcutStock.add);
+                        context
+                            .read<final_prodcut_controller>()
+                            .updateFinalProdcut(item);
+                      };
                       break;
                     case "delete":
-                      context
-                          .read<final_prodcut_controller>()
-                          .deletefinalProudut(item);
+                      () {
+                        item.actions
+                            .add(finalProdcutAction.archive_final_prodcut.add);
+                        context
+                            .read<final_prodcut_controller>()
+                            .updateFinalProdcut(item);
+                      };
                       break;
                   }
                   Navigator.pop(context);

@@ -210,11 +210,14 @@ class details_of_finalProdcut extends StatelessWidget {
                       (BuildContext context, DataGridRow row, int rowIndex) {
                     return GestureDetector(
                         onTap: () {
-                          mytype.deletefinalProudut(mytype.finalproducts
+                          var f = mytype.finalproducts
                               .where((element) =>
                                   element.finalProdcut_ID ==
                                   row.getCells().first.value)
-                              .first);
+                              .first;
+                          f.actions.add(
+                              finalProdcutAction.archive_final_prodcut.add);
+                          mytype.updateFinalProdcut(f);
                         },
                         child: Container(
                             color: Colors.redAccent,

@@ -490,9 +490,13 @@ class TheTable extends StatelessWidget {
                                                                       onPressed: () {
                                                                         if (user.actions.if_action_exist(BlockAction.cut_block_on_H.getactionTitle) ==
                                                                             false) {
+                                                                          user.actions.add(BlockAction
+                                                                              .archive_block
+                                                                              .add);
+
                                                                           context
                                                                               .read<BlockFirebasecontroller>()
-                                                                              .deleteblock(user);
+                                                                              .updateBlock(user);
                                                                         }
                                                                         Navigator.pop(
                                                                             context);
@@ -752,10 +756,17 @@ class ArchivedTheTable extends StatelessWidget {
                                             padding: const EdgeInsets.all(4),
                                             child: GestureDetector(
                                                 onTap: () {
+                                                  int index = user.actions
+                                                      .indexWhere((element) =>
+                                                          element.action ==
+                                                          BlockAction
+                                                              .archive_block
+                                                              .getactionTitle);
+                                                  user.actions.removeAt(index);
                                                   context
                                                       .read<
                                                           BlockFirebasecontroller>()
-                                                      .undeleteblock(user);
+                                                      .updateBlock(user);
                                                 },
                                                 child: const Icon(
                                                   Icons.unarchive_sharp,

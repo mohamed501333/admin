@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names, empty_catches, file_names
-import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,11 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sH/H1_veiwModel.dart';
 
 class BlockFirebasecontroller extends ChangeNotifier {
+  List<BlockModel> all = [];
+  List<BlockModel> blocks = [];
+  List<BlockModel> archived_blocks = [];
+  List<BlockModel> search = [];
+
   get_blocks_data() {
     FirebaseDatabase.instance.ref("blocks").onValue.first.then((value) {
       getInitialData(value.snapshot);
@@ -74,11 +78,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
     print("refrech datata of blocks");
   }
 
-  List<BlockModel> all = [];
-  List<BlockModel> blocks = [];
-  List<BlockModel> archived_blocks = [];
-  List<BlockModel> search = [];
-
   c() {
     // if (all.isNotEmpty) {
     //   for (var element in all) {
@@ -110,26 +109,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
     //     getInitialData(value.snapshot);
     //   });
     // }
-  }
-
-  void runFilter(String enteredKeyword) {
-    if (enteredKeyword.isEmpty) {
-      search = blocks;
-    } else {
-      search = blocks
-          .where((user) => user.number.toString().contains(enteredKeyword)
-              // .toString().toLowerCase() ==
-              // .contains(enteredKeyword.toLowerCase()))
-              // enteredKeyword.toLowerCase()
-              )
-          .toList()
-          .sortedBy<num>((element) => element.number)
-          .toList();
-
-      // we use the toLowerCase() method to make it case-insensitive
-    }
-
-    // Refresh_the_UI();
   }
 
   Refresh_the_UI() {
@@ -168,60 +147,12 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  deleteblock(BlockModel block) {
-    block.actions.add(BlockAction.archive_block.add);
-    FirebaseDatabase.instance
-        .ref("blocks/${block.Block_Id}")
-        .set(block.toJson());
-  }
-
-  undeleteblock(BlockModel block) {
-    int index = block.actions.indexWhere((element) =>
-        element.action == BlockAction.archive_block.getactionTitle);
-    block.actions.removeAt(index);
-    FirebaseDatabase.instance
-        .ref("blocks/${block.Block_Id}")
-        .set(block.toJson());
-  }
-
-  consumeblock(BlockModel block, String outto) {
-    block.actions.add(BlockAction.consume_block.add);
-    block.OutTo = outto;
+  updateBlock(BlockModel block) {
     try {
       FirebaseDatabase.instance
           .ref("blocks/${block.Block_Id}")
           .set(block.toJson());
     } catch (e) {}
-  }
-
-  unconsumeblock(BlockModel block) {
-    int index = block.actions.indexWhere((element) =>
-        element.action == BlockAction.consume_block.getactionTitle);
-    block.actions.removeAt(index);
-    block.actions.add(BlockAction.unconsume_block.add);
-
-    FirebaseDatabase.instance
-        .ref("blocks/${block.Block_Id}")
-        .set(block.toJson());
-  }
-
-  Cut_block({
-    required BlockModel block,
-  }) {
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
-    } catch (e) {}
-  }
-
-  Add_not_finalTo_block(
-      {required BlockModel block, required NotFinal notFinal}) {
-    block.notFinals.add(notFinal);
-
-    FirebaseDatabase.instance
-        .ref("blocks/${block.Block_Id}")
-        .set(block.toJson());
   }
 
   UnCutBlock_FromH({
@@ -242,13 +173,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
     });
     block.notFinals.clear();
 
-    FirebaseDatabase.instance
-        .ref("blocks/${block.Block_Id}")
-        .set(block.toJson());
-  }
-
-  changeOutTO(BlockModel block, String value) {
-    block.OutTo = value;
     FirebaseDatabase.instance
         .ref("blocks/${block.Block_Id}")
         .set(block.toJson());
@@ -305,12 +229,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     user.item.L = newvalue[0].to_double();
     user.item.W = newvalue[1].to_double();
     user.item.H = newvalue[2].to_double();
-
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${user.Block_Id}")
-          .set(user.toJson());
-    } catch (e) {}
+    updateBlock(user);
   }
 
   edit_cell(int id, String cell, String newvalue) {
@@ -331,11 +250,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     cell == "wight"
         ? user.item.wight = newvalue.to_double()
         : DoNothingAction();
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${user.Block_Id}")
-          .set(user.toJson());
-    } catch (e) {}
+    updateBlock(user);
   }
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz

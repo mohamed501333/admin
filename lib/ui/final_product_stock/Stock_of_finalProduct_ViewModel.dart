@@ -6,6 +6,7 @@ import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class stockOfFinalProductsViewModel extends BaseViewModel {
@@ -53,9 +54,10 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
         double.parse(widthcontroller.text) *
         double.parse(lenthcontroller.text) *
         double.parse(hightncontroller.text);
+
     context
         .read<final_prodcut_controller>()
-        .incert_finalProduct_from_Others(FinalProductModel(
+        .updateFinalProdcut(FinalProductModel(
           block_ID: 0,
           fraction_ID: 0,
           sapa_ID: "",
@@ -79,7 +81,7 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
           stage: 0,
           notes: notes.text,
           cuting_order_number: 0,
-          actions: [],
+          actions: [finalProdcutAction.incert_finalProduct_from_Others.add],
           finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
           scissor: int.tryParse(scissorcontroller.text) ?? 0,
           customer: companycontroller.text,
@@ -104,7 +106,7 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
     if (formKey.currentState!.validate() && itemData.total > 0) {
       context
           .read<final_prodcut_controller>()
-          .incert_finalProduct_from_Others(FinalProductModel(
+          .updateFinalProdcut(FinalProductModel(
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",
@@ -128,7 +130,7 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
             stage: 0,
             notes: notes.text,
             cuting_order_number: 0,
-            actions: [],
+            actions: [finalProdcutAction.incert_finalProduct_from_Others.add],
             finalProdcut_ID: DateTime.now().millisecondsSinceEpoch,
             scissor: int.tryParse(scissorcontroller.text) ?? 0,
             customer: headerData.name,

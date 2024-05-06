@@ -99,8 +99,9 @@ class final_prodcut_controller extends ChangeNotifier {
   List<FinalProductModel> finalproducts = [];
   List<FinalProductModel> Archived_finalproducts = [];
 
-  deletefinalProudut(FinalProductModel user) {
-    user.actions.add(finalProdcutAction.archive_final_prodcut.add);
+  updateFinalProdcut(
+    FinalProductModel user,
+  ) {
     try {
       FirebaseDatabase.instance
           .ref("finalproducts/${user.finalProdcut_ID}")
@@ -112,56 +113,8 @@ class final_prodcut_controller extends ChangeNotifier {
     for (var x in finalss) {
       x.invoiceNum = invoiceNum;
       x.actions.add(finalProdcutAction.createInvoice.add);
-      try {
-        FirebaseDatabase.instance
-            .ref("finalproducts/${x.finalProdcut_ID}")
-            .set(x.toJson());
-      } catch (e) {}
+      updateFinalProdcut(x);
     }
-  }
-
-  quality_done(FinalProductModel user) {
-    user.actions.add(finalProdcutAction.final_prodcut_DidQalityCheck.add);
-
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts/${user.finalProdcut_ID}")
-          .set(user.toJson());
-    } catch (e) {}
-  }
-
-  incert_finalProduct_from_cutingUnit(FinalProductModel user) {
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts/${user.finalProdcut_ID}")
-          .set(user.toJson());
-    } catch (e) {}
-  }
-
-  incert_finalProduct_from_Others(FinalProductModel user) {
-    user.actions.add(finalProdcutAction.incert_finalProduct_from_Others.add);
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts/${user.finalProdcut_ID}")
-          .set(user.toJson());
-    } catch (e) {}
-  }
-
-  incert_finalProduct(FinalProductModel user) {
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts/${user.finalProdcut_ID}")
-          .set(user.toJson());
-    } catch (e) {}
-  }
-
-  finalProdcut_out_order(FinalProductModel user) {
-    user.actions.add(finalProdcutAction.out_order.add);
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts/${user.finalProdcut_ID}")
-          .set(user.toJson());
-    } catch (e) {}
   }
 
   edit_cell(int id, String cell, String newvalue) {
@@ -179,11 +132,7 @@ class final_prodcut_controller extends ChangeNotifier {
         : DoNothingAction();
     cell == "color" ? user.item.color = newvalue : DoNothingAction();
     cell == "customer" ? user.customer = newvalue : DoNothingAction();
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts/${user.finalProdcut_ID}")
-          .set(user.toJson());
-    } catch (e) {}
+    updateFinalProdcut(user);
   }
 
   edit_cell_size(int id, String cell, List<String> newvalue) {
@@ -197,23 +146,7 @@ class final_prodcut_controller extends ChangeNotifier {
     user.item.L = newvalue[0].to_double();
     user.item.W = newvalue[1].to_double();
     user.item.H = newvalue[2].to_double();
-
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts/${user.finalProdcut_ID}")
-          .set(user.toJson());
-    } catch (e) {}
-  }
-
-  recevied_from_finalPrdcut_stck(
-    FinalProductModel user,
-  ) {
-    user.actions.add(finalProdcutAction.recive_Done_Form_FinalProdcutStock.add);
-    try {
-      FirebaseDatabase.instance
-          .ref("finalproducts/${user.finalProdcut_ID}")
-          .set(user.toJson());
-    } catch (e) {}
+    updateFinalProdcut(user);
   }
 
   Refresh_Ui() {
@@ -221,7 +154,6 @@ class final_prodcut_controller extends ChangeNotifier {
   }
 
   String searchin_OutOFStock = "";
-
   DateTime from = DateTime.now();
   DateTime to = DateTime.now();
   List<String> selctedcolors = [];

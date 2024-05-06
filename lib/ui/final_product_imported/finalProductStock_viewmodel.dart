@@ -29,7 +29,7 @@ class FinalProductStockViewModel extends BaseViewModel {
           1000000;
       context
           .read<final_prodcut_controller>()
-          .incert_finalProduct_from_cutingUnit(FinalProductModel(
+          .updateFinalProdcut(FinalProductModel(
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",
@@ -107,9 +107,7 @@ class FinalProductStockViewModel extends BaseViewModel {
       actions: [finalProdcutAction.incert_finalProduct_from_cutingUnit.add],
     );
     if (formKey.currentState!.validate()) {
-      context
-          .read<final_prodcut_controller>()
-          .incert_finalProduct_from_cutingUnit(user);
+      context.read<final_prodcut_controller>().updateFinalProdcut(user);
       clearfields();
     }
   }

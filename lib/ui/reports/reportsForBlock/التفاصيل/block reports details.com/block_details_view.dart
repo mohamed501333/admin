@@ -193,11 +193,13 @@ class Block_detaild_view extends StatelessWidget {
                       (BuildContext context, DataGridRow row, int rowIndex) {
                     return GestureDetector(
                         onTap: () {
-                          blocks.deleteblock(blocks.blocks
+                          var b = blocks.blocks
                               .where((element) =>
                                   element.Block_Id ==
                                   row.getCells().first.value)
-                              .first);
+                              .first;
+                          b.actions.add(BlockAction.archive_block.add);
+                          blocks.updateBlock(b);
                         },
                         child: Container(
                             color: Colors.redAccent,
@@ -244,7 +246,8 @@ class EmployeeDataSource22 extends DataGridSource {
               DataGridCell<int>(columnName: 'id', value: e.Block_Id),
               DataGridCell<String>(
                   columnName: 'size',
-                  value: "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
+                  value:
+                      "${e.item.H.removeTrailingZeros}*${e.item.W.removeTrailingZeros}*${e.item.L.removeTrailingZeros}"),
               DataGridCell<String>(columnName: 'color', value: e.item.color),
               DataGridCell<double>(
                   columnName: 'density', value: e.item.density),

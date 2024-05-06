@@ -7,6 +7,10 @@ import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 
 class Fractions_Controller extends ChangeNotifier {
+  List<FractionModel> all = [];
+  List<FractionModel> fractions = [];
+  List<FractionModel> archived_fractions = [];
+
   get_Fractions_data() {
     FirebaseDatabase.instance
         .ref("fractions")
@@ -18,10 +22,8 @@ class Fractions_Controller extends ChangeNotifier {
     }).whenComplete(() => FirebaseDatabase.instance
                 .ref("fractions")
                 .orderByKey()
-                .startAfter("${
-                  fractions.isNotEmpty?
-                  fractions.last.fraction_ID:0
-                  }")
+                .startAfter(
+                    "${fractions.isNotEmpty ? fractions.last.fraction_ID : 0}")
                 .onChildAdded
                 .listen((f) {
               refrech(f);
@@ -78,35 +80,25 @@ class Fractions_Controller extends ChangeNotifier {
     print("refrech datata of fractions");
   }
 
-  List<FractionModel> all = [];
-  List<FractionModel> fractions = [];
-  List<FractionModel> archived_fractions = [];
+  updateFraction(FractionModel fraction) {
+    FirebaseDatabase.instance
+        .ref("fractions/${fraction.fraction_ID}")
+        .set(fraction.toJson());
+  }
 
   Refresh_the_UI() {
     notifyListeners();
   }
 
-  addfractions(FractionModel fraction) async {
-    await FirebaseDatabase.instance
-        .ref("fractions/${fraction.fraction_ID}")
-        .set(fraction.toJson());
-  }
-
   addfractionslist(List<FractionModel> fractionsss) async {
     for (var element in fractionsss) {
-      FirebaseDatabase.instance
-          .ref("fractions/${element.fraction_ID}")
-          .set(element.toJson());
+      updateFraction(element);
     }
   }
 
   deletefractions(FractionModel fraction) {
     fraction.actions.add(FractionActon.archive_fraction.add);
-    try {
-      FirebaseDatabase.instance
-          .ref("fractions/${fraction.fraction_ID}")
-          .set(fraction.toJson());
-    } catch (e) {}
+    updateFraction(fraction);
   }
 
   undeleteFraction(FractionModel fraction) {
@@ -114,12 +106,7 @@ class Fractions_Controller extends ChangeNotifier {
         (element) => element.action == FractionActon.archive_fraction.getTitle);
     fraction.actions.removeAt(index);
 
-    try {
-      FirebaseDatabase.instance
-          .ref("fractions/${fraction.fraction_ID}")
-          .set(fraction.toJson());
-      notifyListeners();
-    } catch (e) {}
+    updateFraction(fraction);
   }
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
@@ -132,11 +119,7 @@ class Fractions_Controller extends ChangeNotifier {
     fractiond.stagenum = lastStage;
     fractiond.underOperation = false;
 
-    try {
-      FirebaseDatabase.instance
-          .ref("fractions/${fractiond.fraction_ID}")
-          .set(fractiond.toJson());
-    } catch (e) {}
+    updateFraction(fractiond);
   }
 
   remove_cuttedFraction_from_R_scissor({
@@ -148,12 +131,7 @@ class Fractions_Controller extends ChangeNotifier {
     fraction.actions.add(FractionActon.Uncut_fraction_OnRscissor.add);
     fraction.stagenum = 0;
     fraction.underOperation = true;
-
-    try {
-      FirebaseDatabase.instance
-          .ref("fractions/${fraction.fraction_ID}")
-          .set(fraction.toJson());
-    } catch (e) {}
+    updateFraction(fraction);
   }
 
   cut_Fraction_on_A_scissor(
@@ -164,11 +142,7 @@ class Fractions_Controller extends ChangeNotifier {
     fractiond.actions.add(FractionActon.cut_fraction_OnAscissor.add);
     fractiond.stagenum = lastStage;
 
-    try {
-      FirebaseDatabase.instance
-          .ref("fractions/${fractiond.fraction_ID}")
-          .set(fractiond.toJson());
-    } catch (e) {}
+    updateFraction(fractiond);
   }
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
@@ -190,11 +164,7 @@ class Fractions_Controller extends ChangeNotifier {
         scissor: 3 + fractiond.Rscissor,
         actions: [NotFinalAction.create_Not_final_cumingFrom_R.add]));
     fractiond.underOperation = false;
-    try {
-      FirebaseDatabase.instance
-          .ref("fractions/${fractiond.fraction_ID}")
-          .set(fractiond.toJson());
-    } catch (e) {}
+    updateFraction(fractiond);
   }
 
   void add_Not_final_ToFraction_cutted_on_A(
@@ -214,10 +184,6 @@ class Fractions_Controller extends ChangeNotifier {
         scissor: 7,
         actions: [NotFinalAction.create_Not_final_cumingFrom_A.add]));
     fractiond.underOperation = false;
-    try {
-      FirebaseDatabase.instance
-          .ref("fractions/${fractiond.fraction_ID}")
-          .set(fractiond.toJson());
-    } catch (e) {}
+    updateFraction(fractiond);
   }
 }

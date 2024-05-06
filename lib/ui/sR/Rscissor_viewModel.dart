@@ -97,7 +97,7 @@ class Rscissor_veiwModel extends BaseViewModel {
           1000000;
       context
           .read<final_prodcut_controller>()
-          .incert_finalProduct_from_cutingUnit(FinalProductModel(
+          .updateFinalProdcut(FinalProductModel(
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",
@@ -125,7 +125,7 @@ class Rscissor_veiwModel extends BaseViewModel {
                 type: orderController.item!.type,
                 amount: int.parse(amountcontroller.text),
                 priceforamount: 0.0),
-            scissor: scissor ,
+            scissor: scissor,
             customer: orderController.order!.customer,
           ));
       amountcontroller.clear();
@@ -148,7 +148,7 @@ class Rscissor_veiwModel extends BaseViewModel {
           1000000;
       context
           .read<final_prodcut_controller>()
-          .incert_finalProduct_from_cutingUnit(FinalProductModel(
+          .updateFinalProdcut(FinalProductModel(
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",

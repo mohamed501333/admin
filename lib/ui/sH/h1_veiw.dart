@@ -27,7 +27,6 @@ class _H1VeiwState extends State<H1Veiw> {
   H1VeiwModel vm = H1VeiwModel();
   @override
   void initState() {
-    context.read<BlockFirebasecontroller>().runFilter("");
     super.initState();
   }
 
