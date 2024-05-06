@@ -8,7 +8,6 @@ import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/functions.dart';
-import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
@@ -395,7 +394,7 @@ extension sdsd on List<NotFinal> {
     return where((element) =>
         format.format(element.actions.get_Date_of_action(
             NotFinalAction.create_Not_final_cumingFrom_H.getTitle)) ==
-        context.read<SettingController>().currentDate()).toList();
+        DateTime.now().formatt()).toList();
   }
 }
 

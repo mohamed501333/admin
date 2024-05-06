@@ -246,7 +246,7 @@ class Chips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool co = context.read<SettingController>().valueOfRadio2;
+    bool co = false;
 
     return SizedBox(
       height: 100,

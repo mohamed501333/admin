@@ -57,11 +57,6 @@ class CustonSwitch extends StatelessWidget {
               "صرف البلوك اتوماتيك عند الاضافه للمخزن",
               style: TextStyle(fontSize: fontsize, fontWeight: FontWeight.bold),
             ),
-            Switch(
-                value: myType.valueOfRadio1,
-                onChanged: (v) {
-                  myType.changevalueOfRadio11(v);
-                }),
           ],
         );
       },
@@ -98,12 +93,6 @@ class CustonSwitch2 extends StatelessWidget {
                   ),
                 ],
               ),
-              Switch(
-                  value: myType.valueOfRadio2,
-                  onChanged: (v) {
-                    myType.changevalueOfRadio22(v);
-                    showmyAlertDialog1(context, myType, vm);
-                  }),
             ],
           ),
         );
@@ -136,7 +125,6 @@ showmyAlertDialog1(
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () {
-                  myType.number = vm.N.text.to_int();
                   Navigator.pop(context);
                 },
                 child: const Text(

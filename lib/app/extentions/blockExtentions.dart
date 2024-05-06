@@ -2,10 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:provider/provider.dart';
 
 extension A1 on List<BlockModel> {
   List<BlockModel> search(String value) {
@@ -89,7 +87,7 @@ extension A1 on List<BlockModel> {
         .where((element) =>
             format.format(element.actions.get_Date_of_action(
                 BlockAction.consume_block.getactionTitle)) ==
-            context.read<SettingController>().currentDate())
+            DateTime.now().formatt())
         .toList();
   }
 

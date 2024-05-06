@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
-import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -125,41 +124,39 @@ class BlocksStockViewModel extends BaseViewModel {
   }
 
   incertblockformchip(BuildContext context, ChipBlockModel chi) {
-    var L = double.parse(lenthcontroller.text);
-    var w = double.parse(widthcontroller.text);
-    var H = double.parse(hightncontroller.text);
-    BlockWetOutput wetOutPut =
-        BlockWetOutput(L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
+    // var L = double.parse(lenthcontroller.text);
+    // var w = double.parse(widthcontroller.text);
+    // var H = double.parse(hightncontroller.text);
+    // BlockWetOutput wetOutPut =
+    //     BlockWetOutput(L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
 
-    Itme item = Itme(
-        L: chi.lenth.removeTrailingZeros.to_double(),
-        W: chi.width.removeTrailingZeros.to_double(),
-        H: chi.hight.removeTrailingZeros.to_double(),
-        density: chi.density,
-        volume: L * w * H / 1000000,
-        wight: chi.wight,
-        color: chi.color,
-        type: chi.type,
-        price: 0);
-    int num = context.read<SettingController>().number;
-    context.read<BlockFirebasecontroller>().addblock(
-          BlockModel(
-            item: item,
-            notFinals: [],
-            wetOutPut: wetOutPut,
-            discreption: chi.description,
-            OutTo: outTo.text.isEmpty ? "" : outTo.text,
-            cumingFrom: cummingFrom.text.isEmpty ? "المصنع" : cummingFrom.text,
-            fractions: [],
-            actions: [BlockAction.create_block.add],
-            Hscissor: 0,
-            Rcissor: 0,
-            Block_Id: DateTime.now().millisecondsSinceEpoch,
-            serial: chi.serial,
-            number: num,
-            notes: chi.notes,
-          ),
-        );
-    context.read<SettingController>().inceasenumber();
+    // Itme item = Itme(
+    //     L: chi.lenth.removeTrailingZeros.to_double(),
+    //     W: chi.width.removeTrailingZeros.to_double(),
+    //     H: chi.hight.removeTrailingZeros.to_double(),
+    //     density: chi.density,
+    //     volume: L * w * H / 1000000,
+    //     wight: chi.wight,
+    //     color: chi.color,
+    //     type: chi.type,
+    //     price: 0);
+    // context.read<BlockFirebasecontroller>().addblock(
+    //       BlockModel(
+    //         item: item,
+    //         notFinals: [],
+    //         wetOutPut: wetOutPut,
+    //         discreption: chi.description,
+    //         OutTo: outTo.text.isEmpty ? "" : outTo.text,
+    //         cumingFrom: cummingFrom.text.isEmpty ? "المصنع" : cummingFrom.text,
+    //         fractions: [],
+    //         actions: [BlockAction.create_block.add],
+    //         Hscissor: 0,
+    //         Rcissor: 0,
+    //         Block_Id: DateTime.now().millisecondsSinceEpoch,
+    //         serial: chi.serial,
+    //         number: num,
+    //         notes: chi.notes,
+    //       ),
+    //     );
   }
 }
