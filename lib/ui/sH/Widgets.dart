@@ -479,7 +479,7 @@ class TheTable0001 extends StatelessWidget {
   }
 
   List<BlockModel> getBloksCuttedOnThisScissor(BlockFirebasecontroller blocks) {
-    List<BlockModel> b = blocks.search
+    List<BlockModel> b = blocks.blocks
         .where((element) =>
             format.format(element.actions.get_Date_of_action(
                 BlockAction.cut_block_on_H.getactionTitle)) ==
@@ -651,7 +651,7 @@ class NewVeiw extends StatelessWidget {
 
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
-        List<BlockModel> blocksConsumedaAndNotCuttedOn_H = myType.search
+        List<BlockModel> blocksConsumedaAndNotCuttedOn_H = myType.blocks
             .where((element) =>
                 element.OutTo == "صالة الانتاج" &&
                 element.actions.if_action_exist(

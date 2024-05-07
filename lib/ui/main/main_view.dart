@@ -97,8 +97,6 @@ class Mainview extends StatelessWidget {
           appBar: AppBar(
             title: Consumer<MainController>(
               builder: (context, myType, child) {
-                print("refesh home  222222");
-
                 return Center(
                     child: Text(
                   vm.indexOfAppBar(myType.currentIndex,

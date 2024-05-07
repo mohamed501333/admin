@@ -250,7 +250,7 @@ class TheTable0001 extends StatelessWidget {
                         .map((user) {
                           return TableRow(
                               decoration: BoxDecoration(
-                                color: blocks.search.indexOf(user) % 2 == 0
+                                color: blocks.blocks.indexOf(user) % 2 == 0
                                     ? Colors.blue[50]
                                     : Colors.amber[50],
                               ),

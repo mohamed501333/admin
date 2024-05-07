@@ -148,7 +148,7 @@ class TheTable extends StatelessWidget {
                                                       .getactionTitle) ==
                                               false) {
                                             showmyAlertDialog2333323242(
-                                                context, vm, user, "delete");
+                                                context, user, "delete");
                                           }
                                         },
                                         child: const Icon(
@@ -170,7 +170,7 @@ class TheTable extends StatelessWidget {
                                                 UserPermition
                                                     .can_aprove_from_recive_from_final_prodcut)
                                         ? showmyAlertDialog2333323242(
-                                            context, vm, user, "stock")
+                                            context, user, "stock")
                                         : DoNothingAction();
                                   },
                                   child: Container(
@@ -219,22 +219,18 @@ class TheTable extends StatelessWidget {
                                 //تم الجوده
                                 GestureDetector(
                                   onTap: () {
-                                    user.actions.if_action_exist(finalProdcutAction
-                                                    .incert_finalProduct_from_cutingUnit
-                                                    .getactionTitle) ==
-                                                true &&
-                                            permitionss(
-                                                context,
-                                                UserPermition
-                                                    .can_aprove_from_quality) &&
-                                            user.actions.if_action_exist(
-                                                    finalProdcutAction
-                                                        .final_prodcut_DidQalityCheck
-                                                        .getactionTitle) ==
-                                                false
-                                        ? showmyAlertDialog2333323242(
-                                            context, vm, user, "q")
-                                        : DoNothingAction();
+                                    // user.actions.if_action_exist(finalProdcutAction
+                                    //                 .incert_finalProduct_from_cutingUnit
+                                    //                 .getactionTitle) ==
+                                    //             true &&
+                                    //         permitionss(context,UserPermition.can_aprove_from_quality) &&
+                                    //         user.actions.if_action_exist(finalProdcutAction.final_prodcut_DidQalityCheck
+                                    //                     .getactionTitle) ==
+                                    //             false
+                                    //     ? 
+                                        showmyAlertDialog2333323242(
+                                            context, user, "q");
+                                        // : DoNothingAction();
                                   },
                                   child: Container(
                                       padding: const EdgeInsets.all(2),
@@ -406,7 +402,7 @@ class TheTable extends StatelessWidget {
   }
 }
 
-showmyAlertDialog2333323242(BuildContext context, FinalProductStockViewModel vm,
+showmyAlertDialog2333323242(BuildContext context,
     FinalProductModel item, String casefun) {
   showDialog(
       context: context,
@@ -429,38 +425,25 @@ showmyAlertDialog2333323242(BuildContext context, FinalProductStockViewModel vm,
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () {
-                  switch (casefun) {
-                    case "c":
-                      break;
-
-                    case "q":
-                      () {
-                        item.actions.add(finalProdcutAction
-                            .final_prodcut_DidQalityCheck.add);
+                  if (casefun=="q") {
+                        item.actions.add(finalProdcutAction.final_prodcut_DidQalityCheck.add);
                         context
                             .read<final_prodcut_controller>()
                             .updateFinalProdcut(item);
-                      };
-
-                      break;
-                    case "stock":
-                      () {
+                  }
+                  if (casefun=="stock") {
                         item.actions.add(finalProdcutAction
                             .recive_Done_Form_FinalProdcutStock.add);
                         context
                             .read<final_prodcut_controller>()
                             .updateFinalProdcut(item);
-                      };
-                      break;
-                    case "delete":
-                      () {
-                        item.actions
+                  }
+                  if (casefun=="delete") {
+                         item.actions
                             .add(finalProdcutAction.archive_final_prodcut.add);
                         context
                             .read<final_prodcut_controller>()
                             .updateFinalProdcut(item);
-                      };
-                      break;
                   }
                   Navigator.pop(context);
                 },
