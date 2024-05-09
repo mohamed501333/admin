@@ -616,7 +616,7 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
           }
           if (myType.selectedreport == 'تقرير المنصرف فقط') {
             f = myType.finalproducts
-                // .filteronfinalproduct()
+                .filteronfinalproduct()
                 .filterFinalProduct_out_DateBetween(
                     myType.pickedDateFrom!, myType.pickedDateTo!)
                 .filterItemsPasedOncolors(context, myType.selctedcolors)
