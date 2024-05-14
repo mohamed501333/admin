@@ -3,7 +3,6 @@
 import 'dart:io';
 
 import 'package:collection/collection.dart';
-import 'package:date_ranger/date_ranger.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -155,7 +154,6 @@ class Block_detaild_view extends StatelessWidget {
             actions: [
               IconButton(
                   onPressed: () {
-                    context.gonext(context, Datepker());
                   },
                   icon: const Icon(Icons.date_range)),
               IconButton(
@@ -383,32 +381,3 @@ class EmployeeDataSource22 extends DataGridSource {
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-class Datepker extends StatelessWidget {
-  const Datepker({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<BlockFirebasecontroller>(
-      builder: (context, myType, child) {
-        return Scaffold(
-            appBar: AppBar(),
-            body: SizedBox(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: DateRanger(
-                    initialRange: myType.initialDateRange,
-                    onRangeChanged: (range) {
-                      myType.initialDateRange = range;
-
-                      myType.filterBlocksCreatedBetweenTowDates();
-                      myType.Refresh_the_UI();
-                    },
-                  ),
-                ),
-              ),
-            ));
-      },
-    );
-  }
-}

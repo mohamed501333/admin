@@ -2,12 +2,10 @@
 
 import 'dart:io';
 import 'package:collection/collection.dart';
-import 'package:date_ranger/date_ranger.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
-import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/file_handle_api.dart';
@@ -144,7 +142,6 @@ class CuttingOrderDetailsReports extends StatelessWidget {
             actions: [
               IconButton(
                   onPressed: () {
-                    context.gonext(context, const Datepker());
                   },
                   icon: const Icon(Icons.date_range)),
               IconButton(
@@ -344,32 +341,3 @@ class EmployeeDataSource223344 extends DataGridSource {
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-class Datepker extends StatelessWidget {
-  const Datepker({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<BlockFirebasecontroller>(
-      builder: (context, myType, child) {
-        return Scaffold(
-            appBar: AppBar(),
-            body: SizedBox(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: DateRanger(
-                    initialRange: myType.initialDateRange,
-                    onRangeChanged: (range) {
-                      myType.initialDateRange = range;
-
-                      myType.filterBlocksCreatedBetweenTowDates();
-                      myType.Refresh_the_UI();
-                    },
-                  ),
-                ),
-              ),
-            ));
-      },
-    );
-  }
-}
