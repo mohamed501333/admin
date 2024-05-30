@@ -139,8 +139,10 @@ class stockOfFinalProductsViewModel extends BaseViewModel {
     }
   }
 }
+abstract interface class SerializableModel {
 
-class GroupModel {
+}
+class GroupModel extends SerializableModel{
   final String name;
   final List<ItemModel> items;
   GroupModel({required this.name, required this.items});
