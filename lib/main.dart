@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:janssenserverpod_client/janssenserverpod_client.dart';
 import 'package:jason_company/ui/cutting_order/cutting_order_view.dart';
 import 'controllers/CategorysController.dart';
 import 'controllers/ChemicalsController.dart';
@@ -91,6 +92,7 @@ initPushNotification() async {
         )));
   });
 }
+final client= Client('localhost:8080/');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
