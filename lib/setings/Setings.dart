@@ -5,16 +5,13 @@ import 'package:flutter/material.dart';
 
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/main.dart';
 import 'package:jason_company/setings/SignUp.dart';
 
 import 'package:jason_company/setings/login.dart';
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
-import 'package:jason_company/ui/final_product_stock/Stock_of_finalProduct_ViewModel.dart';
 import 'package:jason_company/ui/reports/reportsforH/h_reports_viewModel.dart';
 import 'package:provider/provider.dart';
-import 'package:serverpods_client/serverpods_client.dart';
 
 class Setings extends StatelessWidget {
   Setings({super.key});
@@ -38,10 +35,7 @@ class Setings extends StatelessWidget {
                 },
                 child: const Text("تسجيل مستخدم جديد"))
             : const SizedBox(),
-            ElevatedButton(onPressed: (){
-               client.user.sendStreamMessage(myUser);
-
-            }, child: Text("data"))
+      
       ],
     ));
   }

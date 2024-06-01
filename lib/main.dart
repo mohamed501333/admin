@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/ui/cutting_order/cutting_order_view.dart';
-import 'package:serverpods_client/serverpods_client.dart';
 import 'controllers/CategorysController.dart';
 import 'controllers/ChemicalsController.dart';
 import 'controllers/Customer_controller.dart';
@@ -92,7 +91,6 @@ initPushNotification() async {
         )));
   });
 }
-final client= Client('192.168.1.197:8080');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -119,10 +117,6 @@ void main() async {
 
   database = await Database.create();
   runApp(const MyApp());
-  client.openStreamingConnection();
-client.user.stream.listen((data){
-     data.toJson().toString();
-});
 }
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
