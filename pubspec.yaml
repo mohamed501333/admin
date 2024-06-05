@@ -73,8 +73,6 @@ dependencies:
   syncfusion_flutter_xlsio: ^25.2.4
   time_picker_spinner_pop_up: ^2.0.0
   two_dimensional_scrollables: ^0.2.1
-  serverpods_client:
-    path: ../serverpods_client
   serverpod: ^2.0.0
 dev_dependencies:
   build_runner: ^2.4.6

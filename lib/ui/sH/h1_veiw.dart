@@ -154,15 +154,12 @@ class Chips extends StatelessWidget {
       width: 150,
       child: Column(
         children: [
-          Selector<ObjectBoxController, List<ChipFraction>>(
-            selector: (_, myType) => ObjectBoxController().fractionchips,
-            builder: (context, chips, child) {
-              return Expanded(
+Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Wrap(
                     spacing: 9,
-                    children: chips
+                    children: []
                         .map((e) => InkWell(
                               onLongPress: () {
                                 context
@@ -184,9 +181,7 @@ class Chips extends StatelessWidget {
                         .toList(),
                   ),
                 ),
-              );
-            },
-          )
+              )
         ],
       ),
     );
@@ -211,15 +206,12 @@ class Chips2FrorNewView extends StatelessWidget {
       width: 150,
       child: Column(
         children: [
-          Selector<ObjectBoxController, List<ChipFraction>>(
-            selector: (_, myType) => ObjectBoxController().fractionchips,
-            builder: (context, chips, child) {
-              return Expanded(
+  Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Wrap(
                     spacing: 9,
-                    children: chips
+                    children: []
                         .map((e) => InkWell(
                               onLongPress: () {
                                 context
@@ -241,9 +233,7 @@ class Chips2FrorNewView extends StatelessWidget {
                         .toList(),
                   ),
                 ),
-              );
-            },
-          )
+              )
         ],
       ),
     );

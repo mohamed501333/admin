@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
-import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
@@ -11,22 +10,14 @@ import 'package:provider/provider.dart';
 
 class ObjectBoxController extends ChangeNotifier {
   addchips(ChipBlockModel chip) {
-    database.addchips(chip);
-    notifyListeners();
+
   }
 
   addFractionchip(ChipFraction fract) {
-    database.addFractionchip(fract);
-    notifyListeners();
   }
 
-  List<ChipBlockModel> chips = database.getchips();
-
-  List<ChipFraction> fractionchips = database.getFractionchip();
-
   deletechip(id) {
-    database.deletechip(id);
-    notifyListeners();
+
   }
 
   int lenthInFilter = 0;
@@ -35,8 +26,7 @@ class ObjectBoxController extends ChangeNotifier {
   }
 
   deleteFractionchip(id) {
-    database.deleteFractionchip(id);
-    notifyListeners();
+
   }
 
   get() {

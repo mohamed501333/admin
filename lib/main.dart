@@ -27,14 +27,12 @@ import 'package:provider/provider.dart';
 import 'controllers/ObjectBoxController.dart';
 import 'controllers/main_controller.dart';
 import 'controllers/scissors_controller.dart';
-import 'dataScorse/objectBox_helper.dart';
 import 'ui/main/main_view.dart';
 
 DateFormat format = DateFormat('yyyy/MM/dd');
 DateFormat formatwitTime = DateFormat('yyyy-MM-dd/hh:mm a');
 DateFormat formatwitTime2 = DateFormat('yyyy-MM-dd -hh:mm a');
 DateFormat formatwitTime3 = DateFormat('hh:mm a');
-late Database database;
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id
@@ -112,10 +110,7 @@ void main() async {
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   initPushNotification();
-
   FirebaseDatabase.instance.setPersistenceEnabled(true);
-
-  database = await Database.create();
   runApp(const MyApp());
 }
 
@@ -209,9 +204,9 @@ class MyApp extends StatelessWidget {
     //    هذا المتغير اجعله ثابت على الجهاز او من الانترنت
     bool x = c.watch<UpdatesController>().updates == 0;
     //اطرح هنا التاريخ
-    if (DateTime.now().compareTo(DateTime(2024, 6, 6)) >= 0) {
-      x = false;
-    }
+    // if (DateTime.now().compareTo(DateTime(2024, 6, 6)) >= 0) {
+    //   x = false;
+    // }
 
     return x;
   }

@@ -14,8 +14,6 @@ import 'package:provider/provider.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 
 import 'package:jason_company/app/validation.dart';
-import 'package:jason_company/controllers/ObjectBoxController.dart';
-import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
 import 'package:jason_company/ui/blocksStock/widgets.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
@@ -58,7 +56,6 @@ class BlocksStock extends StatelessWidget {
                         : Column(
                             children: [
                               Fields(vm: vm),
-                              Chips(vm: vm),
                               Buttoms(vm: vm),
                             ],
                           ).permition(
@@ -236,59 +233,6 @@ class Buttoms extends StatelessWidget {
   }
 }
 
-class Chips extends StatelessWidget {
-  const Chips({
-    super.key,
-    required this.vm,
-  });
-
-  final BlocksStockViewModel vm;
-
-  @override
-  Widget build(BuildContext context) {
-    bool co = false;
-
-    return SizedBox(
-      height: 100,
-      child: Selector<ObjectBoxController, List<ChipBlockModel>>(
-        selector: (_, myType) => ObjectBoxController().chips,
-        builder: (context, chips, child) {
-          return Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Wrap(
-                    spacing: 9,
-                    children: chips
-                        .map((e) => InkWell(
-                              onLongPress: () {
-                                context
-                                    .read<ObjectBoxController>()
-                                    .deletechip(e.id);
-                              },
-                              onTap: () {
-                                co == true
-                                    ? vm.incertblockformchip(context, e)
-                                    : vm.fillFields(e);
-                              },
-                              child: Chip(
-                                  labelStyle: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                  label: Text(e.title.toString())),
-                            ))
-                        .toList(),
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
 
 class Fields extends StatelessWidget {
   const Fields({

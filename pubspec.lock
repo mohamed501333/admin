@@ -1328,14 +1328,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  serverpod_client:
-    dependency: transitive
-    description:
-      name: serverpod_client
-      sha256: f5c464c7d37c81bb59a7c9a242ab1700ff802360ee8e763f2acfe4a37fa5e1bb
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   serverpod_serialization:
     dependency: transitive
     description:
@@ -1352,13 +1344,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  serverpods_client:
-    dependency: "direct main"
-    description:
-      path: "../serverpods_client"
-      relative: true
-    source: path
-    version: "0.0.0"
   shared_preferences:
     dependency: transitive
     description:
