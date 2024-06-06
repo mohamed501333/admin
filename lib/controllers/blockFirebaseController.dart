@@ -82,21 +82,22 @@ class BlockFirebasecontroller extends ChangeNotifier {
       // for (var element in all) {
       //   element.Hscissor = 0;
       // }
+      // for (var element in all) {
+      //   element.Hscissor=15;
+      // }
       // for (var element in all.where((element) =>
       //     element.actions
       //             .if_action_exist(BlockAction.consume_block.getactionTitle) ==
-      //         true &&
-      //     element.actions
-      //             .get_Date_of_action(BlockAction.consume_block.getactionTitle)
-      //             .formatToInt() ==
-      //         DateTime.now().formatToInt())) {
+      //         false 
+      //     //     &&
+      //     // element.actions
+      //     //         .get_Date_of_action(BlockAction.consume_block.getactionTitle)
+      //     //         .formatToInt() ==
+      //     //     DateTime.now().formatToInt()
+      //         )
+      //         ) {
       //   element.Hscissor = 0;
       // }
-
-    for (var element in all.where((element) =>element.serial=="D33s2-5-2024" && element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)==false)) {
-      element.actions.add(BlockAction.archive_block.add);
-       print(1);
-      }
 
       var s = {};
       s.addEntries(
