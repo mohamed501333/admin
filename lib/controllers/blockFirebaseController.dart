@@ -99,13 +99,13 @@ class BlockFirebasecontroller extends ChangeNotifier {
       //   element.Hscissor = 0;
       // }
 
-      var s = {};
-      s.addEntries(
-          all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
-      FirebaseDatabase.instance.ref("blocks").set(s);
-      FirebaseDatabase.instance.ref("blocks").onValue.first.then((value) {
-        getInitialData(value.snapshot);
-      });
+    //   var s = {};
+    //   s.addEntries(
+    //       all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
+    //   FirebaseDatabase.instance.ref("blocks").set(s);
+    //   FirebaseDatabase.instance.ref("blocks").onValue.first.then((value) {
+    //     getInitialData(value.snapshot);
+    //   });
     }
   }
 
