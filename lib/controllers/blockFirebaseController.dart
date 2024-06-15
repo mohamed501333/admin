@@ -153,28 +153,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     } catch (e) {}
   }
 
-  UnCutBlock_FromH({
-    required BuildContext context,
-    required BlockModel block,
-  }) {
-    Fractions_Controller fractioncontroller = Fractions_Controller();
-    H1VeiwModel vm = H1VeiwModel();
-    int index = block.actions.indexWhere((element) =>
-        element.action == BlockAction.cut_block_on_H.getactionTitle);
-    block.actions.removeAt(index);
-    block.actions.add(BlockAction.UN_cut_block_on_H.add);
 
-    block.Hscissor = 0;
-    // clear the fractions
-    vm.getFractinsOFABlock(context, block).forEach((element) {
-      fractioncontroller.deletefractions(element);
-    });
-    block.notFinals.clear();
-
-    FirebaseDatabase.instance
-        .ref("blocks/${block.Block_Id}")
-        .set(block.toJson());
-  }
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   var initialDateRange =

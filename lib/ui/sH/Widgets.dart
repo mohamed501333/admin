@@ -271,11 +271,8 @@ class TheTable0001 extends StatelessWidget {
                                     padding: const EdgeInsets.all(4),
                                     child: GestureDetector(
                                         onTap: () {
-                                          context
-                                              .read<BlockFirebasecontroller>()
-                                              .UnCutBlock_FromH(
-                                                  context: context,
-                                                  block: user);
+                                          vm2.UNcutBlockFromH(
+                                              context: context, block: user);
                                         },
                                         child: const Icon(
                                           Icons.delete,

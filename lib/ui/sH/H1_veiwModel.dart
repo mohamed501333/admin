@@ -258,4 +258,24 @@ class H1VeiwModel extends BaseViewModel {
   double percentage(BlockModel block) {
     return 100 * wight_of_notfinal(block) / block.item.wight;
   }
+
+  UNcutBlockFromH({
+    required BuildContext context,
+    required BlockModel block,
+  }) {
+    Fractions_Controller fractioncontroller = Fractions_Controller();
+    H1VeiwModel vm = H1VeiwModel();
+    int index = block.actions.indexWhere((element) =>
+        element.action == BlockAction.cut_block_on_H.getactionTitle);
+    block.actions.removeAt(index);
+    block.actions.add(BlockAction.UN_cut_block_on_H.add);
+
+    block.Hscissor = 0;
+    // clear the fractions
+    vm.getFractinsOFABlock(context, block).forEach((element) {
+      fractioncontroller.deletefractions(element);
+    });
+    block.notFinals.clear();
+    context.read<BlockFirebasecontroller>().updateBlock(block);
+  }
 }
