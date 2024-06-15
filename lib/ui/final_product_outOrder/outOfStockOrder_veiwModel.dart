@@ -95,7 +95,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
             notes: "",
             id: DateTime.now().millisecondsSinceEpoch,
             number: context.read<SettingController>().switch1 == false
-                ? invoices.sortedBy<num>((element) => element.id).last.number +
+                ? invoices.map((element) => element.number).max +
                     1
                 : invoiceNum.text.to_int(),
             date: DateTime.now(),
