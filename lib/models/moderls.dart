@@ -1964,10 +1964,10 @@ class OperationOrederItems {
 
 class UserModel {
   int user_Id;
-    String name;
+  String name;
 
   String email;
-    String password;
+  String password;
 
   String uid;
   List<String> permitions;
@@ -1983,7 +1983,6 @@ class UserModel {
     required this.updatedat,
     required this.actions,
   });
-
 
   UserModel copyWith({
     int? user_Id,
@@ -2029,13 +2028,18 @@ class UserModel {
       uid: map['uid'] as String,
       permitions: List<String>.from((map['permitions'] as List<dynamic>)),
       updatedat: map['updatedat'] as int,
-      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
+      actions: List<ActionModel>.from(
+        (map['actions'] as List<dynamic>).map<ActionModel>(
+          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -2045,28 +2049,27 @@ class UserModel {
   @override
   bool operator ==(covariant UserModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.user_Id == user_Id &&
-      other.name == name &&
-      other.email == email &&
-      other.password == password &&
-      other.uid == uid &&
-      listEquals(other.permitions, permitions) &&
-      other.updatedat == updatedat &&
-      listEquals(other.actions, actions);
+
+    return other.user_Id == user_Id &&
+        other.name == name &&
+        other.email == email &&
+        other.password == password &&
+        other.uid == uid &&
+        listEquals(other.permitions, permitions) &&
+        other.updatedat == updatedat &&
+        listEquals(other.actions, actions);
   }
 
   @override
   int get hashCode {
     return user_Id.hashCode ^
-      name.hashCode ^
-      email.hashCode ^
-      password.hashCode ^
-      uid.hashCode ^
-      permitions.hashCode ^
-      updatedat.hashCode ^
-      actions.hashCode;
+        name.hashCode ^
+        email.hashCode ^
+        password.hashCode ^
+        uid.hashCode ^
+        permitions.hashCode ^
+        updatedat.hashCode ^
+        actions.hashCode;
   }
 }
 
@@ -2116,14 +2119,16 @@ class UserpermitionTittle {
 }
 
 class BlockCategory {
-  int id;
+  int blockCategory_ID;
+  int updatedat;
   String description;
   String type;
   String density;
   String color;
   List<ActionModel> actions;
   BlockCategory({
-    required this.id,
+    required this.blockCategory_ID,
+    required this.updatedat,
     required this.description,
     required this.type,
     required this.density,
@@ -2132,7 +2137,8 @@ class BlockCategory {
   });
 
   BlockCategory copyWith({
-    int? id,
+    int? blockCategory_ID,
+    int? updatedat,
     String? description,
     String? type,
     String? density,
@@ -2140,7 +2146,8 @@ class BlockCategory {
     List<ActionModel>? actions,
   }) {
     return BlockCategory(
-      id: id ?? this.id,
+      blockCategory_ID: blockCategory_ID ?? this.blockCategory_ID,
+      updatedat: updatedat ?? this.updatedat,
       description: description ?? this.description,
       type: type ?? this.type,
       density: density ?? this.density,
@@ -2151,7 +2158,8 @@ class BlockCategory {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'blockCategory_ID': blockCategory_ID,
+      'updatedat': updatedat,
       'description': description,
       'type': type,
       'density': density,
@@ -2162,49 +2170,48 @@ class BlockCategory {
 
   factory BlockCategory.fromMap(Map<String, dynamic> map) {
     return BlockCategory(
-      id: map['id'] as int,
+      blockCategory_ID: map['blockCategory_ID'] as int,
+      updatedat: map['updatedat'] as int,
       description: map['description'] as String,
       type: map['type'] as String,
       density: map['density'] as String,
       color: map['color'] as String,
-      actions: List<ActionModel>.from(
-        (map['actions'] as List<dynamic>).map<ActionModel>(
-          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      actions: List<ActionModel>.from((map['actions']as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory BlockCategory.fromJson(String source) =>
-      BlockCategory.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory BlockCategory.fromJson(String source) => BlockCategory.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'BlockCategory(id: $id, description: $description, type: $type, density: $density, color: $color, actions: $actions)';
+    return 'BlockCategory(blockCategory_ID: $blockCategory_ID, updatedat: $updatedat, description: $description, type: $type, density: $density, color: $color, actions: $actions)';
   }
 
   @override
   bool operator ==(covariant BlockCategory other) {
     if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.description == description &&
-        other.type == type &&
-        other.density == density &&
-        other.color == color &&
-        listEquals(other.actions, actions);
+  
+    return 
+      other.blockCategory_ID == blockCategory_ID &&
+      other.updatedat == updatedat &&
+      other.description == description &&
+      other.type == type &&
+      other.density == density &&
+      other.color == color &&
+      listEquals(other.actions, actions);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        description.hashCode ^
-        type.hashCode ^
-        density.hashCode ^
-        color.hashCode ^
-        actions.hashCode;
+    return blockCategory_ID.hashCode ^
+      updatedat.hashCode ^
+      description.hashCode ^
+      type.hashCode ^
+      density.hashCode ^
+      color.hashCode ^
+      actions.hashCode;
   }
 }
 

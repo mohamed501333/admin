@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 // import 'package:jason_company/models/moderls.dart';
 // import 'package:jason_company/ui/recources/userpermitions.dart';
 
@@ -12,6 +13,7 @@ class UsersDashboard extends StatelessWidget {
   TextEditingController useremail = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    context.read<Users_controller>().getAllUsers();
     return Consumer<Users_controller>(
       builder: (context, myType, child) {
         return Scaffold(
@@ -20,7 +22,7 @@ class UsersDashboard extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     showDialog(
-                       context: context,
+                        context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             content: SizedBox(
@@ -58,66 +60,47 @@ class UsersDashboard extends StatelessWidget {
             ],
             title: const DropDdowenForUsers(),
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-
-              // myType.initialforradioqq==null?const SizedBox():  SingleChildScrollView(
-              //     child: Column(
-              //       children: UserPermition.values
-              //           .map((g) => Container(
-              //                 decoration: BoxDecoration(
-              //                   border: Border.all(color: Colors.greenAccent),
-              //                   borderRadius: BorderRadius.circular(20),
-              //                 ),
-              //                 child: CheckboxListTile(
-              //                     activeColor: Colors.blue,
-              //                     checkColor: Colors.white,
-              //                     autofocus: false,
-              //                     onChanged: (v) {
-              //                       if (myType.initialforradioqq != null) {
-              //                         Users u = myType.users
-              //                             .where((element) =>
-              //                                 element.uidemail ==
-              //                                 myType.initialforradioqq)
-              //                             .first;
-
-              //                         if (u.permitions.contains(
-              //                                 UserpermitionTittle(
-              //                                     tittle: g.getTitle)) ==
-              //                             false) {
-              //                           myType.Add_User_permition(g, u);
-              //                         } else {
-              //                           if (myType.initialforradioqq != null) {
-              //                             myType.remove_User_permition(
-              //                                 g.getTitle);
-              //                           }
-              //                         }
-              //                       }
-              //                     },
-              //                     title: Text(g.getTitle,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              //                     value: myType.users
-              //                             .where((element) =>
-              //                                 element.uidemail ==
-              //                                 myType.initialforradioqq)
-              //                             .isNotEmpty
-              //                         ? myType.users
-              //                             .where((element) =>
-              //                                 element.uidemail ==
-              //                                 myType.initialforradioqq)
-              //                             .first
-              //                             .permitions
-              //                             .contains(UserpermitionTittle(
-              //                                 tittle: g.getTitle))
-              //                         : false),
-              //               ))
-              //           .toList(),
-              //     ),
-              //   )
-             
-              ],
-            ),
-          ),
+          body: ListView(
+              children: myType.users
+                  .map(
+                    (u) => ExpansionTile(
+                        title: Text(
+                          " (${u.name}) ",
+                          style: const TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.w500),
+                        ),
+                        children: UserPermition.values
+                            .map((g) => Container(
+                                  decoration: BoxDecoration(
+                                    border:
+                                        Border.all(color: Colors.greenAccent),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: CheckboxListTile(
+                                      activeColor: Colors.blue,
+                                      checkColor: Colors.white,
+                                      autofocus: false,
+                                      onChanged: (v) {
+                                        if (u.permitions.contains(g.getTitle)) {
+                                          u.permitions.removeWhere(
+                                              (a) => a == g.getTitle);
+                                          myType.updateUser(u);
+                                        } else {
+                                          u.permitions.add(g.getTitle);
+                                          myType.updateUser(u);
+                                        }
+                                      },
+                                      title: Text(
+                                        g.getTitle,
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      value: u.permitions.contains(g.getTitle)),
+                                ))
+                            .toList()),
+                  )
+                  .toList()),
         );
       },
     );
@@ -134,7 +117,6 @@ class DropDdowenForUsers extends StatelessWidget {
       builder: (context, Mytype, child) {
         return Column(
           children: [
-
             // DropdownButton(
             //     value: Mytype.initialforradioqq,
             //     items: Mytype.users
@@ -154,7 +136,6 @@ class DropDdowenForUsers extends StatelessWidget {
             //         Mytype.Refrsh_ui();
             //       }
             //     }),
-          
           ],
         );
       },

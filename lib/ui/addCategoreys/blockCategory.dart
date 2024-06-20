@@ -72,9 +72,10 @@ class BlockCategoryView extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   if (vm.formKey.currentState!.validate()) {
-                    context.read<Category_controller>().addNewBlockCategory(
+                    context.read<Category_controller>().updateBlockCategory(
                             BlockCategory(
-                                id: DateTime.now().millisecondsSinceEpoch,
+                              updatedat:  DateTime.now().microsecondsSinceEpoch,
+                                blockCategory_ID: DateTime.now().microsecondsSinceEpoch,
                                 description: vm.blockdesription.text,
                                 type: vm.typecontroller.text,
                                 density: vm.densitycontroller.text,

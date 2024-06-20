@@ -42,6 +42,7 @@ class Mainview extends StatelessWidget {
           initialized = true;
           if (permitionss(context, UserPermition.can_get_data_of_blocks)) {
             context.read<BlockFirebasecontroller>().getData();
+            context.read<Category_controller>().getData();
           }
           if (permitionss(context, UserPermition.can_get_data_of_orders)) {
             context.read<OrderController>().getData();
@@ -58,8 +59,8 @@ class Mainview extends StatelessWidget {
           if ( permitionss(context, UserPermition.can_get_data_of_invoice)) {
            context.read<Invoice_controller>().getData();
           }
+  
         }
-//        
 
 //         permitionss(context, UserPermition.can_get_data_of_stcokCheck)
 //             ? context.read<StokCheck_Controller>().get_StokCheck_data()
@@ -86,9 +87,7 @@ class Mainview extends StatelessWidget {
 //         permitionss(context, UserPermition.can_get_data_of_purches)
 //             ? context.read<PurchesController>().getDataOfPurchesrr()
 //             : DoNothingAction();
-//         permitionss(context, UserPermition.can_get_data_of_blocks)
-//             ? context.read<Category_controller>().get_blockCategory_data()
-//             : DoNothingAction();
+
 
 //         permitionss(context, UserPermition.can_get_data_of_notfinals)
 //             ? context.read<NonFinalController>().getdataOfnotFinals()

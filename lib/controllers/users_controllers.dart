@@ -20,69 +20,63 @@ class Users_controller extends ChangeNotifier {
   List<UserModel> users = [];
   UserModel? currentuser;
 
-    getData(String email, String password) {
+  getData(String email, String password) {
     if (internet == true) {
-      users_From_firebase(email,password);
+      users_From_firebase(email, password);
     } else {
-      usersFrom_server(email,password);
+      usersFrom_server(email, password);
     }
   }
 
-  usersFrom_server(String email, String password){
+  usersFrom_server(String email, String password) {
     Uri uri = Uri.parse('ws://192.168.1.34:8080/users/ws')
         .replace(queryParameters: {'username': email, 'password': password});
     channel = WebSocketChannel.connect(uri);
     channel.sink.add('');
     channel.stream.forEach((u) {
+      print("123312435");
       UserModel user = UserModel.fromJson(u);
       currentuser = user;
       SringsManager.myemail = user.name;
-      if (currentuser!=null) {
-            Sharedprfs.setemail(currentuser!.email);
-      Sharedprfs.setpassword(currentuser!.password); 
+      if (currentuser != null) {
+        Sharedprfs.setemail(currentuser!.email);
+        Sharedprfs.setpassword(currentuser!.password);
       }
       notifyListeners();
       print(user);
     });
-  
   }
-users_From_firebase(String email, String password){
 
-}
+  users_From_firebase(String email, String password) {}
   Uri uri = Uri.http('192.168.1.$ip:8080', '/users');
-getAllUsers() async {
-   // get for the first time
-  
+  getAllUsers() async {
+    // get for the first time
+
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       users.clear();
       var a = json.decode(response.body) as List;
       for (var element in a) {
         var user = UserModel.fromMap(element);
-        if (user.actions
-                .if_action_exist(UserAction.archive_user.getTitle) ==
+        if (user.actions.if_action_exist(UserAction.archive_user.getTitle) ==
             false) {
           users.add(user);
         }
       }
       notifyListeners();
     }
-}
+  }
 
-updateUser(UserModel user){
-if (internet == true) {
+  updateUser(UserModel user) async {
+    if (internet == true) {
       FirebaseFirestore.instance
           .collection('users')
           .doc(user.user_Id.toString())
           .set(user.toMap());
     } else {
-      http.put(uri,body: user.toJson());
+      await http.put(uri, body: user.toJson()).then((e) => getAllUsers());
     }
-}
-
-
-
-
+  }
 
   Refrsh_ui() {
     notifyListeners();
@@ -93,6 +87,4 @@ if (internet == true) {
     await prefs.setBool('internet', val);
     notifyListeners();
   }
-
-  
 }

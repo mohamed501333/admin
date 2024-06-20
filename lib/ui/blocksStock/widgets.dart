@@ -80,7 +80,7 @@ class DropDdowenFor_blockCategory extends StatelessWidget {
       builder: (context, myType, child) {
         return DropdownButton(
             value: myType.initialFordropdowen,
-            items: myType.blockCategory
+            items: myType.blockCategorys
                 .map((e) => e)
                 .toList()
                 .map((e) => DropdownMenuItem(
