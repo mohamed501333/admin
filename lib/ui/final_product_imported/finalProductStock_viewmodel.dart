@@ -11,7 +11,7 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class FinalProductStockViewModel extends BaseViewModel {
-  OrderModel find(List<OrderModel> orders, OperationOrederItems item) {
+  cutingOrder find(List<cutingOrder> orders, OperationOrederItems item) {
     return orders
         .where((element) => element.items.map((e) => e.id).contains(item.id))
         .first;
@@ -30,6 +30,7 @@ class FinalProductStockViewModel extends BaseViewModel {
       context
           .read<final_prodcut_controller>()
           .updateFinalProdcut(FinalProductModel(
+            updatedat: DateTime.now().microsecondsSinceEpoch,
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",
@@ -78,6 +79,8 @@ class FinalProductStockViewModel extends BaseViewModel {
         hightncontroller.text.to_double() /
         1000000;
     FinalProductModel user = FinalProductModel(
+                  updatedat: DateTime.now().microsecondsSinceEpoch,
+
       block_ID: 0,
       fraction_ID: 0,
       sapa_ID: "",

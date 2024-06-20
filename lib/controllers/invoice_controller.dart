@@ -1,77 +1,86 @@
 // ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters, camel_case_types, empty_catches
 
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/data/sharedprefs.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/publicVariables.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:http/http.dart' as http;
 
 class Invoice_controller extends ChangeNotifier {
-  get_invice_data() {
-    try {
-      FirebaseDatabase.instance
-          .ref("invoice")
-          .orderByKey()
-          .onValue
-          .listen((event) {
-        invoices.clear();
-        if (event.snapshot.value != null) {
-          Map<Object?, Object?> map =
-              event.snapshot.value as Map<Object?, Object?>;
-          for (var item in map.values.toList()) {
-            invoices.add(Invoice.fromJson(item.toString()));
-            edits = invoices;
-          }
-        }
-        print("get data of invoice");
-        notifyListeners();
-      });
-    } catch (e) {}
+  static late WebSocketChannel channel;
+  List<Invoice> invoices = [];
+
+  getData() {
+    if (internet == true) {
+      finals_From_firebase();
+    } else {
+      finals_From_Server();
+    }
   }
 
-  List<Invoice> invoices = [];
+  finals_From_firebase() {
+    FirebaseFirestore;
+  }
+
+  finals_From_Server() async {
+    // get for the first time
+    Uri uri = Uri.http('192.168.1.$ip:8080', '/invoices');
+    var response = await http.get(uri);
+    if (response.statusCode == 200) {
+      invoices.clear();
+      var a = json.decode(response.body) as List;
+      for (var element in a) {
+        var item = Invoice.fromMap(element);
+        if (item.actions
+                .if_action_exist(InvoiceAction.archive_invoice.getTitle) ==
+            false) {
+          invoices.add(item);
+        }
+      }
+      notifyListeners();
+    }
+    //
+    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/invoices/ws').replace(
+        queryParameters: {
+          'username': Sharedprfs.email,
+          'password': Sharedprfs.password
+        });
+    channel = WebSocketChannel.connect(uri2);
+    channel.stream.forEach((u) {
+      Invoice user = Invoice.fromJson(u);
+      var index =
+          invoices.map((e) => e.invoice_ID).toList().indexOf(user.invoice_ID);
+      if (user.actions
+              .if_action_exist(InvoiceAction.archive_invoice.getTitle) ==
+          false) {
+        if (index == -1) {
+          invoices.add(user);
+        } else {
+          invoices.removeAt(index);
+          invoices.add(user);
+        }
+      }
+      notifyListeners();
+    });
+  }
+
   List<Invoice> edits = [];
   int x = 0;
 
-  // rr() async {
-  //   print("v");
-  //   for (var t in edits.sortedBy<num>((element) => element.id)) {
-  //     x++;
-  //     print("++");
-
-  //     var n = Invoice(
-  //         id: t.id,
-  //         number: 2061 + t.number,
-  //         date: t.date,
-  //         driverName: t.driverName,
-  //         carNumber: t.carNumber,
-  //         makeLoad: t.makeLoad,
-  //         notes: t.notes,
-  //         biscole: t.biscole,
-  //         actions: t.actions,
-  //         items: t.items
-  //         // .map((e) => InvoiceItem(
-  //         //     lenth: e.lenth,
-  //         //     width: e.width,
-  //         //     hight: e.hight,
-  //         //     wight: e.wight,
-  //         //     color: e.color,
-  //         //     density: e.density,
-  //         //     price: e.price,
-  //         //     customer: e.customer,
-  //         //     amount: e.amount)
-  //         //     )
-  //         // .toList()
-  //         );
-
-  //     await FirebaseDatabase.instance.ref("invoice/${n.id}").set(n.toJson());
-  //   }
-  // }
-
   addInvoice(Invoice invoice) async {
-    try {
-      await FirebaseDatabase.instance
-          .ref("invoice/${invoice.id}")
-          .set(invoice.toJson())
-          .then((value) {});
-    } catch (e) {}
+    if (internet == true) {
+      FirebaseDatabase.instance
+          .ref("invoices/${invoice.invoice_ID}")
+          .set(invoice.toJson());
+    } else {
+      channel.sink.add(invoice.toJson());
+    }
   }
 }

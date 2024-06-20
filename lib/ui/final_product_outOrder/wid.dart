@@ -2,142 +2,33 @@
 
 import 'package:advanced_search/advanced_search.dart';
 import 'package:collection/collection.dart';
-import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwModel.dart';
+import 'package:jason_company/ui/recources/color_manager.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 
 // ignore: must_be_immutable
-class OutOrder extends StatelessWidget {
-  OutOrder({super.key, required this.item});
-  outOfStockOrderveiwModel vm = outOfStockOrderveiwModel();
-  final FinalProdcutWithTOtal item;
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                    scrollable: true,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    content: SizedBox(
-                      height: 250,
-                      child: SingleChildScrollView(
-                        child: Form(
-                          key: vm.formKey,
-                          child: Column(
-                            children: [
-                              Container(
-                                color: Colors.blue[900],
-                                height: 30,
-                                child: const Center(
-                                  child: Text(
-                                    ' صرف منتج تام    ',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      CustomTextFormField(
-                                        autovalidate: true,
-                                        validator: Validation.validateothe,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        keybordtupe: TextInputType.number,
-                                        hint: "الكميه",
-                                        controller: vm.amountcontroller,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 15),
-                                  const SizedBox(height: 15),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ElevatedButton(
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.red)),
-                                        onPressed: () {
-                                          vm.add(context, item);
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('أضافه')),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Expanded(
-                                    child: ElevatedButton(
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.blue)),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('الغاء')),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ));
-        },
-        child: const Text("صرف"));
-  }
-}
-
-class InvoiceM extends StatelessWidget {
-  InvoiceM({
+class OUT extends StatelessWidget {
+  OUT({
     super.key,
   });
   outOfStockOrderveiwModel vm = outOfStockOrderveiwModel();
   @override
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
-      builder: (context, finalproductscntroller, child) {
+      builder: (c, finalproductscntroller, child) {
         List<FinalProductModel> sorce = finalproductscntroller.finalproducts
             .where((e) =>
                 e.item.amount < 0 &&
@@ -155,16 +46,13 @@ class InvoiceM extends StatelessWidget {
           key: vm.formKey,
           child: Column(
             children: [
+              // تم  الاعدادات
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        vm.addInvoice(
-                            context,
-                            finalproductscntroller.finalproducts
-                                .where((e) => e.item.amount < 0)
-                                .toList());
+                        vm.addInvoice(context);
                       },
                       child: const Text("تم")),
                   const SizedBox(
@@ -179,58 +67,63 @@ class InvoiceM extends StatelessWidget {
                           context, UserPermition.show_setting_in_out_order),
                 ],
               ),
-              const SizedBox(
-                height: 10,
+              const Gap(10),
+              // البحنث عن عميل
+              Row(
+                children: [
+                  SizedBox(
+                    width: 280,
+                    child: AdvancedSearch(
+                      searchItems: context
+                          .read<Customer_controller>()
+                          .customers
+                          .map((e) => e.name)
+                          .toList(),
+                      maxElementsToDisplay: 4,
+                      singleItemHeight: 50,
+                      borderColor: Colors.grey,
+                      minLettersForSearch: 1,
+                      selectedTextColor: const Color(0xFF3363D9),
+                      fontSize: 14,
+                      borderRadius: 12.0,
+                      hintText: ' ابحث عن عميل',
+                      cursorColor: Colors.blueGrey,
+                      autoCorrect: false,
+                      focusedBorderColor: Colors.blue,
+                      searchResultsBgColor: const Color(0xFAFAFA),
+                      disabledBorderColor: Colors.cyan,
+                      enabledBorderColor: Colors.black,
+                      enabled: true,
+                      caseSensitive: false,
+                      inputTextFieldBgColor: Colors.white10,
+                      clearSearchEnabled: true,
+                      itemsShownAtStart: 2,
+                      searchMode: SearchMode.CONTAINS,
+                      showListOfResults: true,
+                      unSelectedTextColor: Colors.black54,
+                      verticalPadding: 10,
+                      horizontalPadding: 10,
+                      hideHintOnTextInputFocus: true,
+                      hintTextColor: Colors.grey,
+                      onItemTap: (index, value) {
+                        vm.customerName.text = value;
+                      },
+                      onSearchClear: () {
+                        print("Cleared Search");
+                      },
+                      onSubmitted: (searchText, listOfResults) {
+                        print("Submitted: $searchText");
+                      },
+                      onEditingProgress: (searchText, listOfResults) {
+                        print("TextEdited: $searchText");
+                        print("LENGTH: ${listOfResults.length}");
+                      },
+                    ),
+                  ),
+                ],
               ),
-              AdvancedSearch(
-                searchItems: context
-                    .read<Customer_controller>()
-                    .customers
-                    .map((e) => e.name)
-                    .toList(),
-                maxElementsToDisplay: 4,
-                singleItemHeight: 50,
-                borderColor: Colors.grey,
-                minLettersForSearch: 1,
-                selectedTextColor: const Color(0xFF3363D9),
-                fontSize: 14,
-                borderRadius: 12.0,
-                hintText: ' ابحث عن عميل',
-                cursorColor: Colors.blueGrey,
-                autoCorrect: false,
-                focusedBorderColor: Colors.blue,
-                searchResultsBgColor: const Color(0xFAFAFA),
-                disabledBorderColor: Colors.cyan,
-                enabledBorderColor: Colors.black,
-                enabled: true,
-                caseSensitive: false,
-                inputTextFieldBgColor: Colors.white10,
-                clearSearchEnabled: true,
-                itemsShownAtStart: 2,
-                searchMode: SearchMode.CONTAINS,
-                showListOfResults: true,
-                unSelectedTextColor: Colors.black54,
-                verticalPadding: 10,
-                horizontalPadding: 10,
-                hideHintOnTextInputFocus: true,
-                hintTextColor: Colors.grey,
-                onItemTap: (index, value) {
-                  vm.customerName.text = value;
-                },
-                onSearchClear: () {
-                  print("Cleared Search");
-                },
-                onSubmitted: (searchText, listOfResults) {
-                  print("Submitted: $searchText");
-                },
-                onEditingProgress: (searchText, listOfResults) {
-                  print("TextEdited: $searchText");
-                  print("LENGTH: ${listOfResults.length}");
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              const Gap(10),
+              // العميل و رقم العربه
               SizedBox(
                 height: 100,
                 child: Row(
@@ -250,8 +143,19 @@ class InvoiceM extends StatelessWidget {
                         hint: 'رقم العربه',
                         width: 120,
                         controller: vm.carnumber),
+                    const Gap(22),
                     context.read<SettingController>().switch1 == false
-                        ? const SizedBox()
+                        ? Consumer<Invoice_controller>(
+                            builder: (context, myType, child) {
+                              Iterable<int> invoices =
+                                  myType.invoices.map((e) => e.serial);
+
+                              return Text('( ${invoices.max + 1} ): رقم الاذن',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold));
+                            },
+                          )
                         : CustomTextFormField(
                             validator: Validation.validateothers,
                             hint: 'رقم الاذن',
@@ -260,6 +164,7 @@ class InvoiceM extends StatelessWidget {
                   ],
                 ),
               ),
+              // اسم السائق و القائم با التحميل
               SizedBox(
                 height: 100,
                 child: Row(
@@ -282,56 +187,101 @@ class InvoiceM extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              SingleChildScrollView(
-                child: Table(
-                  columnWidths: const {
-                    4: FlexColumnWidth(2),
-                  },
-                  children: sorce.map((user) {
-                    return TableRow(
-                        decoration: BoxDecoration(color: Colors.teal[50]),
-                        children: [
-                          Container(
-                              padding: const EdgeInsets.all(4),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    user.actions.add(finalProdcutAction
-                                        .archive_final_prodcut.add);
-                                    context
-                                        .read<final_prodcut_controller>()
-                                        .updateFinalProdcut(user);
-                                  },
-                                  child: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ))),
-                          Container(
-                              padding: const EdgeInsets.all(2),
-                              child: Text(user.item.density.toString())),
-                          Container(
-                              padding: const EdgeInsets.all(2),
-                              child: Text(user.customer.toString())),
-                          Container(
-                              padding: const EdgeInsets.all(1),
-                              child: Text(user.item.type.toString())),
-                          Container(
-                              padding: const EdgeInsets.all(4),
-                              child: Text(
-                                  "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}")),
-                          Container(
-                              padding: const EdgeInsets.all(4),
-                              child: Text(
-                                user.item.amount.toString(),
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 221, 2, 75)),
-                              )),
-                        ]);
-                  }).toList(),
-                  border: TableBorder.all(width: 1, color: Colors.black),
-                ),
+              const Gap(10),
+              // البنود
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            itemsWihTotalAndButtomOut(context);
+                          },
+                          icon: const Icon(Icons.add_circle_outline,
+                              size: 30,
+                              color: Color.fromARGB(255, 255, 21, 4))),
+                      const Gap(44),
+                      const Icon(Icons.arrow_downward_sharp,
+                          size: 33, color: Colors.blue),
+                      const Text(
+                        "البنود",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                  SingleChildScrollView(
+                    child: SizedBox(
+                      width: 300,
+                      child: Table(
+                        columnWidths: const {
+                          1: FlexColumnWidth(2),
+                          0: FlexColumnWidth(.7),
+                        },
+                        children: sorce.map((user) {
+                          return TableRow(
+                              decoration: BoxDecoration(color: Colors.teal[50]),
+                              children: [
+                                //delete
+                                Container(
+                                    padding: const EdgeInsets.all(4),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          user.actions.add(finalProdcutAction
+                                              .archive_final_prodcut.add);
+                                          context
+                                              .read<final_prodcut_controller>()
+                                              .updateFinalProdcut(user);
+                                        },
+                                        child: const Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                        ))),
+                                //data
+                                Container(
+                                    padding: const EdgeInsets.all(4),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "${user.item.H.removeTrailingZeros}*${user.item.W.removeTrailingZeros}*${user.item.L.removeTrailingZeros}",
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Text(
+                                          "${user.item.color} ${user.item.type} ك${user.item.density.removeTrailingZeros}",
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    )),
+                                // quantity
+                                Center(
+                                  child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      child: Text(
+                                        user.item.amount.toString(),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: Color.fromARGB(
+                                                255, 255, 0, 106)),
+                                      )),
+                                ),
+                              ]);
+                        }).toList(),
+                        border: TableBorder.all(width: 1, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -341,6 +291,201 @@ class InvoiceM extends StatelessWidget {
   }
 }
 
+class OutButtom extends StatelessWidget {
+  OutButtom({super.key, required this.item});
+  outOfStockOrderveiwModel vm = outOfStockOrderveiwModel();
+  final FinalProductModel item;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                    scrollable: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    content: SizedBox(
+                      height: 200,
+                      child: SingleChildScrollView(
+                        child: Form(
+                          key: vm.formKey,
+                          child: Column(
+                            children: [
+                              Container(
+                                color: Colors.blue[900],
+                                height: 30,
+                                child: const Center(
+                                  child: Text(
+                                    ' صرف منتج تام    ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Gap(5),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  CustomTextFormField(
+                                    autovalidate: true,
+                                    validator: Validation.validateothe,
+                                    width:
+                                        MediaQuery.of(context).size.width * .18,
+                                    keybordtupe: TextInputType.number,
+                                    hint: "الكميه",
+                                    controller: vm.amountcontroller,
+                                  ),
+                                  const Gap(11),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.red)),
+                                            onPressed: () {
+                                              vm.add(context, item);
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('أضافه')),
+                                      ),
+                                      const Gap(5),
+                                      Expanded(
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.blue)),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('الغاء')),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ));
+        },
+        child: const Text("صرف"));
+  }
+}
+
+//الكميات والبحث
+itemsWihTotalAndButtomOut(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextField(
+                    cursorColor: Colors.black,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                        hintText: "بحث فى المخزن المنتج التام",
+                        hintStyle: TextStyle(color: ColorManager.gray),
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: ColorManager.gray,
+                        )),
+                    onChanged: (value) {
+                      context
+                          .read<final_prodcut_controller>()
+                          .searchin_OutOFStock = value;
+                      context.read<final_prodcut_controller>().Refresh_Ui();
+                    },
+                  ),
+                  Consumer<final_prodcut_controller>(
+                    builder: (context, myType, child) {
+                      List<FinalProductModel> instock =
+                          myType.nowBbalanceInStock();
+                      return Column(
+                          children: instock
+                              .search(myType.searchin_OutOFStock)
+                              .map((i) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.blue[50],
+                              border: Border.all(width: .5)),
+                          child: ListTile(
+                            trailing: Text(
+                              "${i.item.amount}",
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorManager.red),
+                            ),
+                            title: Row(
+                              children: [
+                                Text("${i.item.density.removeTrailingZeros}"
+                                    "ك"),
+                                const SizedBox(
+                                  width: 9,
+                                ),
+                                Text(i.item.color),
+                                const SizedBox(
+                                  width: 9,
+                                ),
+                                Text(i.item.type.toString()),
+                                const SizedBox(
+                                  width: 9,
+                                ),
+                                Text("${i.item.L.removeTrailingZeros}"
+                                    "*"
+                                    "${i.item.W.removeTrailingZeros}"
+                                    "*"
+                                    " ${i.item.H.removeTrailingZeros}"),
+                                const SizedBox(
+                                  width: 9,
+                                ),
+                                OutButtom(item: i)
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList());
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            const Row(
+              children: [],
+            ),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                onPressed: () {},
+                child: const Text('ok')),
+          ],
+        );
+      });
+}
+
+// االاعدادات
 showmyAlertDialogforss(BuildContext context) {
   showDialog(
       context: context,
@@ -380,37 +525,4 @@ showmyAlertDialogforss(BuildContext context) {
           ),
         );
       });
-}
-
-class RadiobuttomForFInalProdcutOUtOrder extends StatelessWidget {
-  const RadiobuttomForFInalProdcutOUtOrder({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<final_prodcut_controller>(
-      builder: (context, myType, child) {
-        return CustomRadioButton(
-          width: 130,
-          defaultSelected: myType.indexOfRadioButon,
-          elevation: 0,
-          absoluteZeroSpacing: true,
-          unSelectedColor: Theme.of(context).canvasColor,
-          buttonLables: const ['صرف', 'تسجيل الاذن'],
-          buttonValues: const [0, 1],
-          radioButtonValue: (value) {
-            myType.indexOfRadioButon = value;
-            myType.Refresh_Ui();
-          },
-          // ignore: prefer_const_constructors
-          selectedColor: Color.fromARGB(255, 86, 179, 15),
-          buttonTextStyle: const ButtonTextStyle(
-              selectedColor: Colors.white,
-              unSelectedColor: Colors.black,
-              textStyle: TextStyle(fontSize: 16)),
-        );
-      },
-    );
-  }
 }

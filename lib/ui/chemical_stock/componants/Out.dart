@@ -769,7 +769,7 @@ class _ChemicaTableForSupplyingState extends State<ChemicaTableForSupplying> {
                   8: FlexColumnWidth(1),
                 },
                 border: TableBorder.all(width: 1, color: Colors.black),
-                children: Chemicals.sortedBy<num>((element) => element.id).map((e) => TableRow(
+                children: Chemicals.sortedBy<num>((element) => element.chemical_ID).map((e) => TableRow(
                     decoration: BoxDecoration(color: Colors.teal[50]
                         // : Colors.amber[50],
                         ),

@@ -9,7 +9,7 @@ import '../../setings/Setings.dart';
 class MainViewModel {
   List<Widget> screens = [
     Setings(),
-    ReportsView(),
+    const ReportsView(),
     const HomeView(),
   ];
 

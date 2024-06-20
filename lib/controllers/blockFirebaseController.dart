@@ -1,78 +1,140 @@
-// ignore_for_file: non_constant_identifier_names, empty_catches, file_names
+// ignore_for_file: non_constant_identifier_names, empty_catches, file_names, unused_element
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
+import 'package:jason_company/data/sharedprefs.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:http/http.dart' as http;
+import 'package:jason_company/ui/recources/publicVariables.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class BlockFirebasecontroller extends ChangeNotifier {
   List<BlockModel> all = [];
+  
   List<BlockModel> blocks = [];
   List<BlockModel> archived_blocks = [];
-
-  get_blocks_data() {
-    FirebaseDatabase.instance.ref("blocks").onValue.first.then((value) {
-      getInitialData(value.snapshot);
-    });
-
-    FirebaseDatabase.instance.ref("blocks").onChildChanged.listen((vv) {
-      print("onChildChanged");
-      refrech(vv);
-    });
-  }
-
-  getInitialData(DataSnapshot v) async {
-    all.clear();
-    archived_blocks.clear();
-    blocks.clear();
-    for (var item in v.children) {
-      all.add(BlockModel.fromJson(item.value.toString()));
-    }
-
-    blocks.addAll(all.where((element) =>
-        element.actions
-            .if_action_exist(BlockAction.archive_block.getactionTitle) ==
-        false));
-    archived_blocks.addAll(all.where((element) =>
-        element.actions
-            .if_action_exist(BlockAction.archive_block.getactionTitle) ==
-        true));
-    notifyListeners();
-    print("get initial data of blocks");
-  }
-
-  refrech(DatabaseEvent vv) async {
-    BlockModel newvalue = BlockModel.fromJson(vv.snapshot.value as String);
-
-//--------------------------------------------------
-    all.removeWhere((element) => element.Block_Id == newvalue.Block_Id);
-    all.add(newvalue);
-//--------------------------------------------------
-    // blocks.clear();
-    // blocks.addAll(all.where((element) =>
-    //     element.actions
-    //         .if_action_exist(BlockAction.archive_block.getactionTitle) ==
-    //     false));
-    // archived_blocks.clear();
-    // archived_blocks.addAll(all.where((element) =>
-    //     element.actions
-    //         .if_action_exist(BlockAction.archive_block.getactionTitle) ==
-    //     true));
-    blocks.removeWhere((element) => element.Block_Id == newvalue.Block_Id);
-    archived_blocks
-        .removeWhere((element) => element.Block_Id == newvalue.Block_Id);
-
-    if (newvalue.actions.block_action_Stutus(BlockAction.archive_block) ==
-        false) {
-      blocks.add(newvalue);
+  static late WebSocketChannel channel;
+  getData() {
+    if (internet == true) {
+      Blocks_From_firebase();
     } else {
-      archived_blocks.add(newvalue);
+      Blocks_From_Server();
     }
+  }
 
-    notifyListeners();
-    print("refrech datata of blocks");
+  Blocks_From_firebase() {
+    print("ffff");
+    try {
+      FirebaseDatabase.instance
+          .ref("blocks")
+          .orderByKey()
+          .onValue
+          .listen((event) {
+        all.clear();
+        archived_blocks.clear();
+        blocks.clear();
+        if (event.snapshot.value != null) {
+          Map<Object?, Object?> map =
+              event.snapshot.value as Map<Object?, Object?>;
+          for (var item in map.values.toList()) {
+            all.add(BlockModel.fromJson(item.toString()));
+          }
+          blocks.addAll(all.where((element) =>
+              element.actions
+                  .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+              false));
+          archived_blocks.addAll(all.where((element) =>
+              element.actions
+                  .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+              true));
+        }
+        print("get data of blocks");
+
+        notifyListeners();
+      });
+    } catch (e) {}
+  }
+
+  Blocks_From_Server() async {
+    // get for the first time
+    Uri uri = Uri.http('192.168.1.$ip:8080', '/blocks');
+    var response = await http.get(uri);
+    if (response.statusCode == 200) {
+      blocks.clear();
+      var a = json.decode(response.body) as List;
+      for (var element in a) {
+        var block = BlockModel.fromMap(element);
+        if (block.actions
+                .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+            false) {
+          blocks.add(block);
+        }
+      }
+      notifyListeners();
+    }
+    //
+    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/blocks/ws').replace(
+        queryParameters: {
+          'username': Sharedprfs.email,
+          'password': Sharedprfs.password
+        });
+    channel = WebSocketChannel.connect(uri2);
+    channel.stream.forEach((u) {
+      BlockModel user = BlockModel.fromJson(u);
+      var index = blocks.map((e) => e.Block_Id).toList().indexOf(user.Block_Id);
+      if (user.actions
+              .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+          false) {
+        if (index == -1) {
+          blocks.add(user);
+        } else {
+          blocks.removeAt(index);
+          blocks.add(user);
+        }
+      }
+      notifyListeners();
+    });
+  }
+
+  addblock(BlockModel block) async {
+    if (internet == true) {
+      await FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
+          
+      await FirebaseDatabase.instance.ref("temps/${block.Block_Id}").set( jsonEncode("{'blocks':${block.Block_Id}}"));
+    } else {
+      channel.sink.add(block.toJson());
+    }
+  }
+
+  addblocklist(List<BlockModel> blocks) async {
+    if (internet == true) {
+      for (var b in blocks) {
+        await FirebaseDatabase.instance
+            .ref("blocks/${b.Block_Id}")
+            .set(b.toJson());
+      }
+    } else {
+      for (var b in blocks) {
+        channel.sink.add(b.toJson());
+      }
+    }
+  }
+
+  updateBlock(BlockModel block) {
+    if (internet == true) {
+      FirebaseDatabase.instance
+          .ref("blocks/${block.Block_Id}")
+          .set(block.toJson());
+    } else {
+      channel.sink.add(block.toJson());
+    }
   }
 
   c() {
@@ -86,7 +148,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
       // for (var element in all.where((element) =>
       //     element.actions
       //             .if_action_exist(BlockAction.consume_block.getactionTitle) ==
-      //         false 
+      //         false
       //     //     &&
       //     // element.actions
       //     //         .get_Date_of_action(BlockAction.consume_block.getactionTitle)
@@ -97,13 +159,13 @@ class BlockFirebasecontroller extends ChangeNotifier {
       //   element.Hscissor = 0;
       // }
 
-    //   var s = {};
-    //   s.addEntries(
-    //       all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
-    //   FirebaseDatabase.instance.ref("blocks").set(s);
-    //   FirebaseDatabase.instance.ref("blocks").onValue.first.then((value) {
-    //     getInitialData(value.snapshot);
-    //   });
+      //   var s = {};
+      //   s.addEntries(
+      //       all.map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
+      //   FirebaseDatabase.instance.ref("blocks").set(s);
+      //   FirebaseDatabase.instance.ref("blocks").onValue.first.then((value) {
+      //     getInitialData(value.snapshot);
+      //   });
     }
   }
 
@@ -117,41 +179,6 @@ class BlockFirebasecontroller extends ChangeNotifier {
   int amountofView = 5;
   int amountofViewForMinVeiwIn_H = 5;
   bool veiwCuttedAndimpatyNotfinals = false;
-
-  addblock(BlockModel block) async {
-    try {
-      await FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson())
-          .whenComplete(() => get_blocks_data());
-    } catch (e) {}
-  }
-
-  addblocklist(List<BlockModel> blocks) async {
-    try {
-      if (all.isNotEmpty) {
-        all.addAll(blocks);
-        var s = {};
-        s.addEntries(all
-            .map((el) => MapEntry("${el.Block_Id}", el.toJson().toString())));
-
-        FirebaseDatabase.instance
-            .ref("blocks")
-            .set(s)
-            .whenComplete(() => get_blocks_data());
-      }
-    } catch (e) {}
-  }
-
-  updateBlock(BlockModel block) {
-    try {
-      FirebaseDatabase.instance
-          .ref("blocks/${block.Block_Id}")
-          .set(block.toJson());
-    } catch (e) {}
-  }
-
-
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   var initialDateRange =

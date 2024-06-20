@@ -9,6 +9,7 @@ import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class CuttingOrderViewModel extends BaseViewModel {
@@ -18,13 +19,13 @@ class CuttingOrderViewModel extends BaseViewModel {
 
   addOrder(BuildContext context) async {
     if (temp.isNotEmpty) {
-      OrderModel order = OrderModel(
-          notes: notes.text,
+      cutingOrder order = cutingOrder(
+        updatedat:DateTime.now().microsecondsSinceEpoch ,
+          notes: [notes.text],
           dateTOOrder:
               DateTime.fromMillisecondsSinceEpoch(datecontroller.text.to_int()),
-          datecreated: DateTime.now(),
-          id: DateTime.now().millisecondsSinceEpoch,
-          serial: context.read<OrderController>().orders.length + 1,
+          cuttingOrder_ID: DateTime.now().millisecondsSinceEpoch,
+          serial: context.read<OrderController>().cuttingOrders.length + 1,
           customer: context
               .read<Customer_controller>()
               .customers
@@ -33,7 +34,7 @@ class CuttingOrderViewModel extends BaseViewModel {
                   context.read<Customer_controller>().initialForRaido)
               .serial
               .toString(),
-          actions: [],
+          actions: [OrderAction.create_order.add],
           items: temp);
       context.read<OrderController>().add_order(order);
       context.read<ObjectBoxController>().get();
@@ -60,7 +61,7 @@ class CuttingOrderViewModel extends BaseViewModel {
   List<OperationOrederItems> temp = [];
 
   double petcentage_of_cutingOrder(
-      BuildContext context, OrderModel order, OperationOrederItems item) {
+      BuildContext context, cutingOrder order, OperationOrederItems item) {
     var a = context
         .read<final_prodcut_controller>()
         .finalproducts
@@ -82,7 +83,7 @@ class CuttingOrderViewModel extends BaseViewModel {
   }
 
   double Total_done_of_cutting_order(
-      BuildContext context, OrderModel order, OperationOrederItems item) {
+      BuildContext context, cutingOrder order, OperationOrederItems item) {
     var a = context
         .read<final_prodcut_controller>()
         .finalproducts
@@ -104,7 +105,7 @@ class CuttingOrderViewModel extends BaseViewModel {
   }
 
   num Total_Notdone_of_cutting_order(
-      BuildContext context, OrderModel order, OperationOrederItems item) {
+      BuildContext context, cutingOrder order, OperationOrederItems item) {
     var done = context
         .read<final_prodcut_controller>()
         .finalproducts

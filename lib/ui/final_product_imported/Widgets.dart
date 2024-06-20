@@ -436,7 +436,7 @@ class SearchForSize extends StatelessWidget {
     return Consumer<OrderController>(
       builder: (context, myType, child) {
         OrderController my = context.read<OrderController>();
-        List<OrderModel> orders = myType.orders
+        List<cutingOrder> orders = myType.cuttingOrders
             .where((v) =>
                 v.actions.if_action_exist(OrderAction.order_colosed.getTitle) ==
                     false &&
@@ -554,7 +554,7 @@ class pp extends StatelessWidget {
   });
 
   final CuttingOrderViewModel vm;
-  final OrderModel order;
+  final cutingOrder order;
   final OperationOrederItems item;
 
   @override

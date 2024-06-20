@@ -98,6 +98,8 @@ class Rscissor_veiwModel extends BaseViewModel {
       context
           .read<final_prodcut_controller>()
           .updateFinalProdcut(FinalProductModel(
+                        updatedat: DateTime.now().microsecondsSinceEpoch,
+
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",
@@ -149,6 +151,8 @@ class Rscissor_veiwModel extends BaseViewModel {
       context
           .read<final_prodcut_controller>()
           .updateFinalProdcut(FinalProductModel(
+                        updatedat: DateTime.now().microsecondsSinceEpoch,
+
             block_ID: 0,
             fraction_ID: 0,
             sapa_ID: "",

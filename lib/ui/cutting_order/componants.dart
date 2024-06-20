@@ -39,12 +39,10 @@ class Fields001 extends StatelessWidget {
           height: 450,
           child: Column(
             children: [
-                     DropForCustomers(),
-
+              DropForCustomers(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-           
                   DropDdowenForDensity(),
                   DropDdowenForcolor(),
                   DropDdowenFortype(),
@@ -93,8 +91,7 @@ class Fields001 extends StatelessWidget {
                                 pickedDate.millisecondsSinceEpoch.toString();
 
                             vm.datecontroller.text = formattedDate;
-                          } else {
-                          }
+                          } else {}
                         },
                         readOnly: true,
                         controller: vm.datecontroller,
@@ -115,14 +112,15 @@ class Fields001 extends StatelessWidget {
                   )
                 ],
               ),
-           
-           const SizedBox(height: 20,),
-                  CustomTextFormField(
-                    keybordtupe: TextInputType.name,
-                    width: MediaQuery.of(context).size.width * .5,
-                    hint: "ملحوظه",
-                    controller: vm.notes,
-                  ),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomTextFormField(
+                keybordtupe: TextInputType.name,
+                width: MediaQuery.of(context).size.width * .5,
+                hint: "ملحوظه",
+                controller: vm.notes,
+              ),
             ],
           ),
         ),
@@ -248,8 +246,8 @@ class TheTable001 extends StatelessWidget {
   int x = 0;
   @override
   Widget build(BuildContext context) {
-    return Consumer2<OrderController,final_prodcut_controller>(
-      builder: (context, orders,finalprodcutcontroller, child) {
+    return Consumer2<OrderController, final_prodcut_controller>(
+      builder: (context, orders, finalprodcutcontroller, child) {
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(
@@ -278,7 +276,7 @@ class TheTable001 extends StatelessWidget {
                       13: FlexColumnWidth(1),
                       14: FlexColumnWidth(1.2),
                     },
-                    children: orders.orders
+                    children: orders.cuttingOrders
                         .where((element) =>
                             element.actions.if_action_exist(
                                 OrderAction.order_colosed.getTitle) ==
@@ -295,9 +293,15 @@ class TheTable001 extends StatelessWidget {
                                             false ||
                                         order.actions.if_action_exist(OrderAction
                                                 .order_aproved_from_calculation
-                                                .getTitle) ==false
-                                    ? 
-                                    permitionssForOne(context, UserPermition.full_Red_of_cuttingOrder)==true?Colors.black:Colors.red
+                                                .getTitle) ==
+                                            false
+                                    ? permitionssForOne(
+                                                context,
+                                                UserPermition
+                                                    .full_Red_of_cuttingOrder) ==
+                                            true
+                                        ? Colors.black
+                                        : Colors.red
                                     : x % 2 == 0
                                         ? Colors.blue[50]
                                         : Colors.amber[50],
@@ -338,7 +342,11 @@ class TheTable001 extends StatelessWidget {
                                         ))).permition(context,
                                     UserPermition.can_close_in_cutting_order),
                                 Center(
-                                  child: Text(order.notes),
+                                  child: Column(
+                                    children: order.notes.map((e)=>Text(e)).toList()
+                                     ,
+                                    
+                                  ),
                                 ),
                                 //موافقة الكنترول
                                 GestureDetector(
@@ -494,7 +502,8 @@ class TheTable001 extends StatelessWidget {
                                 Center(
                                   child: Container(
                                       padding: const EdgeInsets.only(bottom: 3),
-                                      child: Text(order.dateTOOrder.formatt(),
+                                      child: Text(
+                                        order.dateTOOrder.formatt(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 12,
@@ -555,7 +564,7 @@ class TheTable001 extends StatelessWidget {
                                       )
                                       .toList(),
                                 ),
-                                // المتبقى                      
+                                // المتبقى
                                 Column(
                                   children: order.items
                                       .map(
@@ -568,9 +577,14 @@ class TheTable001 extends StatelessWidget {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Text((item.Qantity- vm.Total_done_of_cutting_order(
-                                                          context, order, item)).removeTrailingZeros
-                                                 , style: const TextStyle(
+                                                Text(
+                                                  (item.Qantity -
+                                                          vm.Total_done_of_cutting_order(
+                                                              context,
+                                                              order,
+                                                              item))
+                                                      .removeTrailingZeros,
+                                                  style: const TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black,
@@ -764,8 +778,6 @@ class TheTable001 extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       )),
                                 ),
-                              
-                              
                               ]);
                         })
                         .toList()
@@ -792,21 +804,21 @@ class HeaderOftable001 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Table(
       columnWidths: const {
-       0: FlexColumnWidth(1),
-                      1: FlexColumnWidth(1),
-                      2: FlexColumnWidth(3),
-                      3: FlexColumnWidth(3),
-                      4: FlexColumnWidth(3),
-                      5: FlexColumnWidth(3),
-                      6: FlexColumnWidth(2),
-                      7: FlexColumnWidth(1.5),
-                      8: FlexColumnWidth(1.5),
-                      9: FlexColumnWidth(1),
-                      10: FlexColumnWidth(1.3),
-                      11: FlexColumnWidth(1.5),
-                      12: FlexColumnWidth(5),
-                      13: FlexColumnWidth(1),
-                      14: FlexColumnWidth(1.2),
+        0: FlexColumnWidth(1),
+        1: FlexColumnWidth(1),
+        2: FlexColumnWidth(3),
+        3: FlexColumnWidth(3),
+        4: FlexColumnWidth(3),
+        5: FlexColumnWidth(3),
+        6: FlexColumnWidth(2),
+        7: FlexColumnWidth(1.5),
+        8: FlexColumnWidth(1.5),
+        9: FlexColumnWidth(1),
+        10: FlexColumnWidth(1.3),
+        11: FlexColumnWidth(1.5),
+        12: FlexColumnWidth(5),
+        13: FlexColumnWidth(1),
+        14: FlexColumnWidth(1.2),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -842,7 +854,8 @@ class HeaderOftable001 extends StatelessWidget {
                     child: const Text("sales approval")),
               ),
               Container(
-                  padding: const EdgeInsets.all(5), child: const Text("تاريخ التسليم")),
+                  padding: const EdgeInsets.all(5),
+                  child: const Text("تاريخ التسليم")),
               Container(
                   padding: const EdgeInsets.all(5), child: const Text("عميل")),
               Center(
@@ -889,7 +902,7 @@ class HeaderOftable001 extends StatelessWidget {
   }
 }
 
-showmyAlertDialog(BuildContext context, OrderAction action, OrderModel item) {
+showmyAlertDialog(BuildContext context, OrderAction action, cutingOrder item) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -911,7 +924,7 @@ showmyAlertDialog(BuildContext context, OrderAction action, OrderModel item) {
             ElevatedButton(
                 // style: ElevatedButton.styleFrom(primary: Colors.red),
                 onPressed: () {
-                  context.read<OrderController>().addAction(item, action);
+                  context.read<OrderController>().updatecuttingOrder(item, action);
                   Navigator.pop(context);
                 },
                 child: const Text(
@@ -922,106 +935,97 @@ showmyAlertDialog(BuildContext context, OrderAction action, OrderModel item) {
       });
 }
 
-
-
-
-
-
-
 class DropForCustomers extends StatelessWidget {
-   DropForCustomers({super.key});
+  DropForCustomers({super.key});
   final TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
- 
     return Consumer<Customer_controller>(
       builder: (context, myType, child) {
-            String? selectedValue =
-        context.read<Customer_controller>().initialForRaido;
+        String? selectedValue =
+            context.read<Customer_controller>().initialForRaido;
         return DropdownButtonHideUnderline(
-      child: DropdownButton2<String>(
-        isExpanded: true,
-        hint: Text(
-          selectedValue == null ? 'اختر العميل' : selectedValue.toString(),
-          style: TextStyle(
-            fontSize: 14,
-            color: Theme.of(context).hintColor,
-          ),
-        ),
-        items: myType.customers.sortedBy<num>((element) => element.serial)
-            .map((item) => DropdownMenuItem(
-                  value: item.name.toString(),
-                  child: Text(
-                    "${item.name}-${item.serial}"
-                    ,
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                ))
-            .toList(),
-        value: selectedValue,
-        onChanged: (value) {
-            context.read<Customer_controller>().initialForRaido =
-                value;
-                myType.Refrsh_ui();
-        },
-        buttonStyleData: const ButtonStyleData(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          height: 40,
-          width: 200,
-        ),
-        dropdownStyleData: const DropdownStyleData(
-          maxHeight: 200,
-        ),
-        menuItemStyleData: const MenuItemStyleData(
-          height: 40,
-        ),
-        dropdownSearchData: DropdownSearchData(
-          searchController: textEditingController,
-          searchInnerWidgetHeight: 50,
-          searchInnerWidget: Container(
-            height: 50,
-            padding: const EdgeInsets.only(
-              top: 8,
-              bottom: 4,
-              right: 8,
-              left: 8,
-            ),
-            child: TextFormField(
-              expands: true,
-              maxLines: null,
-              controller: textEditingController,
-              decoration: InputDecoration(
-                isDense: true,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 8,
-                ),
-                hintText: '  ... البحث عن عميل',
-                hintStyle: const TextStyle(fontSize: 12),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+          child: DropdownButton2<String>(
+            isExpanded: true,
+            hint: Text(
+              selectedValue == null ? 'اختر العميل' : selectedValue.toString(),
+              style: TextStyle(
+                fontSize: 14,
+                color: Theme.of(context).hintColor,
               ),
             ),
+            items: myType.customers
+                .sortedBy<num>((element) => element.serial)
+                .map((item) => DropdownMenuItem(
+                      value: item.name.toString(),
+                      child: Text(
+                        "${item.name}-${item.serial}",
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ))
+                .toList(),
+            value: selectedValue,
+            onChanged: (value) {
+              context.read<Customer_controller>().initialForRaido = value;
+              myType.Refrsh_ui();
+            },
+            buttonStyleData: const ButtonStyleData(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              height: 40,
+              width: 200,
+            ),
+            dropdownStyleData: const DropdownStyleData(
+              maxHeight: 200,
+            ),
+            menuItemStyleData: const MenuItemStyleData(
+              height: 40,
+            ),
+            dropdownSearchData: DropdownSearchData(
+              searchController: textEditingController,
+              searchInnerWidgetHeight: 50,
+              searchInnerWidget: Container(
+                height: 50,
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  bottom: 4,
+                  right: 8,
+                  left: 8,
+                ),
+                child: TextFormField(
+                  expands: true,
+                  maxLines: null,
+                  controller: textEditingController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                    hintText: '  ... البحث عن عميل',
+                    hintStyle: const TextStyle(fontSize: 12),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+              searchMatchFn: (item, searchValue) {
+                return item.value.toString().contains(searchValue);
+              },
+            ),
+            //This to clear the search value when you close the menu
+            onMenuStateChange: (isOpen) {
+              if (!isOpen) {
+                textEditingController.clear();
+              }
+            },
           ),
-          searchMatchFn: (item, searchValue) {
-            return item.value.toString().contains(searchValue);
-          },
-        ),
-        //This to clear the search value when you close the menu
-        onMenuStateChange: (isOpen) {
-          if (!isOpen) {
-            textEditingController.clear();
-          }
-        },
-      ),
-    ); },
+        );
+      },
     );
-             
-             
   }
 }
 

@@ -21,7 +21,7 @@ extension Permition on Widget {
 
 extension Brovider on BuildContext {
   gonext(BuildContext context, Widget route) {
-    checkAuth(context);
+    // checkAuth(context);
     Navigator.of(this).push(MaterialPageRoute(builder: (context) => route));
   }
 
@@ -655,5 +655,11 @@ extension R4 on List<StockCheckModel> {
             .get_Date_of_action(StockCheckAction.creat_new_StockCheck.getTitle)
             .formatToInt())
         .toList();
+  }
+}
+
+extension Rd on dynamic {
+  caneExecute(BuildContext context, UserPermition permition) {
+    permitionss(context, permition) ? this :(){};
   }
 }

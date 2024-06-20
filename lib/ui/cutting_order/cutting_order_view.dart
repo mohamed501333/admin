@@ -178,7 +178,7 @@ class HistoryForOrders extends StatelessWidget {
                       13: FlexColumnWidth(1),
                       14: FlexColumnWidth(1.2),
                     },
-                    children: orders.orders
+                    children: orders.cuttingOrders
                         .where((element) =>
                             element.actions.if_action_exist(
                                 OrderAction.order_colosed.getTitle) ==
@@ -229,7 +229,7 @@ class HistoryForOrders extends StatelessWidget {
                                         ))).permition(context,
                                     UserPermition.can_close_in_cutting_order),
                                 Center(
-                                  child: Text(order.notes),
+                                  child: Column(children: order.notes.map((e)=>Text(e)).toList(),),
                                 ),
                                 //موافقة الكنترول
                                 GestureDetector(
@@ -655,7 +655,7 @@ class percentage extends StatelessWidget {
   }) : super(key: key);
 
   final CuttingOrderViewModel vm;
-  final OrderModel order;
+  final cutingOrder order;
 
   @override
   Widget build(BuildContext context) {

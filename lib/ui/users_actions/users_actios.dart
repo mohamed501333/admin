@@ -109,7 +109,7 @@ class _UsersActionsState extends State<UsersActions> {
         .toList();
     List<ActionModel> h = context
         .read<OrderController>()
-        .orders
+        .cuttingOrders
         .map((e) => e.actions)
         .toList()
         .expand((element) => element)

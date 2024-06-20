@@ -7,6 +7,20 @@ import 'package:intl/intl.dart';
 import '../../ui/recources/enums.dart';
 
 extension Filter on List<FinalProductModel> {
+  List<FinalProductModel> search(String value) {
+    if (value.isEmpty) {
+      return this;
+    } else {
+      return where((item) => (item.item.L.removeTrailingZeros +
+              item.item.W.removeTrailingZeros +
+              item.item.H.removeTrailingZeros)
+          .toString()
+          .contains(value)).toList().toList();
+
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+  }
+
   int countOf(FinalProductModel e) {
     var a = where((element) =>
         element.item.L == e.item.L &&
@@ -375,6 +389,7 @@ extension Filter on List<FinalProductModel> {
   List<FinalProductModel> Remove_total_zero() {
     List<FinalProductModel> a = filter_density_typ_color_size()
         .map((e) => FinalProductModel(
+              updatedat: DateTime.now().microsecondsSinceEpoch,
               customer: e.customer,
               actions: [],
               block_ID: 0,

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' as d;
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
@@ -43,7 +44,7 @@ class finalProductInvoice {
                     Text("stock requisition order",
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold)),
-                    Text("serial: ${invoices.number}",
+                    Text("serial: ${invoices.serial}",
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold)),
                   ]),
@@ -114,11 +115,11 @@ Items(List<InvoiceItem> items) {
                         children: [
                           SizedBox(
                               child: Center(
-                            child: Text("${e.amount * -1}", style: style),
+                            child: Text("${e.quantity * -1}", style: style),
                           )),
                           SizedBox(
                               child: Center(
-                            child: Text(e.wight.toString(), style: style),
+                            child: Text(e.theoriticalWight.toString(), style: style),
                           )),
                           SizedBox(
                               child: Center(
@@ -145,7 +146,7 @@ Items(List<InvoiceItem> items) {
 
 total(Invoice invoice) {
   double totalWightAmount = double.parse(invoice.items
-      .map((e) => e.wight)
+      .map((e) => e.theoriticalWight)
       .reduce((a, b) => a + b)
       .removeTrailingZeros);
   return Directionality(
@@ -209,7 +210,7 @@ foter(Invoice invoice) {
               ),
               SizedBox(height: 1 * PdfPageFormat.mm),
               Text(
-                'Date : ${d.DateFormat('dd-MM-yy/hh:mm a').format(invoice.date)}',
+                'Date : ${d.DateFormat('dd-MM-yy/hh:mm a').format(invoice.actions.get_Date_of_action(InvoiceAction.creat_invoice.getTitle))}',
               ),
               SizedBox(height: 1 * PdfPageFormat.mm),
             ]),
@@ -221,7 +222,7 @@ foter(Invoice invoice) {
               ),
               SizedBox(height: 1 * PdfPageFormat.mm),
               Text(
-                'dispatcher : ${invoice.makeLoad}',
+                'dispatcher : ${invoice.dispatcher}',
               ),
               SizedBox(height: 1 * PdfPageFormat.mm),
             ]),

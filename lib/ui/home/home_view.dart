@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../app/extentions.dart';
-import '../../app/functions.dart';
 import '../../controllers/users_controllers.dart';
 import '../Users_dashboard/users_dashbord.dart';
 import '../addCategoreys/blockCategory.dart';
@@ -31,7 +29,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    checkAuth(context);
 
     return Consumer<Users_controller>(
       builder: (context, myType, child) {
@@ -272,7 +269,8 @@ class HomeView extends StatelessWidget {
                       context.gonext(context, const UsersActions());
                     },
                   ).permition(context, UserPermition.show_users_actions),
-                  FirebaseAuth.instance.currentUser!.email == "m.khaled@0.com"
+                  context.read<Users_controller>().currentuser!.email ==
+                          "mohamed501333"
                       ? Item0(
                           MediaQuery.of(context).size.width * .45,
                           ColorManager.arsenic,

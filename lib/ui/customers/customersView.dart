@@ -9,6 +9,7 @@ import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/customers/customers_viewModel.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
 
@@ -114,10 +115,11 @@ class Customers_view extends StatelessWidget {
                             onPressed: () {
                               if (vm.formKey.currentState!.validate()) {
                                 CustomerModel customer = CustomerModel(
-                                    id: DateTime.now().millisecondsSinceEpoch,
+                                  updatedat: DateTime.now().microsecondsSinceEpoch,
+                                    customer_id: DateTime.now().millisecondsSinceEpoch,
                                     serial: vm.customerSerial.text.to_int(),
                                     name: vm.customerName.text,
-                                    actions: []);
+                                    actions: [customerAction.create_new_customer.add]);
                                 myType.Add_new_customer(customer);
                                 vm.clearfields();
                               }

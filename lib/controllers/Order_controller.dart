@@ -1,93 +1,111 @@
 // ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters, empty_catches
 
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/data/sharedprefs.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/notification.dart';
 
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:http/http.dart' as http;
+import 'package:jason_company/ui/recources/publicVariables.dart';
 import 'package:jason_company/ui/recources/strings_manager.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class OrderController extends ChangeNotifier {
-  get_Order_data() {
-    try {
-      FirebaseDatabase.instance
-          .ref("orders")
-          .orderByKey()
-          .onValue
-          .listen((event) {
-        orders.clear();
-        initalData.clear();
-        if (event.snapshot.value != null) {
-          Map<Object?, Object?> map =
-              event.snapshot.value as Map<Object?, Object?>;
-          for (var item in map.values.toList()) {
-            initalData.add(OrderModel.fromJson(item.toString()));
-          }
-          orders.addAll(initalData.where((element) =>
-              element.actions
-                  .if_action_exist(OrderAction.Archive_order.getTitle) ==
-              false));
+  List<cutingOrder> cuttingOrders = [];
+  List<cutingOrder> initalData = [];
+  static late WebSocketChannel channel;
+  getData() {
+    if (internet == true) {
+      cuttingOrders_From_firebase();
+    } else {
+      cuttingOrders_From_Server();
+    }
+  }
+
+  cuttingOrders_From_firebase() {
+    FirebaseFirestore;
+  }
+
+  cuttingOrders_From_Server() async {
+    // get for the first time
+    Uri uri = Uri.http('192.168.1.$ip:8080', '/cuttingOrders');
+    var response = await http.get(uri);
+    if (response.statusCode == 200) {
+      cuttingOrders.clear();
+      var a = json.decode(response.body) as List;
+      for (var element in a) {
+        var cittingorder = cutingOrder.fromMap(element);
+        if (cittingorder.actions
+                .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+            false) {
+          cuttingOrders.add(cittingorder);
         }
-        print("get data of order");
-        notifyListeners();
-      });
-    } catch (e) {}
-  }
-
-  // gggg() {
-  //   for (var el in orders) {
-  //     OrderModel e = OrderModel(
-  //       id: el.id,
-  //       notes: "",
-  //       serial: el.serial,
-  //       datecreated: el.datecreated,
-  //       dateTOOrder: el.dateTOOrder,
-  //       customer: el.customer,
-  //       actions: el.actions,
-  //       items: el.items,
-  //     );
-
-  //     FirebaseDatabase.instance.ref("orders/${el.id}").set(e.toJson());
-  //   }
-  // }
-
-  List<OrderModel> orders = [];
-  List<OrderModel> initalData = [];
-
-  add_order(OrderModel order) async {
-    order.actions.add(OrderAction.create_order.add);
-    try {
-      FirebaseDatabase.instance.ref("orders/${order.id}").set(order.toJson());
-      String dataNotifications = '{ '
-          ' "to" : "/topics/myTopic1" , '
-          ' "notification" : {'
-          ' "title":"(${order.serial})امر شغل جديد    " , '
-          ' "body":"${order.actions.get_Who_Of(OrderAction.create_order.getTitle)}" '
-          ' "sound":"default" '
-          ' } '
-          ' } ';
-
-      await http.post(
-        Uri.parse(Constants.BASE_URL),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'key= ${Constants.KEY_SERVER}',
-        },
-        body: dataNotifications,
-      );
+      }
       notifyListeners();
-    } catch (e) {}
+    }
+    //
+    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/cuttingOrders/ws').replace(
+        queryParameters: {
+          'username': Sharedprfs.email,
+          'password': Sharedprfs.password
+        });
+    channel = WebSocketChannel.connect(uri2);
+    channel.stream.forEach((u) {
+      cutingOrder order = cutingOrder.fromJson(u);
+      var index = cuttingOrders
+          .map((e) => e.cuttingOrder_ID)
+          .toList()
+          .indexOf(order.cuttingOrder_ID);
+      if (order.actions.if_action_exist(OrderAction.Archive_order.getTitle) ==
+          false) {
+        if (index == -1) {
+          cuttingOrders.add(order);
+        } else {
+          cuttingOrders.removeAt(index);
+          cuttingOrders.add(order);
+        }
+      }
+      notifyListeners();
+    });
   }
 
-  addAction(OrderModel item, OrderAction action) async {
-    item.actions.add(action.add);
-    try {
-      FirebaseDatabase.instance.ref("orders/${item.id}").set(item.toJson());
+  add_order(cutingOrder order) async {
+    String dataNotifications = '{ '
+        ' "to" : "/topics/myTopic1" , '
+        ' "notification" : {'
+        ' "title":"(${order.serial})امر شغل جديد    " , '
+        ' "body":"${order.actions.get_Who_Of(OrderAction.create_order.getTitle)}" '
+        ' "sound":"default" '
+        ' } '
+        ' } ';
 
+    if (internet == true) {
+      FirebaseFirestore.instance
+          .collection('cuttingOrders')
+          .doc(order.cuttingOrder_ID.toString())
+          .set(order.toMap());
+      sendnotification(dataNotifications);
+    } else {
+      channel.sink.add(order.toJson());
+    }
+
+    notifyListeners();
+  }
+
+  updatecuttingOrder(cutingOrder item, OrderAction action) async {
+    item.actions.add(action.add);
+    if (internet == true) {
+      FirebaseFirestore.instance
+          .collection('cuttingOrders')
+          .doc(item.cuttingOrder_ID.toString())
+          .set(item.toMap());
       if (action.add.action == "order_aproved_from_calculation") {
         String dataNotifications = '{ '
             ' "to" : "/topics/myTopic1" , '
@@ -98,14 +116,7 @@ class OrderController extends ChangeNotifier {
             ' } '
             ' } ';
 
-        await http.post(
-          Uri.parse(Constants.BASE_URL),
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-            'Authorization': 'key= ${Constants.KEY_SERVER}',
-          },
-          body: dataNotifications,
-        );
+        sendnotification(dataNotifications);
       }
       if (action.add.action == "order_aproved_from_control") {
         String dataNotifications = '{ '
@@ -116,46 +127,30 @@ class OrderController extends ChangeNotifier {
             ' "sound":"default" '
             ' } '
             ' } ';
-
-        await http.post(
-          Uri.parse(Constants.BASE_URL),
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-            'Authorization': 'key= ${Constants.KEY_SERVER}',
-          },
-          body: dataNotifications,
-        );
+        sendnotification(dataNotifications);
       }
-
-      notifyListeners();
+    } else {}
+    try {
+      channel.sink.add(item.toJson());
     } catch (e) {}
   }
 
-  // chosen order serial
-
-  List<OrderModel> getOrdersForRadio_order_Serials() {
-    return orders
-        .where((e) =>
-            e.actions.if_action_exist(
-                OrderAction.order_aproved_from_calculation.getTitle) ==
-            true)
-        .where((element) =>
-            element.actions.if_action_exist(
-                OrderAction.order_aproved_from_control.getTitle) ==
-            true)
-        .where((element) =>
-            element.actions
-                .if_action_exist(OrderAction.order_colosed.getTitle) ==
-            false)
-        .toList();
+  sendnotification(String data) async {
+    await http.post(
+      Uri.parse(Constants.BASE_URL),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key= ${Constants.KEY_SERVER}',
+      },
+      body: data,
+    );
   }
 
-//chosen item
-
   OperationOrederItems? item;
-  OrderModel? order;
+  cutingOrder? order;
   edit_cell(dynamic oldvalue, int id, int id2, String cell, String newvalue) {
-    OrderModel user = orders.where((element) => element.id == id).first;
+    cutingOrder user =
+        cuttingOrders.where((element) => element.cuttingOrder_ID == id).first;
 
     user.actions.add(ActionModel(
         action:
@@ -192,13 +187,13 @@ class OrderController extends ChangeNotifier {
             newvalue.to_int()
         : DoNothingAction();
     try {
-      FirebaseDatabase.instance.ref("orders/${user.id}").set(user.toJson());
+      FirebaseDatabase.instance
+          .ref("orders/${user.cuttingOrder_ID}")
+          .set(user.toJson());
     } catch (e) {}
   }
 
   Refrsh_ui() {
     notifyListeners();
   }
-
-  get_blockCategory_data() {}
 }

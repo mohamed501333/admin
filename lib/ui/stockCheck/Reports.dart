@@ -392,6 +392,8 @@ class ButtomOfRefreshQuantity extends StatelessWidget {
                                                 .read<
                                                     final_prodcut_controller>()
                                                 .updateFinalProdcut(FinalProductModel(
+                                                              updatedat: DateTime.now().microsecondsSinceEpoch,
+
                                                     finalProdcut_ID: DateTime
                                                             .now()
                                                         .millisecondsSinceEpoch,

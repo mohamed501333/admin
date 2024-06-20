@@ -7,7 +7,7 @@ import 'package:pdf/widgets.dart';
 
 class Cuting_order_pdf {
   CuttingOrderViewModel vm = CuttingOrderViewModel();
-  Future<Document> generate(c, OrderModel order) async {
+  Future<Document> generate(c, cutingOrder order) async {
     var data = await rootBundle.load("assets/fonts/HacenTunisia.ttf");
     final iconImage =
         (await rootBundle.load('assets/icon.png')).buffer.asUint8List();
@@ -41,7 +41,7 @@ class Cuting_order_pdf {
                       Container(
                           color: PdfColors.grey,
                           child: Text(
-                              " تاريخ امر الشغل : ${vm.date(order.datecreated)}  ")),
+                              " تاريخ امر الشغل :  ")),
                       SizedBox(height: 20),
                       Container(
                           color: PdfColors.grey,

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
-import 'package:jason_company/models/moderls.dart';
-import 'package:jason_company/ui/recources/userpermitions.dart';
+// import 'package:jason_company/models/moderls.dart';
+// import 'package:jason_company/ui/recources/userpermitions.dart';
 
 import 'package:provider/provider.dart';
 
@@ -43,7 +43,7 @@ class UsersDashboard extends StatelessWidget {
                                   // style: ElevatedButton.styleFrom(
                                   //     primary: Colors.red),
                                   onPressed: () {
-                                    myType.Add_new_user(useremail.text);
+                                    // myType.Add_new_user(useremail.text);
 
                                     Navigator.pop(context);
                                   },
@@ -61,58 +61,60 @@ class UsersDashboard extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               children: [
-              myType.initialforradioqq==null?const SizedBox():  SingleChildScrollView(
-                  child: Column(
-                    children: UserPermition.values
-                        .map((g) => Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.greenAccent),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: CheckboxListTile(
-                                  activeColor: Colors.blue,
-                                  checkColor: Colors.white,
-                                  autofocus: false,
-                                  onChanged: (v) {
-                                    if (myType.initialforradioqq != null) {
-                                      Users u = myType.users
-                                          .where((element) =>
-                                              element.uidemail ==
-                                              myType.initialforradioqq)
-                                          .first;
 
-                                      if (u.permitions.contains(
-                                              UserpermitionTittle(
-                                                  tittle: g.getTitle)) ==
-                                          false) {
-                                        myType.Add_User_permition(g, u);
-                                      } else {
-                                        if (myType.initialforradioqq != null) {
-                                          myType.remove_User_permition(
-                                              g.getTitle);
-                                        }
-                                      }
-                                    }
-                                  },
-                                  title: Text(g.getTitle,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                                  value: myType.users
-                                          .where((element) =>
-                                              element.uidemail ==
-                                              myType.initialforradioqq)
-                                          .isNotEmpty
-                                      ? myType.users
-                                          .where((element) =>
-                                              element.uidemail ==
-                                              myType.initialforradioqq)
-                                          .first
-                                          .permitions
-                                          .contains(UserpermitionTittle(
-                                              tittle: g.getTitle))
-                                      : false),
-                            ))
-                        .toList(),
-                  ),
-                )
+              // myType.initialforradioqq==null?const SizedBox():  SingleChildScrollView(
+              //     child: Column(
+              //       children: UserPermition.values
+              //           .map((g) => Container(
+              //                 decoration: BoxDecoration(
+              //                   border: Border.all(color: Colors.greenAccent),
+              //                   borderRadius: BorderRadius.circular(20),
+              //                 ),
+              //                 child: CheckboxListTile(
+              //                     activeColor: Colors.blue,
+              //                     checkColor: Colors.white,
+              //                     autofocus: false,
+              //                     onChanged: (v) {
+              //                       if (myType.initialforradioqq != null) {
+              //                         Users u = myType.users
+              //                             .where((element) =>
+              //                                 element.uidemail ==
+              //                                 myType.initialforradioqq)
+              //                             .first;
+
+              //                         if (u.permitions.contains(
+              //                                 UserpermitionTittle(
+              //                                     tittle: g.getTitle)) ==
+              //                             false) {
+              //                           myType.Add_User_permition(g, u);
+              //                         } else {
+              //                           if (myType.initialforradioqq != null) {
+              //                             myType.remove_User_permition(
+              //                                 g.getTitle);
+              //                           }
+              //                         }
+              //                       }
+              //                     },
+              //                     title: Text(g.getTitle,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              //                     value: myType.users
+              //                             .where((element) =>
+              //                                 element.uidemail ==
+              //                                 myType.initialforradioqq)
+              //                             .isNotEmpty
+              //                         ? myType.users
+              //                             .where((element) =>
+              //                                 element.uidemail ==
+              //                                 myType.initialforradioqq)
+              //                             .first
+              //                             .permitions
+              //                             .contains(UserpermitionTittle(
+              //                                 tittle: g.getTitle))
+              //                         : false),
+              //               ))
+              //           .toList(),
+              //     ),
+              //   )
+             
               ],
             ),
           ),
@@ -132,25 +134,27 @@ class DropDdowenForUsers extends StatelessWidget {
       builder: (context, Mytype, child) {
         return Column(
           children: [
-            DropdownButton(
-                value: Mytype.initialforradioqq,
-                items: Mytype.users
-                    .map((e) => e.uidemail)
-                    .toList()
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Text(e.toString()),
-                        ))
-                    .toList()
-                    .reversed
-                    .toList(),
-                onChanged: (v) {
-                  if (v != null) {
-                    Mytype.initialforradioqq = v;
 
-                    Mytype.Refrsh_ui();
-                  }
-                }),
+            // DropdownButton(
+            //     value: Mytype.initialforradioqq,
+            //     items: Mytype.users
+            //         .map((e) => e.uidemail)
+            //         .toList()
+            //         .map((e) => DropdownMenuItem(
+            //               value: e,
+            //               child: Text(e.toString()),
+            //             ))
+            //         .toList()
+            //         .reversed
+            //         .toList(),
+            //     onChanged: (v) {
+            //       if (v != null) {
+            //         Mytype.initialforradioqq = v;
+
+            //         Mytype.Refrsh_ui();
+            //       }
+            //     }),
+          
           ],
         );
       },

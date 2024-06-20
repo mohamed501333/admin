@@ -5,7 +5,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
-import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/setings/login.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -79,28 +78,28 @@ List<DateTime> getDaysInBeteween(DateTime startDate, DateTime endDate) {
 }
 
 bool permitionss(BuildContext context, UserPermition permition) {
-  List<Users> users = context
+  var test = context
       .read<Users_controller>()
-      .users
-      .where((element) =>
-          element.uidemail == FirebaseAuth.instance.currentUser!.email)
-      .toList();
-  if (users.isNotEmpty) {
-    return users.first.permitions
-            .map((e) => e.tittle)
-            .contains(permition.getTitle) ||
-        users.first.permitions.map((e) => e.tittle).contains("show_all");
+      .currentuser!
+      .permitions
+      .where((e) => e == permition.getTitle || e == "show_all");
+
+  if (test.isNotEmpty) {
+    return true;
   } else {
     return false;
   }
 }
+
 bool permitionssForOne(BuildContext context, UserPermition permition) {
-  List<Users> users = context.read<Users_controller>().users.where((element) =>element.uidemail == FirebaseAuth.instance.currentUser!.email)
-      .toList();
-  if (users.isNotEmpty) {
-    return users.first.permitions
-            .map((e) => e.tittle)
-            .contains(permition.getTitle) ;
+  var test = context
+      .read<Users_controller>()
+      .currentuser!
+      .permitions
+      .where((e) => e == permition.getTitle);
+
+  if (test.isNotEmpty) {
+    return true;
   } else {
     return false;
   }

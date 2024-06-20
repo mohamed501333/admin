@@ -1,11 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
-import 'package:jason_company/ui/cutting_order/cutting_order_view.dart';
+import 'package:jason_company/data/sharedprefs.dart';
+import 'package:jason_company/notification.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'controllers/CategorysController.dart';
 import 'controllers/ChemicalsController.dart';
 import 'controllers/Customer_controller.dart';
@@ -34,61 +35,6 @@ DateFormat formatwitTime = DateFormat('yyyy-MM-dd/hh:mm a');
 DateFormat formatwitTime2 = DateFormat('yyyy-MM-dd -hh:mm a');
 DateFormat formatwitTime3 = DateFormat('hh:mm a');
 
-const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    // 'This channel is used for important notifications.', // description
-    importance: Importance.high,
-    playSound: true,
-    sound: UriAndroidNotificationSound("default"),
-    description: AutofillHints.gender);
-
-Future<void> messagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-}
-
-final localanotification = FlutterLocalNotificationsPlugin();
-void handleMassage(RemoteMessage? massage) {
-  if (massage == null) return;
-  navigatorKey.currentState!
-      .push(MaterialPageRoute(builder: (context) => const CuttingOrderView()));
-}
-
-initPushNotification() async {
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-  await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-  FirebaseMessaging.instance.subscribeToTopic("myTopic1");
-  FirebaseMessaging.instance.getInitialMessage().then(handleMassage);
-  FirebaseMessaging.onMessageOpenedApp.listen(handleMassage);
-  FirebaseMessaging.onBackgroundMessage(messagingBackgroundHandler);
-  FirebaseMessaging.onMessage.listen((event) {
-    final notificatin = event.notification;
-    if (notificatin == null) return;
-    localanotification.show(
-        notificatin.hashCode,
-        notificatin.title,
-        notificatin.body,
-        NotificationDetails(
-            android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-        )));
-  });
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -98,27 +44,22 @@ void main() async {
           appId: "1:106186917009:android:fcd892c86b7d3e3447ab30",
           messagingSenderId: "106186917009",
           projectId: "janson-11f24"));
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
-
-  const InitializationSettings initializationSettings = InitializationSettings(
-    android: initializationSettingsAndroid,
-  );
-
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  initPushNotification();
   FirebaseDatabase.instance.setPersistenceEnabled(true);
-  runApp(const MyApp());
+
+// Initialize shared preferences
+  prefs = await SharedPreferences.getInstance();
+  
+  if (Platform.isAndroid) {
+     initPushNotification();
+  }
+  runApp(MyApp());
 }
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  bool initionlized = false;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -186,12 +127,17 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(useMaterial3: false),
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          home: Builder(
-            builder: (c) {
-              c.read<Users_controller>().get_users_data();
-              c.read<UpdatesController>().Updates_up();
-              return a(c)
-                  ? FirebaseAuth.instance.currentUser?.uid == null
+          home: Consumer<Users_controller>(
+            builder: (context, myType, child) {
+              if (Sharedprfs.email != null &&
+                  Sharedprfs.password != null &&
+                  initionlized == false) {
+                myType.connect(Sharedprfs.email!, Sharedprfs.password!);
+                initionlized = true;
+              }
+
+              return a(context)
+                  ? myType.currentuser == null
                       ? const MyloginPage()
                       : Mainview()
                   : const CircularProgressIndicator();

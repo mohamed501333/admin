@@ -1,120 +1,176 @@
 // ignore_for_file: file_names, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_function_type_syntax_for_parameters, empty_catches, camel_case_types
 
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
-import 'package:jason_company/controllers/Order_controller.dart';
+import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
+import 'package:jason_company/data/sharedprefs.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:provider/provider.dart';
+import 'package:jason_company/ui/recources/publicVariables.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:http/http.dart' as http;
 
 class final_prodcut_controller extends ChangeNotifier {
-  get_finalProdcut_data(BuildContext context) {
-    FirebaseDatabase.instance
-        .ref("finalproducts")
-        .orderByKey()
-        .onValue
-        .first
-        .then((value) {
-      getInitialData(value.snapshot, context);
-    }).then((value) => FirebaseDatabase.instance
-                .ref("finalproducts")
-                .orderByKey()
-                .startAfter("${finalproducts.last.finalProdcut_ID}")
-                .onChildAdded
-                .listen((f) async {
-              await refrech(f);
-            }));
-
-    FirebaseDatabase.instance.ref("finalproducts").onChildChanged.listen((vv) {
-      refrech(vv);
-    });
-  }
-
-  c() {
-    // if (all.isNotEmpty) {
-    //   for (var element
-    //       in all.where((element) => element.item.type.contains('سوفت'))) {
-    //     element.item.type = "سوفت";
-    //   }
-    //   for (var element
-    //       in all.where((element) => element.item.type.contains('هارد'))) {
-    //     element.item.type = "هارد";
-    //   }
-    //   var s = {};
-    //   s.addEntries(all.map(
-    //       (el) => MapEntry("${el.finalProdcut_ID}", el.toJson().toString())));
-
-    //   FirebaseDatabase.instance.ref("finalproducts").set(s);
-    // }
-  }
-
-  getInitialData(DataSnapshot v, BuildContext context) async {
-    all.clear();
-    Archived_finalproducts.clear();
-    finalproducts.clear();
-    for (var item in v.children) {
-      all.add(FinalProductModel.fromJson(item.value.toString()));
-    }
-
-    finalproducts.addAll(all.where((element) =>
-        element.actions.if_action_exist(
-            finalProdcutAction.archive_final_prodcut.getactionTitle) ==
-        false));
-    Archived_finalproducts.addAll(all.where((element) =>
-        element.actions.if_action_exist(
-            finalProdcutAction.archive_final_prodcut.getactionTitle) ==
-        true));
-    notifyListeners();
-    context.read<OrderController>().Refrsh_ui();
-  }
-
-  refrech(DatabaseEvent vv) async {
-    FinalProductModel newvalue =
-        FinalProductModel.fromJson(vv.snapshot.value as String);
-
-//--------------------------------------------------
-    all.removeWhere(
-        (element) => element.finalProdcut_ID == newvalue.finalProdcut_ID);
-    all.add(newvalue);
-//--------------------------------------------------
-
-    finalproducts.removeWhere(
-        (element) => element.finalProdcut_ID == newvalue.finalProdcut_ID);
-
-    if (newvalue.actions.if_action_exist(
-            finalProdcutAction.archive_final_prodcut.getactionTitle) ==
-        false) {
-      finalproducts.add(newvalue);
-    } else {
-      Archived_finalproducts.add(newvalue);
-    }
-
-    notifyListeners();
-    print("refresh datata of finalprodcuts");
-  }
-
   List<FinalProductModel> all = [];
   List<FinalProductModel> finalproducts = [];
   List<FinalProductModel> Archived_finalproducts = [];
+  static late WebSocketChannel channel;
 
-  updateFinalProdcut(
-    FinalProductModel user,
-  ) {
+  getData() {
+    if (internet == true) {
+      finals_From_firebase();
+    } else {
+      finals_From_Server();
+    }
+  }
+
+  finals_From_firebase() {
     try {
       FirebaseDatabase.instance
-          .ref("finalproducts/${user.finalProdcut_ID}")
-          .set(user.toJson());
+          .ref("finalProducts")
+          .orderByKey()
+          .onValue
+          .listen((event) {
+        all.clear();
+        Archived_finalproducts.clear();
+        finalproducts.clear();
+        if (event.snapshot.value != null) {
+          Map<Object?, Object?> map =
+              event.snapshot.value as Map<Object?, Object?>;
+          for (var item in map.values.toList()) {
+            all.add(FinalProductModel.fromJson(item.toString()));
+          }
+          finalproducts.addAll(all.where((element) =>
+              element.actions.if_action_exist(
+                  finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+              false));
+          Archived_finalproducts.addAll(all.where((element) =>
+              element.actions.if_action_exist(
+                  finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+              true));
+        }
+        print("get data of finalprodcuts");
+
+        Refresh_Ui();
+      });
     } catch (e) {}
   }
 
-  addinvoice(List<FinalProductModel> finalss, int invoiceNum) {
+  finals_From_Server() async {
+    // get for the first time
+    Uri uri = Uri.http('192.168.1.$ip:8080', '/finalProducts');
+    var response = await http.get(uri);
+    if (response.statusCode == 200) {
+      finalproducts.clear();
+      var a = json.decode(response.body) as List;
+      for (var element in a) {
+        var item = FinalProductModel.fromMap(element);
+        if (item.actions.if_action_exist(
+                finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+            false) {
+          finalproducts.add(item);
+        }
+      }
+      Refresh_Ui();
+    }
+    //
+    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/finalProducts/ws').replace(
+        queryParameters: {
+          'username': Sharedprfs.email,
+          'password': Sharedprfs.password
+        });
+    channel = WebSocketChannel.connect(uri2);
+    channel.stream.forEach((u) {
+      FinalProductModel user = FinalProductModel.fromJson(u);
+      var index = finalproducts
+          .map((e) => e.finalProdcut_ID)
+          .toList()
+          .indexOf(user.finalProdcut_ID);
+
+      if (index == -1) {
+        if (user.actions.if_action_exist(
+                finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+            false) {
+          finalproducts.add(user);
+        }
+      } else {
+        finalproducts.removeAt(index);
+        if (user.actions.if_action_exist(
+                finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+            false) {
+          finalproducts.add(user);
+        }
+      }
+      Refresh_Ui();
+    });
+  }
+
+  updateFinalProdcut(FinalProductModel itme) {
+    if (internet == true) {
+      FirebaseDatabase.instance
+          .ref("finalProducts/${itme.finalProdcut_ID}")
+          .set(itme.toJson());
+    } else {
+      channel.sink.add(itme.toJson());
+    }
+  }
+
+  updateItemsWith_actionAndInvioceNum(
+      List<FinalProductModel> finalss, int invoiceNum) {
     for (var x in finalss) {
       x.invoiceNum = invoiceNum;
       x.actions.add(finalProdcutAction.createInvoice.add);
       updateFinalProdcut(x);
     }
+  }
+
+  Refresh_Ui() {
+    notifyListeners();
+  }
+
+  List<FinalProductModel> nowBbalanceInStock() {
+    List<FinalProductModel> finals = finalproducts;
+    List<FinalProductModel> instock = finals
+        .where((e) => e.actions.if_action_exist(finalProdcutAction
+            .recive_Done_Form_FinalProdcutStock.getactionTitle))
+        .toList();
+
+    return instock.filter_density_typ_color_size().map((a) {
+      int quantity = instock.countOf(a);
+      double vol = quantity * a.item.L * a.item.W * a.item.H / 1000000;
+      return FinalProductModel(
+          finalProdcut_ID: 0,
+          block_ID: 0,
+          fraction_ID: 0,
+          subfraction_ID: 0,
+          sapa_ID: "0",
+          sapa_desc: "0",
+          item: FinalProdcutItme(
+              L: a.item.L,
+              W: a.item.W,
+              H: a.item.H,
+              density: a.item.density,
+              volume: vol,
+              theowight: vol * a.item.density,
+              realowight: 0,
+              color: a.item.color,
+              type: a.item.type,
+              amount: quantity,
+              priceforamount: 0),
+          scissor: 0,
+          stage: 0,
+          worker: '',
+          customer: '',
+          notes: '',
+          invoiceNum: 0,
+          cuting_order_number: 0,
+          actions: [],
+          updatedat: 0);
+    }).toList();
   }
 
   edit_cell(int id, String cell, String newvalue) {
@@ -147,10 +203,6 @@ class final_prodcut_controller extends ChangeNotifier {
     user.item.W = newvalue[1].to_double();
     user.item.H = newvalue[2].to_double();
     updateFinalProdcut(user);
-  }
-
-  Refresh_Ui() {
-    notifyListeners();
   }
 
   String searchin_OutOFStock = "";

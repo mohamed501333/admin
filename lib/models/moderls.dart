@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names, camel_case_types
 
 import 'dart:convert';
+
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-import 'package:objectbox/objectbox.dart';
+
 import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
 
 class Itme {
@@ -1010,6 +1012,8 @@ class FinalProductModel {
   int invoiceNum;
   int cuting_order_number;
   List<ActionModel> actions;
+
+  int updatedat;
   FinalProductModel({
     required this.finalProdcut_ID,
     required this.block_ID,
@@ -1026,6 +1030,7 @@ class FinalProductModel {
     required this.invoiceNum,
     required this.cuting_order_number,
     required this.actions,
+    required this.updatedat,
   });
 
   FinalProductModel copyWith({
@@ -1044,6 +1049,7 @@ class FinalProductModel {
     int? invoiceNum,
     int? cuting_order_number,
     List<ActionModel>? actions,
+    int? updatedat,
   }) {
     return FinalProductModel(
       finalProdcut_ID: finalProdcut_ID ?? this.finalProdcut_ID,
@@ -1061,6 +1067,7 @@ class FinalProductModel {
       invoiceNum: invoiceNum ?? this.invoiceNum,
       cuting_order_number: cuting_order_number ?? this.cuting_order_number,
       actions: actions ?? this.actions,
+      updatedat: updatedat ?? this.updatedat,
     );
   }
 
@@ -1081,6 +1088,7 @@ class FinalProductModel {
       'invoiceNum': invoiceNum,
       'cuting_order_number': cuting_order_number,
       'actions': actions.map((x) => x.toMap()).toList(),
+      'updatedat': updatedat,
     };
   }
 
@@ -1105,6 +1113,7 @@ class FinalProductModel {
           (x) => ActionModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
+      updatedat: map['updatedat'] as int,
     );
   }
 
@@ -1115,7 +1124,7 @@ class FinalProductModel {
 
   @override
   String toString() {
-    return 'FinalProductModel(finalProdcut_ID: $finalProdcut_ID, block_ID: $block_ID, fraction_ID: $fraction_ID, subfraction_ID: $subfraction_ID, sapa_ID: $sapa_ID, sapa_desc: $sapa_desc, item: $item, scissor: $scissor, stage: $stage, worker: $worker, customer: $customer, notes: $notes, invoiceNum: $invoiceNum, cuting_order_number: $cuting_order_number, actions: $actions)';
+    return 'FinalProductModel(finalProdcut_ID: $finalProdcut_ID, block_ID: $block_ID, fraction_ID: $fraction_ID, subfraction_ID: $subfraction_ID, sapa_ID: $sapa_ID, sapa_desc: $sapa_desc, item: $item, scissor: $scissor, stage: $stage, worker: $worker, customer: $customer, notes: $notes, invoiceNum: $invoiceNum, cuting_order_number: $cuting_order_number, actions: $actions, updatedat: $updatedat)';
   }
 
   @override
@@ -1136,7 +1145,8 @@ class FinalProductModel {
         other.notes == notes &&
         other.invoiceNum == invoiceNum &&
         other.cuting_order_number == cuting_order_number &&
-        listEquals(other.actions, actions);
+        listEquals(other.actions, actions) &&
+        other.updatedat == updatedat;
   }
 
   @override
@@ -1155,13 +1165,12 @@ class FinalProductModel {
         notes.hashCode ^
         invoiceNum.hashCode ^
         cuting_order_number.hashCode ^
-        actions.hashCode;
+        actions.hashCode ^
+        updatedat.hashCode;
   }
 }
 
-@Entity()
 class ChipBlockModel {
-  @Id()
   int id;
   final String title;
   final String color;
@@ -1314,9 +1323,7 @@ class ChipBlockModel {
   }
 }
 
-@Entity()
 class ChipFraction {
-  @Id()
   int id;
   final double width;
   final double lenth;
@@ -1387,288 +1394,309 @@ class ActionModel {
 }
 
 class Invoice {
-  final int id;
-  final int number;
-  final DateTime date;
+  final int invoice_ID;
+  final int serial;
   final String driverName;
   final int carNumber;
-  final String makeLoad;
+  final String dispatcher;
   final String notes;
-  final double biscole;
   final List<ActionModel> actions;
   final List<InvoiceItem> items;
+  int updatedat;
   Invoice({
-    required this.id,
-    required this.number,
-    required this.date,
+    required this.invoice_ID,
+    required this.serial,
     required this.driverName,
     required this.carNumber,
-    required this.makeLoad,
+    required this.dispatcher,
     required this.notes,
-    required this.biscole,
     required this.actions,
     required this.items,
+    required this.updatedat,
   });
 
   Invoice copyWith({
-    int? id,
-    int? number,
-    DateTime? date,
+    int? invoice_ID,
+    int? serial,
     String? driverName,
     int? carNumber,
-    String? makeLoad,
+    String? dispatcher,
     String? notes,
-    double? biscole,
     List<ActionModel>? actions,
     List<InvoiceItem>? items,
+    int? updatedat,
   }) {
     return Invoice(
-      id: id ?? this.id,
-      number: number ?? this.number,
-      date: date ?? this.date,
+      invoice_ID: invoice_ID ?? this.invoice_ID,
+      serial: serial ?? this.serial,
       driverName: driverName ?? this.driverName,
       carNumber: carNumber ?? this.carNumber,
-      makeLoad: makeLoad ?? this.makeLoad,
+      dispatcher: dispatcher ?? this.dispatcher,
       notes: notes ?? this.notes,
-      biscole: biscole ?? this.biscole,
       actions: actions ?? this.actions,
       items: items ?? this.items,
+      updatedat: updatedat ?? this.updatedat,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'number': number,
-      'date': date.millisecondsSinceEpoch,
+      'invoice_ID': invoice_ID,
+      'serial': serial,
       'driverName': driverName,
       'carNumber': carNumber,
-      'makeLoad': makeLoad,
+      'dispatcher': dispatcher,
       'notes': notes,
-      'biscole': biscole,
       'actions': actions.map((x) => x.toMap()).toList(),
       'items': items.map((x) => x.toMap()).toList(),
+      'updatedat': updatedat,
     };
   }
 
   factory Invoice.fromMap(Map<String, dynamic> map) {
     return Invoice(
-      id: map['id'] as int,
-      number: map['number'] as int,
-      date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
+      invoice_ID: map['invoice_ID'] as int,
+      serial: map['serial'] as int,
       driverName: map['driverName'] as String,
       carNumber: map['carNumber'] as int,
-      makeLoad: map['makeLoad'] as String,
+      dispatcher: map['dispatcher'] as String,
       notes: map['notes'] as String,
-      biscole: map['biscole'] as double,
-      actions: List<ActionModel>.from(
-        (map['actions'] as List<dynamic>).map<ActionModel>(
-          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      items: List<InvoiceItem>.from(
-        (map['items'] as List<dynamic>).map<InvoiceItem>(
-          (x) => InvoiceItem.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
+      items: List<InvoiceItem>.from((map['items'] as List<dynamic>).map<InvoiceItem>((x) => InvoiceItem.fromMap(x as Map<String,dynamic>),),),
+      updatedat: map['updatedat'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Invoice.fromJson(String source) =>
-      Invoice.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Invoice.fromJson(String source) => Invoice.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'Invoice(id: $id, number: $number, date: $date, driverName: $driverName, carNumber: $carNumber, makeLoad: $makeLoad, notes: $notes, biscole: $biscole, actions: $actions, items: $items)';
+    return 'Invoice(invoice_ID: $invoice_ID, serial: $serial, driverName: $driverName, carNumber: $carNumber, dispatcher: $dispatcher, notes: $notes, actions: $actions, items: $items, updatedat: $updatedat)';
   }
 
   @override
   bool operator ==(covariant Invoice other) {
     if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.number == number &&
-        other.date == date &&
-        other.driverName == driverName &&
-        other.carNumber == carNumber &&
-        other.makeLoad == makeLoad &&
-        other.notes == notes &&
-        other.biscole == biscole &&
-        listEquals(other.actions, actions) &&
-        listEquals(other.items, items);
+  
+    return 
+      other.invoice_ID == invoice_ID &&
+      other.serial == serial &&
+      other.driverName == driverName &&
+      other.carNumber == carNumber &&
+      other.dispatcher == dispatcher &&
+      other.notes == notes &&
+      listEquals(other.actions, actions) &&
+      listEquals(other.items, items) &&
+      other.updatedat == updatedat;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        number.hashCode ^
-        date.hashCode ^
-        driverName.hashCode ^
-        carNumber.hashCode ^
-        makeLoad.hashCode ^
-        notes.hashCode ^
-        biscole.hashCode ^
-        actions.hashCode ^
-        items.hashCode;
+    return invoice_ID.hashCode ^
+      serial.hashCode ^
+      driverName.hashCode ^
+      carNumber.hashCode ^
+      dispatcher.hashCode ^
+      notes.hashCode ^
+      actions.hashCode ^
+      items.hashCode ^
+      updatedat.hashCode;
   }
 }
 
 class InvoiceItem {
+  int invoiceItem_ID;
+  int finalprodcut_ID;
   double lenth;
   double width;
   double hight;
-  double wight;
   String color;
   double density;
+  String type;
   double price;
   String customer;
-  int amount;
+  int quantity;
+  double theoriticalWight;
+  double reallWight;
   InvoiceItem({
+    required this.invoiceItem_ID,
+    required this.finalprodcut_ID,
     required this.lenth,
     required this.width,
     required this.hight,
-    required this.wight,
     required this.color,
     required this.density,
+    required this.type,
     required this.price,
     required this.customer,
-    required this.amount,
+    required this.quantity,
+    required this.theoriticalWight,
+    required this.reallWight,
   });
 
   InvoiceItem copyWith({
+    int? invoiceItem_ID,
+    int? finalprodcut_ID,
     double? lenth,
     double? width,
     double? hight,
-    double? wight,
     String? color,
     double? density,
+    String? type,
     double? price,
     String? customer,
-    int? amount,
+    int? quantity,
+    double? theoriticalWight,
+    double? reallWight,
   }) {
     return InvoiceItem(
+      invoiceItem_ID: invoiceItem_ID ?? this.invoiceItem_ID,
+      finalprodcut_ID: finalprodcut_ID ?? this.finalprodcut_ID,
       lenth: lenth ?? this.lenth,
       width: width ?? this.width,
       hight: hight ?? this.hight,
-      wight: wight ?? this.wight,
       color: color ?? this.color,
       density: density ?? this.density,
+      type: type ?? this.type,
       price: price ?? this.price,
       customer: customer ?? this.customer,
-      amount: amount ?? this.amount,
+      quantity: quantity ?? this.quantity,
+      theoriticalWight: theoriticalWight ?? this.theoriticalWight,
+      reallWight: reallWight ?? this.reallWight,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'invoiceItem_ID': invoiceItem_ID,
+      'finalprodcut_ID': finalprodcut_ID,
       'lenth': lenth,
       'width': width,
       'hight': hight,
-      'wight': wight,
       'color': color,
       'density': density,
+      'type': type,
       'price': price,
       'customer': customer,
-      'amount': amount,
+      'quantity': quantity,
+      'theoriticalWight': theoriticalWight,
+      'reallWight': reallWight,
     };
   }
 
   factory InvoiceItem.fromMap(Map<String, dynamic> map) {
     return InvoiceItem(
+      invoiceItem_ID: map['invoiceItem_ID'] as int,
+      finalprodcut_ID: map['finalprodcut_ID'] as int,
       lenth: map['lenth'] as double,
       width: map['width'] as double,
       hight: map['hight'] as double,
-      wight: map['wight'] as double,
       color: map['color'] as String,
       density: map['density'] as double,
+      type: map['type'] as String,
       price: map['price'] as double,
       customer: map['customer'] as String,
-      amount: map['amount'] as int,
+      quantity: map['quantity'] as int,
+      theoriticalWight: map['theoriticalWight'] as double,
+      reallWight: map['reallWight'] as double,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory InvoiceItem.fromJson(String source) =>
-      InvoiceItem.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory InvoiceItem.fromJson(String source) => InvoiceItem.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'InvoiceItem(lenth: $lenth, width: $width, hight: $hight, wight: $wight, color: $color, density: $density, price: $price, customer: $customer, amount: $amount)';
+    return 'InvoiceItem(invoiceItem_ID: $invoiceItem_ID, finalprodcut_ID: $finalprodcut_ID, lenth: $lenth, width: $width, hight: $hight, color: $color, density: $density, type: $type, price: $price, customer: $customer, quantity: $quantity, theoriticalWight: $theoriticalWight, reallWight: $reallWight)';
   }
 
   @override
   bool operator ==(covariant InvoiceItem other) {
     if (identical(this, other)) return true;
-
-    return other.lenth == lenth &&
-        other.width == width &&
-        other.hight == hight &&
-        other.wight == wight &&
-        other.color == color &&
-        other.density == density &&
-        other.price == price &&
-        other.customer == customer &&
-        other.amount == amount;
+  
+    return 
+      other.invoiceItem_ID == invoiceItem_ID &&
+      other.finalprodcut_ID == finalprodcut_ID &&
+      other.lenth == lenth &&
+      other.width == width &&
+      other.hight == hight &&
+      other.color == color &&
+      other.density == density &&
+      other.type == type &&
+      other.price == price &&
+      other.customer == customer &&
+      other.quantity == quantity &&
+      other.theoriticalWight == theoriticalWight &&
+      other.reallWight == reallWight;
   }
 
   @override
   int get hashCode {
-    return lenth.hashCode ^
-        width.hashCode ^
-        hight.hashCode ^
-        wight.hashCode ^
-        color.hashCode ^
-        density.hashCode ^
-        price.hashCode ^
-        customer.hashCode ^
-        amount.hashCode;
+    return invoiceItem_ID.hashCode ^
+      finalprodcut_ID.hashCode ^
+      lenth.hashCode ^
+      width.hashCode ^
+      hight.hashCode ^
+      color.hashCode ^
+      density.hashCode ^
+      type.hashCode ^
+      price.hashCode ^
+      customer.hashCode ^
+      quantity.hashCode ^
+      theoriticalWight.hashCode ^
+      reallWight.hashCode;
   }
 }
 
 class CustomerModel {
-  int id;
+  int customer_id;
   int serial;
   String name;
+  int updatedat;
   List<ActionModel> actions;
-
   CustomerModel({
-    required this.id,
+    required this.customer_id,
     required this.serial,
     required this.name,
+    required this.updatedat,
     required this.actions,
   });
 
   CustomerModel copyWith({
-    int? id,
+    int? customer_id,
     int? serial,
     String? name,
+    int? updatedat,
     List<ActionModel>? actions,
   }) {
     return CustomerModel(
-      id: id ?? this.id,
+      customer_id: customer_id ?? this.customer_id,
       serial: serial ?? this.serial,
       name: name ?? this.name,
+      updatedat: updatedat ?? this.updatedat,
       actions: actions ?? this.actions,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'customer_id': customer_id,
       'serial': serial,
       'name': name,
+      'updatedat': updatedat,
       'actions': actions.map((x) => x.toMap()).toList(),
     };
   }
 
   factory CustomerModel.fromMap(Map<String, dynamic> map) {
     return CustomerModel(
-      id: map['id'] as int,
+      customer_id: map['customer_id'] as int,
       serial: map['serial'] as int,
       name: map['name'] as String,
+      updatedat: map['updatedat'] as int,
       actions: List<ActionModel>.from(
         (map['actions'] as List<dynamic>).map<ActionModel>(
           (x) => ActionModel.fromMap(x as Map<String, dynamic>),
@@ -1684,86 +1712,89 @@ class CustomerModel {
 
   @override
   String toString() {
-    return 'CustomerModel(id: $id, serial: $serial, name: $name, actions: $actions)';
+    return 'CustomerModel(customer_id: $customer_id, serial: $serial, name: $name, updatedat: $updatedat, actions: $actions)';
   }
 
   @override
   bool operator ==(covariant CustomerModel other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other.customer_id == customer_id &&
         other.serial == serial &&
         other.name == name &&
+        other.updatedat == updatedat &&
         listEquals(other.actions, actions);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ serial.hashCode ^ name.hashCode ^ actions.hashCode;
+    return customer_id.hashCode ^
+        serial.hashCode ^
+        name.hashCode ^
+        updatedat.hashCode ^
+        actions.hashCode;
   }
 }
 
-class OrderModel {
-  int id;
+class cutingOrder {
+  int cuttingOrder_ID;
   int serial;
-  DateTime datecreated;
   DateTime dateTOOrder;
   String customer;
   List<ActionModel> actions;
   List<OperationOrederItems> items;
-  String notes;
-  OrderModel({
-    required this.id,
+  int updatedat;
+  List<String> notes;
+  cutingOrder({
+    required this.cuttingOrder_ID,
     required this.serial,
-    required this.datecreated,
     required this.dateTOOrder,
     required this.customer,
     required this.actions,
-    required this.notes,
     required this.items,
+    required this.updatedat,
+    required this.notes,
   });
 
-  OrderModel copyWith({
-    int? id,
+  cutingOrder copyWith({
+    int? cuttingOrder_ID,
     int? serial,
-    DateTime? datecreated,
     DateTime? dateTOOrder,
     String? customer,
     List<ActionModel>? actions,
-    String? notes,
     List<OperationOrederItems>? items,
+    int? updatedat,
+    List<String>? notes,
   }) {
-    return OrderModel(
-      id: id ?? this.id,
+    return cutingOrder(
+      cuttingOrder_ID: cuttingOrder_ID ?? this.cuttingOrder_ID,
       serial: serial ?? this.serial,
-      datecreated: datecreated ?? this.datecreated,
       dateTOOrder: dateTOOrder ?? this.dateTOOrder,
       customer: customer ?? this.customer,
       actions: actions ?? this.actions,
       items: items ?? this.items,
+      updatedat: updatedat ?? this.updatedat,
       notes: notes ?? this.notes,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'cuttingOrder_ID': cuttingOrder_ID,
       'serial': serial,
-      'datecreated': datecreated.millisecondsSinceEpoch,
       'dateTOOrder': dateTOOrder.millisecondsSinceEpoch,
       'customer': customer,
-      'notes': notes,
       'actions': actions.map((x) => x.toMap()).toList(),
       'items': items.map((x) => x.toMap()).toList(),
+      'updatedat': updatedat,
+      'notes': notes,
     };
   }
 
-  factory OrderModel.fromMap(Map<String, dynamic> map) {
-    return OrderModel(
-      id: map['id'] as int,
+  factory cutingOrder.fromMap(Map<String, dynamic> map) {
+    return cutingOrder(
+      cuttingOrder_ID: map['cuttingOrder_ID'] as int,
       serial: map['serial'] as int,
-      datecreated:
-          DateTime.fromMillisecondsSinceEpoch(map['datecreated'] as int),
       dateTOOrder:
           DateTime.fromMillisecondsSinceEpoch(map['dateTOOrder'] as int),
       customer: map['customer'] as String,
@@ -1777,43 +1808,44 @@ class OrderModel {
           (x) => OperationOrederItems.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      notes: map['notes'] as String,
+      updatedat: map['updatedat'] as int,
+      notes: List<String>.from((map['notes'] as List<dynamic>)),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory OrderModel.fromJson(String source) =>
-      OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory cutingOrder.fromJson(String source) =>
+      cutingOrder.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, serial: $serial, datecreated: $datecreated, dateTOOrder: $dateTOOrder, customer: $customer, actions: $actions, items: $items, notes: $notes)';
+    return 'cutingOrder(cuttingOrder_ID: $cuttingOrder_ID, serial: $serial, dateTOOrder: $dateTOOrder, customer: $customer, actions: $actions, items: $items, updatedat: $updatedat, notes: $notes)';
   }
 
   @override
-  bool operator ==(covariant OrderModel other) {
+  bool operator ==(covariant cutingOrder other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other.cuttingOrder_ID == cuttingOrder_ID &&
         other.serial == serial &&
-        other.datecreated == datecreated &&
         other.dateTOOrder == dateTOOrder &&
         other.customer == customer &&
         listEquals(other.actions, actions) &&
         listEquals(other.items, items) &&
-        other.notes == notes;
+        other.updatedat == updatedat &&
+        listEquals(other.notes, notes);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return cuttingOrder_ID.hashCode ^
         serial.hashCode ^
-        datecreated.hashCode ^
         dateTOOrder.hashCode ^
         customer.hashCode ^
         actions.hashCode ^
         items.hashCode ^
+        updatedat.hashCode ^
         notes.hashCode;
   }
 }
@@ -1920,6 +1952,96 @@ class OperationOrederItems {
         widti.hashCode ^
         hight.hashCode ^
         Qantity.hashCode;
+  }
+}
+
+class UserModel {
+  int id;
+  String email;
+  String uid;
+  String name;
+  String password;
+  List<String> permitions;
+  UserModel({
+    required this.id,
+    required this.email,
+    required this.uid,
+    required this.name,
+    required this.password,
+    required this.permitions,
+  });
+
+  UserModel copyWith({
+    int? id,
+    String? email,
+    String? uid,
+    String? name,
+    String? password,
+    List<String>? permitions,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
+      password: password ?? this.password,
+      permitions: permitions ?? this.permitions,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'email': email,
+      'uid': uid,
+      'name': name,
+      'password': password,
+      'permitions': permitions,
+    };
+  }
+
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      id: map['id'] as int,
+      email: map['email'] as String,
+      uid: map['uid'] as String,
+      name: map['name'] as String,
+      password: map['password'] as String,
+      permitions: List<String>.from(map['permitions'] as List<dynamic>),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'UserModel(id: $id, email: $email, uid: $uid, name: $name, password: $password, permitions: $permitions)';
+  }
+
+  @override
+  bool operator ==(covariant UserModel other) {
+    if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
+
+    return other.id == id &&
+        other.email == email &&
+        other.uid == uid &&
+        other.name == name &&
+        other.password == password &&
+        listEquals(other.permitions, permitions);
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        email.hashCode ^
+        uid.hashCode ^
+        name.hashCode ^
+        password.hashCode ^
+        permitions.hashCode;
   }
 }
 
@@ -2147,7 +2269,8 @@ class BlockCategory {
 }
 
 class ChemicalsModel {
-  int id;
+  int chemical_ID;
+  int updatedat;
   String family;
   String name;
   String unit;
@@ -2162,7 +2285,8 @@ class ChemicalsModel {
   String outTo;
   List<ActionModel> actions;
   ChemicalsModel({
-    required this.id,
+    required this.chemical_ID,
+    required this.updatedat,
     required this.family,
     required this.name,
     required this.unit,
@@ -2179,7 +2303,8 @@ class ChemicalsModel {
   });
 
   ChemicalsModel copyWith({
-    int? id,
+    int? chemical_ID,
+    int? updatedat,
     String? family,
     String? name,
     String? unit,
@@ -2195,7 +2320,8 @@ class ChemicalsModel {
     List<ActionModel>? actions,
   }) {
     return ChemicalsModel(
-      id: id ?? this.id,
+      chemical_ID: chemical_ID ?? this.chemical_ID,
+      updatedat: updatedat ?? this.updatedat,
       family: family ?? this.family,
       name: name ?? this.name,
       unit: unit ?? this.unit,
@@ -2215,7 +2341,8 @@ class ChemicalsModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'chemical_ID': chemical_ID,
+      'updatedat': updatedat,
       'family': family,
       'name': name,
       'unit': unit,
@@ -2234,7 +2361,8 @@ class ChemicalsModel {
 
   factory ChemicalsModel.fromMap(Map<String, dynamic> map) {
     return ChemicalsModel(
-      id: map['id'] as int,
+      chemical_ID: map['chemical_ID'] as int,
+      updatedat: map['updatedat'] as int,
       family: map['family'] as String,
       name: map['name'] as String,
       unit: map['unit'] as String,
@@ -2262,14 +2390,15 @@ class ChemicalsModel {
 
   @override
   String toString() {
-    return 'ChemicalsModel(id: $id, family: $family, name: $name, unit: $unit, quantityForSingleUnit: $quantityForSingleUnit, supplyOrderNum: $supplyOrderNum, StockRequisitionNum: $StockRequisitionNum, quantity: $quantity, Totalquantity: $Totalquantity, description: $description, notes: $notes, cumingFrom: $cumingFrom, outTo: $outTo, actions: $actions)';
+    return 'ChemicalsModel(chemical_ID: $chemical_ID, updatedat: $updatedat, family: $family, name: $name, unit: $unit, quantityForSingleUnit: $quantityForSingleUnit, supplyOrderNum: $supplyOrderNum, StockRequisitionNum: $StockRequisitionNum, quantity: $quantity, Totalquantity: $Totalquantity, description: $description, notes: $notes, cumingFrom: $cumingFrom, outTo: $outTo, actions: $actions)';
   }
 
   @override
   bool operator ==(covariant ChemicalsModel other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other.chemical_ID == chemical_ID &&
+        other.updatedat == updatedat &&
         other.family == family &&
         other.name == name &&
         other.unit == unit &&
@@ -2287,7 +2416,8 @@ class ChemicalsModel {
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return chemical_ID.hashCode ^
+        updatedat.hashCode ^
         family.hashCode ^
         name.hashCode ^
         unit.hashCode ^
@@ -2305,8 +2435,8 @@ class ChemicalsModel {
 }
 
 class ChemicalCategory {
-  int id;
-
+  int chemicalcategory_ID;
+  int updatedat;
   String family;
 
   String item;
@@ -2318,7 +2448,8 @@ class ChemicalCategory {
 
   List<ActionModel> actions;
   ChemicalCategory({
-    required this.id,
+    required this.chemicalcategory_ID,
+    required this.updatedat,
     required this.family,
     required this.item,
     required this.unit,
@@ -2329,7 +2460,8 @@ class ChemicalCategory {
   });
 
   ChemicalCategory copyWith({
-    int? id,
+    int? chemicalcategory_ID,
+    int? updatedat,
     String? family,
     String? item,
     String? unit,
@@ -2339,7 +2471,8 @@ class ChemicalCategory {
     List<ActionModel>? actions,
   }) {
     return ChemicalCategory(
-      id: id ?? this.id,
+      chemicalcategory_ID: chemicalcategory_ID ?? this.chemicalcategory_ID,
+      updatedat: updatedat ?? this.updatedat,
       family: family ?? this.family,
       item: item ?? this.item,
       unit: unit ?? this.unit,
@@ -2352,7 +2485,8 @@ class ChemicalCategory {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'chemicalcategory_ID': chemicalcategory_ID,
+      'updatedat': updatedat,
       'family': family,
       'item': item,
       'unit': unit,
@@ -2365,7 +2499,8 @@ class ChemicalCategory {
 
   factory ChemicalCategory.fromMap(Map<String, dynamic> map) {
     return ChemicalCategory(
-      id: map['id'] as int,
+      chemicalcategory_ID: map['chemicalcategory_ID'] as int,
+      updatedat: map['updatedat'] as int,
       family: map['family'] as String,
       item: map['item'] as String,
       unit: map['unit'] as String,
@@ -2387,14 +2522,15 @@ class ChemicalCategory {
 
   @override
   String toString() {
-    return 'ChemicalCategory(id: $id, family: $family, item: $item, unit: $unit, cummingFrom: $cummingFrom, OutTo: $OutTo, quantityForUnit: $quantityForUnit, actions: $actions)';
+    return 'ChemicalCategory(chemicalcategory_ID: $chemicalcategory_ID, updatedat: $updatedat, family: $family, item: $item, unit: $unit, cummingFrom: $cummingFrom, OutTo: $OutTo, quantityForUnit: $quantityForUnit, actions: $actions)';
   }
 
   @override
   bool operator ==(covariant ChemicalCategory other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other.chemicalcategory_ID == chemicalcategory_ID &&
+        other.updatedat == updatedat &&
         other.family == family &&
         other.item == item &&
         other.unit == unit &&
@@ -2406,7 +2542,8 @@ class ChemicalCategory {
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return chemicalcategory_ID.hashCode ^
+        updatedat.hashCode ^
         family.hashCode ^
         item.hashCode ^
         unit.hashCode ^

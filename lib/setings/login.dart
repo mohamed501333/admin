@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/controllers/users_controllers.dart';
+import 'package:provider/provider.dart';
 import '../app/extentions.dart';
 import '../main.dart';
-import '../ui/main/main_view.dart';
 
 class MyloginPage extends StatefulWidget {
   const MyloginPage({super.key});
@@ -81,15 +82,18 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
                     child: ElevatedButton(
                       child: const Text('Login'),
                       onPressed: () {
-                        formKey.currentState?.validate();
-                        FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: nameController.text.toString(),
-                                password: passwordController.text.toString())
-                            .then((value) {
-                          setState(() {});
-                          context.gonextAnsRemove(context, Mainview());
-                        });
+                        
+                        if (formKey.currentState!.validate()) {
+                        context.read<Users_controller>().connect(nameController.text.toString(),passwordController.text.toString());
+                        }
+                        // FirebaseAuth.instance
+                        //     .signInWithEmailAndPassword(
+                        //         email: nameController.text.toString(),
+                        //         password: passwordController.text.toString())
+                        //     .then((value) {
+                        //   setState(() {});
+                        //   context.gonextAnsRemove(context, Mainview());
+                        // });
                       },
                     )),
                 const SizedBox(
@@ -103,7 +107,7 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
                       onPressed: () {
                         FirebaseAuth.instance.signOut().then((value) {
                           setState(() {});
-                          context.gonextAnsRemove(context, MyApp());
+                          context.gonextAnsRemove(context,  MyApp());
                         });
                       },
                     )),

@@ -9,6 +9,7 @@ import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/inviceForFinalProdct.dart';
 import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
 
@@ -52,8 +53,8 @@ class _InvicesViewState extends State<InvicesView> {
       body: Consumer<Invoice_controller>(
         builder: (context, myType, child) {
           List<Invoice> t = myType.invoices
-              .where((element) => format.format(element.date) == chosenDate)
-              .sortedBy<num>((element) => element.number)
+              .where((element) => format.format(element.actions.get_Date_of_action(InvoiceAction.creat_invoice.getTitle)) == chosenDate)
+              .sortedBy<num>((element) => element.serial)
               .reversed
               .toList();
           return SingleChildScrollView(
@@ -83,10 +84,10 @@ class _InvicesViewState extends State<InvicesView> {
                           title: Column(
                             children: [
                               Text(
-                                  'الوقت: ${formatwitTime3.format(e.date).replaceAll(RegExp(r'PM'), 'م').replaceAll(RegExp(r'AM'), 'ص')}'),
+                                  'الوقت: ${formatwitTime3.format(e.actions.get_Date_of_action(InvoiceAction.creat_invoice.getTitle)).replaceAll(RegExp(r'PM'), 'م').replaceAll(RegExp(r'AM'), 'ص')}'),
                               Text(
                                   'عميل: ${e.items.isEmpty ? 0 : e.items.first.customer}'),
-                              Text('تسلسل: ${e.number}'),
+                              Text('تسلسل: ${e.serial}'),
                               Text('السائق : ${e.driverName}'),
                               Text('رقم العربه : ${e.carNumber}'),
                             ],

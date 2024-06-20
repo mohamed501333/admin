@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, file_names, non_constant_identifier_names
 // ignore_for_file: library_private_types_in_public_api, unused_local_variable
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/setings/SignUp.dart';
 
 import 'package:jason_company/setings/login.dart';
@@ -28,14 +28,13 @@ class Setings extends StatelessWidget {
               context.gonext(context, const MyloginPage());
             },
             child: const Text("تسجيل الدخول")),
-        FirebaseAuth.instance.currentUser!.email == "m.khaled@0.com"
+        context.read<Users_controller>().currentuser!.email == "m0hamed501333"
             ? ElevatedButton(
                 onPressed: () {
                   context.gonext(context, SignupPage());
                 },
                 child: const Text("تسجيل مستخدم جديد"))
             : const SizedBox(),
-      
       ],
     ));
   }

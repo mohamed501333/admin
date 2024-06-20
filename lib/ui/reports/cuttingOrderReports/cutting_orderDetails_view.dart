@@ -140,10 +140,7 @@ class CuttingOrderDetailsReports extends StatelessWidget {
       return Scaffold(
           appBar: AppBar(
             actions: [
-              IconButton(
-                  onPressed: () {
-                  },
-                  icon: const Icon(Icons.date_range)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.date_range)),
               IconButton(
                 onPressed: () async {
                   createAndopenEXL(kkkkk);
@@ -192,7 +189,7 @@ class CuttingOrderDetailsReports extends StatelessWidget {
                   allowTriStateSorting: true,
                   allowFiltering: true,
                   source: EmployeeDataSource223344(context,
-                      coumingData: mytype.orders.toList()),
+                      coumingData: mytype.cuttingOrders.toList()),
                   columnWidthMode: ColumnWidthMode.fill,
                   columns: columns,
                 ),
@@ -211,11 +208,11 @@ class EmployeeDataSource223344 extends DataGridSource {
 
   EmployeeDataSource223344(
     this.context, {
-    required List<OrderModel> coumingData,
+    required List<cutingOrder> coumingData,
   }) {
     data = coumingData
         .expand<DataGridRow>((e) => e.items.map((a) => DataGridRow(cells: [
-              DataGridCell<int>(columnName: 'id', value: e.id),
+              DataGridCell<int>(columnName: 'id', value: e.cuttingOrder_ID),
               DataGridCell<int>(columnName: 'id2', value: a.id),
               DataGridCell<int>(columnName: 'serial', value: e.serial),
               DataGridCell<double>(columnName: 'len', value: a.lenth),
@@ -231,7 +228,7 @@ class EmployeeDataSource223344 extends DataGridSource {
   }
   final BuildContext context;
   List<DataGridRow> data = [];
-  List<OrderModel> data2 = [];
+  List<cutingOrder> data2 = [];
   @override
   List<DataGridRow> get rows => data;
   @override
@@ -290,7 +287,7 @@ class EmployeeDataSource223344 extends DataGridSource {
         '';
 
     final int dataRowIndex = data.indexOf(dataGridRow);
-    // final OrderModel u = data2.elementAt(dataRowIndex);
+    // final cutingOrder u = data2.elementAt(dataRowIndex);
 
     newCellValue = "";
 

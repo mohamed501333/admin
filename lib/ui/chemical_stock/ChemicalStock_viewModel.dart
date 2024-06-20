@@ -40,7 +40,8 @@ class ChemicalStockViewModel extends BaseViewModel {
         mytype.selectedValueForUnit != null &&
         quantity.text.isNotEmpty) {
       ChemicalsModel r = ChemicalsModel(
-          id: DateTime.now().microsecondsSinceEpoch,
+        updatedat: DateTime.now().microsecondsSinceEpoch,
+          chemical_ID: DateTime.now().microsecondsSinceEpoch,
           family: mytype.selectedValueForFamily.toString(),
           name: mytype.selectedValueForItem.toString(),
           unit: mytype.selectedValueForUnit.toString(),
@@ -55,7 +56,7 @@ class ChemicalStockViewModel extends BaseViewModel {
           outTo: "",
           actions: [ChemicalAction.creat_new_ChemicalAction_item.add]);
 
-      mytype.addOrDeleteNewChemicals(r);
+      mytype.addChemical(r);
       quantity.clear();
     }
   }
@@ -73,7 +74,8 @@ class ChemicalStockViewModel extends BaseViewModel {
             .quantityForUnit;
 
     ChemicalsModel r = ChemicalsModel(
-        id: DateTime.now().microsecondsSinceEpoch,
+       updatedat: DateTime.now().microsecondsSinceEpoch,
+          chemical_ID: DateTime.now().microsecondsSinceEpoch,
         family: mytype.selectedValueForFamily.toString(),
         name: mytype.selectedValueForItem.toString(),
         unit: mytype.selectedValueForUnit.toString(),
@@ -93,7 +95,7 @@ class ChemicalStockViewModel extends BaseViewModel {
         mytype.selectedValueForcustomer != null &&
         mytype.selectedValueForUnit != null &&
         quantity.text.isNotEmpty) {
-      mytype.addOrDeleteNewChemicals(r);
+      mytype.addChemical(r);
       quantity.clear();
     }
   }
@@ -102,12 +104,13 @@ class ChemicalStockViewModel extends BaseViewModel {
     Chemicals_controller mytype = context.read<Chemicals_controller>();
     e.actions.add(ChemicalAction.archive_ChemicalAction_item.add);
 
-    mytype.addOrDeleteNewChemicals(e);
+    mytype.addChemical(e);
   }
 
   addUnit(BuildContext context) {
     ChemicalCategory record = ChemicalCategory(
-        id: DateTime.now().millisecondsSinceEpoch,
+      updatedat:DateTime.now().microsecondsSinceEpoch,
+        chemicalcategory_ID: DateTime.now().millisecondsSinceEpoch,
         family: "",
         item: '',
         OutTo: "",
@@ -126,7 +129,8 @@ class ChemicalStockViewModel extends BaseViewModel {
 
   addFamily(BuildContext context) {
     ChemicalCategory record = ChemicalCategory(
-        id: DateTime.now().millisecondsSinceEpoch,
+       updatedat: DateTime.now().microsecondsSinceEpoch,
+          chemicalcategory_ID: DateTime.now().microsecondsSinceEpoch,
         family: family.text,
         item: '',
         unit: "",
@@ -140,7 +144,8 @@ class ChemicalStockViewModel extends BaseViewModel {
 
   addItem(BuildContext context) {
     ChemicalCategory record = ChemicalCategory(
-        id: DateTime.now().millisecondsSinceEpoch,
+       updatedat: DateTime.now().microsecondsSinceEpoch,
+          chemicalcategory_ID: DateTime.now().microsecondsSinceEpoch,
         family: "",
         item: item.text,
         unit: "",
@@ -154,7 +159,8 @@ class ChemicalStockViewModel extends BaseViewModel {
 
   addSupplyer(BuildContext context) {
     ChemicalCategory record = ChemicalCategory(
-        id: DateTime.now().millisecondsSinceEpoch,
+       updatedat: DateTime.now().microsecondsSinceEpoch,
+          chemicalcategory_ID: DateTime.now().microsecondsSinceEpoch,
         family: "",
         item: "",
         unit: "",
@@ -168,7 +174,8 @@ class ChemicalStockViewModel extends BaseViewModel {
 
   addcustomer(BuildContext context) {
     ChemicalCategory record = ChemicalCategory(
-        id: DateTime.now().millisecondsSinceEpoch,
+       updatedat: DateTime.now().microsecondsSinceEpoch,
+          chemicalcategory_ID: DateTime.now().microsecondsSinceEpoch,
         family: "",
         item: "",
         unit: "",
