@@ -1,12 +1,16 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/validation.dart';
+import 'package:jason_company/controllers/users_controllers.dart';
+
+import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/recources/enums.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
-  TextEditingController username = TextEditingController();
+  TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -44,7 +48,7 @@ class SignupPage extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   TextField(
-                    controller: username,
+                    controller: name,
                     decoration: InputDecoration(
                         hintText: "name",
                         border: OutlineInputBorder(
@@ -90,27 +94,16 @@ class SignupPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      try {
-                        FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
+                   final user=  UserModel(
+                          user_Id: DateTime.now().microsecondsSinceEpoch,
+                          name: name.text,
                           email: email.text,
                           password: password.text,
-                        )
-                            .then((value) {
-                          value.user!.updateDisplayName(username.text);
-                          email.clear();
-                          password.clear();
-                          username.clear();
-                        });
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'weak-password') {
-                          print('The password provided is too weak.');
-                        } else if (e.code == 'email-already-in-use') {
-                          print('The account already exists for that email.');
-                        }
-                      } catch (e) {
-                        print(e);
-                      }
+                          uid: '',
+                          permitions: [],
+                          updatedat: DateTime.now().microsecondsSinceEpoch,
+                          actions: [UserAction.creat_user.add]);
+                      context.read<Users_controller>().updateUser(user);
                     }
                   },
                   style: ElevatedButton.styleFrom(

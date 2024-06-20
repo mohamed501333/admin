@@ -132,7 +132,7 @@ class MyApp extends StatelessWidget {
               if (Sharedprfs.email != null &&
                   Sharedprfs.password != null &&
                   initionlized == false) {
-                myType.connect(Sharedprfs.email!, Sharedprfs.password!);
+                myType.getData(Sharedprfs.email!, Sharedprfs.password!);
                 initionlized = true;
               }
 

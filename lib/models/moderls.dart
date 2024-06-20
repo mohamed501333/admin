@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
@@ -1461,15 +1460,24 @@ class Invoice {
       carNumber: map['carNumber'] as int,
       dispatcher: map['dispatcher'] as String,
       notes: map['notes'] as String,
-      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
-      items: List<InvoiceItem>.from((map['items'] as List<dynamic>).map<InvoiceItem>((x) => InvoiceItem.fromMap(x as Map<String,dynamic>),),),
+      actions: List<ActionModel>.from(
+        (map['actions'] as List<dynamic>).map<ActionModel>(
+          (x) => ActionModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      items: List<InvoiceItem>.from(
+        (map['items'] as List<dynamic>).map<InvoiceItem>(
+          (x) => InvoiceItem.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
       updatedat: map['updatedat'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Invoice.fromJson(String source) => Invoice.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Invoice.fromJson(String source) =>
+      Invoice.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -1479,30 +1487,29 @@ class Invoice {
   @override
   bool operator ==(covariant Invoice other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.invoice_ID == invoice_ID &&
-      other.serial == serial &&
-      other.driverName == driverName &&
-      other.carNumber == carNumber &&
-      other.dispatcher == dispatcher &&
-      other.notes == notes &&
-      listEquals(other.actions, actions) &&
-      listEquals(other.items, items) &&
-      other.updatedat == updatedat;
+
+    return other.invoice_ID == invoice_ID &&
+        other.serial == serial &&
+        other.driverName == driverName &&
+        other.carNumber == carNumber &&
+        other.dispatcher == dispatcher &&
+        other.notes == notes &&
+        listEquals(other.actions, actions) &&
+        listEquals(other.items, items) &&
+        other.updatedat == updatedat;
   }
 
   @override
   int get hashCode {
     return invoice_ID.hashCode ^
-      serial.hashCode ^
-      driverName.hashCode ^
-      carNumber.hashCode ^
-      dispatcher.hashCode ^
-      notes.hashCode ^
-      actions.hashCode ^
-      items.hashCode ^
-      updatedat.hashCode;
+        serial.hashCode ^
+        driverName.hashCode ^
+        carNumber.hashCode ^
+        dispatcher.hashCode ^
+        notes.hashCode ^
+        actions.hashCode ^
+        items.hashCode ^
+        updatedat.hashCode;
   }
 }
 
@@ -1606,7 +1613,8 @@ class InvoiceItem {
 
   String toJson() => json.encode(toMap());
 
-  factory InvoiceItem.fromJson(String source) => InvoiceItem.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory InvoiceItem.fromJson(String source) =>
+      InvoiceItem.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -1616,38 +1624,37 @@ class InvoiceItem {
   @override
   bool operator ==(covariant InvoiceItem other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.invoiceItem_ID == invoiceItem_ID &&
-      other.finalprodcut_ID == finalprodcut_ID &&
-      other.lenth == lenth &&
-      other.width == width &&
-      other.hight == hight &&
-      other.color == color &&
-      other.density == density &&
-      other.type == type &&
-      other.price == price &&
-      other.customer == customer &&
-      other.quantity == quantity &&
-      other.theoriticalWight == theoriticalWight &&
-      other.reallWight == reallWight;
+
+    return other.invoiceItem_ID == invoiceItem_ID &&
+        other.finalprodcut_ID == finalprodcut_ID &&
+        other.lenth == lenth &&
+        other.width == width &&
+        other.hight == hight &&
+        other.color == color &&
+        other.density == density &&
+        other.type == type &&
+        other.price == price &&
+        other.customer == customer &&
+        other.quantity == quantity &&
+        other.theoriticalWight == theoriticalWight &&
+        other.reallWight == reallWight;
   }
 
   @override
   int get hashCode {
     return invoiceItem_ID.hashCode ^
-      finalprodcut_ID.hashCode ^
-      lenth.hashCode ^
-      width.hashCode ^
-      hight.hashCode ^
-      color.hashCode ^
-      density.hashCode ^
-      type.hashCode ^
-      price.hashCode ^
-      customer.hashCode ^
-      quantity.hashCode ^
-      theoriticalWight.hashCode ^
-      reallWight.hashCode;
+        finalprodcut_ID.hashCode ^
+        lenth.hashCode ^
+        width.hashCode ^
+        hight.hashCode ^
+        color.hashCode ^
+        density.hashCode ^
+        type.hashCode ^
+        price.hashCode ^
+        customer.hashCode ^
+        quantity.hashCode ^
+        theoriticalWight.hashCode ^
+        reallWight.hashCode;
   }
 }
 
@@ -1956,177 +1963,110 @@ class OperationOrederItems {
 }
 
 class UserModel {
-  int id;
+  int user_Id;
+    String name;
+
   String email;
+    String password;
+
   String uid;
-  String name;
-  String password;
   List<String> permitions;
+  int updatedat;
+  List<ActionModel> actions;
   UserModel({
-    required this.id,
-    required this.email,
-    required this.uid,
+    required this.user_Id,
     required this.name,
+    required this.email,
     required this.password,
+    required this.uid,
     required this.permitions,
+    required this.updatedat,
+    required this.actions,
   });
 
+
   UserModel copyWith({
-    int? id,
-    String? email,
-    String? uid,
+    int? user_Id,
     String? name,
+    String? email,
     String? password,
+    String? uid,
     List<String>? permitions,
+    int? updatedat,
+    List<ActionModel>? actions,
   }) {
     return UserModel(
-      id: id ?? this.id,
-      email: email ?? this.email,
-      uid: uid ?? this.uid,
+      user_Id: user_Id ?? this.user_Id,
       name: name ?? this.name,
+      email: email ?? this.email,
       password: password ?? this.password,
+      uid: uid ?? this.uid,
       permitions: permitions ?? this.permitions,
+      updatedat: updatedat ?? this.updatedat,
+      actions: actions ?? this.actions,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'email': email,
-      'uid': uid,
+      'user_Id': user_Id,
       'name': name,
+      'email': email,
       'password': password,
+      'uid': uid,
       'permitions': permitions,
+      'updatedat': updatedat,
+      'actions': actions.map((x) => x.toMap()).toList(),
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] as int,
-      email: map['email'] as String,
-      uid: map['uid'] as String,
+      user_Id: map['user_Id'] as int,
       name: map['name'] as String,
+      email: map['email'] as String,
       password: map['password'] as String,
-      permitions: List<String>.from(map['permitions'] as List<dynamic>),
+      uid: map['uid'] as String,
+      permitions: List<String>.from((map['permitions'] as List<dynamic>)),
+      updatedat: map['updatedat'] as int,
+      actions: List<ActionModel>.from((map['actions'] as List<dynamic>).map<ActionModel>((x) => ActionModel.fromMap(x as Map<String,dynamic>),),),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'UserModel(id: $id, email: $email, uid: $uid, name: $name, password: $password, permitions: $permitions)';
+    return 'UserModel(user_Id: $user_Id, name: $name, email: $email, password: $password, uid: $uid, permitions: $permitions, updatedat: $updatedat, actions: $actions)';
   }
 
   @override
   bool operator ==(covariant UserModel other) {
     if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
-
-    return other.id == id &&
-        other.email == email &&
-        other.uid == uid &&
-        other.name == name &&
-        other.password == password &&
-        listEquals(other.permitions, permitions);
+  
+    return 
+      other.user_Id == user_Id &&
+      other.name == name &&
+      other.email == email &&
+      other.password == password &&
+      other.uid == uid &&
+      listEquals(other.permitions, permitions) &&
+      other.updatedat == updatedat &&
+      listEquals(other.actions, actions);
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        email.hashCode ^
-        uid.hashCode ^
-        name.hashCode ^
-        password.hashCode ^
-        permitions.hashCode;
-  }
-}
-
-class Users {
-  int id;
-  String uidemail;
-  String uid;
-  String name;
-  List<UserpermitionTittle> permitions;
-  Users({
-    required this.id,
-    required this.uidemail,
-    required this.uid,
-    required this.name,
-    required this.permitions,
-  });
-
-  Users copyWith({
-    int? id,
-    String? uidemail,
-    String? uid,
-    String? name,
-    List<UserpermitionTittle>? permitions,
-  }) {
-    return Users(
-      id: id ?? this.id,
-      uidemail: uidemail ?? this.uidemail,
-      uid: uid ?? this.uid,
-      name: name ?? this.name,
-      permitions: permitions ?? this.permitions,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'uidemail': uidemail,
-      'uid': uid,
-      'name': name,
-      'permitions': permitions.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  factory Users.fromMap(Map<String, dynamic> map) {
-    return Users(
-      id: map['id'] as int,
-      uidemail: map['uidemail'] as String,
-      uid: map['uid'] as String,
-      name: map['name'] as String,
-      permitions: List<UserpermitionTittle>.from(
-        (map['permitions'] as List<dynamic>).map<UserpermitionTittle>(
-          (x) => UserpermitionTittle.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Users.fromJson(String source) =>
-      Users.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'Users(id: $id, uidemail: $uidemail, uid: $uid, name: $name, permitions: $permitions)';
-  }
-
-  @override
-  bool operator ==(covariant Users other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.uidemail == uidemail &&
-        other.uid == uid &&
-        other.name == name &&
-        listEquals(other.permitions, permitions);
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        uidemail.hashCode ^
-        uid.hashCode ^
-        name.hashCode ^
-        permitions.hashCode;
+    return user_Id.hashCode ^
+      name.hashCode ^
+      email.hashCode ^
+      password.hashCode ^
+      uid.hashCode ^
+      permitions.hashCode ^
+      updatedat.hashCode ^
+      actions.hashCode;
   }
 }
 

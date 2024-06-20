@@ -84,7 +84,7 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
                       onPressed: () {
                         
                         if (formKey.currentState!.validate()) {
-                        context.read<Users_controller>().connect(nameController.text.toString(),passwordController.text.toString());
+                        context.read<Users_controller>().getData(nameController.text.toString(),passwordController.text.toString());
                         }
                         // FirebaseAuth.instance
                         //     .signInWithEmailAndPassword(

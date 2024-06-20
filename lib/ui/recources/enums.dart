@@ -813,3 +813,37 @@ extension A323 on Appactions {
   }
 }
 
+
+
+
+
+enum UserAction {
+  creat_user,
+  archive_user,
+}
+
+extension Q12 on UserAction {
+  ActionModel get add {
+    switch (this) {
+      case UserAction.creat_user:
+        return ActionModel(
+            action: "creat_user",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+      case UserAction.archive_user:
+        return ActionModel(
+            action: "archive_user",
+            who: SringsManager.myemail,
+            when: DateTime.now());
+    }
+  }
+
+  String get getTitle {
+    switch (this) {
+      case UserAction.creat_user:
+        return "creat_user";
+      case UserAction.archive_user:
+        return "archive_user";
+    }
+  }
+}
