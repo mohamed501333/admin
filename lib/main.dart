@@ -38,7 +38,6 @@ DateFormat formatwitTime3 = DateFormat('hh:mm a');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firestore.initialize("janson-11f24");
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           apiKey: "AIzaSyAkWHl9E0KfHcvf5Ifx0WVvEXuvk2URhhs",
@@ -46,7 +45,7 @@ void main() async {
           messagingSenderId: "106186917009",
           projectId: "janson-11f24"));
 
-  FirebaseDatabase.instance.setPersistenceEnabled(true);
+  // FirebaseDatabase.instance.setPersistenceEnabled(true);
 
       // Initialize shared preferences
   prefs = await SharedPreferences.getInstance();

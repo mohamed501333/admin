@@ -29,7 +29,7 @@ class Users_controller extends ChangeNotifier {
   }
 
   usersFrom_server(String email, String password) {
-    Uri uri = Uri.parse('ws://192.168.1.34:8080/users/ws')
+    Uri uri = Uri.parse('ws://192.168.1.$ip:8080/users/ws')
         .replace(queryParameters: {'username': email, 'password': password});
     channel = WebSocketChannel.connect(uri);
     channel.sink.add('');
