@@ -48,7 +48,8 @@ class BlocksStock extends StatelessWidget {
             child: Consumer<SettingController>(
               builder: (context, myType, child) {
                 return Column(
-                  children: [   errmsg() ,
+                  children: [
+                    errmsg(),
                     const SizedBox(
                       height: 12,
                     ),
@@ -233,7 +234,6 @@ class Buttoms extends StatelessWidget {
     );
   }
 }
-
 
 class Fields extends StatelessWidget {
   const Fields({

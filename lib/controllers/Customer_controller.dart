@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firedart/firestore/firestore.dart';
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/data/sharedprefs.dart';
@@ -18,7 +18,6 @@ class Customer_controller extends ChangeNotifier {
   List<CustomerModel> initalData = [];
   static late WebSocketChannel channel;
 
-
   getData() {
     if (internet == true) {
       customers_From_firebase();
@@ -28,21 +27,21 @@ class Customer_controller extends ChangeNotifier {
   }
 
   customers_From_firebase() {
-      print('get custorerms firvase');
+    print('get custorerms firvase');
     Firestore.instance.collection('customers').get().then((val) {
-            customers.clear();
+      customers.clear();
 
-        for (var element in val) {
-           
-              var customer = CustomerModel.fromMap(element.map);
-        if (customer.actions.if_action_exist(customerAction.archive_customer.getTitle) ==
+      for (var element in val) {
+        var customer = CustomerModel.fromMap(element.map);
+        if (customer.actions
+                .if_action_exist(customerAction.archive_customer.getTitle) ==
             false) {
           customers.add(customer);
         }
-        }
+      }
+  
     });
   }
-  
 
   customers_From_Server() async {
     // get for the first time
@@ -74,7 +73,8 @@ class Customer_controller extends ChangeNotifier {
           .map((e) => e.customer_id)
           .toList()
           .indexOf(customer.customer_id);
-      if (customer.actions.if_action_exist(customerAction.archive_customer.getTitle) ==
+      if (customer.actions
+              .if_action_exist(customerAction.archive_customer.getTitle) ==
           false) {
         if (index == -1) {
           customers.add(customer);
@@ -87,12 +87,8 @@ class Customer_controller extends ChangeNotifier {
     });
   }
 
-
-
-
-
   Add_new_customer(CustomerModel customer) {
-        if (internet == true) {
+    if (internet == true) {
       FirebaseFirestore.instance
           .collection('customers')
           .doc(customer.customer_id.toString())
@@ -100,7 +96,6 @@ class Customer_controller extends ChangeNotifier {
     } else {
       channel.sink.add(customer.toJson());
     }
-
   }
 
   String? initialForRaido;

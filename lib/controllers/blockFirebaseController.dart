@@ -15,7 +15,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class BlockFirebasecontroller extends ChangeNotifier {
   List<BlockModel> all = [];
-  
+
   List<BlockModel> blocks = [];
   List<BlockModel> archived_blocks = [];
   static late WebSocketChannel channel;
@@ -28,8 +28,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
   Blocks_From_firebase() {
-
-        if(Platform.isAndroid) {
+    if (Platform.isAndroid) {
       FirebaseDatabase.instance
           .ref("blocks")
           .orderByKey()
@@ -55,10 +54,10 @@ class BlockFirebasecontroller extends ChangeNotifier {
               true));
         }
         print("get data of blocks");
-
+   
         notifyListeners();
       });
-    } 
+    }
   }
 
   Blocks_From_Server() async {
@@ -107,8 +106,10 @@ class BlockFirebasecontroller extends ChangeNotifier {
       await FirebaseDatabase.instance
           .ref("blocks/${block.Block_Id}")
           .set(block.toJson());
-          
-      await FirebaseDatabase.instance.ref("temps/${block.Block_Id}").set( jsonEncode("{'blocks':${block.Block_Id}}"));
+
+      await FirebaseDatabase.instance
+          .ref("temps/${block.Block_Id}")
+          .set(jsonEncode("{'blocks':${block.Block_Id}}"));
     } else {
       channel.sink.add(block.toJson());
     }
@@ -128,9 +129,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
     }
   }
 
-  updateBlock(BlockModel block)async {
+  updateBlock(BlockModel block) async {
     if (internet == true) {
-    await  FirebaseDatabase.instance
+      await FirebaseDatabase.instance
           .ref("blocks/${block.Block_Id}")
           .set(block.toJson());
     } else {
@@ -227,7 +228,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     user.actions.add(ActionModel(
         action:
             "edit $cell of block  ${user.serial}/${user.number}/  from  $oldvalue  to  $newvalue",
-        who: Sharedprfs.email?? "",
+        who: Sharedprfs.email ?? "",
         when: DateTime.now()));
     user.item.L = newvalue[0].to_double();
     user.item.W = newvalue[1].to_double();
@@ -240,7 +241,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
     user.actions.add(ActionModel(
         action: "edit $cell",
-        who:Sharedprfs.email?? "",
+        who: Sharedprfs.email ?? "",
         when: DateTime.now()));
     cell == "color" ? user.item.color = newvalue : DoNothingAction();
     cell == "type" ? user.item.type = newvalue : DoNothingAction();

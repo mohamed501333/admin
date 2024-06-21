@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/data/sharedprefs.dart';
@@ -37,6 +38,7 @@ DateFormat formatwitTime3 = DateFormat('hh:mm a');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Firestore.initialize("janson-11f24");
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           apiKey: "AIzaSyAkWHl9E0KfHcvf5Ifx0WVvEXuvk2URhhs",
