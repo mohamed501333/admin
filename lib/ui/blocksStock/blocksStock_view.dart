@@ -9,6 +9,7 @@ import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
@@ -47,7 +48,7 @@ class BlocksStock extends StatelessWidget {
             child: Consumer<SettingController>(
               builder: (context, myType, child) {
                 return Column(
-                  children: [
+                  children: [   errmsg() ,
                     const SizedBox(
                       height: 12,
                     ),

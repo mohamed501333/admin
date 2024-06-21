@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, camel_case_types
 // ignore_for_file: must_be_immutable
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 
 import 'package:collection/collection.dart';
@@ -56,7 +57,7 @@ class CuttingOrderView extends StatelessWidget {
         ],
       ),
       body: Column(
-        children: [
+        children: [   errmsg() ,
           TheTable001(
             vm: vm,
           )
@@ -129,7 +130,7 @@ class HistoryPage extends StatelessWidget {
         title: const Text("تاريخ اوامر التشغيل"),
       ),
       body: Column(
-        children: [
+        children: [   errmsg() ,
           const SizedBox(
             height: 20,
           ),
@@ -807,7 +808,7 @@ class AddNewCuttingOrder extends StatelessWidget {
       body: SingleChildScrollView(
         reverse: true,
         child: Column(
-          children: [
+          children: [   errmsg() ,
             const SizedBox(
               height: 20,
             ),

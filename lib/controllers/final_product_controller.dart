@@ -29,35 +29,35 @@ class final_prodcut_controller extends ChangeNotifier {
   }
 
   finals_From_firebase() {
-    try {
-      FirebaseDatabase.instance
-          .ref("finalProducts")
-          .orderByKey()
-          .onValue
-          .listen((event) {
-        all.clear();
-        Archived_finalproducts.clear();
-        finalproducts.clear();
-        if (event.snapshot.value != null) {
-          Map<Object?, Object?> map =
-              event.snapshot.value as Map<Object?, Object?>;
-          for (var item in map.values.toList()) {
-            all.add(FinalProductModel.fromJson(item.toString()));
-          }
-          finalproducts.addAll(all.where((element) =>
-              element.actions.if_action_exist(
-                  finalProdcutAction.archive_final_prodcut.getactionTitle) ==
-              false));
-          Archived_finalproducts.addAll(all.where((element) =>
-              element.actions.if_action_exist(
-                  finalProdcutAction.archive_final_prodcut.getactionTitle) ==
-              true));
-        }
-        print("get data of finalprodcuts");
+    // try {
+    //   FirebaseDatabase.instance
+    //       .ref("finalProducts")
+    //       .orderByKey()
+    //       .onValue
+    //       .listen((event) {
+    //     all.clear();
+    //     Archived_finalproducts.clear();
+    //     finalproducts.clear();
+    //     if (event.snapshot.value != null) {
+    //       Map<Object?, Object?> map =
+    //           event.snapshot.value as Map<Object?, Object?>;
+    //       for (var item in map.values.toList()) {
+    //         all.add(FinalProductModel.fromJson(item.toString()));
+    //       }
+    //       finalproducts.addAll(all.where((element) =>
+    //           element.actions.if_action_exist(
+    //               finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+    //           false));
+    //       Archived_finalproducts.addAll(all.where((element) =>
+    //           element.actions.if_action_exist(
+    //               finalProdcutAction.archive_final_prodcut.getactionTitle) ==
+    //           true));
+    //     }
+    //     print("get data of finalprodcuts");
 
-        Refresh_Ui();
-      });
-    } catch (e) {}
+    //     Refresh_Ui();
+    //   });
+    // } catch (e) {}
   }
 
   finals_From_Server() async {
@@ -109,9 +109,9 @@ class final_prodcut_controller extends ChangeNotifier {
     });
   }
 
-  updateFinalProdcut(FinalProductModel itme) {
+  updateFinalProdcut(FinalProductModel itme)async {
     if (internet == true) {
-      FirebaseDatabase.instance
+    await  FirebaseDatabase.instance
           .ref("finalProducts/${itme.finalProdcut_ID}")
           .set(itme.toJson());
     } else {

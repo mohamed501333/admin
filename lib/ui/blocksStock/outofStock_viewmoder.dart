@@ -63,6 +63,7 @@ class BlocksStockViewModel extends BaseViewModel {
         type: typecontroller.text,
         price: 0);
     context.read<BlockFirebasecontroller>().addblock(BlockModel(
+      updatedat: DateTime.now().microsecondsSinceEpoch ,
         item: item,
         discreption: blockdesription.text,
         actions: [BlockAction.create_block.add],
@@ -104,6 +105,8 @@ class BlocksStockViewModel extends BaseViewModel {
           BlockWetOutput(L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
 
       BlockModel block = BlockModel(
+              updatedat: DateTime.now().microsecondsSinceEpoch ,
+
           item: item,
           notFinals: [],
           wetOutPut: wetOutPut,

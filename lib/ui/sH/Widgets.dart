@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/ui/chips/constans_view.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +70,7 @@ class _ReportwForHViewState extends State<ReportwForHView> {
         ],
       ),
       body: Column(
-        children: [
+        children: [   errmsg() ,
           TheTable0001(
             vm: vm,
             scissor: widget.scissor,

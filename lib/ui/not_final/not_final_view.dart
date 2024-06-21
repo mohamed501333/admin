@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/non_final_controller.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/not_final/not_final_viewModer.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class NotFinal extends StatelessWidget {
         ],
       ),
       body: Column(
-        children: [
+        children: [   errmsg() ,
           Item001(
             type: "ارضيات",
           ),
@@ -59,7 +60,9 @@ class NonFinalHistory extends StatelessWidget {
       appBar: AppBar(
         title: const Text('سجل الاضافه لليوم فى دون التام'),
       ),
-      body: Column(children: [TheTable0012(vm: vm)]),
+      body: Column(children: [
+           errmsg() ,
+        TheTable0012(vm: vm)]),
     );
   }
 }

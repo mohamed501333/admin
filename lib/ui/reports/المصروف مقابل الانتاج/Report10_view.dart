@@ -3,6 +3,7 @@
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/app/extentions.dart';
@@ -56,7 +57,7 @@ class Report10View extends StatelessWidget {
           ),
           body: SingleChildScrollView(
             child: Column(
-              children: [
+              children: [   errmsg() ,
                 const Text("تقرير الانتاج مقابل المصروف "),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,

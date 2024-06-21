@@ -26,7 +26,6 @@ class Chemicals_controller extends ChangeNotifier {
   }
 
   chemicals_From_firebase() {
-    FirebaseFirestore;
   }
 
   chmecals_From_Server() async {
@@ -136,7 +135,6 @@ class Chemicals_controller extends ChangeNotifier {
   }
 
   ChemicalCategorys_From_firebase() {
-    FirebaseFirestore;
   }
 
   ChemicalCategorys_From_Server() async {

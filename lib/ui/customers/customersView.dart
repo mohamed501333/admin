@@ -7,6 +7,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/customers/customers_viewModel.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -26,7 +27,7 @@ class Customers_view extends StatelessWidget {
               key: vm.formKey,
               child: SingleChildScrollView(
                 child: Column(
-                  children: [
+                  children: [   errmsg() ,
                     const SizedBox(
                       height: 20,
                     ),

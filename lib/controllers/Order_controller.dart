@@ -3,8 +3,8 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/data/sharedprefs.dart';
@@ -30,7 +30,31 @@ class OrderController extends ChangeNotifier {
   }
 
   cuttingOrders_From_firebase() {
-    FirebaseFirestore;
+
+
+    
+    // print('get orders firbase');Firestore.instance.collection('cuttingOrders').stream.where(test)
+    // Firestore.instance.collection('cuttingOrders').where('cuttingOrder_ID',isEqualTo:1704617197825 ).get().then((val) {
+    //   cuttingOrders.clear();
+
+    //   for (var element in val) {
+    //     var order = cutingOrder.fromMap(element.map);
+    //     if (order.actions.if_action_exist(OrderAction.Archive_order.getTitle) ==
+    //         false) {
+    //       cuttingOrders.add(order);
+    //     }
+    //   }
+    // });
+    // FirebaseFirestore.instance.collection('cuttingOrders').get().then((val) {
+    //   cuttingOrders.clear();
+    //   for (var element in val.docChanges) {
+    //     var order = cutingOrder.fromMap(element.doc.data()!);
+    //     if (order.actions.if_action_exist(OrderAction.Archive_order.getTitle) ==
+    //         false) {
+    //       cuttingOrders.add(order);
+    //     }
+    //   }
+    // });
   }
 
   cuttingOrders_From_Server() async {
@@ -43,7 +67,7 @@ class OrderController extends ChangeNotifier {
       for (var element in a) {
         var cittingorder = cutingOrder.fromMap(element);
         if (cittingorder.actions
-                .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+                .if_action_exist(OrderAction.Archive_order.getTitle) ==
             false) {
           cuttingOrders.add(cittingorder);
         }
@@ -63,13 +87,18 @@ class OrderController extends ChangeNotifier {
           .map((e) => e.cuttingOrder_ID)
           .toList()
           .indexOf(order.cuttingOrder_ID);
-      if (order.actions.if_action_exist(OrderAction.Archive_order.getTitle) ==
-          false) {
-        if (index == -1) {
+
+      if (index == -1) {
+        if (order.actions.if_action_exist(OrderAction.Archive_order.getTitle) ==
+            false) {
           cuttingOrders.add(order);
         } else {
           cuttingOrders.removeAt(index);
-          cuttingOrders.add(order);
+          if (order.actions
+                  .if_action_exist(OrderAction.Archive_order.getTitle) ==
+              false) {
+            cuttingOrders.add(order);
+          }
         }
       }
       notifyListeners();
@@ -152,11 +181,11 @@ class OrderController extends ChangeNotifier {
     cutingOrder user =
         cuttingOrders.where((element) => element.cuttingOrder_ID == id).first;
 
-    user.actions.add(ActionModel(
-        action:
-            "edit $cell of order  ${user.serial}  from  $oldvalue  to  $newvalue",
-        who: FirebaseAuth.instance.currentUser!.email ?? "",
-        when: DateTime.now()));
+    // user.actions.add(ActionModel(
+    //     action:
+    //         "edit $cell of order  ${user.serial}  from  $oldvalue  to  $newvalue",
+    //     who: FirebaseAuth.instance.currentUser!.email ?? "",
+    //     when: DateTime.now()));
 
     cell == "serial" ? user.serial = newvalue.to_int() : DoNothingAction();
     cell == "len"

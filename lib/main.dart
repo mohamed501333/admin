@@ -1,11 +1,12 @@
 import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/data/sharedprefs.dart';
 import 'package:jason_company/notification.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controllers/CategorysController.dart';
 import 'controllers/ChemicalsController.dart';
@@ -35,23 +36,25 @@ DateFormat formatwitTime = DateFormat('yyyy-MM-dd/hh:mm a');
 DateFormat formatwitTime2 = DateFormat('yyyy-MM-dd -hh:mm a');
 DateFormat formatwitTime3 = DateFormat('hh:mm a');
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Firestore.initialize("janson-11f24");
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           apiKey: "AIzaSyAkWHl9E0KfHcvf5Ifx0WVvEXuvk2URhhs",
           appId: "1:106186917009:android:fcd892c86b7d3e3447ab30",
           messagingSenderId: "106186917009",
           projectId: "janson-11f24"));
+
   FirebaseDatabase.instance.setPersistenceEnabled(true);
 
-// Initialize shared preferences
+      // Initialize shared preferences
   prefs = await SharedPreferences.getInstance();
-  
+
   if (Platform.isAndroid) {
-     initPushNotification();
+    initPushNotification();
   }
+
   runApp(MyApp());
 }
 
@@ -65,7 +68,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (context) => MainController(),
+            create: (context) => MainController()..streamServerStutues(),
           ),
           ChangeNotifierProvider(
             create: (context) => ScissorsController(),
@@ -101,7 +104,7 @@ class MyApp extends StatelessWidget {
             create: (context) => dropDowenContoller(),
           ),
           ChangeNotifierProvider(
-            create: (context) => Users_controller(),
+            create: (context) => Users_controller()..assignValOF_internet(),
           ),
           ChangeNotifierProvider(
             create: (context) => Category_controller(),
@@ -126,7 +129,6 @@ class MyApp extends StatelessWidget {
           navigatorKey: navigatorKey,
           theme: ThemeData(useMaterial3: false),
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
           home: Consumer<Users_controller>(
             builder: (context, myType, child) {
               if (Sharedprfs.email != null &&

@@ -25,7 +25,6 @@ class Category_controller extends ChangeNotifier {
   }
 
   chemicals_From_firebase() {
-    FirebaseFirestore;
   }
 
   chmecals_From_Server() async {

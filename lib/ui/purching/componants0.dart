@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/functions.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
@@ -76,7 +77,7 @@ class NewPurch extends StatelessWidget {
               key: vm.formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: [   errmsg() ,
                   const Center(
                     child: Text(
                       "تسجيل طلب شراء جديد",
@@ -345,7 +346,7 @@ class Details extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            
+               errmsg() ,
             IntrinsicHeight(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

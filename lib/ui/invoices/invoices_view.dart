@@ -9,6 +9,7 @@ import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/inviceForFinalProdct.dart';
 import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +60,9 @@ class _InvicesViewState extends State<InvicesView> {
               .toList();
           return SingleChildScrollView(
             child: Column(
-              children: t
+              children:[ 
+                   errmsg() ,
+                ...t
                   .map(
                     (e) => GestureDetector(
                       onTap: () {
@@ -98,7 +101,7 @@ class _InvicesViewState extends State<InvicesView> {
                       ),
                     ),
                   )
-                  .toList(),
+                  .toList()],
             ),
           );
         },

@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -26,7 +25,6 @@ class Invoice_controller extends ChangeNotifier {
   }
 
   finals_From_firebase() {
-    FirebaseFirestore;
   }
 
   finals_From_Server() async {

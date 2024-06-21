@@ -9,6 +9,7 @@ import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/chemical_stock/ChemicalStock_viewModel.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +36,7 @@ class Suplying extends StatelessWidget {
             title: const Text("امر توريد مخزنى"),
           ),
           body: Column(
-            children: [
+            children: [   errmsg() ,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

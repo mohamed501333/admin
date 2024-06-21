@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/ChemicalsController.dart';
 import 'package:jason_company/ui/chemical_stock/ChemicalStock_viewModel.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class CreateChemicalCategory extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+                children: [   errmsg() ,
                   ExpansionTile(
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

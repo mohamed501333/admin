@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +63,7 @@ class _FinalProductViewState extends State<FinalProductView> {
         body: Form(
           key: vm.formKey,
           child: Column(
-            children: [
+            children: [   errmsg() ,
               // FieldsINsertInFInalProdcut(vm: vm).permition(
               //     context, UserPermition.incert_in_finalProdcut_imorted),
               // Buttoms(vm: vm).permition(

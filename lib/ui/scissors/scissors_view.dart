@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import '../../app/extentions.dart';
 import '../../controllers/scissors_controller.dart';
@@ -36,7 +37,7 @@ class ScissorsView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(),
           body: Column(
-            children: [
+            children: [   errmsg() ,
               const Radiobuttom(),
               Expanded(
                 child: csissorsPages[myType.indexOfRadioButon],

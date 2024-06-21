@@ -4,6 +4,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/stockCheckController.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/stockCheck/reportBox.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class Report1_stockCheck extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(),
           body: Column(
-            children: [
+            children: [   errmsg() ,
               BoxOFReportForStockChek(),
               if (myType.selectedreport == 'تقرير عمليات الجرد')
                 Expanded(

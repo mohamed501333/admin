@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 
 void main() {
   runApp(const GeeksForGeeks());
@@ -35,7 +36,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       backgroundColor: const Color(0xff22252D),
       body: SafeArea(
         child: Column(
-          children: [
+          children: [   errmsg() ,
             Expanded(
               flex: 1,
               child: Row(

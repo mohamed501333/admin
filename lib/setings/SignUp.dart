@@ -5,6 +5,7 @@ import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class SignupPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
+          children: <Widget>[   errmsg() ,
             Column(
               children: <Widget>[
                 const SizedBox(height: 60.0),

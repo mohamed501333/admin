@@ -9,6 +9,7 @@ import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/round/report2pdf.dart';
 import 'package:jason_company/ui/reports/All_reports_veiwModel.dart';
@@ -95,7 +96,7 @@ class _Report2ForRState extends State<Report2ForR> {
         ],
       ),
       body: Column(
-        children: [
+        children: [   errmsg() ,
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,

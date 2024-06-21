@@ -6,6 +6,7 @@ import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/pdfForAllOF_h.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_viewmodel.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/pdfForScissors.dart';
@@ -32,7 +33,7 @@ class _H_Reports_viewState extends State<H_Reports_view> {
           body: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: [   errmsg() ,
                 TextButton(
                     onPressed: () async {
                       DateTime? pickedDate = await showDatePicker(

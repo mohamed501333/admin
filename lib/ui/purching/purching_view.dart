@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/purching/pdf.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,11 @@ class PurchVeiw extends StatelessWidget {
         builder: (context, myType, child) {
           return SingleChildScrollView(
             child: Column(
-              children: myType.purchesOrders.sortedBy<num>((element) => element.serial).map((e) => Card1(e: e)).toList(),
+              children:[    errmsg() ,
+                ...myType.purchesOrders.
+              sortedBy<num>((element) => 
+              element.serial).map((e) =>
+               Card1(e: e)).toList()],
             ),
           );
         },

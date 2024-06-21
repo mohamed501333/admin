@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle, Uint8List;
 import 'package:csv/csv.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'extentions.dart';
 import '../controllers/final_product_controller.dart';
 import '../models/moderls.dart';
@@ -43,6 +44,7 @@ class _bulkUploadState extends State<bulkUpload> {
         ),
         body: Column(
           children: [
+             errmsg() ,
             const Text(
               "هام:يجب ان يكون شيت الاكسل كالتالى مع حذف اول صف عند التصدير",
               style: TextStyle(

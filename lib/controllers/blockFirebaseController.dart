@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, empty_catches, file_names, unused_element
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -28,8 +29,8 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
   Blocks_From_firebase() {
-    print("ffff");
-    try {
+
+        if(Platform.isAndroid) {
       FirebaseDatabase.instance
           .ref("blocks")
           .orderByKey()
@@ -44,6 +45,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
           for (var item in map.values.toList()) {
             all.add(BlockModel.fromJson(item.toString()));
           }
+
           blocks.addAll(all.where((element) =>
               element.actions
                   .if_action_exist(BlockAction.archive_block.getactionTitle) ==
@@ -57,7 +59,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
         notifyListeners();
       });
-    } catch (e) {}
+    } 
   }
 
   Blocks_From_Server() async {
@@ -127,9 +129,9 @@ class BlockFirebasecontroller extends ChangeNotifier {
     }
   }
 
-  updateBlock(BlockModel block) {
+  updateBlock(BlockModel block)async {
     if (internet == true) {
-      FirebaseDatabase.instance
+    await  FirebaseDatabase.instance
           .ref("blocks/${block.Block_Id}")
           .set(block.toJson());
     } else {

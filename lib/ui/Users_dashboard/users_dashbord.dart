@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 // import 'package:jason_company/models/moderls.dart';
 // import 'package:jason_company/ui/recources/userpermitions.dart';
@@ -61,7 +62,8 @@ class UsersDashboard extends StatelessWidget {
             title: const DropDdowenForUsers(),
           ),
           body: ListView(
-              children: myType.users
+              children: [   errmsg() ,
+                ...myType.users
                   .map(
                     (u) => ExpansionTile(
                         title: Text(
@@ -69,38 +71,44 @@ class UsersDashboard extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 16.0, fontWeight: FontWeight.w500),
                         ),
-                        children: UserPermition.values
-                            .map((g) => Container(
-                                  decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: Colors.greenAccent),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: CheckboxListTile(
-                                      activeColor: Colors.blue,
-                                      checkColor: Colors.white,
-                                      autofocus: false,
-                                      onChanged: (v) {
-                                        if (u.permitions.contains(g.getTitle)) {
-                                          u.permitions.removeWhere(
-                                              (a) => a == g.getTitle);
-                                          myType.updateUser(u);
-                                        } else {
-                                          u.permitions.add(g.getTitle);
-                                          myType.updateUser(u);
-                                        }
-                                      },
-                                      title: Text(
-                                        g.getTitle,
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      value: u.permitions.contains(g.getTitle)),
-                                ))
-                            .toList()),
+                        children: [
+                          Text(
+                              "email : ${u.email} ----pass : ${u.password} ----id : ${u.user_Id}"),
+                          ...UserPermition.values
+                              .map((g) => Container(
+                                    decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Colors.greenAccent),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: CheckboxListTile(
+                                        activeColor: Colors.blue,
+                                        checkColor: Colors.white,
+                                        autofocus: false,
+                                        onChanged: (v) {
+                                          if (u.permitions
+                                              .contains(g.getTitle)) {
+                                            u.permitions.removeWhere(
+                                                (a) => a == g.getTitle);
+                                            myType.updateUser(u);
+                                          } else {
+                                            u.permitions.add(g.getTitle);
+                                            myType.updateUser(u);
+                                          }
+                                        },
+                                        title: Text(
+                                          g.getTitle,
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        value:
+                                            u.permitions.contains(g.getTitle)),
+                                  ))
+                              .toList()
+                        ]),
                   )
-                  .toList()),
+                  .toList()]),
         );
       },
     );

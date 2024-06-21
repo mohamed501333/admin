@@ -9,6 +9,7 @@ import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/stockCheckController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/buttoms.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/stockCheck/Reports.dart';
@@ -44,7 +45,7 @@ class Stockcheck extends StatelessWidget {
               vm.finalprodctBalance(myType.finalproducts, context);
 
           return Column(
-            children: [
+            children: [   errmsg() ,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

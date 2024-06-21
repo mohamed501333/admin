@@ -3,6 +3,7 @@
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/final_product_outOrder/wid.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class outOfStockOrder extends StatelessWidget {
           ),
           body: SingleChildScrollView(
             child: Column(
-              children: [
+              children: [   errmsg() ,
                 if (finalproducts.indexOfRadioButon == 0) OUT(),
                 // if (finalproducts.indexOfRadioButon == 0) column
               ],

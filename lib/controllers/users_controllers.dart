@@ -34,7 +34,6 @@ class Users_controller extends ChangeNotifier {
     channel = WebSocketChannel.connect(uri);
     channel.sink.add('');
     channel.stream.forEach((u) {
-      print("123312435");
       UserModel user = UserModel.fromJson(u);
       currentuser = user;
       SringsManager.myemail = user.name;
@@ -82,9 +81,16 @@ class Users_controller extends ChangeNotifier {
     notifyListeners();
   }
 
+  assignValOF_internet() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('internet', false);
+    internet = prefs.getBool('internet')!;
+  }
+
   changeValOf_internet(bool val) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('internet', val);
+    internet = val;
     notifyListeners();
   }
 }

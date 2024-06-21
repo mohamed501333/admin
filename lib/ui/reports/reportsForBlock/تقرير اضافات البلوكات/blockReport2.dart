@@ -8,6 +8,7 @@ import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/featues.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/pdf.dart';
@@ -58,7 +59,7 @@ class BlockReport3 extends StatelessWidget {
                 reverse: true,
                 scrollDirection: Axis.horizontal,
                 child: Column(
-                  children: [
+                  children: [   errmsg() ,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

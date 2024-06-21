@@ -5,6 +5,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:provider/provider.dart';
 
 //بلوكات منصرفه ومل تصنع
@@ -20,7 +21,7 @@ class OutAnsNorScissored extends StatelessWidget {
         title: const Text("بلوكات منصرفه ولم تصنع"),
       ),
       body: Column(
-        children: [const HeaderOftable9(), TheTable9(vm: vm)],
+        children: [   errmsg() ,const HeaderOftable9(), TheTable9(vm: vm)],
       ),
     );
   }

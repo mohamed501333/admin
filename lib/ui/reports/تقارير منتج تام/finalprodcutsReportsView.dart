@@ -7,6 +7,7 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D9%85%D9%86%D8%AA%D8%AC%20%D8%AA%D8%A7%D9%85/finalprodcutreprotsviewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,7 @@ class FinalprodcutsReportsView extends StatelessWidget {
             Consumer<final_prodcut_controller>(
               builder: (context, myType, child) {
                 return Column(
-                  children: [
+                  children: [   errmsg() ,
                     if (myType.selectedreport == 'تقرير المنصرف فقط')
                       const FinalprodcutReport1(),
                     if (myType.selectedreport == 'تقرير الوارد فقط')

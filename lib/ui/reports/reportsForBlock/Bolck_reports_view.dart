@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/reports/cuttingOrderReports/cutting_orderDetails_view.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/W.dart';
@@ -22,7 +23,7 @@ class BlockReportsView extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: [   errmsg() ,
             const SizedBox(
               height: 15,
             ),
@@ -165,7 +166,7 @@ class DailyBlockReportsView extends StatelessWidget {
         title: const Text(" تقارير يومية بلوكات"),
       ),
       body: Column(
-        children: [
+        children: [   errmsg() ,
           const SizedBox(
             height: 15,
           ),

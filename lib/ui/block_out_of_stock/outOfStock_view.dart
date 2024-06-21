@@ -11,6 +11,7 @@ import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/sH/Widgets.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +72,7 @@ class _OutOfStockViewState extends State<OutOfStockView> {
       body: Consumer<BlockFirebasecontroller>(
         builder: (context, b, child) {
           return Column(
-            children: [
+            children: [   errmsg() ,
               SizedBox(
                 height: 160,
                 child: Form(

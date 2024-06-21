@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
@@ -223,7 +224,7 @@ class HistoryOfAdingToStock extends StatelessWidget {
             title: const Text("سجل "),
           ),
           body: Column(
-            children: [
+            children: [   errmsg() ,
               Expanded(
                 child: SingleChildScrollView(
                   child: Table(

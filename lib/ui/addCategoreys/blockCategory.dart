@@ -6,6 +6,7 @@ import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
 import 'package:jason_company/ui/blocksStock/widgets.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class BlockCategoryView extends StatelessWidget {
       body: Form(
         key: vm.formKey,
         child: Column(
-          children: [
+          children: [   errmsg() ,
             const SizedBox(
               height: 12,
             ),

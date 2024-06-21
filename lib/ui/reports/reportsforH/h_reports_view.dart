@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/reports/reportsforH/Widgets.dart';
 
 class HReprotsView extends StatelessWidget {
@@ -21,7 +22,7 @@ class HReprotsView extends StatelessWidget {
                   child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: [
+                        children: [   errmsg() ,
                           Results(
                             scissor: e,
                             blocks: const [],

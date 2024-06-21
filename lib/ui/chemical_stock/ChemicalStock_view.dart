@@ -7,6 +7,7 @@ import 'package:jason_company/ui/chemical_stock/componants/Out.dart';
 import 'package:jason_company/ui/chemical_stock/componants/boxOfReport.dart';
 import 'package:jason_company/ui/chemical_stock/componants/componants.dart';
 import 'package:jason_company/ui/chemical_stock/componants/reports.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +49,7 @@ class Chemical_view extends StatelessWidget {
       body: Consumer<dropDowenContoller>(
         builder: (context, myType, child) {
           return Column(
-            children: [
+            children: [   errmsg() ,
               BoxOFReport(),
               if (myType.selectedreport == 'تقرير الكمية المتوفره فقط')
                 R_FOR_onlyAvilableQuantity(),

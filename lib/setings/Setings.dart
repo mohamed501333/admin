@@ -9,7 +9,10 @@ import 'package:jason_company/setings/SignUp.dart';
 
 import 'package:jason_company/setings/login.dart';
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
+import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
+import 'package:jason_company/ui/main/main_view.dart';
+import 'package:jason_company/ui/recources/publicVariables.dart';
 import 'package:jason_company/ui/reports/reportsforH/h_reports_viewModel.dart';
 import 'package:provider/provider.dart';
 
@@ -17,12 +20,12 @@ class Setings extends StatelessWidget {
   Setings({super.key});
   HReportsViewModel vm1 = HReportsViewModel();
   HReportsViewModel vm2 = HReportsViewModel();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
       children: [
+        errmsg(),
         ElevatedButton(
             onPressed: () {
               context.gonext(context, const MyloginPage());
@@ -35,6 +38,47 @@ class Setings extends StatelessWidget {
                 },
                 child: const Text("تسجيل مستخدم جديد"))
             : const SizedBox(),
+        Consumer<Users_controller>(
+          builder: (context, myType, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'اختر طريقة االاتصال',
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                ),
+                Row(
+                  children: [
+                    Radio(
+                        value: true,
+                        groupValue: internet,
+                        onChanged: (onChanged) {
+                          myType.changeValOf_internet(onChanged!);
+                          initialized = false;
+                          internet = true;
+                          getModulesData(context);
+                        }),
+                    const Text('الانترنت')
+                  ],
+                ),
+                Row(
+                  children: [
+                    Radio(
+                        value: false,
+                        groupValue: internet,
+                        onChanged: (onChanged) {
+                          myType.changeValOf_internet(onChanged!);
+                          initialized = false;
+                                     internet = false;
+                          getModulesData(context);
+                        }),
+                    const Text("السيرفر")
+                  ],
+                ),
+              ],
+            );
+          },
+        )
       ],
     ));
   }
