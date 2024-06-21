@@ -437,7 +437,8 @@ class ButtomOfRefreshQuantity extends StatelessWidget {
                                                     notes: "",
                                                     invoiceNum: 0,
                                                     cuting_order_number: 0,
-                                                    actions: [
+                                                    actions: [finalProdcutAction
+                                  .recive_Done_Form_FinalProdcutStock.add,
                                                       finalProdcutAction
                                                           .incert_From_StockChekRefresh
                                                           .add

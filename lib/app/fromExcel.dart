@@ -111,7 +111,8 @@ class _bulkUploadState extends State<bulkUpload> {
                                 cuting_order_number: 0,
                                 actions: [
                               finalProdcutAction
-                                  .incert_finalProduct_from_Others.add
+                                  .incert_finalProduct_from_Others.add,finalProdcutAction
+                                  .recive_Done_Form_FinalProdcutStock.add,
                             ]));
                   }
                 }
