@@ -38,8 +38,6 @@ dependencies:
   expandable: ^5.0.1
   file_picker: ^8.0.3
   firebase_analytics: ^10.10.0
-  firebase_auth: ^4.19.5
-  firebase_auth_platform_interface: ^7.2.6
   firebase_core: ^2.24.2
   firebase_database: ^10.3.2
   firebase_messaging: ^14.8.0

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
@@ -14,8 +13,8 @@ class MyloginPage extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyloginPage> {
-  TextEditingController nameController = TextEditingController(text: Sharedprfs.email);
-  TextEditingController passwordController = TextEditingController(text:Sharedprfs.email );
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -45,8 +44,7 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          FirebaseAuth.instance.currentUser?.email.toString() ??
-                              "",
+                         Sharedprfs.email?? "",
                           style: const TextStyle(fontSize: 20),
                         )),
                     Container(

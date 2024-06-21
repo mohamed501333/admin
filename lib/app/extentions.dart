@@ -26,7 +26,7 @@ extension Brovider on BuildContext {
   }
 
   gonextAnsRemove(BuildContext context, Widget route) {
-    checkAuth(context);
+
     Navigator.of(this).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => route), (d) => false);
   }

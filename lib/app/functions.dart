@@ -1,11 +1,8 @@
 // ignore: non_constant_identifier_names
 // ignore_for_file: avoid_print, argument_type_not_assignable_to_error_handler
 
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
-import 'package:jason_company/setings/login.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -30,40 +27,6 @@ Future<void> permission() async {
   }
 }
 
-checkAuth(BuildContext context) {
-  Connectivity().checkConnectivity().then((value) {
-    if (value == ConnectivityResult.none) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('You\'re not connected to a network')));
-    } else {
-      try {
-        if (FirebaseAuth.instance.currentUser != null) {
-          try {
-            FirebaseAuth.instance.currentUser!.reload();
-          } catch (e) {
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (c) => const MyloginPage()),
-                (f) => true);
-          }
-          FirebaseAuth.instance.currentUser!.reload().then((value) {});
-          print("reload auth");
-        } else {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (c) => const MyloginPage()),
-              (f) => true);
-        }
-      } catch (e) {
-        print("fail auth");
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (c) => const MyloginPage()),
-            (f) => true);
-      }
-    }
-  });
-}
 
 List<DateTime> getDaysInBeteween(DateTime startDate, DateTime endDate) {
   List<DateTime> days = [];

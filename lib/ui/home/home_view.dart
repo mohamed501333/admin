@@ -270,7 +270,7 @@ class HomeView extends StatelessWidget {
                     },
                   ).permition(context, UserPermition.show_users_actions),
                   context.read<Users_controller>().currentuser!.email ==
-                          "mohamed501333"
+                          "m.khaled"
                       ? Item0(
                           MediaQuery.of(context).size.width * .45,
                           ColorManager.arsenic,

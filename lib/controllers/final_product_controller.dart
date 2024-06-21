@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -179,7 +178,7 @@ class final_prodcut_controller extends ChangeNotifier {
 
     user.actions.add(ActionModel(
         action: "edit $cell",
-        who: FirebaseAuth.instance.currentUser!.email ?? "",
+        who: Sharedprfs.email?? "",
         when: DateTime.now()));
     cell == "amount" ? user.item.amount = newvalue.to_int() : DoNothingAction();
     cell == "type" ? user.item.type = newvalue : DoNothingAction();
@@ -197,7 +196,7 @@ class final_prodcut_controller extends ChangeNotifier {
 
     user.actions.add(ActionModel(
         action: "edit $cell",
-        who: FirebaseAuth.instance.currentUser!.email ?? "",
+        who:Sharedprfs.email?? "",
         when: DateTime.now()));
     user.item.L = newvalue[0].to_double();
     user.item.W = newvalue[1].to_double();

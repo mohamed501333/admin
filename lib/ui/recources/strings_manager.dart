@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SringsManager {
   static const String itemTitle1 = " منصرف من مخزن البلوك";
@@ -14,6 +13,4 @@ class SringsManager {
   static const String itemTitle12 = "اضافه الى البلوكات";
   static const String itemTitle13 = " الاله الحسابه";
   static String myemail='';
-  static String myemail2 =
-      FirebaseAuth.instance.currentUser!.email ?? "unknowen";
 }

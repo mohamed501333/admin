@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
@@ -228,7 +227,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     user.actions.add(ActionModel(
         action:
             "edit $cell of block  ${user.serial}/${user.number}/  from  $oldvalue  to  $newvalue",
-        who: FirebaseAuth.instance.currentUser!.email ?? "",
+        who: Sharedprfs.email?? "",
         when: DateTime.now()));
     user.item.L = newvalue[0].to_double();
     user.item.W = newvalue[1].to_double();
@@ -241,7 +240,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
     user.actions.add(ActionModel(
         action: "edit $cell",
-        who: FirebaseAuth.instance.currentUser!.email ?? "",
+        who:Sharedprfs.email?? "",
         when: DateTime.now()));
     cell == "color" ? user.item.color = newvalue : DoNothingAction();
     cell == "type" ? user.item.type = newvalue : DoNothingAction();
