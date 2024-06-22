@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -9,8 +10,17 @@ class PDfpreview extends StatelessWidget {
   final FutureOr<Uint8List> v;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PdfPreview(build: (d) => v),
-    );
+    if (Platform.isAndroid) {
+          return Scaffold(
+            
+        body: PdfPreview(build: (d) => v),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(),
+        body: PdfPreview(build: (d) => v),
+      );
+    }
+    
   }
 }

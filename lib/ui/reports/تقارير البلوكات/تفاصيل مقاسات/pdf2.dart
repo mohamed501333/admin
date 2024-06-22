@@ -4,7 +4,7 @@ import 'package:jason_company/app/extentions/blockExtentions.dart';
 import '../../../../app/extentions.dart';
 
 import '../../../../models/moderls.dart';
-import '../Bolck_reports_viewModel.dart';
+import '../../reportsForBlock/Bolck_reports_viewModel.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 

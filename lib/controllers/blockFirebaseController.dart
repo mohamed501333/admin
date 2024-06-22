@@ -258,4 +258,5 @@ class BlockFirebasecontroller extends ChangeNotifier {
   }
 
 //zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  String? selectedReport;
 }

@@ -10,8 +10,8 @@ import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/featues.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/pdf.dart';
+import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/featues.dart';
+import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/pdf.dart';
 import 'package:provider/provider.dart';
 
 import 'package:jason_company/controllers/blockFirebaseController.dart';
@@ -30,36 +30,34 @@ class BlockReport3 extends StatelessWidget {
                 element.serial == context.read<ObjectBoxController>().serial2)
             .sortedBy<num>((element) => element.number)
             .toList();
-        return Scaffold(
-            appBar: AppBar(
-              actions: [
-                IconButton(
-                  onPressed: () async {
-                    generateAndSaveExcel(blocks);
-                  },
-                  icon: const Icon(Icons.explicit_outlined),
-                ),
-                IconButton(
-                    onPressed: () {
-                      permission().then((value) async {
-                        PdfBlockReport2.generate(context, blocks)
-                            .then((value) => context.gonext(
-                                context,
-                                PDfpreview(
-                                  v: value.save(),
-                                )));
-                      });
-                    },
-                    icon: const Icon(Icons.picture_as_pdf)),
-                const DropDdowen_forCode()
-              ],
-            ),
-            body: ListView(children: [
-              SingleChildScrollView(
-                reverse: true,
-                scrollDirection: Axis.horizontal,
-                child: Column(
-                  children: [   errmsg() ,
+        return Column(
+                  children: [
+                    errmsg(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () async {
+                            generateAndSaveExcel(blocks);
+                          },
+                          icon: const Icon(Icons.explicit_outlined),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              permission().then((value) async {
+                                PdfBlockReport2.generate(context, blocks)
+                                    .then((value) => context.gonext(
+                                        context,
+                                        PDfpreview(
+                                          v: value.save(),
+                                        )));
+                              });
+                            },
+                            icon: const Icon(Icons.picture_as_pdf)),
+                        const DropDdowen_forCode(),
+                      ],
+                    ),
+                 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -82,9 +80,7 @@ class BlockReport3 extends StatelessWidget {
                           .toList(),
                     )
                   ],
-                ),
-              )
-            ]));
+                );
       },
     );
   }

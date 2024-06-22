@@ -6,14 +6,12 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:jason_company/ui/reports/%D8%A7%D9%84%D9%85%D8%B5%D8%B1%D9%88%D9%81%20%D9%85%D9%82%D8%A7%D8%A8%D9%84%20%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%A7%D8%AC/Report10_view.dart';
+import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/blocksReoprtsveiw.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/horizintal/scissor_reports_view.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D9%85%D9%82%D8%B5%D8%A7%D8%AA/round/report2.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D9%85%D9%86%D8%AA%D8%AC%20%D8%AA%D8%A7%D9%85/finalprodcutsReportsView.dart';
 import 'package:jason_company/ui/reports/reportsForBlock/%D8%A7%D9%84%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84/block%20reports%20details.com/block_details_view.dart';
 import 'package:jason_company/ui/reports/cuttingOrderReports/cutting_orderDetails_view.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84%20%D9%85%D9%82%D8%A7%D8%B3%D8%A7%D8%AA/sizes_details.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/blockReport2.dart';
-import 'package:jason_company/ui/reports/reportsForBlock/Bolck_reports_view.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/details_of_finalProdcut.dart';
 
 // ignore: must_be_immutable
@@ -35,18 +33,8 @@ class ReportsView extends StatelessWidget {
         permition: permitionss(
             context, UserPermition.show_Reports_details_of_finalProdcut_stock),
       ),
-      Reportmodel(
-        title: "اجماليات البلوكات      ",
-        route: const BlockReportsView(),
-        permition:
-            permitionss(context, UserPermition.show_Reports_totals_of_blocks),
-      ),
-      Reportmodel(
-        title: "يومية صرف بلوكات     ",
-        route: DailyBlockReportsView(),
-        permition:
-            permitionss(context, UserPermition.show_Reports_consume_boock),
-      ),
+
+  
       Reportmodel(
         title: "  تفاصيل مخزن البلوكات     ",
         route: Block_detaild_view(),
@@ -54,8 +42,8 @@ class ReportsView extends StatelessWidget {
             context, UserPermition.show_Reports_details_of_block_stock),
       ),
       Reportmodel(
-        title: "  تفاصيل مقاسات البلوكات     ",
-        route: BlocksSizesDetials(),
+        title: "  تقارير البلوكات    ",
+        route: BlocksReports(),
         permition: permitionss(context,
             UserPermition.show_Reports_details_of_sizes_of_block_stock),
       ),
@@ -65,12 +53,7 @@ class ReportsView extends StatelessWidget {
         permition: permitionss(
             context, UserPermition.show_Reports_details_of_finalProdcut_stock),
       ),
-      Reportmodel(
-        title: " تقرير  صبات البلوكات     ",
-        route: const BlockReport3(),
-        permition:
-            permitionss(context, UserPermition.show_Reports_every_serial),
-      ),
+
       Reportmodel(
         title: "  تقرير   المقصات  الراسى     ",
         route: const H_Reports_view(),
