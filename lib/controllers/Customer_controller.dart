@@ -27,20 +27,20 @@ class Customer_controller extends ChangeNotifier {
   }
 
   customers_From_firebase() {
-    print('get custorerms firvase');
-    Firestore.instance.collection('customers').get().then((val) {
-      customers.clear();
+    // print('get custorerms firvase');
+    // Firestore.instance.collection('customers').get().then((val) {
+    //   customers.clear();
 
-      for (var element in val) {
-        var customer = CustomerModel.fromMap(element.map);
-        if (customer.actions
-                .if_action_exist(customerAction.archive_customer.getTitle) ==
-            false) {
-          customers.add(customer);
-        }
-      }
+    //   for (var element in val) {
+    //     var customer = CustomerModel.fromMap(element.map);
+    //     if (customer.actions
+    //             .if_action_exist(customerAction.archive_customer.getTitle) ==
+    //         false) {
+    //       customers.add(customer);
+    //     }
+    //   }
   
-    });
+    // });
   }
 
   customers_From_Server() async {

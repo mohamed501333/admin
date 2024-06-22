@@ -31,7 +31,7 @@ class Setings extends StatelessWidget {
               context.gonext(context, const MyloginPage());
             },
             child: const Text("تسجيل الدخول")),
-        context.read<Users_controller>().currentuser!.email == "m.khaked"
+        context.read<Users_controller>().currentuser!.email == "m.khaled"
             ? ElevatedButton(
                 onPressed: () {
                   context.gonext(context, SignupPage());
