@@ -8,11 +8,6 @@ class MainController extends ChangeNotifier {
   bool isServerOnline = false;
   streamServerStutues() {
     Timer.periodic(const Duration(seconds: 1), (t) async {
-      //      NetworkDiscovery.discover('192.168.1', 8080).listen((onData) {
-      //   if (onData.ip.to_int() != ip) {
-      //     ip = onData.ip.to_int();
-      //   }
-      // });
 
       final serverisofline =
           await NetworkDiscovery.discover('192.168.1', 8080).isEmpty;
