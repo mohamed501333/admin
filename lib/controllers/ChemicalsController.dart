@@ -30,7 +30,7 @@ class Chemicals_controller extends ChangeNotifier {
 
   chmecals_From_Server() async {
     // get for the first time
-    Uri uri = Uri.http('192.168.1.$ip:8080', '/chemicals');
+    Uri uri = Uri.http('$ip:8080', '/chemicals');
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       Chemicals.clear();
@@ -46,7 +46,7 @@ class Chemicals_controller extends ChangeNotifier {
       notifyListeners();
     }
     //
-    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/chemicals/ws').replace(
+    Uri uri2 = Uri.parse('ws://$ip:8080/chemicals/ws').replace(
         queryParameters: {
           'username': Sharedprfs.email,
           'password': Sharedprfs.password
@@ -140,7 +140,7 @@ class Chemicals_controller extends ChangeNotifier {
   ChemicalCategorys_From_Server() async {
     // get for the first time
     Uri uri =
-        Uri.http('192.168.1.$ip:8080', '/chemicalcategorys/chemicalcategorys');
+        Uri.http('$ip:8080', '/chemicalcategorys/chemicalcategorys');
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       ChemicalCategorys.clear();
@@ -156,7 +156,7 @@ class Chemicals_controller extends ChangeNotifier {
       notifyListeners();
     }
     //
-    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/chemicalcategorys/ws')
+    Uri uri2 = Uri.parse('ws://$ip:8080/chemicalcategorys/ws')
         .replace(queryParameters: {
       'username': Sharedprfs.email,
       'password': Sharedprfs.password

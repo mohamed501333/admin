@@ -251,6 +251,7 @@ class TheTable001 extends StatelessWidget {
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(
+            
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
@@ -343,9 +344,9 @@ class TheTable001 extends StatelessWidget {
                                     UserPermition.can_close_in_cutting_order),
                                 Center(
                                   child: Column(
-                                    children: order.notes.map((e)=>Text(e)).toList()
-                                     ,
-                                    
+                                    children: order.notes
+                                        .map((e) => Text(e))
+                                        .toList(),
                                   ),
                                 ),
                                 //موافقة الكنترول
@@ -924,7 +925,9 @@ showmyAlertDialog(BuildContext context, OrderAction action, cutingOrder item) {
             ElevatedButton(
                 // style: ElevatedButton.styleFrom(primary: Colors.red),
                 onPressed: () {
-                  context.read<OrderController>().updatecuttingOrder(item, action);
+                  context
+                      .read<OrderController>()
+                      .updatecuttingOrder(item, action);
                   Navigator.pop(context);
                 },
                 child: const Text(

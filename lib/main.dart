@@ -127,16 +127,11 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: Consumer<Users_controller>(
             builder: (context, myType, child) {
-              if (Sharedprfs.email != null &&
-                  Sharedprfs.password != null &&
-                  initionlized == false) {
-                myType.getData(Sharedprfs.email!, Sharedprfs.password!);
-                initionlized = true;
-              }
+
 
               return a(context)
                   ? myType.currentuser == null
-                      ? const MyloginPage()
+                      ?  MyloginPage()
                       : Mainview()
                   : const CircularProgressIndicator();
             },

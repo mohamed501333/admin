@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firedart/firedart.dart';
+// import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/data/sharedprefs.dart';
@@ -45,7 +45,7 @@ class Customer_controller extends ChangeNotifier {
 
   customers_From_Server() async {
     // get for the first time
-    Uri uri = Uri.http('192.168.1.$ip:8080', '/customers');
+    Uri uri = Uri.http('$ip:8080', '/customers');
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       customers.clear();
@@ -61,7 +61,7 @@ class Customer_controller extends ChangeNotifier {
       notifyListeners();
     }
     //
-    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/customers/ws').replace(
+    Uri uri2 = Uri.parse('ws://$ip:8080/customers/ws').replace(
         queryParameters: {
           'username': Sharedprfs.email,
           'password': Sharedprfs.password

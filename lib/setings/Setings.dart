@@ -28,7 +28,7 @@ class Setings extends StatelessWidget {
         errmsg(),
         ElevatedButton(
             onPressed: () {
-              context.gonext(context, const MyloginPage());
+              context.gonext(context,  MyloginPage());
             },
             child: const Text("تسجيل الدخول")),
         context.read<Users_controller>().currentuser!.email == "m.khaled"
@@ -38,6 +38,8 @@ class Setings extends StatelessWidget {
                 },
                 child: const Text("تسجيل مستخدم جديد"))
             : const SizedBox(),
+        context.read<Users_controller>().currentuser!.email == "m.khaled"?Text(ip):const SizedBox(),
+
         Consumer<Users_controller>(
           builder: (context, myType, child) {
             return Column(

@@ -61,7 +61,7 @@ class final_prodcut_controller extends ChangeNotifier {
 
   finals_From_Server() async {
     // get for the first time
-    Uri uri = Uri.http('192.168.1.$ip:8080', '/finalProducts');
+    Uri uri = Uri.http('$ip:8080', '/finalProducts');
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       finalproducts.clear();
@@ -77,7 +77,7 @@ class final_prodcut_controller extends ChangeNotifier {
       Refresh_Ui();
     }
     //
-    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/finalProducts/ws').replace(
+    Uri uri2 = Uri.parse('ws://$ip:8080/finalProducts/ws').replace(
         queryParameters: {
           'username': Sharedprfs.email,
           'password': Sharedprfs.password

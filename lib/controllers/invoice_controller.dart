@@ -29,7 +29,7 @@ class Invoice_controller extends ChangeNotifier {
 
   finals_From_Server() async {
     // get for the first time
-    Uri uri = Uri.http('192.168.1.$ip:8080', '/invoices');
+    Uri uri = Uri.http('$ip:8080', '/invoices');
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       invoices.clear();
@@ -45,7 +45,7 @@ class Invoice_controller extends ChangeNotifier {
       notifyListeners();
     }
     //
-    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/invoices/ws').replace(
+    Uri uri2 = Uri.parse('ws://$ip:8080/invoices/ws').replace(
         queryParameters: {
           'username': Sharedprfs.email,
           'password': Sharedprfs.password

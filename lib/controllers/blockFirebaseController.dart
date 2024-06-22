@@ -54,7 +54,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
               true));
         }
         print("get data of blocks");
-   
+
         notifyListeners();
       });
     }
@@ -62,10 +62,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
   Blocks_From_Server() async {
     // get for the first time
-    Uri uri = Uri.http('192.168.1.$ip:8080', '/blocks').replace(
-        queryParameters: {
-          'avilable':true
-        });
+    Uri uri = Uri.http('$ip:8080', '/blocks');
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       blocks.clear();
@@ -81,7 +78,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
       notifyListeners();
     }
     //
-    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/blocks/ws').replace(
+    Uri uri2 = Uri.parse('ws://$ip:8080/blocks/ws').replace(
         queryParameters: {
           'username': Sharedprfs.email,
           'password': Sharedprfs.password

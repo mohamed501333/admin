@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
+
 import '../../../../app/extentions.dart';
 import '../../../../models/moderls.dart';
 import '../../../../services/file_handle_api.dart';
@@ -10,8 +12,6 @@ Future<void> generateAndSaveExcel(List<BlockModel> blocks) async {
   final xcel.Workbook workbook = xcel.Workbook(); // create a new excel workbook
   final xcel.Worksheet sheet = workbook
       .worksheets[0]; // the sheet we will be populating (only the first sheet)
-  // const String excelFile = 'test_download'; // the name of the excel
-  Directory? appDocDirectory = await getExternalStorageDirectory();
 
   sheet.getRangeByIndex(1, 1).setText('number');
   sheet.getRangeByIndex(1, 2).setText('code');
@@ -46,10 +46,17 @@ Future<void> generateAndSaveExcel(List<BlockModel> blocks) async {
 
   // save the document in the downloads file
   final List<int> bytes = workbook.saveAsStream();
-  File('${appDocDirectory!.path}/${blocks.first.serial} صبه.xlsx')
-      .writeAsBytes(bytes)
-      .then((value) => FileHandleApi.openFile(value));
 
-  //dispose the workbook
-  // workbook.dispose();
+  if (Platform.isAndroid) {
+    Directory? appDocDirectory = await getExternalStorageDirectory();
+
+    File('${appDocDirectory!.path}/${blocks.first.serial} صبه.xlsx')
+        .writeAsBytes(bytes)
+        .then((value) => FileHandleApi.openFile(value));
+  } else {
+    String? outputFile = await FilePicker.platform.saveFile(
+        dialogTitle: 'Save Your File to desired location',
+        fileName: ' ${blocks.first.serial} صبه');
+    File('$outputFile .xlsx').writeAsBytes(bytes);
+  }
 }

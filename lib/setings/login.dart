@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:jason_company/controllers/main_controller.dart';
 import 'package:jason_company/controllers/users_controllers.dart';
 import 'package:jason_company/data/sharedprefs.dart';
 import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/publicVariables.dart';
 import 'package:provider/provider.dart';
 
-class MyloginPage extends StatefulWidget {
-  const MyloginPage({super.key});
-  @override
-  State<MyloginPage> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyloginPage> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class MyloginPage extends StatelessWidget {
+  MyloginPage({super.key});
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +19,18 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
           padding: const EdgeInsets.all(10),
           child: Form(
             key: formKey,
-            child: Consumer<Users_controller>(
-              builder: (context, myType, child) {
+            child: Consumer2<Users_controller, MainController>(
+              builder: (context, myType, mm, child) {
+                TextEditingController nameController = TextEditingController();
+                TextEditingController passwordController =
+                    TextEditingController();
+
+                nameController.text = Sharedprfs.email!;
+                passwordController.text = Sharedprfs.password!;
+                if (nameController.text != '' &&
+                    passwordController.text != '') {
+                  myType.getData(nameController.text, passwordController.text);
+                }
 
                 return ListView(
                   children: <Widget>[
@@ -44,7 +49,7 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                         Sharedprfs.email?? "",
+                          Sharedprfs.email ?? "",
                           style: const TextStyle(fontSize: 20),
                         )),
                     Container(
@@ -105,6 +110,8 @@ class _MyStatefulWidgetState extends State<MyloginPage> {
                           onPressed: () {
                             myType.currentuser = null;
                             Sharedprfs.removeemailAndPassword();
+                            passwordController.text = '';
+                            nameController.text = '';
                             initialized = false;
                             myType.Refrsh_ui();
                           },

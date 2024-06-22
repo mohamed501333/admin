@@ -58,7 +58,7 @@ class OrderController extends ChangeNotifier {
 
   cuttingOrders_From_Server() async {
     // get for the first time
-    Uri uri = Uri.http('192.168.1.$ip:8080', '/cuttingOrders');
+    Uri uri = Uri.http('$ip:8080', '/cuttingOrders');
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       cuttingOrders.clear();
@@ -74,7 +74,7 @@ class OrderController extends ChangeNotifier {
       notifyListeners();
     }
     //
-    Uri uri2 = Uri.parse('ws://192.168.1.$ip:8080/cuttingOrders/ws').replace(
+    Uri uri2 = Uri.parse('ws://$ip:8080/cuttingOrders/ws').replace(
         queryParameters: {
           'username': Sharedprfs.email,
           'password': Sharedprfs.password

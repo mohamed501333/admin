@@ -29,7 +29,7 @@ class Users_controller extends ChangeNotifier {
   }
 
   usersFrom_server(String email, String password) {
-    Uri uri = Uri.parse('ws://192.168.1.$ip:8080/users/ws')
+    Uri uri = Uri.parse('ws://$ip:8080/users/ws')
         .replace(queryParameters: {'username': email, 'password': password});
     channel = WebSocketChannel.connect(uri);
     channel.sink.add('');
@@ -37,19 +37,17 @@ class Users_controller extends ChangeNotifier {
       UserModel user = UserModel.fromJson(u);
       currentuser = user;
       SringsManager.myemail = user.name;
-      if (currentuser != null) {
-        Sharedprfs.setemail(currentuser!.email);
-        Sharedprfs.setpassword(currentuser!.password);
-      }
+      Sharedprfs.setemail(user.email);
+      Sharedprfs.setpassword(user.password);
       notifyListeners();
       print(user);
     });
   }
 
   users_From_firebase(String email, String password) {}
-  Uri uri = Uri.http('192.168.1.$ip:8080', '/users');
   getAllUsers() async {
     // get for the first time
+    Uri uri = Uri.http('$ip:8080', '/users');
 
     var response = await http.get(uri);
     if (response.statusCode == 200) {
@@ -67,6 +65,8 @@ class Users_controller extends ChangeNotifier {
   }
 
   updateUser(UserModel user) async {
+        Uri uri = Uri.http('$ip:8080', '/users');
+
     if (internet == true) {
       FirebaseFirestore.instance
           .collection('users')
