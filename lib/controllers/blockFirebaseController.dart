@@ -62,7 +62,10 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
   Blocks_From_Server() async {
     // get for the first time
-    Uri uri = Uri.http('192.168.1.$ip:8080', '/blocks');
+    Uri uri = Uri.http('192.168.1.$ip:8080', '/blocks').replace(
+        queryParameters: {
+          'avilable':true
+        });
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       blocks.clear();
