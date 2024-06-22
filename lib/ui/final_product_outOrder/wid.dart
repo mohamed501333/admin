@@ -150,7 +150,7 @@ class OUT extends StatelessWidget {
                               Iterable<int> invoices =
                                   myType.invoices.map((e) => e.serial);
 
-                              return Text('( ${invoices.max + 1} ): رقم الاذن',
+                              return Text('( ${invoices.isEmpty?1:invoices.max + 1} ): رقم الاذن',
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold));

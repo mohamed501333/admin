@@ -77,7 +77,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
         .toList();
 
     int serial = context.read<SettingController>().switch1 == false
-        ? invoices.max+1
+        ? invoices.isEmpty?0:invoices.max+1
         : invoiceNum.text.to_int();
 
     if (formKey.currentState!.validate() && finals.isNotEmpty) {
