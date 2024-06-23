@@ -12,7 +12,7 @@ class MainController extends ChangeNotifier {
       final serverisofline =
           await NetworkDiscovery.discover('192.168.1', 8080).isEmpty;
 
-      NetworkDiscovery.discover('192.168.1', 8080).first.then((e) {
+     serverisofline?DoNothingAction(): NetworkDiscovery.discover('192.168.1', 8080).first.then((e) {
         if (ip != e.ip) {
           ip = e.ip;
                   notifyListeners();

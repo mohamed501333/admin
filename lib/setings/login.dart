@@ -25,10 +25,13 @@ class MyloginPage extends StatelessWidget {
                 TextEditingController passwordController =
                     TextEditingController();
 
-                nameController.text = Sharedprfs.email!;
-                passwordController.text = Sharedprfs.password!;
-                if (nameController.text != '' &&
-                    passwordController.text != '') {
+                nameController.text = Sharedprfs.email??'';
+                passwordController.text = Sharedprfs.password??'';
+                if (
+                    nameController.text != '' &&
+                    passwordController.text != ''&&
+                    ip!=''
+                    ) {
                   myType.getData(nameController.text, passwordController.text);
                 }
 
