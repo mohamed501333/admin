@@ -25,13 +25,14 @@ class MyloginPage extends StatelessWidget {
                 TextEditingController passwordController =
                     TextEditingController();
 
-                nameController.text = Sharedprfs.email??'';
-                passwordController.text = Sharedprfs.password??'';
-                if (
+                nameController.text = Sharedprfs.getemail() ?? '';
+                passwordController.text = Sharedprfs.getpassword() ?? '';
+                print(nameController.text);
+                if (myType.currentuser == null &&
                     nameController.text != '' &&
-                    passwordController.text != ''&&
-                    ip!=''
-                    ) {
+                    passwordController.text != '' &&
+                    ip != '') {
+                  print(nameController.text);
                   myType.getData(nameController.text, passwordController.text);
                 }
 
@@ -52,7 +53,7 @@ class MyloginPage extends StatelessWidget {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          Sharedprfs.email ?? "",
+                          Sharedprfs.getemail() ?? "",
                           style: const TextStyle(fontSize: 20),
                         )),
                     Container(

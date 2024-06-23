@@ -5,21 +5,22 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle, Uint8List;
 import 'package:csv/csv.dart';
+import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/controllers/blockFirebaseController.dart';
+import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/errmsg.dart';
-import 'extentions.dart';
-import '../controllers/final_product_controller.dart';
-import '../models/moderls.dart';
-import '../ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/enums.dart';
+
 import 'package:provider/provider.dart';
 
-class bulkUpload extends StatefulWidget {
-  const bulkUpload({Key? key}) : super(key: key);
+class bulkUploadForBlocks extends StatefulWidget {
+  const bulkUploadForBlocks({Key? key}) : super(key: key);
 
   @override
-  State<bulkUpload> createState() => _bulkUploadState();
+  State<bulkUploadForBlocks> createState() => _bulkUploadState();
 }
 
-class _bulkUploadState extends State<bulkUpload> {
+class _bulkUploadState extends State<bulkUploadForBlocks> {
   List<List<dynamic>> _data = [];
   String? filePath;
   // This function is triggered when the  button is pressed
@@ -44,7 +45,7 @@ class _bulkUploadState extends State<bulkUpload> {
         ),
         body: Column(
           children: [
-             errmsg() ,
+            errmsg(),
             const Text(
               "هام:يجب ان يكون شيت الاكسل كالتالى مع حذف اول صف عند التصدير",
               style: TextStyle(
@@ -53,7 +54,7 @@ class _bulkUploadState extends State<bulkUpload> {
               ),
             ),
             Image.asset(
-              'assets/namozag.png',
+              'assets/1234.png',
             ),
             ElevatedButton(
               child: const Text("Upload FIle"),
@@ -61,8 +62,6 @@ class _bulkUploadState extends State<bulkUpload> {
                 pickFile();
               },
             ),
-        
-        
             ElevatedButton(
               style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.red)),
@@ -71,51 +70,34 @@ class _bulkUploadState extends State<bulkUpload> {
                 if (_data.isNotEmpty) {
                   for (var e in _data) {
                     print(e);
-                    context.read<final_prodcut_controller>().updateFinalProdcut(
-                            FinalProductModel(
-                                          updatedat: DateTime.now().microsecondsSinceEpoch,
-
-                                block_ID: 0,
-                                fraction_ID: 0,
-                                sapa_ID: "",
-                                sapa_desc: "",
-                                subfraction_ID: 0,
-                                finalProdcut_ID:
-                                    DateTime.now().microsecondsSinceEpoch +
-                                        e[4].toString().to_int(),
-                                item: FinalProdcutItme(
-                                    L: e[0].toString().to_double(),
-                                    W: e[1].toString().to_double(),
-                                    H: e[2].toString().to_double(),
-                                    density: e[3].toString().to_double(),
-                                    volume: e[4].toString().to_double() *
-                                        e[1].toString().to_double() *
-                                        e[0].toString().to_double() *
-                                        e[2].toString().to_double() /
-                                        1000000,
-                                    theowight: e[3].toString().to_double() *
-                                        e[4].toString().to_double() *
-                                        e[1].toString().to_double() *
-                                        e[0].toString().to_double() *
-                                        e[2].toString().to_double() /
-                                        1000000,
-                                    realowight: 0.0,
-                                    color: e[6],
-                                    type: e[7].toString(),
-                                    amount: e[4].toString().to_int(),
-                                    priceforamount: 0.0),
-                                scissor: 0,
-                                stage: 0,
-                                invoiceNum: 0,
-                                customer: e[5],
-                                worker: "",
-                                notes: e[8],
-                                cuting_order_number: 0,
-                                actions: [
-                              finalProdcutAction
-                                  .incert_finalProduct_from_Others.add,finalProdcutAction
-                                  .recive_Done_Form_FinalProdcutStock.add,
-                            ]));
+      BlockWetOutput wetOutPut =
+          BlockWetOutput(L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
+                    context.read<BlockFirebasecontroller>().addblock(BlockModel(
+                        Block_Id:  DateTime.now().microsecondsSinceEpoch,
+                        number: e[0].toString().to_int(),
+                        serial:  e[1],
+                        Rcissor: 0,
+                        Hscissor: 0,
+                        cumingFrom: "الصبه",
+                        OutTo: "",
+                        notes:  e[11],
+                        discreption:  e[10],
+                        item: Itme(
+                          L:  e[2].toString().to_double(), 
+                        W:  e[3].toString().to_double(),
+                         H:  e[4].toString().to_double(),
+                         density:  e[5].toString().to_double(), 
+                         volume:  e[9].toString().to_double(),
+                          wight:  e[8].toString().to_double(),
+                           color:  e[6],
+                           type:  e[7], 
+                           price: 0
+                           ),
+                        wetOutPut: wetOutPut,
+                        fractions: [],
+                        actions: [BlockAction.create_block.add],
+                        notFinals: [],
+                        updatedat: DateTime.now().microsecondsSinceEpoch));
                   }
                 }
                 setState(() {

@@ -6,17 +6,16 @@ import 'package:network_discovery/network_discovery.dart';
 
 class MainController extends ChangeNotifier {
   bool isServerOnline = false;
+
   streamServerStutues() {
     Timer.periodic(const Duration(seconds: 1), (t) async {
+      var serverisofline =await NetworkDiscovery.discover('192.168.1', 8080).isEmpty;
 
-      final serverisofline =
-          await NetworkDiscovery.discover('192.168.1', 8080).isEmpty;
 
-     serverisofline?DoNothingAction(): NetworkDiscovery.discover('192.168.1', 8080).first.then((e) {
+      NetworkDiscovery.discover('192.168.1', 8080).forEach((e) {
         if (ip != e.ip) {
           ip = e.ip;
-                  notifyListeners();
-
+          notifyListeners();
         }
         print(e.ip);
       });

@@ -78,25 +78,29 @@ class BlockFirebasecontroller extends ChangeNotifier {
       notifyListeners();
     }
     //
-    Uri uri2 = Uri.parse('ws://$ip:8080/blocks/ws').replace(
-        queryParameters: {
-          'username': Sharedprfs.email,
-          'password': Sharedprfs.password
-        });
+    Uri uri2 = Uri.parse('ws://$ip:8080/blocks/ws').replace(queryParameters: {
+      'username': Sharedprfs.getemail(),
+      'password': Sharedprfs.getpassword()
+    });
     channel = WebSocketChannel.connect(uri2);
     channel.stream.forEach((u) {
       BlockModel user = BlockModel.fromJson(u);
       var index = blocks.map((e) => e.Block_Id).toList().indexOf(user.Block_Id);
-      if (user.actions
-              .if_action_exist(BlockAction.archive_block.getactionTitle) ==
-          false) {
-        if (index == -1) {
+   
+      if (index == -1) {
+        if (user.actions
+            .if_action_exist(BlockAction.archive_block.getactionTitle)==false) {
           blocks.add(user);
-        } else {
-          blocks.removeAt(index);
+        }
+      } else {
+        blocks.removeAt(index);
+        if (user.actions
+                .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+            false) {
           blocks.add(user);
         }
       }
+
       notifyListeners();
     });
   }
@@ -228,7 +232,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
     user.actions.add(ActionModel(
         action:
             "edit $cell of block  ${user.serial}/${user.number}/  from  $oldvalue  to  $newvalue",
-        who: Sharedprfs.email ?? "",
+        who: Sharedprfs.getemail() ?? "",
         when: DateTime.now()));
     user.item.L = newvalue[0].to_double();
     user.item.W = newvalue[1].to_double();
@@ -241,7 +245,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
 
     user.actions.add(ActionModel(
         action: "edit $cell",
-        who: Sharedprfs.email ?? "",
+        who: Sharedprfs.getemail() ?? "",
         when: DateTime.now()));
     cell == "color" ? user.item.color = newvalue : DoNothingAction();
     cell == "type" ? user.item.type = newvalue : DoNothingAction();

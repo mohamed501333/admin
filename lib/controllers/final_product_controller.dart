@@ -79,8 +79,8 @@ class final_prodcut_controller extends ChangeNotifier {
     //
     Uri uri2 = Uri.parse('ws://$ip:8080/finalProducts/ws').replace(
         queryParameters: {
-          'username': Sharedprfs.email,
-          'password': Sharedprfs.password
+          'username': Sharedprfs.getemail(),
+          'password': Sharedprfs.getpassword()
         });
     channel = WebSocketChannel.connect(uri2);
     channel.stream.forEach((u) {
@@ -178,7 +178,7 @@ class final_prodcut_controller extends ChangeNotifier {
 
     user.actions.add(ActionModel(
         action: "edit $cell",
-        who: Sharedprfs.email?? "",
+        who: Sharedprfs.getemail()?? "",
         when: DateTime.now()));
     cell == "amount" ? user.item.amount = newvalue.to_int() : DoNothingAction();
     cell == "type" ? user.item.type = newvalue : DoNothingAction();
@@ -196,7 +196,7 @@ class final_prodcut_controller extends ChangeNotifier {
 
     user.actions.add(ActionModel(
         action: "edit $cell",
-        who:Sharedprfs.email?? "",
+        who:Sharedprfs.getemail()?? "",
         when: DateTime.now()));
     user.item.L = newvalue[0].to_double();
     user.item.W = newvalue[1].to_double();

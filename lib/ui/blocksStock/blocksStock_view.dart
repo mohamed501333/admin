@@ -9,6 +9,7 @@ import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/controllers/CategorysController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
+import 'package:jason_company/ui/blocksStock/bulkUpload.dart';
 import 'package:jason_company/ui/commen/errmsg.dart';
 import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,9 @@ class BlocksStock extends StatelessWidget {
                   settingthedialog(context);
                 },
                 icon: const Icon(Icons.settings)),
+                 IconButton(
+                  onPressed: () => context.gonext(context, const bulkUploadForBlocks()),
+                  icon: const Icon(Icons.explicit_outlined)),
           ],
           title: const Text("رصيد البلوكات"),
         ),

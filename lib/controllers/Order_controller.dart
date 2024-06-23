@@ -29,9 +29,6 @@ class OrderController extends ChangeNotifier {
   }
 
   cuttingOrders_From_firebase() {
-
-
-    
     // print('get orders firbase');Firestore.instance.collection('cuttingOrders').stream.where(test)
     // Firestore.instance.collection('cuttingOrders').where('cuttingOrder_ID',isEqualTo:1704617197825 ).get().then((val) {
     //   cuttingOrders.clear();
@@ -76,8 +73,8 @@ class OrderController extends ChangeNotifier {
     //
     Uri uri2 = Uri.parse('ws://$ip:8080/cuttingOrders/ws').replace(
         queryParameters: {
-          'username': Sharedprfs.email,
-          'password': Sharedprfs.password
+          'username': Sharedprfs.getemail(),
+          'password': Sharedprfs.getpassword()
         });
     channel = WebSocketChannel.connect(uri2);
     channel.stream.forEach((u) {
@@ -86,18 +83,16 @@ class OrderController extends ChangeNotifier {
           .map((e) => e.cuttingOrder_ID)
           .toList()
           .indexOf(order.cuttingOrder_ID);
-
       if (index == -1) {
         if (order.actions.if_action_exist(OrderAction.Archive_order.getTitle) ==
             false) {
           cuttingOrders.add(order);
-        } else {
-          cuttingOrders.removeAt(index);
-          if (order.actions
-                  .if_action_exist(OrderAction.Archive_order.getTitle) ==
-              false) {
-            cuttingOrders.add(order);
-          }
+        }
+      } else {
+        cuttingOrders.removeAt(index);
+        if (order.actions.if_action_exist(OrderAction.Archive_order.getTitle) ==
+            false) {
+          cuttingOrders.add(order);
         }
       }
       notifyListeners();

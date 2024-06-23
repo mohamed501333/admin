@@ -63,8 +63,8 @@ class Customer_controller extends ChangeNotifier {
     //
     Uri uri2 = Uri.parse('ws://$ip:8080/customers/ws').replace(
         queryParameters: {
-          'username': Sharedprfs.email,
-          'password': Sharedprfs.password
+          'username': Sharedprfs.getemail(),
+          'password': Sharedprfs.getpassword()
         });
     channel = WebSocketChannel.connect(uri2);
     channel.stream.forEach((u) {
