@@ -22,7 +22,7 @@ class OutOfStockViewModel extends BaseViewModel {
       bloc[0].actions.add(BlockAction.consume_block.add);
 
       context.read<BlockFirebasecontroller>().updateBlock(bloc[0]);
-      blocknumbercontroller.clear();
+      blocknumbercontroller.text = '';
     }
   }
 

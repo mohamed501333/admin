@@ -4,21 +4,22 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/extentions/blockExtentions.dart';
+import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/main.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
 import 'package:jason_company/ui/blocksStock/outofStock_viewmoder.dart';
 import 'package:jason_company/ui/commen/errmsg.dart';
-import 'package:jason_company/ui/recources/enums.dart';
-import 'package:jason_company/ui/sH/Widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
-import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
+import 'package:jason_company/ui/sH/Widgets.dart';
 
 class OutOfStockView extends StatefulWidget {
   const OutOfStockView({super.key});
@@ -32,6 +33,7 @@ class _OutOfStockViewState extends State<OutOfStockView> {
 
   BlocksStockViewModel vm2 = BlocksStockViewModel();
   String chosenDate = format.format(DateTime.now());
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +74,8 @@ class _OutOfStockViewState extends State<OutOfStockView> {
       body: Consumer<BlockFirebasecontroller>(
         builder: (context, b, child) {
           return Column(
-            children: [   errmsg() ,
+            children: [
+              errmsg(),
               SizedBox(
                 height: 160,
                 child: Form(
@@ -83,9 +86,13 @@ class _OutOfStockViewState extends State<OutOfStockView> {
                       Column(
                         children: [
                           Fieldss(
+                            formKey: formKey,
                             vm: vm,
                           ),
-                          Buttoms(vm: vm)
+                          Buttoms(
+                            vm: vm,
+                            formKey: formKey,
+                          )
                         ],
                       ),
                       Column(
@@ -109,11 +116,13 @@ class _OutOfStockViewState extends State<OutOfStockView> {
 
 class Buttoms extends StatelessWidget {
   const Buttoms({
-    super.key,
+    Key? key,
     required this.vm,
-  });
+    required this.formKey,
+  }) : super(key: key);
 
   final OutOfStockViewModel vm;
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +134,9 @@ class Buttoms extends StatelessWidget {
         ),
         ElevatedButton(
             onPressed: () {
-              vm.consumeBlock(context);
+              if (formKey.currentState!.validate()) {
+                vm.consumeBlock(context);
+              }
             },
             child: const SizedBox(
               width: 90,
@@ -143,46 +154,57 @@ class Buttoms extends StatelessWidget {
 }
 
 class Fieldss extends StatelessWidget {
-  const Fieldss({
-    super.key,
+  Fieldss({
+    Key? key,
     required this.vm,
-  });
+    required this.formKey,
+  }) : super(key: key);
 
   final OutOfStockViewModel vm;
-
+  final GlobalKey<FormState> formKey;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            const SizedBox(
-              width: 20,
-            ),
-            CustomTextFormField(
-              keybordtupe: TextInputType.name,
-              width: MediaQuery.of(context).size.width * .23,
-              hint: "صالة الانتاج",
-              label: "صادر الى",
-              controller: vm.outTo,
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            CustomTextFormField(
-              width: MediaQuery.of(context).size.width * .23,
-              hint: "رقم البلوك",
-              controller: vm.blocknumbercontroller,
-              validator:
-                  Validation.validate_if_block_in_Stock_or_already_consumed(
-                      context, vm),
-            ),
-          ],
-        ),
-      ],
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 20,
+              ),
+              CustomTextFormField(
+                keybordtupe: TextInputType.name,
+                width: MediaQuery.of(context).size.width * .23,
+                hint: "صالة الانتاج",
+                label: "صادر الى",
+                controller: vm.outTo,
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              CustomTextFormField(
+                autofocus: true,
+                onsubmitted: (d) {
+                  if (formKey.currentState!.validate()) {
+                    vm.consumeBlock(context);
+                  }
+                  return null;
+                },
+                width: MediaQuery.of(context).size.width * .23,
+                hint: "رقم البلوك",
+                controller: vm.blocknumbercontroller,
+                validator:
+                    Validation.validate_if_block_in_Stock_or_already_consumed(
+                        context, vm),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
