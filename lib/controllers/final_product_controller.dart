@@ -61,7 +61,7 @@ class final_prodcut_controller extends ChangeNotifier {
 
   finals_From_Server() async {
     // get for the first time
-    Uri uri = Uri.http('$ip:8080', '/finalproducts');
+    Uri uri = Uri.http('$ip:8080', '/finalProducts');
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       finalproducts.clear();
@@ -77,7 +77,7 @@ class final_prodcut_controller extends ChangeNotifier {
       Refresh_Ui();
     }
     //
-    Uri uri2 = Uri.parse('ws://$ip:8080/finalproducts/ws').replace(
+    Uri uri2 = Uri.parse('ws://$ip:8080/finalProducts/ws').replace(
         queryParameters: {
           'username': Sharedprfs.getemail(),
           'password': Sharedprfs.getpassword()
@@ -108,9 +108,9 @@ class final_prodcut_controller extends ChangeNotifier {
     });
   }
 
-  updateFinalProdcut(FinalProductModel itme)async {
+  updateFinalProdcut(FinalProductModel itme) async {
     if (internet == true) {
-    await  FirebaseDatabase.instance
+      await FirebaseDatabase.instance
           .ref("finalProducts/${itme.finalProdcut_ID}")
           .set(itme.toJson());
     } else {
@@ -172,13 +172,205 @@ class final_prodcut_controller extends ChangeNotifier {
     }).toList();
   }
 
+  List<FinalProductModel> BalanceToDate(DateTime to) {
+    List<FinalProductModel> finals = finalproducts;
+    List<FinalProductModel> TODate = finals
+        .where((e) =>
+            e.actions
+                .get_Date_of_action(finalProdcutAction
+                    .recive_Done_Form_FinalProdcutStock.getactionTitle)
+                .formatToInt() <=
+            to.formatToInt())
+        .toList();
+
+    return TODate.filter_density_typ_color_size().map((a) {
+      int quantity = TODate.countOf(a);
+      double vol = quantity * a.item.L * a.item.W * a.item.H / 1000000;
+      return FinalProductModel(
+          finalProdcut_ID: 0,
+          block_ID: 0,
+          fraction_ID: 0,
+          subfraction_ID: 0,
+          sapa_ID: "0",
+          sapa_desc: "0",
+          item: FinalProdcutItme(
+              L: a.item.L,
+              W: a.item.W,
+              H: a.item.H,
+              density: a.item.density,
+              volume: vol,
+              theowight: vol * a.item.density,
+              realowight: 0,
+              color: a.item.color,
+              type: a.item.type,
+              amount: quantity,
+              priceforamount: 0),
+          scissor: 0,
+          stage: 0,
+          worker: '',
+          customer: '',
+          notes: '',
+          invoiceNum: 0,
+          cuting_order_number: 0,
+          actions: [],
+          updatedat: 0);
+    }).toList();
+  }
+
+  List<FinalProductModel> FirstPeriodBalanceToDate(DateTime to) {
+    List<FinalProductModel> finals = finalproducts;
+    List<FinalProductModel> TODate = finals
+        .where((e) =>
+            e.actions
+                .get_Date_of_action(finalProdcutAction
+                    .recive_Done_Form_FinalProdcutStock.getactionTitle)
+                .formatToInt() <
+            to.formatToInt())
+        .toList();
+
+    return TODate.filter_density_typ_color_size().map((a) {
+      int quantity = TODate.countOf(a);
+      double vol = quantity * a.item.L * a.item.W * a.item.H / 1000000;
+      return FinalProductModel(
+          finalProdcut_ID: 0,
+          block_ID: 0,
+          fraction_ID: 0,
+          subfraction_ID: 0,
+          sapa_ID: "0",
+          sapa_desc: "0",
+          item: FinalProdcutItme(
+              L: a.item.L,
+              W: a.item.W,
+              H: a.item.H,
+              density: a.item.density,
+              volume: vol,
+              theowight: vol * a.item.density,
+              realowight: 0,
+              color: a.item.color,
+              type: a.item.type,
+              amount: quantity,
+              priceforamount: 0),
+          scissor: 0,
+          stage: 0,
+          worker: '',
+          customer: '',
+          notes: '',
+          invoiceNum: 0,
+          cuting_order_number: 0,
+          actions: [],
+          updatedat: 0);
+    }).toList();
+  }
+
+  List<FinalProductModel> OUtBalanceBetween(DateTime from, DateTime to) {
+    List<FinalProductModel> finals = finalproducts;
+    List<FinalProductModel> TODate = finals
+        .where((e) =>
+            e.item.amount < 0 &&
+            e.actions
+                    .get_Date_of_action(finalProdcutAction
+                        .recive_Done_Form_FinalProdcutStock.getactionTitle)
+                    .formatToInt() <=
+                to.formatToInt() &&
+            e.actions
+                    .get_Date_of_action(finalProdcutAction
+                        .recive_Done_Form_FinalProdcutStock.getactionTitle)
+                    .formatToInt() >=
+                from.formatToInt())
+        .toList();
+
+    return TODate.filter_density_typ_color_size().map((a) {
+      int quantity = TODate.countOf(a);
+      double vol = quantity * a.item.L * a.item.W * a.item.H / 1000000;
+      return FinalProductModel(
+          finalProdcut_ID: 0,
+          block_ID: 0,
+          fraction_ID: 0,
+          subfraction_ID: 0,
+          sapa_ID: "0",
+          sapa_desc: "0",
+          item: FinalProdcutItme(
+              L: a.item.L,
+              W: a.item.W,
+              H: a.item.H,
+              density: a.item.density,
+              volume: vol,
+              theowight: vol * a.item.density,
+              realowight: 0,
+              color: a.item.color,
+              type: a.item.type,
+              amount: quantity,
+              priceforamount: 0),
+          scissor: 0,
+          stage: 0,
+          worker: '',
+          customer: '',
+          notes: '',
+          invoiceNum: 0,
+          cuting_order_number: 0,
+          actions: [],
+          updatedat: 0);
+    }).toList();
+  }
+
+  List<FinalProductModel> INBalanceBetween(DateTime from, DateTime to) {
+    List<FinalProductModel> finals = finalproducts;
+    List<FinalProductModel> TODate = finals
+        .where((e) =>
+            e.item.amount > 0 &&
+            e.actions
+                    .get_Date_of_action(finalProdcutAction
+                        .recive_Done_Form_FinalProdcutStock.getactionTitle)
+                    .formatToInt() <=
+                to.formatToInt() &&
+            e.actions
+                    .get_Date_of_action(finalProdcutAction
+                        .recive_Done_Form_FinalProdcutStock.getactionTitle)
+                    .formatToInt() >=
+                from.formatToInt())
+        .toList();
+
+    return TODate.filter_density_typ_color_size().map((a) {
+      int quantity = TODate.countOf(a);
+      double vol = quantity * a.item.L * a.item.W * a.item.H / 1000000;
+      return FinalProductModel(
+          finalProdcut_ID: 0,
+          block_ID: 0,
+          fraction_ID: 0,
+          subfraction_ID: 0,
+          sapa_ID: "0",
+          sapa_desc: "0",
+          item: FinalProdcutItme(
+              L: a.item.L,
+              W: a.item.W,
+              H: a.item.H,
+              density: a.item.density,
+              volume: vol,
+              theowight: vol * a.item.density,
+              realowight: 0,
+              color: a.item.color,
+              type: a.item.type,
+              amount: quantity,
+              priceforamount: 0),
+          scissor: 0,
+          stage: 0,
+          worker: '',
+          customer: '',
+          notes: '',
+          invoiceNum: 0,
+          cuting_order_number: 0,
+          actions: [],
+          updatedat: 0);
+    }).toList();
+  }
+
   edit_cell(int id, String cell, String newvalue) {
     FinalProductModel user =
         finalproducts.where((element) => element.finalProdcut_ID == id).first;
 
     user.actions.add(ActionModel(
         action: "edit $cell",
-        who: Sharedprfs.getemail()?? "",
+        who: Sharedprfs.getemail() ?? "",
         when: DateTime.now()));
     cell == "amount" ? user.item.amount = newvalue.to_int() : DoNothingAction();
     cell == "type" ? user.item.type = newvalue : DoNothingAction();
@@ -196,7 +388,7 @@ class final_prodcut_controller extends ChangeNotifier {
 
     user.actions.add(ActionModel(
         action: "edit $cell",
-        who:Sharedprfs.getemail()?? "",
+        who: Sharedprfs.getemail() ?? "",
         when: DateTime.now()));
     user.item.L = newvalue[0].to_double();
     user.item.W = newvalue[1].to_double();

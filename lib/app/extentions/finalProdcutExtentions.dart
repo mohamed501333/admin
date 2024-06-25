@@ -422,27 +422,27 @@ extension Filter on List<FinalProductModel> {
     return a;
   }
 
-  List<FinalProductModel> data_until_date(DateTime to) {
-    return where((element) =>
-        (element.actions.if_action_exist(finalProdcutAction.recive_Done_Form_FinalProdcutStock.getactionTitle) == true &&
-            element.actions
-                    .get_Date_of_action(finalProdcutAction
-                        .recive_Done_Form_FinalProdcutStock.getactionTitle)
-                    .formatToInt() <=
-                to.formatToInt()) ||
-        (element.actions.if_action_exist(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle) == true &&
-            element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle).formatToInt() <=
-                to.formatToInt()) ||
-        (element.actions.if_action_exist(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) == true &&
-            element.actions.get_Date_of_action(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle).formatToInt() <=
-                to.formatToInt()) ||
-        (element.actions.if_action_exist(finalProdcutAction.out_order.getactionTitle) ==
-                true &&
-            element.actions
-                    .get_Date_of_action(finalProdcutAction.out_order.getactionTitle)
-                    .formatToInt() <=
-                to.formatToInt())).toList();
-  }
+  // List<FinalProductModel> data_until_date(DateTime to) {
+  //   return where((element) =>
+  //       (element.actions.if_action_exist(finalProdcutAction.recive_Done_Form_FinalProdcutStock.getactionTitle) == true &&
+  //           element.actions
+  //                   .get_Date_of_action(finalProdcutAction
+  //                       .recive_Done_Form_FinalProdcutStock.getactionTitle)
+  //                   .formatToInt() <=
+  //               to.formatToInt()) ||
+  //       (element.actions.if_action_exist(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle) == true &&
+  //           element.actions.get_Date_of_action(finalProdcutAction.incert_finalProduct_from_Others.getactionTitle).formatToInt() <=
+  //               to.formatToInt()) ||
+  //       (element.actions.if_action_exist(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle) == true &&
+  //           element.actions.get_Date_of_action(finalProdcutAction.incert_From_StockChekRefresh.getactionTitle).formatToInt() <=
+  //               to.formatToInt()) ||
+  //       (element.actions.if_action_exist(finalProdcutAction.out_order.getactionTitle) ==
+  //               true &&
+  //           element.actions
+  //                   .get_Date_of_action(finalProdcutAction.out_order.getactionTitle)
+  //                   .formatToInt() <=
+  //               to.formatToInt())).toList();
+  // }
 
   List<FinalProductModel> data_until_date_from(
       DateTime to, FinalProductModel e) {
