@@ -150,7 +150,8 @@ class OUT extends StatelessWidget {
                               Iterable<int> invoices =
                                   myType.invoices.map((e) => e.serial);
 
-                              return Text('( ${invoices.isEmpty?1:invoices.max + 1} ): رقم الاذن',
+                              return Text(
+                                  '( ${invoices.isEmpty ? 1 : invoices.max + 1} ): رقم الاذن',
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold));
@@ -295,6 +296,8 @@ class OutButtom extends StatelessWidget {
   OutButtom({super.key, required this.item});
   outOfStockOrderveiwModel vm = outOfStockOrderveiwModel();
   final FinalProductModel item;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -310,7 +313,7 @@ class OutButtom extends StatelessWidget {
                       height: 200,
                       child: SingleChildScrollView(
                         child: Form(
-                          key: vm.formKey,
+                          key: formKey,
                           child: Column(
                             children: [
                               Container(
@@ -333,6 +336,15 @@ class OutButtom extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   CustomTextFormField(
+                                    onsubmitted: (r) {
+                                      if (formKey.currentState!.validate()) {
+                                        vm.add(context, item);
+                                        Navigator.pop(context);
+                                        FocusScope.of(context).nextFocus();
+                                      }
+                                      return null;
+                                    },
+                                    autofocus: true,
                                     autovalidate: true,
                                     validator: Validation.validateothe,
                                     width:
@@ -351,8 +363,11 @@ class OutButtom extends StatelessWidget {
                                                     MaterialStateProperty.all(
                                                         Colors.red)),
                                             onPressed: () {
-                                              vm.add(context, item);
-                                              Navigator.pop(context);
+                                              if (formKey.currentState!
+                                                  .validate()) {
+                                                vm.add(context, item);
+                                                Navigator.pop(context);
+                                              }
                                             },
                                             child: const Text('أضافه')),
                                       ),
@@ -399,6 +414,7 @@ itemsWihTotalAndButtomOut(BuildContext context) {
               child: Column(
                 children: [
                   TextField(
+                    autofocus: true,
                     cursorColor: Colors.black,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
