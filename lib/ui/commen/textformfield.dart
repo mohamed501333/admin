@@ -9,21 +9,27 @@ class CustomTextFormField extends StatelessWidget {
       this.onChanged,
       this.readOnly = false,
       this.autovalidate = false,
+      this.autofocus = false,
       this.label = "",
       this.keybordtupe = TextInputType.number,
       required this.width,
       required this.controller,
-      this.ontap});
+      this.ontap,
+      this.onsubmitted,
+      this.textInputAction = TextInputAction.unspecified});
   final TextInputType keybordtupe;
   final String hint;
   final String label;
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final String? Function(String?)? onChanged;
+  final String? Function(String?)? onsubmitted;
   final String? Function()? ontap;
   final double width;
   final bool autovalidate;
+  final bool autofocus;
   final bool readOnly;
+  final TextInputAction textInputAction;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,6 +37,9 @@ class CustomTextFormField extends StatelessWidget {
         SizedBox(
           width: width,
           child: TextFormField(
+              autofocus: autofocus,
+              textInputAction: textInputAction,
+              onFieldSubmitted: onsubmitted,
               readOnly: readOnly,
               onTap: ontap,
               onChanged: onChanged,

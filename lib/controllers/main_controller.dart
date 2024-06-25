@@ -17,7 +17,7 @@ class MainController extends ChangeNotifier {
           ip = e.ip;
           notifyListeners();
         }
-        print(e.ip);
+        print('ffff ${e.ip}');
       });
 
       if (!serverisofline != isServerOnline) {

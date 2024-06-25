@@ -14,8 +14,7 @@ import 'package:provider/provider.dart';
 class outOfStockOrderveiwModel extends BaseViewModel {
   //صرف المنتح التام
   void add(BuildContext context, FinalProductModel item) {
-    if (formKey.currentState!.validate() &&
-        item.item.amount > 0 &&
+    if (item.item.amount > 0 &&
         item.item.amount >= int.parse(amountcontroller.text)) {
       double volume = item.item.W *
           item.item.L *
@@ -62,7 +61,10 @@ class outOfStockOrderveiwModel extends BaseViewModel {
   }
 
   addInvoice(BuildContext context) {
-   Iterable<int> invoices = Provider.of<Invoice_controller>(context,listen: false).invoices.map((e) => e.serial);
+    Iterable<int> invoices =
+        Provider.of<Invoice_controller>(context, listen: false)
+            .invoices
+            .map((e) => e.serial);
     List<FinalProductModel> finals = context
         .read<final_prodcut_controller>()
         .finalproducts
@@ -77,7 +79,9 @@ class outOfStockOrderveiwModel extends BaseViewModel {
         .toList();
 
     int serial = context.read<SettingController>().switch1 == false
-        ? invoices.isEmpty?0:invoices.max+1
+        ? invoices.isEmpty
+            ? 0
+            : invoices.max + 1
         : invoiceNum.text.to_int();
 
     if (formKey.currentState!.validate() && finals.isNotEmpty) {
