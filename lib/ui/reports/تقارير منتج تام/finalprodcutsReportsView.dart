@@ -25,7 +25,8 @@ class FinalprodcutsReportsView extends StatelessWidget {
             Consumer<final_prodcut_controller>(
               builder: (context, myType, child) {
                 return Column(
-                  children: [   errmsg() ,
+                  children: [
+                    errmsg(),
                     if (myType.selectedreport == 'تقرير المنصرف فقط')
                       const FinalprodcutReport1(),
                     if (myType.selectedreport == 'تقرير الوارد فقط')
@@ -246,15 +247,15 @@ class FinalprodcutReport3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<final_prodcut_controller>(
       builder: (context, finalprodcuts, child) {
-        List<FinalProductModel> finalproductsBetweenTowDates = finalprodcuts
-            .finalproducts
-            .data_until_date(finalprodcuts.pickedDateTo!)
-            .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
-            .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
-            .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
-            .filterItemsPasedOnCustomers(
-                context, finalprodcuts.selctedcustomers)
-            .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
+        List<FinalProductModel> finalproductsBetweenTowDates =
+            finalprodcuts.nowBbalanceInStock();
+        // .data_until_date(finalprodcuts.pickedDateTo!)
+        // .filterItemsPasedOncolors(context, finalprodcuts.selctedcolors)
+        // .filterItemsPasedOnDensites(context, finalprodcuts.selctedDensities)
+        // .filterItemsPasedOntypes(context, finalprodcuts.selctedtybes)
+        // .filterItemsPasedOnCustomers(
+        //     context, finalprodcuts.selctedcustomers)
+        // .filterItemsPasedOnsizes(context, finalprodcuts.selctedsizes);
         return SizedBox(
           width: 300,
           child: Column(
@@ -594,15 +595,14 @@ class BoxOFReportForfinalProdcutsReport extends StatelessWidget {
           List<FinalProductModel> f = [];
 
           if (myType.selectedreport == 'الكميه المتوفره فقط') {
-            f = myType.finalproducts
-                .filteronfinalproduct()
-                .data_until_date(myType.pickedDateTo!)
-                .filterItemsPasedOncolors(context, myType.selctedcolors)
-                .filterItemsPasedOnDensites(context, myType.selctedDensities)
-                .filterItemsPasedOntypes(context, myType.selctedtybes)
-                .filterItemsPasedOnCustomers(context, myType.selctedcustomers)
-                .filterItemsPasedOnsizes(context, myType.selctedsizes);
-            ;
+            f = myType.finalproducts.filteronfinalproduct()
+                // .data_until_date(myType.pickedDateTo!)
+                // .filterItemsPasedOncolors(context, myType.selctedcolors)
+                // .filterItemsPasedOnDensites(context, myType.selctedDensities)
+                // .filterItemsPasedOntypes(context, myType.selctedtybes)
+                // .filterItemsPasedOnCustomers(context, myType.selctedcustomers)
+                // .filterItemsPasedOnsizes(context, myType.selctedsizes);
+                ;
           }
           if (myType.selectedreport == 'تقرير الوارد فقط') {
             f = myType.finalproducts
