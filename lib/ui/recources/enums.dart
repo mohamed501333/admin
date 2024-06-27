@@ -703,12 +703,18 @@ enum OrderAction {
   Archive_order,
   order_aproved_from_calculation,
   order_aproved_from_control,
+  order_edit,
   order_colosed,
 }
 
 extension FF on OrderAction {
   ActionModel get add {
     switch (this) {
+      case OrderAction.order_edit:
+        return ActionModel(
+            action: "order_edit",
+            who: SringsManager.myemail,
+            when: DateTime.now());
       case OrderAction.create_order:
         return ActionModel(
             action: "create_order",
@@ -739,6 +745,8 @@ extension FF on OrderAction {
 
   String get getTitle {
     switch (this) {
+      case OrderAction.order_edit:
+        return "order_edit";
       case OrderAction.create_order:
         return "create_order";
       case OrderAction.Archive_order:
@@ -753,8 +761,7 @@ extension FF on OrderAction {
   }
 }
 
-
-enum  Appactions{
+enum Appactions {
   open_Home_page,
   open_1_addToBlock,
   open_2_addTOFInalProdcut,
@@ -765,7 +772,6 @@ enum  Appactions{
 extension A323 on Appactions {
   ActionModel get add {
     switch (this) {
-
       case Appactions.open_Home_page:
         return ActionModel(
             action: "open_Home_page",
@@ -791,13 +797,11 @@ extension A323 on Appactions {
             action: "open_3_blockOUtOfStock",
             who: SringsManager.myemail,
             when: DateTime.now());
-   
     }
   }
 
   String get getTitle {
     switch (this) {
-
       case Appactions.open_Home_page:
         return "open_Home_page";
       case Appactions.open_1_addToBlock:
@@ -808,14 +812,9 @@ extension A323 on Appactions {
         return "open_3_blockOUtOfStock";
       case Appactions.open_4_importedFromScissros:
         return "open_4_importedFromScissros";
-
     }
   }
 }
-
-
-
-
 
 enum UserAction {
   creat_user,

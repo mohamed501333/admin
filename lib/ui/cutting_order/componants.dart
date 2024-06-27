@@ -3,6 +3,7 @@
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/functions.dart';
@@ -11,6 +12,7 @@ import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
+import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/services/pdfprevei.dart';
 import 'package:jason_company/ui/cutting_order/cuting_order_pdf.dart';
@@ -49,77 +51,102 @@ class Fields001 extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Column(
                 children: [
-                  CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .19,
-                    hint: "ارتفاع",
-                    controller: vm.hightncontroller,
-                    validator: Validation.validateothers,
-                  ),
-                  CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .19,
-                    hint: "عرض",
-                    controller: vm.widthcontroller,
-                    validator: Validation.validateothers,
-                  ),
-                  CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .19,
-                    hint: "طول",
-                    controller: vm.lenthcontroller,
-                    validator: Validation.validateothers,
-                  ),
-                  CustomTextFormField(
-                    width: MediaQuery.of(context).size.width * .19,
-                    hint: "كميه",
-                    controller: vm.amountcontroller,
-                    validator: Validation.validateothers,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .19,
-                    child: TextFormField(
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101));
-
-                          if (pickedDate != null) {
-                            String formattedDate =
-                                pickedDate.millisecondsSinceEpoch.toString();
-
-                            vm.datecontroller.text = formattedDate;
-                          } else {}
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomTextFormField(
+                        onsubmitted: (v) {
+                          FocusScope.of(context).previousFocus();
+                          return null;
                         },
-                        readOnly: true,
-                        controller: vm.datecontroller,
+                        width: MediaQuery.of(context).size.width * .19,
+                        hint: "ارتفاع",
+                        controller: vm.hightncontroller,
                         validator: Validation.validateothers,
-                        decoration: const InputDecoration(
-                            hintText: "التسليم",
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 2, color: Colors.teal)),
-                            border: OutlineInputBorder(),
-                            labelStyle: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            fillColor: Color.fromARGB(31, 184, 161, 161),
-                            filled: true)),
-                  )
+                      ),
+                      CustomTextFormField(
+                        onsubmitted: (v) {
+                          FocusScope.of(context).previousFocus();
+                          return null;
+                        },
+                        width: MediaQuery.of(context).size.width * .19,
+                        hint: "عرض",
+                        controller: vm.widthcontroller,
+                        validator: Validation.validateothers,
+                      ),
+                      CustomTextFormField(
+                        onsubmitted: (v) {
+                          FocusScope.of(context).previousFocus();
+                          return null;
+                        },
+                        width: MediaQuery.of(context).size.width * .19,
+                        hint: "طول",
+                        controller: vm.lenthcontroller,
+                        validator: Validation.validateothers,
+                      ),
+                      CustomTextFormField(
+                        onsubmitted: (v) {
+                          FocusScope.of(context).previousFocus();
+                          return null;
+                        },
+                        width: MediaQuery.of(context).size.width * .19,
+                        hint: "كميه",
+                        controller: vm.amountcontroller,
+                        validator: Validation.validateothers,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * .19,
+                        child: TextFormField(
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2101));
+
+                              if (pickedDate != null) {
+                                String formattedDate = pickedDate
+                                    .millisecondsSinceEpoch
+                                    .toString();
+
+                                vm.datecontroller.text = formattedDate;
+                              } else {}
+                            },
+                            onFieldSubmitted: (v) {
+                              FocusScope.of(context).previousFocus();
+                            },
+                            readOnly: true,
+                            controller: vm.datecontroller,
+                            validator: Validation.validateothers,
+                            decoration: const InputDecoration(
+                                hintText: "التسليم",
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 2, color: Colors.teal)),
+                                border: OutlineInputBorder(),
+                                labelStyle: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                fillColor: Color.fromARGB(31, 184, 161, 161),
+                                filled: true)),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextFormField(
+                    keybordtupe: TextInputType.name,
+                    width: MediaQuery.of(context).size.width * .5,
+                    hint: "ملحوظه",
+                    controller: vm.notes,
+                  ),
                 ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextFormField(
-                keybordtupe: TextInputType.name,
-                width: MediaQuery.of(context).size.width * .5,
-                hint: "ملحوظه",
-                controller: vm.notes,
               ),
             ],
           ),
@@ -251,7 +278,6 @@ class TheTable001 extends StatelessWidget {
         return Expanded(
           flex: 4,
           child: SingleChildScrollView(
-            
             reverse: true,
             scrollDirection: Axis.horizontal,
             child: SizedBox(
@@ -263,19 +289,20 @@ class TheTable001 extends StatelessWidget {
                     columnWidths: const {
                       0: FlexColumnWidth(1),
                       1: FlexColumnWidth(1),
-                      2: FlexColumnWidth(3),
+                      2: FlexColumnWidth(1),
                       3: FlexColumnWidth(3),
                       4: FlexColumnWidth(3),
                       5: FlexColumnWidth(3),
-                      6: FlexColumnWidth(2),
-                      7: FlexColumnWidth(1.5),
+                      6: FlexColumnWidth(3),
+                      7: FlexColumnWidth(2),
                       8: FlexColumnWidth(1.5),
-                      9: FlexColumnWidth(1),
-                      10: FlexColumnWidth(1.3),
-                      11: FlexColumnWidth(1.5),
-                      12: FlexColumnWidth(5),
-                      13: FlexColumnWidth(1),
-                      14: FlexColumnWidth(1.2),
+                      9: FlexColumnWidth(1.5),
+                      10: FlexColumnWidth(1),
+                      11: FlexColumnWidth(1.3),
+                      12: FlexColumnWidth(1.5),
+                      13: FlexColumnWidth(5),
+                      14: FlexColumnWidth(1),
+                      15: FlexColumnWidth(1.2),
                     },
                     children: orders.cuttingOrders
                         .where((element) =>
@@ -308,6 +335,20 @@ class TheTable001 extends StatelessWidget {
                                         : Colors.amber[50],
                               ),
                               children: [
+                                //طباعة امر الشغل
+                                Container(
+                                    padding: const EdgeInsets.all(4),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          showmyAlertDialogfor_EDIT(
+                                              context, order);
+                                        },
+                                        child: const Icon(
+                                          Icons.edit,
+                                          color:
+                                              Color.fromARGB(255, 108, 207, 83),
+                                        ))).permition(context,
+                                    UserPermition.can_edit_in_cutting_order),
                                 //طباعة امر الشغل
                                 Container(
                                     padding: const EdgeInsets.all(4),
@@ -691,8 +732,8 @@ class TheTable001 extends StatelessWidget {
                                           decoration: BoxDecoration(
                                               border: Border.all(width: .4)),
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 8),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,
@@ -729,6 +770,7 @@ class TheTable001 extends StatelessWidget {
                                                     color: Colors.black,
                                                   ),
                                                 ),
+                                                const Gap(5)
                                               ],
                                             ),
                                           ),
@@ -807,19 +849,20 @@ class HeaderOftable001 extends StatelessWidget {
       columnWidths: const {
         0: FlexColumnWidth(1),
         1: FlexColumnWidth(1),
-        2: FlexColumnWidth(3),
+        2: FlexColumnWidth(1),
         3: FlexColumnWidth(3),
         4: FlexColumnWidth(3),
         5: FlexColumnWidth(3),
-        6: FlexColumnWidth(2),
-        7: FlexColumnWidth(1.5),
+        6: FlexColumnWidth(3),
+        7: FlexColumnWidth(2),
         8: FlexColumnWidth(1.5),
-        9: FlexColumnWidth(1),
-        10: FlexColumnWidth(1.3),
-        11: FlexColumnWidth(1.5),
-        12: FlexColumnWidth(5),
-        13: FlexColumnWidth(1),
-        14: FlexColumnWidth(1.2),
+        9: FlexColumnWidth(1.5),
+        10: FlexColumnWidth(1),
+        11: FlexColumnWidth(1.3),
+        12: FlexColumnWidth(1.5),
+        13: FlexColumnWidth(5),
+        14: FlexColumnWidth(1),
+        15: FlexColumnWidth(1.2),
       },
       border: TableBorder.all(width: 1, color: Colors.black),
       children: [
@@ -828,6 +871,8 @@ class HeaderOftable001 extends StatelessWidget {
               color: Color.fromARGB(255, 111, 191, 216),
             ),
             children: [
+              Container(
+                  padding: const EdgeInsets.all(5), child: const Text("تعديل")),
               Container(
                   padding: const EdgeInsets.all(5), child: const Text("طباعه")),
               Center(
@@ -928,6 +973,167 @@ showmyAlertDialog(BuildContext context, OrderAction action, cutingOrder item) {
                   context
                       .read<OrderController>()
                       .updatecuttingOrder(item, action);
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'yes',
+                )),
+          ],
+        );
+      });
+}
+
+showmyAlertDialogfor_EDIT(BuildContext context, cutingOrder item) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('تعديل امر الشغل'),
+          content: Consumer<SettingController>(
+            builder: (context, myType, child) {
+              return Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...item.items.map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              var Q = TextEditingController();
+                              Q.text = e.Qantity.toString();
+                              var L = TextEditingController();
+                              L.text = e.lenth.removeTrailingZeros;
+                              var W = TextEditingController();
+                              W.text = e.widti.removeTrailingZeros;
+                              var H = TextEditingController();
+                              H.text = e.hight.removeTrailingZeros;
+                              var D = TextEditingController();
+                              D.text = e.density.removeTrailingZeros;
+                              var T = TextEditingController();
+                              T.text = e.type;
+                              var C = TextEditingController();
+                              C.text = e.color;
+                              var N = TextEditingController();
+                              N.text =
+                                  item.notes.isEmpty ? '' : item.notes.first;
+                              showDialog(
+                                  context: context,
+                                  builder: (builder) => AlertDialog(
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            CustomTextFormField(
+                                                hint: "كميه",
+                                                width: 80,
+                                                controller: Q),
+                                            const Gap(8),
+                                            Row(
+                                              children: [
+                                                CustomTextFormField(
+                                                    hint: "طول",
+                                                    width: 80,
+                                                    controller: L),
+                                                CustomTextFormField(
+                                                    hint: "عرض",
+                                                    width: 80,
+                                                    controller: W),
+                                                CustomTextFormField(
+                                                    hint: "ارتفاع",
+                                                    width: 80,
+                                                    controller: H),
+                                              ].reversed.toList(),
+                                            ),
+                                            const Gap(8),
+                                            Row(
+                                              children: [
+                                                CustomTextFormField(
+                                                    hint: "لون",
+                                                    width: 80,
+                                                    controller: C),
+                                                CustomTextFormField(
+                                                    hint: "نوع",
+                                                    width: 80,
+                                                    controller: T),
+                                                CustomTextFormField(
+                                                    hint: "كثافه",
+                                                    width: 80,
+                                                    controller: D),
+                                              ].reversed.toList(),
+                                            ),
+                                            const Gap(6),
+                                            CustomTextFormField(
+                                                hint: "ملاحظات",
+                                                width: 120,
+                                                controller: N),
+                                          ],
+                                        ),
+                                        actions: [
+                                          ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.green),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text('No')),
+                                          ElevatedButton(
+                                              // style: ElevatedButton.styleFrom(primary: Colors.red),
+                                              onPressed: () {
+                                                e.Qantity = Q.text.to_int();
+                                                e.lenth = L.text.to_double();
+                                                e.widti = W.text.to_double();
+                                                e.hight = H.text.to_double();
+                                                e.density = D.text.to_double();
+                                                e.color = C.text;
+                                                e.type = T.text;
+                                                item.notes
+                                                  ..clear()
+                                                  ..add(N.text);
+                                                Navigator.pop(context);
+                                                myType.Refresh_Ui();
+                                              },
+                                              child: const Text(
+                                                'yes',
+                                              )),
+                                        ],
+                                      ));
+                            },
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 225, 167, 167),
+                                  border: Border.all(width: .4)),
+                              child: Center(
+                                child: Text(
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600),
+                                    'عدد ${e.Qantity} ${e.color}>>${e.type}>>ك${e.density.removeTrailingZeros}>>${e.lenth.removeTrailingZeros}*${e.widti.removeTrailingZeros}*${e.hight.removeTrailingZeros}'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+          actions: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('No')),
+            ElevatedButton(
+                // style: ElevatedButton.styleFrom(primary: Colors.red),
+                onPressed: () {
+                  context
+                      .read<OrderController>()
+                      .updatecuttingOrder(item, OrderAction.order_edit);
                   Navigator.pop(context);
                 },
                 child: const Text(

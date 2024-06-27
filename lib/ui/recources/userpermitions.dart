@@ -1,10 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
-
-
 //صلاحيات المستخدمين
 
 import 'package:jason_company/models/moderls.dart';
+
 enum UserPermition {
   show_all,
   can_get_data_of_blocks,
@@ -28,6 +27,7 @@ enum UserPermition {
   can_aprove_from_controll,
   can_aprove_from_calculation,
   can_print_in_cutting_order,
+  can_edit_in_cutting_order,
   can_close_in_cutting_order,
   delete_in_cutting_order,
   full_Red_of_cuttingOrder,
@@ -335,11 +335,15 @@ extension QQ on UserPermition {
             tittle: "امر التشغيل احمر ب الكامل حال عدم الموافقه");
       case UserPermition.show_cutting_order_notifications:
         return UserpermitionTittle(tittle: "عرض اشعارات اوامر التشغيل");
+      case UserPermition.can_edit_in_cutting_order:
+        return UserpermitionTittle(tittle: "التعديل فى اوامر الشغل");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.can_edit_in_cutting_order:
+        return "التعديل فى اوامر الشغل";
       case UserPermition.show_cutting_order_notifications:
         return "عرض اشعارات اوامر التشغيل";
       case UserPermition.full_Red_of_cuttingOrder:
