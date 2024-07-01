@@ -86,10 +86,11 @@ class BlockFirebasecontroller extends ChangeNotifier {
     channel.stream.forEach((u) {
       BlockModel user = BlockModel.fromJson(u);
       var index = blocks.map((e) => e.Block_Id).toList().indexOf(user.Block_Id);
-   
+
       if (index == -1) {
         if (user.actions
-            .if_action_exist(BlockAction.archive_block.getactionTitle)==false) {
+                .if_action_exist(BlockAction.archive_block.getactionTitle) ==
+            false) {
           blocks.add(user);
         }
       } else {
@@ -115,6 +116,7 @@ class BlockFirebasecontroller extends ChangeNotifier {
           .ref("temps/${block.Block_Id}")
           .set(jsonEncode("{'blocks':${block.Block_Id}}"));
     } else {
+      print('add ${block.number}');
       channel.sink.add(block.toJson());
     }
   }

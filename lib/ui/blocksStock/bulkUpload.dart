@@ -67,32 +67,32 @@ class _bulkUploadState extends State<bulkUploadForBlocks> {
                   backgroundColor: MaterialStatePropertyAll(Colors.red)),
               child: const Text(" incert This Data"),
               onPressed: () {
+                int x = 0;
                 if (_data.isNotEmpty) {
                   for (var e in _data) {
-                    print(e);
-      BlockWetOutput wetOutPut =
-          BlockWetOutput(L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
+                    print('val $e');
+                    BlockWetOutput wetOutPut = BlockWetOutput(
+                        L: 0, W: 0, H: 0, density: 0, volume: 0, wight: 0);
                     context.read<BlockFirebasecontroller>().addblock(BlockModel(
-                        Block_Id:  DateTime.now().microsecondsSinceEpoch,
+                        Block_Id: DateTime.now().microsecondsSinceEpoch + x++,
                         number: e[0].toString().to_int(),
-                        serial:  e[1],
+                        serial: e[1],
                         Rcissor: 0,
                         Hscissor: 0,
                         cumingFrom: "الصبه",
                         OutTo: "",
-                        notes:  e[11],
-                        discreption:  e[10],
+                        notes: e[11],
+                        discreption: e[10],
                         item: Itme(
-                          L:  e[2].toString().to_double(), 
-                        W:  e[3].toString().to_double(),
-                         H:  e[4].toString().to_double(),
-                         density:  e[5].toString().to_double(), 
-                         volume:  e[9].toString().to_double(),
-                          wight:  e[8].toString().to_double(),
-                           color:  e[6],
-                           type:  e[7], 
-                           price: 0
-                           ),
+                            L: e[2].toString().to_double(),
+                            W: e[3].toString().to_double(),
+                            H: e[4].toString().to_double(),
+                            density: e[5].toString().to_double(),
+                            volume: e[9].toString().to_double(),
+                            wight: e[8].toString().to_double(),
+                            color: e[6],
+                            type: e[7],
+                            price: 0),
                         wetOutPut: wetOutPut,
                         fractions: [],
                         actions: [BlockAction.create_block.add],
