@@ -152,7 +152,6 @@ class Chemicals_controller extends ChangeNotifier {
           ChemicalCategorys.add(channelcategory);
         }
       }
-      print(ChemicalCategorys);
       notifyListeners();
     }
     //

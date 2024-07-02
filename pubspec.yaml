@@ -53,7 +53,6 @@ dependencies:
   intl: ^0.19.0
   material_table_view: ^4.0.2
   network_discovery: ^1.0.0
-  observe_internet_connectivity: ^1.0.2
   open_file: ^3.3.2
   path_provider: ^2.1.1
   pdf: ^3.10.6
