@@ -25,8 +25,7 @@ class Chemicals_controller extends ChangeNotifier {
     }
   }
 
-  chemicals_From_firebase() {
-  }
+  chemicals_From_firebase() {}
 
   chmecals_From_Server() async {
     // get for the first time
@@ -134,13 +133,13 @@ class Chemicals_controller extends ChangeNotifier {
     }
   }
 
-  ChemicalCategorys_From_firebase() {
-  }
+  ChemicalCategorys_From_firebase() {}
 
   ChemicalCategorys_From_Server() async {
+    print("ChemicalCategorys");
+
     // get for the first time
-    Uri uri =
-        Uri.http('$ip:8080', '/chemicalcategorys/chemicalcategorys');
+    Uri uri = Uri.http('$ip:8080', '/chemicalcategorys');
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       ChemicalCategorys.clear();
@@ -153,14 +152,15 @@ class Chemicals_controller extends ChangeNotifier {
           ChemicalCategorys.add(channelcategory);
         }
       }
+      print(ChemicalCategorys);
       notifyListeners();
     }
     //
-    Uri uri2 = Uri.parse('ws://$ip:8080/chemicalcategorys/ws')
-        .replace(queryParameters: {
-      'username': Sharedprfs.getemail(),
-      'password': Sharedprfs.getpassword()
-    });
+    Uri uri2 = Uri.parse('ws://$ip:8080/chemicalcategorys/ws').replace(
+        queryParameters: {
+          'username': Sharedprfs.getemail(),
+          'password': Sharedprfs.getpassword()
+        });
     channel2 = WebSocketChannel.connect(uri2);
     channel2.stream.forEach((u) {
       ChemicalCategory chemicalcategory = ChemicalCategory.fromJson(u);
@@ -181,16 +181,15 @@ class Chemicals_controller extends ChangeNotifier {
     });
   }
 
-  addNewChemicalCategory(ChemicalCategory ChemicalCategorys) async {
-    ChemicalCategorys.actions
-        .add(Chemical_Category.creat_new_Chemical_category.add);
+  addNewChemicalCategory(ChemicalCategory item) async {
+    item.actions.add(Chemical_Category.creat_new_Chemical_category.add);
     if (internet == true) {
       FirebaseFirestore.instance
           .collection('ChemicalCategory')
-          .doc(ChemicalCategorys.chemicalcategory_ID.toString())
-          .set(ChemicalCategorys.toMap());
+          .doc(item.chemicalcategory_ID.toString())
+          .set(item.toMap());
     } else {
-      channel2.sink.add(ChemicalCategorys.toJson());
+      channel2.sink.add(item.toJson());
     }
   }
 

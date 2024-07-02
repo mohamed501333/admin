@@ -44,7 +44,7 @@ void main() async {
 
   // FirebaseDatabase.instance.setPersistenceEnabled(true);
 
-      // Initialize shared preferences
+  // Initialize shared preferences
   prefs = await SharedPreferences.getInstance();
 
   if (Platform.isAndroid) {
@@ -127,11 +127,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: Consumer<Users_controller>(
             builder: (context, myType, child) {
-
-
               return a(context)
                   ? myType.currentuser == null
-                      ?  MyloginPage()
+                      ? MyloginPage()
                       : Mainview()
                   : const CircularProgressIndicator();
             },
