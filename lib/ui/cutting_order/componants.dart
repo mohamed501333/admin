@@ -991,132 +991,127 @@ showmyAlertDialogfor_EDIT(BuildContext context, cutingOrder item) {
           title: const Text('تعديل امر الشغل'),
           content: Consumer<SettingController>(
             builder: (context, myType, child) {
-              return Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ...item.items.map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              var Q = TextEditingController();
-                              Q.text = e.Qantity.toString();
-                              var L = TextEditingController();
-                              L.text = e.lenth.removeTrailingZeros;
-                              var W = TextEditingController();
-                              W.text = e.widti.removeTrailingZeros;
-                              var H = TextEditingController();
-                              H.text = e.hight.removeTrailingZeros;
-                              var D = TextEditingController();
-                              D.text = e.density.removeTrailingZeros;
-                              var T = TextEditingController();
-                              T.text = e.type;
-                              var C = TextEditingController();
-                              C.text = e.color;
-                              var N = TextEditingController();
-                              N.text =
-                                  item.notes.isEmpty ? '' : item.notes.first;
-                              showDialog(
-                                  context: context,
-                                  builder: (builder) => AlertDialog(
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            CustomTextFormField(
-                                                hint: "كميه",
-                                                width: 80,
-                                                controller: Q),
-                                            const Gap(8),
-                                            Row(
-                                              children: [
-                                                CustomTextFormField(
-                                                    hint: "طول",
-                                                    width: 80,
-                                                    controller: L),
-                                                CustomTextFormField(
-                                                    hint: "عرض",
-                                                    width: 80,
-                                                    controller: W),
-                                                CustomTextFormField(
-                                                    hint: "ارتفاع",
-                                                    width: 80,
-                                                    controller: H),
-                                              ].reversed.toList(),
-                                            ),
-                                            const Gap(8),
-                                            Row(
-                                              children: [
-                                                CustomTextFormField(
-                                                    hint: "لون",
-                                                    width: 80,
-                                                    controller: C),
-                                                CustomTextFormField(
-                                                    hint: "نوع",
-                                                    width: 80,
-                                                    controller: T),
-                                                CustomTextFormField(
-                                                    hint: "كثافه",
-                                                    width: 80,
-                                                    controller: D),
-                                              ].reversed.toList(),
-                                            ),
-                                            const Gap(6),
-                                            CustomTextFormField(
-                                                hint: "ملاحظات",
-                                                width: 120,
-                                                controller: N),
-                                          ],
-                                        ),
-                                        actions: [
-                                          ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.green),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text('No')),
-                                          ElevatedButton(
-                                              // style: ElevatedButton.styleFrom(primary: Colors.red),
-                                              onPressed: () {
-                                                e.Qantity = Q.text.to_int();
-                                                e.lenth = L.text.to_double();
-                                                e.widti = W.text.to_double();
-                                                e.hight = H.text.to_double();
-                                                e.density = D.text.to_double();
-                                                e.color = C.text;
-                                                e.type = T.text;
-                                                item.notes
-                                                  ..clear()
-                                                  ..add(N.text);
-                                                Navigator.pop(context);
-                                                myType.Refresh_Ui();
-                                              },
-                                              child: const Text(
-                                                'yes',
-                                              )),
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ...item.items.map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            var Q = TextEditingController();
+                            Q.text = e.Qantity.toString();
+                            var L = TextEditingController();
+                            L.text = e.lenth.removeTrailingZeros;
+                            var W = TextEditingController();
+                            W.text = e.widti.removeTrailingZeros;
+                            var H = TextEditingController();
+                            H.text = e.hight.removeTrailingZeros;
+                            var D = TextEditingController();
+                            D.text = e.density.removeTrailingZeros;
+                            var T = TextEditingController();
+                            T.text = e.type;
+                            var C = TextEditingController();
+                            C.text = e.color;
+                            var N = TextEditingController();
+                            N.text = item.notes.isEmpty ? '' : item.notes.first;
+                            showDialog(
+                                context: context,
+                                builder: (builder) => AlertDialog(
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          CustomTextFormField(
+                                              hint: "كميه",
+                                              width: 80,
+                                              controller: Q),
+                                          const Gap(8),
+                                          Row(
+                                            children: [
+                                              CustomTextFormField(
+                                                  hint: "طول",
+                                                  width: 80,
+                                                  controller: L),
+                                              CustomTextFormField(
+                                                  hint: "عرض",
+                                                  width: 80,
+                                                  controller: W),
+                                              CustomTextFormField(
+                                                  hint: "ارتفاع",
+                                                  width: 80,
+                                                  controller: H),
+                                            ].reversed.toList(),
+                                          ),
+                                          const Gap(8),
+                                          Row(
+                                            children: [
+                                              CustomTextFormField(
+                                                  hint: "لون",
+                                                  width: 80,
+                                                  controller: C),
+                                              CustomTextFormField(
+                                                  hint: "نوع",
+                                                  width: 80,
+                                                  controller: T),
+                                              CustomTextFormField(
+                                                  hint: "كثافه",
+                                                  width: 80,
+                                                  controller: D),
+                                            ].reversed.toList(),
+                                          ),
+                                          const Gap(6),
+                                          CustomTextFormField(
+                                              hint: "ملاحظات",
+                                              width: 120,
+                                              controller: N),
                                         ],
-                                      ));
-                            },
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 225, 167, 167),
-                                  border: Border.all(width: .4)),
-                              child: Center(
-                                child: Text(
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600),
-                                    'عدد ${e.Qantity} ${e.color}>>${e.type}>>ك${e.density.removeTrailingZeros}>>${e.lenth.removeTrailingZeros}*${e.widti.removeTrailingZeros}*${e.hight.removeTrailingZeros}'),
-                              ),
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.green),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('No')),
+                                        ElevatedButton(
+                                            // style: ElevatedButton.styleFrom(primary: Colors.red),
+                                            onPressed: () {
+                                              e.Qantity = Q.text.to_int();
+                                              e.lenth = L.text.to_double();
+                                              e.widti = W.text.to_double();
+                                              e.hight = H.text.to_double();
+                                              e.density = D.text.to_double();
+                                              e.color = C.text;
+                                              e.type = T.text;
+                                              item.notes
+                                                ..clear()
+                                                ..add(N.text);
+                                              Navigator.pop(context);
+                                              myType.Refresh_Ui();
+                                            },
+                                            child: const Text(
+                                              'yes',
+                                            )),
+                                      ],
+                                    ));
+                          },
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 225, 167, 167),
+                                border: Border.all(width: .4)),
+                            child: Center(
+                              child: Text(
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                  'عدد ${e.Qantity} ${e.color}>>${e.type}>>ك${e.density.removeTrailingZeros}>>${e.lenth.removeTrailingZeros}*${e.widti.removeTrailingZeros}*${e.hight.removeTrailingZeros}'),
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },
