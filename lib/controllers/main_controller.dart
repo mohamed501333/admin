@@ -12,7 +12,6 @@ class MainController extends ChangeNotifier {
     Timer.periodic(const Duration(seconds: 1), (t) async {
       if (ip == '') {
         NetworkDiscovery.discover('192.168.1', 8080).forEach((e) {
-          print(1);
           if (ip != e.ip) {
             ip = e.ip;
             notifyListeners();
@@ -44,12 +43,6 @@ class MainController extends ChangeNotifier {
         }
       }
     });
-    changeip(String incomingip) {
-      if (ip != incomingip) {
-        ip = incomingip;
-        notifyListeners();
-      } else {}
-    }
   }
 
   int currentIndex = 2;

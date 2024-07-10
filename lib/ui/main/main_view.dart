@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:jason_company/controllers/biscol.dart';
 import 'package:jason_company/ui/recources/publicVariables.dart';
 import '../../app/functions.dart';
 import '../../controllers/CategorysController.dart';
@@ -103,6 +104,7 @@ class Mainview extends StatelessWidget {
 void getModulesData(BuildContext context) {
   if (initialized == false) {
     initialized = true;
+    context.read<Hivecontroller>().channelConection();
     if (permitionss(context, UserPermition.can_get_data_of_blocks)) {
       context.read<BlockFirebasecontroller>().getData();
       context.read<Category_controller>().getData();

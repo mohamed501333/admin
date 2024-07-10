@@ -18,6 +18,17 @@ extension Permition on Widget {
     return permitionss(context, permition) ? this : const SizedBox();
   }
 }
+extension Dsd on DateTime {
+  String formatt_yMd() {
+    String formateeddate = DateFormat('dd-MM-yyyy').format(this);
+    return formateeddate;
+  }
+
+  String formatt_hms() {
+    String formateeddate = DateFormat('hh:mm:ss a').format(this);
+    return formateeddate;
+  }
+}
 
 extension Brovider on BuildContext {
   gonext(BuildContext context, Widget route) {

@@ -14,6 +14,8 @@ import 'package:jason_company/ui/reports/reportsForBlock/%D8%A7%D9%84%D8%AA%D9%8
 import 'package:jason_company/ui/reports/cuttingOrderReports/cutting_orderDetails_view.dart';
 import 'package:jason_company/ui/reports/reprtsForFinlProuduct/details_of_finalProdcut.dart';
 
+import 'البسكول/reports.dart';
+
 // ignore: must_be_immutable
 class ReportsView extends StatelessWidget {
   const ReportsView({super.key});
@@ -33,8 +35,6 @@ class ReportsView extends StatelessWidget {
         permition: permitionss(
             context, UserPermition.show_Reports_details_of_finalProdcut_stock),
       ),
-
-  
       Reportmodel(
         title: "  تفاصيل مخزن البلوكات     ",
         route: Block_detaild_view(),
@@ -53,7 +53,6 @@ class ReportsView extends StatelessWidget {
         permition: permitionss(
             context, UserPermition.show_Reports_details_of_finalProdcut_stock),
       ),
-
       Reportmodel(
         title: "  تقرير   المقصات  الراسى     ",
         route: const H_Reports_view(),
@@ -67,6 +66,12 @@ class ReportsView extends StatelessWidget {
       Reportmodel(
         title: "تقرير مقارنة الانتاج بالمصروف      ",
         route: Report10View(),
+        permition: permitionss(context,
+            UserPermition.show_Reports_Comparison_Of_consumedAndResults),
+      ),
+      Reportmodel(
+        title: "تقرير   البسكول      ",
+        route: biscolView(),
         permition: permitionss(context,
             UserPermition.show_Reports_Comparison_Of_consumedAndResults),
       ),
