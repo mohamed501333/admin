@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/biscol.dart';
 import 'package:jason_company/models/moderls.dart';
+import 'package:jason_company/ui/recources/enums.dart';
 import 'package:provider/provider.dart';
 
 class biscolView extends StatelessWidget {
@@ -66,6 +67,10 @@ class Towdirectonscroll extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
+        List<WieghtTecketMOdel> filterd = myType.allrecords.values
+            .toList()
+            .filtercarnums(myType.selectedCarNum)
+            .filterDataBetween(myType.pickedDateFrom!, myType.pickedDateTO!);
         return SizedBox(
           width: 790,
           child: Scrollbar(
@@ -82,7 +87,7 @@ class Towdirectonscroll extends StatelessWidget {
                   SizedBox(
                     height: MediaQuery.of(context).size.height -
                         MediaQuery.of(context).padding.vertical -
-                        245,
+                        294,
                     child: Scrollbar(
                       controller: yourScrollController2,
                       thumbVisibility: true,
@@ -90,7 +95,7 @@ class Towdirectonscroll extends StatelessWidget {
                         controller: yourScrollController2,
                         scrollDirection: Axis.vertical,
                         child: Column(
-                          children: allrecords.values
+                          children: filterd
                               .map((e) => RecordWidg(
                                     ticket: e,
                                   ))
@@ -133,130 +138,132 @@ class _RecordWidgState extends State<RecordWidg> {
               showPhoto = !showPhoto;
             });
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                width: 70,
-                decoration: BoxDecoration(
-                    border: Border.all(), color: Colors.amber.shade100),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Center(
-                    child: Text(
-                      widget.ticket.wightTecket_serial.toString(),
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+          child: IntrinsicHeight(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 70,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                        widget.ticket.wightTecket_serial.toString(),
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                    border: Border.all(), color: Colors.amber.shade100),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Center(
-                    child: Text(
-                      '${widget.ticket.carNum}',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                        '${widget.ticket.carNum}',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                    border: Border.all(), color: Colors.amber.shade100),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Center(
-                    child: Text(
-                      '${widget.ticket.driverName}',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                        '${widget.ticket.driverName}',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                    border: Border.all(), color: Colors.amber.shade100),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Center(
-                    child: Text(
-                      '${widget.ticket.customerName}',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                        '${widget.ticket.customerName}',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                    border: Border.all(), color: Colors.amber.shade100),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Center(
-                    child: Text(
-                      '${widget.ticket.prodcutName}',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                        '${widget.ticket.prodcutName}',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                    border: Border.all(), color: Colors.amber.shade100),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Center(
-                    child: Text(
-                      '${widget.ticket.firstShot}',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                        '${widget.ticket.firstShot}',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                    border: Border.all(), color: Colors.amber.shade100),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Center(
-                    child: Text(
-                      '${widget.ticket.secondShot}',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                        '${widget.ticket.secondShot}',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                    border: Border.all(), color: Colors.amber.shade100),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Center(
-                    child: Text(
-                      '${widget.ticket.totalWeight}',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                        '${widget.ticket.totalWeight}',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ].reversed.toList(),
+              ].reversed.toList(),
+            ),
           ),
         ),
         showPhoto
@@ -515,7 +522,7 @@ class DatepickerTo4 extends StatelessWidget {
                       context: context,
                       initialDate: myType.pickedDateTO!,
                       firstDate: myType.pickedDateFrom!,
-                      lastDate: myType.AllDatesOfOfData().max);
+                      lastDate: DateTime.now());
 
                   if (pickedDate != null) {
                     myType.pickedDateTO = pickedDate;
@@ -564,7 +571,7 @@ class Dropdowen extends StatelessWidget {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
         List<String> items =
-            allrecords.values.map((e) => e.carNum.toString()).toList();
+            myType.allrecords.values.map((e) => e.carNum.toString()).toList();
         List<String> selecteditems = myType.selectedCarNum;
         return DropdownButton2<String>(
             isExpanded: true,
@@ -577,7 +584,7 @@ class Dropdowen extends StatelessWidget {
                 ),
               ),
             ),
-            items: items.map((item) {
+            items: items.toSet().toList().map((item) {
               return DropdownMenuItem(
                 value: item,
                 //disable default onTap to avoid closing menu when selecting an item
@@ -587,6 +594,7 @@ class Dropdowen extends StatelessWidget {
                     final isSelected = selecteditems.contains(item);
                     return InkWell(
                       onTap: () {
+                        print(item);
                         isSelected
                             ? selecteditems.remove(item)
                             : selecteditems.add(item);
@@ -708,8 +716,9 @@ class Dropdowen_Drivers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
-        List<String> items =
-            allrecords.values.map((e) => e.driverName.toString()).toList();
+        List<String> items = myType.allrecords.values
+            .map((e) => e.driverName.toString())
+            .toList();
         List<String> selecteditems = myType.selectedDrivers;
         return DropdownButton2<String>(
             isExpanded: true,
@@ -722,7 +731,7 @@ class Dropdowen_Drivers extends StatelessWidget {
                 ),
               ),
             ),
-            items: items.map((item) {
+            items: items.toSet().toList().map((item) {
               return DropdownMenuItem(
                 value: item,
                 //disable default onTap to avoid closing menu when selecting an item
@@ -853,8 +862,9 @@ class Dropdowen_customers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
-        List<String> items =
-            allrecords.values.map((e) => e.customerName.toString()).toList();
+        List<String> items = myType.allrecords.values
+            .map((e) => e.customerName.toString())
+            .toList();
         List<String> selecteditems = myType.selectedcustomerName;
         return DropdownButton2<String>(
             isExpanded: true,
@@ -867,7 +877,7 @@ class Dropdowen_customers extends StatelessWidget {
                 ),
               ),
             ),
-            items: items.map((item) {
+            items: items.toSet().toList().map((item) {
               return DropdownMenuItem(
                 value: item,
                 //disable default onTap to avoid closing menu when selecting an item
@@ -998,8 +1008,9 @@ class Dropdowen_prodcutName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
-        List<String> items =
-            allrecords.values.map((e) => e.prodcutName.toString()).toList();
+        List<String> items = myType.allrecords.values
+            .map((e) => e.prodcutName.toString())
+            .toList();
         List<String> selecteditems = myType.selectedProdcutName;
         return DropdownButton2<String>(
             isExpanded: true,
@@ -1012,7 +1023,7 @@ class Dropdowen_prodcutName extends StatelessWidget {
                 ),
               ),
             ),
-            items: items.map((item) {
+            items: items.toSet().toList().map((item) {
               return DropdownMenuItem(
                 value: item,
                 //disable default onTap to avoid closing menu when selecting an item
@@ -1144,7 +1155,7 @@ class Dropdowen_doneOrNot extends StatelessWidget {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
         List<String> items =
-            allrecords.values.map((e) => e.carNum.toString()).toList();
+            myType.allrecords.values.map((e) => e.carNum.toString()).toList();
         List<String> selecteditems = myType.selectedCarNum;
         return DropdownButton2<String>(
             isExpanded: true,
@@ -1273,5 +1284,51 @@ class Dropdowen_doneOrNot extends StatelessWidget {
             ));
       },
     );
+  }
+}
+
+extension F on List<WieghtTecketMOdel> {
+  List<WieghtTecketMOdel> filtercarnums(List<String> curnums) {
+    List<WieghtTecketMOdel> l = [];
+    if (curnums.isNotEmpty) {
+      for (var f in curnums) {
+        for (var i in this) {
+          if (i.carNum.toString() == f) {
+            l.add(i);
+          }
+        }
+      }
+      return l;
+    } else {
+      return this;
+    }
+  }
+
+  List<WieghtTecketMOdel> filterdrivers(List<String> drivers) {
+    List<WieghtTecketMOdel> l = [];
+    if (drivers.isNotEmpty) {
+      for (var f in drivers) {
+        for (var i in this) {
+          if (i.driverName.toString() == f) {
+            l.add(i);
+          }
+        }
+      }
+      return l;
+    } else {
+      return this;
+    }
+  }
+
+  List<WieghtTecketMOdel> filterDataBetween(DateTime from, DateTime to) {
+    return where((e) =>
+        e.actions
+                .get_Date_of_action(WhigtTecketAction.create_newTicket.getTitle)
+                .formatToInt() >=
+            from.formatToInt() &&
+        e.actions
+                .get_Date_of_action(WhigtTecketAction.create_newTicket.getTitle)
+                .formatToInt() <=
+            to.formatToInt()).toList();
   }
 }
