@@ -1,16 +1,15 @@
 import 'dart:convert';
-import 'dart:nativewrappers/_internal/vm/lib/typed_data_patch.dart';
 
-import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/publicVariables.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:http/http.dart' as http;
 
-Map<String, WieghtTecketMOdel> allrecords = {};
-
 class Hivecontroller extends ChangeNotifier {
+  Map<String, WieghtTecketMOdel> allrecords = {};
+
   static late WebSocketChannel channel;
 
   WieghtTecketMOdel? temprecord;
@@ -107,11 +106,19 @@ class Hivecontroller extends ChangeNotifier {
   channelConection() async {
     // get for the first time
     Uri uri = Uri.http('$ip:8080', '/biscol');
+    print("1");
+
     var response = await http.get(uri);
     if (response.statusCode == 200) {
+      print("2");
+
       allrecords.clear();
       var a = json.decode(response.body) as List;
+      print("3");
+
       for (var element in a) {
+        print("4");
+
         var block = WieghtTecketMOdel.fromMap(element);
 
         allrecords.addAll({block.wightTecket_ID.toString(): block});
@@ -146,12 +153,11 @@ class Hivecontroller extends ChangeNotifier {
     notifyListeners();
   }
 
-  // updateRecord(WieghtTecketMOdel record) {
-  //   record.synced = false;
-  //   record.lastupdated = DateTime.now().microsecondsSinceEpoch;
-  //   Hive.box('records').put(record.wightTecket_ID.toString(), record.toJson());
-  //   notifyListeners();
-  // }
+  updateRecord(WieghtTecketMOdel record, int serial) {
+    record.lastupdated = DateTime.now().microsecondsSinceEpoch;
+    record.stockRequsition_serial = serial;
+    channel.sink.add(record.toJson());
+  }
 
   // removeRecord(WieghtTecketMOdel record) {
   //   record.synced = false;
@@ -179,4 +185,6 @@ class Hivecontroller extends ChangeNotifier {
         .map((d) => d.when)
         .toList();
   }
+
+  WieghtTecketMOdel? ini;
 }

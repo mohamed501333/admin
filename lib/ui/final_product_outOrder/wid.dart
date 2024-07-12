@@ -8,11 +8,13 @@ import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/extentions/finalProdcutExtentions.dart';
 import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/Customer_controller.dart';
+import 'package:jason_company/controllers/biscol.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/controllers/invoice_controller.dart';
 import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/commen/textformfield.dart';
+import 'package:jason_company/ui/final_product_outOrder/%D9%85%D9%86%20%D8%A7%D9%84%D8%A8%D8%B3%D9%83%D9%88%D8%A8.dart';
 import 'package:jason_company/ui/final_product_outOrder/outOfStockOrder_veiwModel.dart';
 import 'package:jason_company/ui/recources/color_manager.dart';
 import 'package:jason_company/ui/recources/enums.dart';
@@ -20,6 +22,7 @@ import 'package:provider/provider.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 
 // ignore: must_be_immutable
+// صفحة الصرف
 class OUT extends StatelessWidget {
   OUT({
     super.key,
@@ -27,8 +30,14 @@ class OUT extends StatelessWidget {
   outOfStockOrderveiwModel vm = outOfStockOrderveiwModel();
   @override
   Widget build(BuildContext context) {
-    return Consumer<final_prodcut_controller>(
-      builder: (c, finalproductscntroller, child) {
+    return Consumer2<final_prodcut_controller, Hivecontroller>(
+      builder: (c, finalproductscntroller, hivecontroller, child) {
+        if (hivecontroller.ini != null) {
+          vm.carnumber.text = hivecontroller.ini!.carNum.toString();
+          vm.driverName.text = hivecontroller.ini!.driverName.toString();
+          vm.customerName.text = hivecontroller.ini!.customerName.toString();
+        }
+
         List<FinalProductModel> sorce = finalproductscntroller.finalproducts
             .where((e) =>
                 e.item.amount < 0 &&
@@ -67,94 +76,107 @@ class OUT extends StatelessWidget {
                           context, UserPermition.show_setting_in_out_order),
                 ],
               ),
+
               const Gap(10),
+              if (finalproductscntroller.indexOfRadioButon == 0) Out2(),
               // البحنث عن عميل
-              Row(
-                children: [
-                  SizedBox(
-                    width: 280,
-                    child: AdvancedSearch(
-                      searchItems: context
-                          .read<Customer_controller>()
-                          .customers
-                          .map((e) => e.name)
-                          .toList(),
-                      maxElementsToDisplay: 4,
-                      singleItemHeight: 50,
-                      borderColor: Colors.grey,
-                      minLettersForSearch: 1,
-                      selectedTextColor: const Color(0xFF3363D9),
-                      fontSize: 14,
-                      borderRadius: 12.0,
-                      hintText: ' ابحث عن عميل',
-                      cursorColor: Colors.blueGrey,
-                      autoCorrect: false,
-                      focusedBorderColor: Colors.blue,
-                      searchResultsBgColor: const Color(0xFAFAFA),
-                      disabledBorderColor: Colors.cyan,
-                      enabledBorderColor: Colors.black,
-                      enabled: true,
-                      caseSensitive: false,
-                      inputTextFieldBgColor: Colors.white10,
-                      clearSearchEnabled: true,
-                      itemsShownAtStart: 2,
-                      searchMode: SearchMode.CONTAINS,
-                      showListOfResults: true,
-                      unSelectedTextColor: Colors.black54,
-                      verticalPadding: 10,
-                      horizontalPadding: 10,
-                      hideHintOnTextInputFocus: true,
-                      hintTextColor: Colors.grey,
-                      onItemTap: (index, value) {
-                        vm.customerName.text = value;
-                      },
-                      onSearchClear: () {
-                        print("Cleared Search");
-                      },
-                      onSubmitted: (searchText, listOfResults) {
-                        print("Submitted: $searchText");
-                      },
-                      onEditingProgress: (searchText, listOfResults) {
-                        print("TextEdited: $searchText");
-                        print("LENGTH: ${listOfResults.length}");
-                      },
+              if (finalproductscntroller.indexOfRadioButon == 1 ||
+                  (hivecontroller.ini != null &&
+                      hivecontroller.ini!.customerName.isEmpty))
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 280,
+                      child: AdvancedSearch(
+                        searchItems: context
+                            .read<Customer_controller>()
+                            .customers
+                            .map((e) => e.name)
+                            .toList(),
+                        maxElementsToDisplay: 4,
+                        singleItemHeight: 50,
+                        borderColor: Colors.grey,
+                        minLettersForSearch: 1,
+                        selectedTextColor: const Color(0xFF3363D9),
+                        fontSize: 14,
+                        borderRadius: 12.0,
+                        hintText: ' ابحث عن عميل',
+                        cursorColor: Colors.blueGrey,
+                        autoCorrect: false,
+                        focusedBorderColor: Colors.blue,
+                        searchResultsBgColor: const Color(0xFAFAFA),
+                        disabledBorderColor: Colors.cyan,
+                        enabledBorderColor: Colors.black,
+                        enabled: true,
+                        caseSensitive: false,
+                        inputTextFieldBgColor: Colors.white10,
+                        clearSearchEnabled: true,
+                        itemsShownAtStart: 2,
+                        searchMode: SearchMode.CONTAINS,
+                        showListOfResults: true,
+                        unSelectedTextColor: Colors.black54,
+                        verticalPadding: 10,
+                        horizontalPadding: 10,
+                        hideHintOnTextInputFocus: true,
+                        hintTextColor: Colors.grey,
+                        onItemTap: (index, value) {
+                          vm.customerName.text = value;
+                        },
+                        onSearchClear: () {
+                          print("Cleared Search");
+                        },
+                        onSubmitted: (searchText, listOfResults) {
+                          print("Submitted: $searchText");
+                        },
+                        onEditingProgress: (searchText, listOfResults) {
+                          print("TextEdited: $searchText");
+                          print("LENGTH: ${listOfResults.length}");
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
               const Gap(10),
               // العميل و رقم العربه
               SizedBox(
                 height: 100,
                 child: Row(
                   children: [
-                    CustomTextFormField(
-                        label: "العميل",
-                        readOnly: true,
-                        validator: Validation.validateothers,
-                        hint: 'فارغ  ',
-                        width: 120,
-                        controller: vm.customerName),
+                    if (finalproductscntroller.indexOfRadioButon == 1)
+                      CustomTextFormField(
+                          label: "العميل",
+                          readOnly: true,
+                          validator: Validation.validateothers,
+                          hint: 'فارغ  ',
+                          width: 120,
+                          controller: vm.customerName),
                     const SizedBox(
                       width: 10,
                     ),
-                    CustomTextFormField(
-                        validator: Validation.validateothers,
-                        hint: 'رقم العربه',
-                        width: 120,
-                        controller: vm.carnumber),
+                    if (finalproductscntroller.indexOfRadioButon == 1)
+                      CustomTextFormField(
+                          validator: Validation.validateothers,
+                          hint: 'رقم العربه',
+                          width: 120,
+                          controller: vm.carnumber),
                     const Gap(22),
                     context.read<SettingController>().switch1 == false
                         ? Consumer<Invoice_controller>(
                             builder: (context, myType, child) {
+                              var x = const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold);
                               Iterable<int> invoices =
                                   myType.invoices.map((e) => e.serial);
 
-                              return Text(
-                                  '( ${invoices.isEmpty ? 1 : invoices.max + 1} ): رقم الاذن',
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold));
+                              return Column(
+                                children: [
+                                  Text('رقم', style: x),
+                                  Text('الاذن', style: x),
+                                  Text(
+                                      '( ${invoices.isEmpty ? 1 : invoices.max + 1} )',
+                                      style: x),
+                                ],
+                              );
                             },
                           )
                         : CustomTextFormField(
@@ -170,12 +192,16 @@ class OUT extends StatelessWidget {
                 height: 100,
                 child: Row(
                   children: [
-                    CustomTextFormField(
-                        validator: Validation.validateothers,
-                        keybordtupe: TextInputType.name,
-                        hint: 'اسم السائق ',
-                        width: 120,
-                        controller: vm.driverName),
+                    if ((finalproductscntroller.indexOfRadioButon == 0 &&
+                            hivecontroller.ini != null &&
+                            hivecontroller.ini!.driverName.isEmpty) ||
+                        finalproductscntroller.indexOfRadioButon == 1)
+                      CustomTextFormField(
+                          validator: Validation.validateothers,
+                          keybordtupe: TextInputType.name,
+                          hint: 'اسم السائق ',
+                          width: 120,
+                          controller: vm.driverName),
                     const SizedBox(
                       width: 10,
                     ),
@@ -189,6 +215,7 @@ class OUT extends StatelessWidget {
                 ),
               ),
               const Gap(10),
+
               // البنود
               Column(
                 children: [
