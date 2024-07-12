@@ -123,9 +123,11 @@ class outOfStockOrderveiwModel extends BaseViewModel {
           .read<final_prodcut_controller>()
           .updateItemsWith_actionAndInvioceNum(finals, serial);
       if (context.read<final_prodcut_controller>().indexOfRadioButon == 0) {
-        context
-            .read<Hivecontroller>()
-            .updateRecord(context.read<Hivecontroller>().ini!, serial);
+        final record = context.read<Hivecontroller>().ini!;
+        record.carNum = carnumber.text.to_int();
+        record.driverName = driverName.text;
+        record.customerName = customerName.text;
+        context.read<Hivecontroller>().updateRecord(record, serial);
       }
 
       clearfields();
