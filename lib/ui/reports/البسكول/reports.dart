@@ -23,9 +23,10 @@ class biscolView extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              DropdwoenFOrArvhived(),
               DatepickerFrom4(),
               DatepickerTo4(),
             ],
@@ -69,10 +70,13 @@ class Towdirectonscroll extends StatelessWidget {
       builder: (context, myType, child) {
         List<WieghtTecketMOdel> filterd = myType.allrecords.values
             .toList()
+            .filterDataBetween(myType.pickedDateFrom!, myType.pickedDateTO!)
             .filtercarnums(myType.selectedCarNum)
-            .filterDataBetween(myType.pickedDateFrom!, myType.pickedDateTO!);
+            .filterdrivers(myType.selectedDrivers)
+            .filtercustomers(myType.selectedcustomerName)
+            .filterdeleted(myType.archived);
         return SizedBox(
-          width: 790,
+          width: 980,
           child: Scrollbar(
             thumbVisibility: true,
             controller: yourScrollController,
@@ -142,6 +146,26 @@ class _RecordWidgState extends State<RecordWidg> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Container(
+                  width: 70,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: IconButton(
+                          onPressed: () {
+                            context.read<Hivecontroller>().canedit1 = false;
+
+                            context
+                                .read<Hivecontroller>()
+                                .FillRecord(widget.ticket);
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(Icons.open_in_browser)),
+                    ),
+                  ),
+                ),
                 Container(
                   width: 70,
                   decoration: BoxDecoration(
@@ -262,6 +286,21 @@ class _RecordWidgState extends State<RecordWidg> {
                     ),
                   ),
                 ),
+                Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      border: Border.all(), color: Colors.amber.shade100),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                        '${widget.ticket.stockRequsition_serial}',
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                ),
               ].reversed.toList(),
             ),
           ),
@@ -336,114 +375,142 @@ class RecordHeader extends StatelessWidget {
   final color = const Color.fromARGB(255, 197, 150, 8);
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-          width: 70,
-          decoration: BoxDecoration(border: Border.all(), color: color),
-          child: const Padding(
-            padding: EdgeInsets.all(3.0),
-            child: Center(
-              child: Text(
-                'م التذكره',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+    return IntrinsicHeight(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 70,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  'فتح',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
-        ),
-        Container(
-          width: 100,
-          decoration: BoxDecoration(border: Border.all(), color: color),
-          child: const Padding(
-            padding: EdgeInsets.all(3.0),
-            child: Center(
-              child: Text(
-                'رقم السياره',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          Container(
+            width: 70,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  'م التذكره',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
-        ),
-        Container(
-          width: 100,
-          decoration: BoxDecoration(border: Border.all(), color: color),
-          child: const Padding(
-            padding: EdgeInsets.all(3.0),
-            child: Center(
-              child: Text(
-                'اسم السائق',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          Container(
+            width: 100,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  'رقم السياره',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
-        ),
-        Container(
-          width: 100,
-          decoration: BoxDecoration(border: Border.all(), color: color),
-          child: const Padding(
-            padding: EdgeInsets.all(3.0),
-            child: Center(
-              child: Text(
-                'عميل / مورد',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          Container(
+            width: 100,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  'اسم السائق',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
-        ),
-        Container(
-          width: 100,
-          decoration: BoxDecoration(border: Border.all(), color: color),
-          child: const Padding(
-            padding: EdgeInsets.all(3.0),
-            child: Center(
-              child: Text(
-                'الصنف',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          Container(
+            width: 100,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  'عميل / مورد',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
-        ),
-        Container(
-          width: 100,
-          decoration: BoxDecoration(border: Border.all(), color: color),
-          child: const Padding(
-            padding: EdgeInsets.all(3.0),
-            child: Center(
-              child: Text(
-                'الوزنه الاولى',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          Container(
+            width: 100,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  'الصنف',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
-        ),
-        Container(
-          width: 100,
-          decoration: BoxDecoration(border: Border.all(), color: color),
-          child: const Padding(
-            padding: EdgeInsets.all(3.0),
-            child: Center(
-              child: Text(
-                'الوزنه الثانيه',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          Container(
+            width: 100,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  'الوزنه الاولى',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
-        ),
-        Container(
-          width: 100,
-          decoration: BoxDecoration(border: Border.all(), color: color),
-          child: const Padding(
-            padding: EdgeInsets.all(3.0),
-            child: Center(
-              child: Text(
-                '  الصافى ',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          Container(
+            width: 100,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  'الوزنه الثانيه',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ),
-        ),
-      ].reversed.toList(),
+          Container(
+            width: 100,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  '  الصافى ',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: 100,
+            decoration: BoxDecoration(border: Border.all(), color: color),
+            child: const Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Center(
+                child: Text(
+                  'م اذن التحميل',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+              ),
+            ),
+          ),
+        ].reversed.toList(),
+      ),
     );
   }
 }
@@ -570,8 +637,11 @@ class Dropdowen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
-        List<String> items =
-            myType.allrecords.values.map((e) => e.carNum.toString()).toList();
+        List<String> items = myType.allrecords.values
+            .toList()
+            .filterDataBetween(myType.pickedDateFrom!, myType.pickedDateTO!)
+            .map((e) => e.carNum.toString())
+            .toList();
         List<String> selecteditems = myType.selectedCarNum;
         return DropdownButton2<String>(
             isExpanded: true,
@@ -717,6 +787,8 @@ class Dropdowen_Drivers extends StatelessWidget {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
         List<String> items = myType.allrecords.values
+            .toList()
+            .filterDataBetween(myType.pickedDateFrom!, myType.pickedDateTO!)
             .map((e) => e.driverName.toString())
             .toList();
         List<String> selecteditems = myType.selectedDrivers;
@@ -863,6 +935,8 @@ class Dropdowen_customers extends StatelessWidget {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
         List<String> items = myType.allrecords.values
+            .toList()
+            .filterDataBetween(myType.pickedDateFrom!, myType.pickedDateTO!)
             .map((e) => e.customerName.toString())
             .toList();
         List<String> selecteditems = myType.selectedcustomerName;
@@ -1009,6 +1083,8 @@ class Dropdowen_prodcutName extends StatelessWidget {
     return Consumer<Hivecontroller>(
       builder: (context, myType, child) {
         List<String> items = myType.allrecords.values
+            .toList()
+            .filterDataBetween(myType.pickedDateFrom!, myType.pickedDateTO!)
             .map((e) => e.prodcutName.toString())
             .toList();
         List<String> selecteditems = myType.selectedProdcutName;
@@ -1287,6 +1363,30 @@ class Dropdowen_doneOrNot extends StatelessWidget {
   }
 }
 
+class DropdwoenFOrArvhived extends StatelessWidget {
+  DropdwoenFOrArvhived({super.key});
+  List<String> a = ['محزوف', 'غير محزوف', 'كل'];
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Hivecontroller>(
+      builder: (context, myType, child) {
+        return DropdownButton(
+            value: myType.archived,
+            items: a
+                .map((e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e),
+                    ))
+                .toList(),
+            onChanged: (v) {
+              myType.archived = v!;
+              myType.Refrech_UI();
+            });
+      },
+    );
+  }
+}
+
 extension F on List<WieghtTecketMOdel> {
   List<WieghtTecketMOdel> filtercarnums(List<String> curnums) {
     List<WieghtTecketMOdel> l = [];
@@ -1294,6 +1394,38 @@ extension F on List<WieghtTecketMOdel> {
       for (var f in curnums) {
         for (var i in this) {
           if (i.carNum.toString() == f) {
+            l.add(i);
+          }
+        }
+      }
+      return l;
+    } else {
+      return this;
+    }
+  }
+
+  List<WieghtTecketMOdel> filterdeleted(String archived) {
+    if (archived == 'كل') {
+      return this;
+    } else if (archived == 'محزوف') {
+      return where((e) =>
+          e.actions
+              .if_action_exist(WhigtTecketAction.archive_tecket.getTitle) ==
+          true).toList();
+    } else {
+      return where((e) =>
+          e.actions
+              .if_action_exist(WhigtTecketAction.archive_tecket.getTitle) ==
+          false).toList();
+    }
+  }
+
+  List<WieghtTecketMOdel> filtercustomers(List<String> curnums) {
+    List<WieghtTecketMOdel> l = [];
+    if (curnums.isNotEmpty) {
+      for (var f in curnums) {
+        for (var i in this) {
+          if (i.customerName.toString() == f) {
             l.add(i);
           }
         }

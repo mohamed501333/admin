@@ -150,6 +150,7 @@ class Hivecontroller extends ChangeNotifier {
     customercontroller.text = r.customerName;
     itemcontroller.text = r.prodcutName;
     notescontroller.text = r.notes;
+
     notifyListeners();
   }
 
@@ -179,6 +180,8 @@ class Hivecontroller extends ChangeNotifier {
   String selectedReport = '';
   DateTime? pickedDateFrom;
   DateTime? pickedDateTO;
+  String archived = 'غير محزوف';
+
   List<DateTime> AllDatesOfOfData() {
     return allrecords.values
         .expand((e) => e.actions)
