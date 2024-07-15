@@ -36,8 +36,11 @@ class DropDdowenFor_cars extends StatelessWidget {
         var a = myType.allrecords.values
             .where((e) =>
                 e.actions.if_action_exist(
-                    WhigtTecketAction.create_secondWhigt.getTitle) ==
-                false)
+                        WhigtTecketAction.archive_tecket.getTitle) ==
+                    false &&
+                e.actions.if_action_exist(
+                        WhigtTecketAction.create_secondWhigt.getTitle) ==
+                    false)
             .map((e) => e)
             .toList()
             .toSet()
