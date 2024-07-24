@@ -10,6 +10,7 @@ import 'package:jason_company/controllers/setting_controller.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/base/base_view_mode.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/strings_manager.dart';
 import 'package:provider/provider.dart';
 
 class outOfStockOrderveiwModel extends BaseViewModel {
@@ -113,7 +114,7 @@ class outOfStockOrderveiwModel extends BaseViewModel {
           serial: serial,
           driverName: driverName.text,
           carNumber: carnumber.text.to_int(),
-          dispatcher: whoLoad.text,
+          dispatcher: SringsManager.myemail,
           actions: [InvoiceAction.creat_invoice.add],
           items: invoiceItems);
 

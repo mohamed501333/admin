@@ -41,11 +41,18 @@ class Stockcheck extends StatelessWidget {
       body: Consumer2<final_prodcut_controller, StokCheck_Controller>(
         builder: (context, myType, sstockCheckcontroller, child) {
           Stockcheck_veiwModel vm = Stockcheck_veiwModel();
-          List<FinalProdcutBalanceModel> f =
-              vm.finalprodctBalance(myType.finalproducts, context);
+          List<FinalProdcutBalanceModel> f = vm.finalprodctBalance(
+              myType.finalproducts
+                  .where((test) =>
+                      test.actions.if_action_exist(finalProdcutAction
+                          .recive_Done_Form_FinalProdcutStock.getactionTitle) ==
+                      true)
+                  .toList(),
+              context);
 
           return Column(
-            children: [   errmsg() ,
+            children: [
+              errmsg(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -489,8 +496,10 @@ class Stockcheck extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: f.map((e) {
-                      List<StockCheckModel> a =
-                          sstockCheckcontroller.stockChecks.getIdentCalOf(e);
+                      List<StockCheckModel> a = sstockCheckcontroller
+                          .stockChecks.values
+                          .toList()
+                          .getIdentCalOf(e);
                       return Center(
                         child: IntrinsicHeight(
                             child: Row(

@@ -219,4 +219,7 @@ class OrderController extends ChangeNotifier {
   Refrsh_ui() {
     notifyListeners();
   }
+
+  bool showAproves = false;
+  bool showButtoms = false;
 }

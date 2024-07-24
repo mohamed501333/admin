@@ -58,7 +58,21 @@ class Fields001 extends StatelessWidget {
                     children: [
                       CustomTextFormField(
                         onsubmitted: (v) {
-                          FocusScope.of(context).previousFocus();
+                          dropDowenContoller g =
+                              context.read<dropDowenContoller>();
+                          vm.validate();
+                          if (vm.formKey.currentState!.validate() &&
+                              g.initialcolor != null &&
+                              g.initialdensity != null &&
+                              g.initialtype != null) {
+                            vm.addItem(
+                                context, context.read<dropDowenContoller>());
+                          }
+
+                          context.read<ObjectBoxController>().get();
+                          FocusScope.of(context).nextFocus();
+                          FocusScope.of(context).nextFocus();
+                          FocusScope.of(context).nextFocus();
                           return null;
                         },
                         width: MediaQuery.of(context).size.width * .19,

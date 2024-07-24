@@ -1,7 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:typed_data';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -90,7 +88,10 @@ class _InvicesViewState extends State<InvicesView> {
       ),
       body: Consumer2<Invoice_controller, Hivecontroller>(
         builder: (context, myType, hivecontroller, child) {
-          var a = hivecontroller.allrecords.values;
+          var allTickets = hivecontroller.allrecords.values.where((test) =>
+              test.actions
+                  .if_action_exist(WhigtTecketAction.archive_tecket.getTitle) ==
+              false);
           List<Invoice> t = myType.invoices
               .where((element) =>
                   format.format(element.actions.get_Date_of_action(
@@ -111,47 +112,31 @@ class _InvicesViewState extends State<InvicesView> {
                               const Color.fromARGB(255, 153, 211, 218),
                           backgroundColor:
                               const Color.fromARGB(255, 238, 118, 150),
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              CircleAvatar(
-                                child: Text(
-                                    "${t.reversed.toList().indexOf(i) + 1}"),
-                              ),
-                              Text(i.driverName.toString(),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              Text(i.serial.toString(),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                            ],
-                          ),
+                          title: title(t, i),
                           children: [
-                            if (a
+                            if (allTickets
                                 .where((test) =>
                                     test.stockRequsition_serial == i.serial)
                                 .isNotEmpty)
-                              Column(
-                                children: [
-                                  Text(
-                                    'تسلسل : ${i.serial}',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  InteractiveViewer(
-                                    child: Image.memory(
-                                      Uint8List.fromList(a
-                                          .where((test) =>
-                                              test.stockRequsition_serial ==
-                                              i.serial)
-                                          .first
-                                          .secondShotpiccam1),
-                                      width: 400,
-                                      height: 400,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ],
+                              Visibility(
+                                visible: allTickets
+                                        .where((test) =>
+                                            test.stockRequsition_serial ==
+                                            i.serial)
+                                        .isNotEmpty &&
+                                    allTickets
+                                        .where((test) =>
+                                            test.stockRequsition_serial ==
+                                            i.serial)
+                                        .first
+                                        .secondShotpiccam2Adress
+                                        .isNotEmpty,
+                                child: Image.network(
+                                  'http://192.168.1.225:8080/i?imageid=${allTickets.where((test) => test.stockRequsition_serial == i.serial).first.secondShotpiccam2Adress}',
+                                  width: 400,
+                                  height: 400,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                           ],
                         ),
@@ -200,6 +185,21 @@ class _InvicesViewState extends State<InvicesView> {
           );
         },
       ),
+    );
+  }
+
+  Row title(List<Invoice> t, Invoice i) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        CircleAvatar(
+          child: Text("${t.reversed.toList().indexOf(i) + 1}"),
+        ),
+        Text(i.driverName.toString(),
+            style: const TextStyle(fontWeight: FontWeight.bold)),
+        Text(i.carNumber.toString(),
+            style: const TextStyle(fontWeight: FontWeight.bold)),
+      ],
     );
   }
 }

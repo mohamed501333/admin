@@ -204,7 +204,7 @@ class _RecordWidgState extends State<RecordWidg> {
                     padding: const EdgeInsets.all(3.0),
                     child: Center(
                       child: Text(
-                        '${widget.ticket.driverName}',
+                        widget.ticket.driverName,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w700),
                       ),
@@ -219,7 +219,7 @@ class _RecordWidgState extends State<RecordWidg> {
                     padding: const EdgeInsets.all(3.0),
                     child: Center(
                       child: Text(
-                        '${widget.ticket.customerName}',
+                        widget.ticket.customerName,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w700),
                       ),
@@ -234,7 +234,7 @@ class _RecordWidgState extends State<RecordWidg> {
                     padding: const EdgeInsets.all(3.0),
                     child: Center(
                       child: Text(
-                        '${widget.ticket.prodcutName}',
+                        widget.ticket.prodcutName,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w700),
                       ),
@@ -319,19 +319,57 @@ class _RecordWidgState extends State<RecordWidg> {
                   Row(
                     children: [
                       InteractiveViewer(
-                        child: Image.memory(
-                          Uint8List.fromList(widget.ticket.firstShotpiccam1),
-                          width: 400,
-                          height: 400,
-                          fit: BoxFit.fill,
+                        child: Column(
+                          children: [
+                            Visibility(
+                              visible: widget.ticket.synced == true &&
+                                  widget
+                                      .ticket.firstShotpiccam1Adress.isNotEmpty,
+                              child: Image.network(
+                                'http://192.168.1.225:8080/i?imageid=${widget.ticket.firstShotpiccam1Adress}',
+                                width: 400,
+                                height: 400,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Visibility(
+                              visible: widget.ticket.synced == false,
+                              child: Image.memory(
+                                Uint8List.fromList(
+                                    widget.ticket.firstShotpiccam1),
+                                width: 400,
+                                height: 400,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       InteractiveViewer(
-                        child: Image.memory(
-                          Uint8List.fromList(widget.ticket.firstShotpiccam2),
-                          width: 400,
-                          height: 400,
-                          fit: BoxFit.fill,
+                        child: Column(
+                          children: [
+                            Visibility(
+                              visible: widget.ticket.synced == true &&
+                                  widget
+                                      .ticket.firstShotpiccam2Adress.isNotEmpty,
+                              child: Image.network(
+                                'http://192.168.1.225:8080/i?imageid=${widget.ticket.firstShotpiccam2Adress}',
+                                width: 400,
+                                height: 400,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Visibility(
+                              visible: widget.ticket.synced == false,
+                              child: Image.memory(
+                                Uint8List.fromList(
+                                    widget.ticket.firstShotpiccam2),
+                                width: 400,
+                                height: 400,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -346,19 +384,57 @@ class _RecordWidgState extends State<RecordWidg> {
                   Row(
                     children: [
                       InteractiveViewer(
-                        child: Image.memory(
-                          Uint8List.fromList(widget.ticket.secondShotpiccam1),
-                          width: 400,
-                          height: 400,
-                          fit: BoxFit.fill,
+                        child: Column(
+                          children: [
+                            Visibility(
+                              visible: widget.ticket.synced == true &&
+                                  widget.ticket.secondShotpiccam1Adress
+                                      .isNotEmpty,
+                              child: Image.network(
+                                'http://192.168.1.225:8080/i?imageid=${widget.ticket.secondShotpiccam1Adress}',
+                                width: 400,
+                                height: 400,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Visibility(
+                              visible: widget.ticket.synced == false,
+                              child: Image.memory(
+                                Uint8List.fromList(
+                                    widget.ticket.secondShotpiccam1),
+                                width: 400,
+                                height: 400,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       InteractiveViewer(
-                        child: Image.memory(
-                          Uint8List.fromList(widget.ticket.secondShotpiccam2),
-                          width: 400,
-                          height: 400,
-                          fit: BoxFit.fill,
+                        child: Column(
+                          children: [
+                            Visibility(
+                              visible: widget.ticket.synced == true &&
+                                  widget.ticket.secondShotpiccam2Adress
+                                      .isNotEmpty,
+                              child: Image.network(
+                                'http://192.168.1.225:8080/i?imageid=${widget.ticket.secondShotpiccam2Adress}',
+                                width: 400,
+                                height: 400,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Visibility(
+                              visible: widget.ticket.synced == false,
+                              child: Image.memory(
+                                Uint8List.fromList(
+                                    widget.ticket.secondShotpiccam2),
+                                width: 400,
+                                height: 400,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

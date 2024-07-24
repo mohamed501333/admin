@@ -4,20 +4,18 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jason_company/controllers/biscol.dart';
+import 'package:jason_company/controllers/stockCheckController.dart';
 import 'package:jason_company/ui/recources/publicVariables.dart';
 import '../../app/functions.dart';
 import '../../controllers/CategorysController.dart';
 import '../../controllers/ChemicalsController.dart';
 import '../../controllers/Customer_controller.dart';
 import '../../controllers/Order_controller.dart';
-import '../../controllers/bFractionsController.dart';
-import '../../controllers/bSubfractions.dart';
+
 import '../../controllers/blockFirebaseController.dart';
 import '../../controllers/final_product_controller.dart';
 import '../../controllers/invoice_controller.dart';
-import '../../controllers/non_final_controller.dart';
-import '../../controllers/purchesController.dart';
-import '../../controllers/stockCheckController.dart';
+
 import '../../controllers/users_controllers.dart';
 import 'componants/nav_bar.dart';
 import '../../controllers/main_controller.dart';
@@ -126,6 +124,9 @@ void getModulesData(BuildContext context) {
     if (permitionss(context, UserPermition.can_get_data_of_invoice)) {
       context.read<Invoice_controller>().getData();
     }
+    if (permitionss(context, UserPermition.can_get_data_of_stcokCheck)) {
+      context.read<StokCheck_Controller>().get_StokCheck_data();
+    }
     if (Platform.isAndroid) {
       if (permitionss(
           context, UserPermition.show_cutting_order_notifications)) {
@@ -137,10 +138,8 @@ void getModulesData(BuildContext context) {
   }
 }
 
-//         permitionss(context, UserPermition.can_get_data_of_stcokCheck)
-//             ? context.read<StokCheck_Controller>().get_StokCheck_data()
-//             : DoNothingAction();
-//
+
+
 //         permitionss(context, UserPermition.can_get_data_of_fractions)
 //             ? context.read<Fractions_Controller>().get_Fractions_data()
 //             : DoNothingAction();

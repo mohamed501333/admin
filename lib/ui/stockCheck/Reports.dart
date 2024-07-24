@@ -23,7 +23,8 @@ class Report1_stockCheck extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(),
           body: Column(
-            children: [   errmsg() ,
+            children: [
+              errmsg(),
               BoxOFReportForStockChek(),
               if (myType.selectedreport == 'تقرير عمليات الجرد')
                 Expanded(
@@ -38,7 +39,8 @@ class Report1_stockCheck extends StatelessWidget {
                             1: FlexColumnWidth(1),
                             2: FlexColumnWidth(1),
                           },
-                          children: myType.stockChecks
+                          children: myType.stockChecks.values
+                              .toList()
                               .beweenTowDates(
                                   myType.pickedDateFrom!.formatToInt(),
                                   myType.pickedDateTo!.formatToInt())
@@ -157,7 +159,8 @@ class Report1_stockCheck extends StatelessWidget {
                             1: FlexColumnWidth(1),
                             2: FlexColumnWidth(.8),
                           },
-                          children: myType.stockChecks
+                          children: myType.stockChecks.values
+                              .toList()
                               .beweenTowDates(
                                   myType.pickedDateFrom!.formatToInt(),
                                   myType.pickedDateTo!.formatToInt())
@@ -393,10 +396,9 @@ class ButtomOfRefreshQuantity extends StatelessWidget {
                                                 .read<
                                                     final_prodcut_controller>()
                                                 .updateFinalProdcut(FinalProductModel(
-                                                              updatedat: DateTime.now().microsecondsSinceEpoch,
-
-                                                    finalProdcut_ID: DateTime
-                                                            .now()
+                                                    updatedat: DateTime.now()
+                                                        .microsecondsSinceEpoch,
+                                                    finalProdcut_ID: DateTime.now()
                                                         .millisecondsSinceEpoch,
                                                     block_ID: 0,
                                                     fraction_ID: 0,
@@ -415,8 +417,7 @@ class ButtomOfRefreshQuantity extends StatelessWidget {
                                                             e.item.W *
                                                             e.item.H /
                                                             1000000,
-                                                        theowight: e
-                                                                .item.density *
+                                                        theowight: e.item.density *
                                                             (e.realamont -
                                                                 e.item
                                                                     .quantity) *
@@ -427,8 +428,8 @@ class ButtomOfRefreshQuantity extends StatelessWidget {
                                                         realowight: 0.0,
                                                         color: e.item.color,
                                                         type: e.item.type,
-                                                        amount: e.realamont -
-                                                            e.item.quantity,
+                                                        amount:
+                                                            e.realamont - e.item.quantity,
                                                         priceforamount: 0.0),
                                                     scissor: 0,
                                                     stage: 0,
@@ -437,8 +438,10 @@ class ButtomOfRefreshQuantity extends StatelessWidget {
                                                     notes: "",
                                                     invoiceNum: 0,
                                                     cuting_order_number: 0,
-                                                    actions: [finalProdcutAction
-                                  .recive_Done_Form_FinalProdcutStock.add,
+                                                    actions: [
+                                                      finalProdcutAction
+                                                          .recive_Done_Form_FinalProdcutStock
+                                                          .add,
                                                       finalProdcutAction
                                                           .incert_From_StockChekRefresh
                                                           .add

@@ -2982,6 +2982,10 @@ class WieghtTecketMOdel {
   List<int> firstShotpiccam2;
   List<int> secondShotpiccam1;
   List<int> secondShotpiccam2;
+  String firstShotpiccam1Adress;
+  String firstShotpiccam2Adress;
+  String secondShotpiccam1Adress;
+  String secondShotpiccam2Adress;
   List<ActionModel> actions;
   bool synced;
   int lastupdated;
@@ -3002,6 +3006,10 @@ class WieghtTecketMOdel {
     required this.firstShotpiccam2,
     required this.secondShotpiccam1,
     required this.secondShotpiccam2,
+    required this.firstShotpiccam1Adress,
+    required this.firstShotpiccam2Adress,
+    required this.secondShotpiccam1Adress,
+    required this.secondShotpiccam2Adress,
     required this.actions,
     required this.synced,
     required this.lastupdated,
@@ -3024,6 +3032,10 @@ class WieghtTecketMOdel {
     List<int>? firstShotpiccam2,
     List<int>? secondShotpiccam1,
     List<int>? secondShotpiccam2,
+    String? firstShotpiccam1Adress,
+    String? firstShotpiccam2Adress,
+    String? secondShotpiccam1Adress,
+    String? secondShotpiccam2Adress,
     List<ActionModel>? actions,
     bool? synced,
     int? lastupdated,
@@ -3046,6 +3058,14 @@ class WieghtTecketMOdel {
       firstShotpiccam2: firstShotpiccam2 ?? this.firstShotpiccam2,
       secondShotpiccam1: secondShotpiccam1 ?? this.secondShotpiccam1,
       secondShotpiccam2: secondShotpiccam2 ?? this.secondShotpiccam2,
+      firstShotpiccam1Adress:
+          firstShotpiccam1Adress ?? this.firstShotpiccam1Adress,
+      firstShotpiccam2Adress:
+          firstShotpiccam2Adress ?? this.firstShotpiccam2Adress,
+      secondShotpiccam1Adress:
+          secondShotpiccam1Adress ?? this.secondShotpiccam1Adress,
+      secondShotpiccam2Adress:
+          secondShotpiccam2Adress ?? this.secondShotpiccam2Adress,
       actions: actions ?? this.actions,
       synced: synced ?? this.synced,
       lastupdated: lastupdated ?? this.lastupdated,
@@ -3070,6 +3090,10 @@ class WieghtTecketMOdel {
       'firstShotpiccam2': firstShotpiccam2,
       'secondShotpiccam1': secondShotpiccam1,
       'secondShotpiccam2': secondShotpiccam2,
+      'firstShotpiccam1Adress': firstShotpiccam1Adress,
+      'firstShotpiccam2Adress': firstShotpiccam2Adress,
+      'secondShotpiccam1Adress': secondShotpiccam1Adress,
+      'secondShotpiccam2Adress': secondShotpiccam2Adress,
       'actions': actions.map((x) => x.toMap()).toList(),
       'synced': synced,
       'lastupdated': lastupdated,
@@ -3098,6 +3122,10 @@ class WieghtTecketMOdel {
           List<int>.from((map['secondShotpiccam1'] as List<dynamic>)),
       secondShotpiccam2:
           List<int>.from((map['secondShotpiccam2'] as List<dynamic>)),
+      firstShotpiccam1Adress: map['firstShotpiccam1Adress'] as String,
+      firstShotpiccam2Adress: map['firstShotpiccam2Adress'] as String,
+      secondShotpiccam1Adress: map['secondShotpiccam1Adress'] as String,
+      secondShotpiccam2Adress: map['secondShotpiccam2Adress'] as String,
       actions: List<ActionModel>.from(
         (map['actions'] as List<dynamic>).map<ActionModel>(
           (x) => ActionModel.fromMap(x as Map<String, dynamic>),
@@ -3115,7 +3143,7 @@ class WieghtTecketMOdel {
 
   @override
   String toString() {
-    return 'WieghtTecketMOdel(wightTecket_ID: $wightTecket_ID, wightTecket_serial: $wightTecket_serial, stockRequsition_ID: $stockRequsition_ID, stockRequsition_serial: $stockRequsition_serial, carNum: $carNum, customerName: $customerName, driverName: $driverName, prodcutName: $prodcutName, notes: $notes, firstShot: $firstShot, secondShot: $secondShot, totalWeight: $totalWeight, firstShotpiccam1: $firstShotpiccam1, firstShotpiccam2: $firstShotpiccam2, secondShotpiccam1: $secondShotpiccam1, secondShotpiccam2: $secondShotpiccam2, actions: $actions, synced: $synced, lastupdated: $lastupdated)';
+    return 'WieghtTecketMOdel(wightTecket_ID: $wightTecket_ID, wightTecket_serial: $wightTecket_serial, stockRequsition_ID: $stockRequsition_ID, stockRequsition_serial: $stockRequsition_serial, carNum: $carNum, customerName: $customerName, driverName: $driverName, prodcutName: $prodcutName, notes: $notes, firstShot: $firstShot, secondShot: $secondShot, totalWeight: $totalWeight, firstShotpiccam1: $firstShotpiccam1, firstShotpiccam2: $firstShotpiccam2, secondShotpiccam1: $secondShotpiccam1, secondShotpiccam2: $secondShotpiccam2, firstShotpiccam1Adress: $firstShotpiccam1Adress, firstShotpiccam2Adress: $firstShotpiccam2Adress, secondShotpiccam1Adress: $secondShotpiccam1Adress, secondShotpiccam2Adress: $secondShotpiccam2Adress, actions: $actions, synced: $synced, lastupdated: $lastupdated)';
   }
 
   @override
@@ -3138,6 +3166,10 @@ class WieghtTecketMOdel {
         listEquals(other.firstShotpiccam2, firstShotpiccam2) &&
         listEquals(other.secondShotpiccam1, secondShotpiccam1) &&
         listEquals(other.secondShotpiccam2, secondShotpiccam2) &&
+        other.firstShotpiccam1Adress == firstShotpiccam1Adress &&
+        other.firstShotpiccam2Adress == firstShotpiccam2Adress &&
+        other.secondShotpiccam1Adress == secondShotpiccam1Adress &&
+        other.secondShotpiccam2Adress == secondShotpiccam2Adress &&
         listEquals(other.actions, actions) &&
         other.synced == synced &&
         other.lastupdated == lastupdated;
@@ -3161,6 +3193,10 @@ class WieghtTecketMOdel {
         firstShotpiccam2.hashCode ^
         secondShotpiccam1.hashCode ^
         secondShotpiccam2.hashCode ^
+        firstShotpiccam1Adress.hashCode ^
+        firstShotpiccam2Adress.hashCode ^
+        secondShotpiccam1Adress.hashCode ^
+        secondShotpiccam2Adress.hashCode ^
         actions.hashCode ^
         synced.hashCode ^
         lastupdated.hashCode;

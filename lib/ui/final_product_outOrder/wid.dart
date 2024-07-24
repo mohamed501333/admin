@@ -205,12 +205,12 @@ class OUT extends StatelessWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    CustomTextFormField(
-                        validator: Validation.validateothers,
-                        keybordtupe: TextInputType.name,
-                        hint: 'القائم بالتحميل',
-                        width: 120,
-                        controller: vm.whoLoad),
+                    // CustomTextFormField(
+                    //     validator: Validation.validateothers,
+                    //     keybordtupe: TextInputType.name,
+                    //     hint: 'القائم بالتحميل',
+                    //     width: 120,
+                    //     controller: vm.whoLoad),
                   ],
                 ),
               ),

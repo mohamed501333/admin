@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, camel_case_types
 // ignore_for_file: must_be_immutable
 import 'package:jason_company/ui/commen/errmsg.dart';
+import 'package:jason_company/ui/cutting_order/2DTable.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 
 import 'package:collection/collection.dart';
@@ -26,6 +27,7 @@ class CuttingOrderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     CuttingOrderViewModel vm = CuttingOrderViewModel();
     return Scaffold(
       appBar: AppBar(
@@ -57,10 +59,12 @@ class CuttingOrderView extends StatelessWidget {
         ],
       ),
       body: Column(
-        children: [   errmsg() ,
-          TheTable001(
-            vm: vm,
-          )
+        children: [
+          errmsg(),
+          Towdirectonscroll001(),
+          // TheTable001(
+          //   vm: vm,
+          // )
         ],
       ),
     );
@@ -130,7 +134,8 @@ class HistoryPage extends StatelessWidget {
         title: const Text("تاريخ اوامر التشغيل"),
       ),
       body: Column(
-        children: [   errmsg() ,
+        children: [
+          errmsg(),
           const SizedBox(
             height: 20,
           ),
@@ -230,7 +235,11 @@ class HistoryForOrders extends StatelessWidget {
                                         ))).permition(context,
                                     UserPermition.can_close_in_cutting_order),
                                 Center(
-                                  child: Column(children: order.notes.map((e)=>Text(e)).toList(),),
+                                  child: Column(
+                                    children: order.notes
+                                        .map((e) => Text(e))
+                                        .toList(),
+                                  ),
                                 ),
                                 //موافقة الكنترول
                                 GestureDetector(
@@ -808,7 +817,8 @@ class AddNewCuttingOrder extends StatelessWidget {
       body: SingleChildScrollView(
         reverse: true,
         child: Column(
-          children: [   errmsg() ,
+          children: [
+            errmsg(),
             const SizedBox(
               height: 20,
             ),

@@ -1,95 +1,81 @@
 // ignore_for_file: non_constant_identifier_names, empty_catches, file_names, camel_case_types
 
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:jason_company/app/extentions.dart';
+import 'package:jason_company/data/sharedprefs.dart';
 import 'package:jason_company/models/moderls.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/publicVariables.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:http/http.dart' as http;
 
 class StokCheck_Controller extends ChangeNotifier {
-  get_StokCheck_data() {
-    FirebaseDatabase.instance.ref("FstockCheck").onValue.listen((value) {
-      getInitialData(value.snapshot);
-    });
-
-    // FirebaseDatabase.instance.ref("fractions").onValue.listen((event) {
-    //   refrech(event);
-    // });
-  }
-
-  getInitialData(DataSnapshot v) async {
-    all.clear();
-    archived_stockChecks.clear();
-    stockChecks.clear();
-    for (var item in v.children) {
-      all.add(StockCheckModel.fromJson(item.value.toString()));
-    }
-
-    stockChecks.addAll(all.where((element) =>
-        element.actions
-            .if_action_exist(StockCheckAction.archive_StockCheck.getTitle) ==
-        false));
-    archived_stockChecks.addAll(all.where((element) =>
-        element.actions
-            .if_action_exist(StockCheckAction.archive_StockCheck.getTitle) ==
-        true));
-    notifyListeners();
-    if (kDebugMode) {
-      print("get initial data of stockChecks");
-    }
-  }
-
-  refrech(DatabaseEvent vv) async {
-    StockCheckModel newvalue =
-        StockCheckModel.fromJson(vv.snapshot.children.last.value as String);
-    print(newvalue.stockCheck_ID);
-//--------------------------------------------------
-    all.removeWhere(
-        (element) => element.stockCheck_ID == newvalue.stockCheck_ID);
-    all.add(newvalue);
-//--------------------------------------------------
-
-    stockChecks.removeWhere(
-        (element) => element.stockCheck_ID == newvalue.stockCheck_ID);
-
-    if (newvalue.actions
-            .if_action_exist(StockCheckAction.archive_StockCheck.getTitle) ==
-        false) {
-      stockChecks.add(newvalue);
-    } else {
-      archived_stockChecks.add(newvalue);
-    }
-
-    notifyListeners();
-    print("refrech datata of stockChecks");
-  }
-
-  List<StockCheckModel> all = [];
-  List<StockCheckModel> stockChecks = [];
-  List<StockCheckModel> archived_stockChecks = [];
-
+  Map<String, StockCheckModel> all = {};
+  Map<String, StockCheckModel> stockChecks = {};
+  Map<String, StockCheckModel> archived_stockChecks = {};
   Refresh_the_UI() {
     notifyListeners();
   }
 
+  static late WebSocketChannel channel;
+
+  get_StokCheck_data() {
+    if (internet == true) {
+    } else {
+      stockchecks_From_Server();
+    }
+  }
+
+  stockchecks_From_Server() async {
+    // get for the first time
+    Uri uri = Uri.http('$ip:8080', '/stockcheck');
+    var response = await http.get(uri);
+    if (response.statusCode == 200) {
+      stockChecks.clear();
+      var a = json.decode(response.body) as List;
+      for (var element in a) {
+        var item = StockCheckModel.fromMap(element);
+        if (item.actions.if_action_exist(
+                StockCheckAction.archive_StockCheck.getTitle) ==
+            false) {
+          stockChecks.addAll({item.stockCheck_ID.toString(): item});
+        }
+      }
+      Refresh_the_UI();
+    }
+    //
+    Uri uri2 = Uri.parse('ws://$ip:8080/stockcheck/ws').replace(
+        queryParameters: {
+          'username': Sharedprfs.getemail(),
+          'password': Sharedprfs.getpassword()
+        });
+    channel = WebSocketChannel.connect(uri2);
+    channel.stream.forEach((u) {
+      StockCheckModel item = StockCheckModel.fromJson(u);
+      if (item.actions
+              .if_action_exist(StockCheckAction.archive_StockCheck.getTitle) ==
+          false) {
+        stockChecks.addAll({item.stockCheck_ID.toString(): item});
+      }
+      Refresh_the_UI();
+    });
+  }
+
   addNewStockCheck(StockCheckModel stockCheck) async {
-    await FirebaseDatabase.instance
-        .ref("FstockCheck/${stockCheck.stockCheck_ID}")
-        .set(stockCheck.toJson());
+    channel.sink.add(stockCheck.toJson());
   }
 
   deleteStockCheck(StockCheckModel stockCheck) {
     stockCheck.actions.add(StockCheckAction.archive_StockCheck.add);
-    FirebaseDatabase.instance
-        .ref("FstockCheck/${stockCheck.stockCheck_ID}")
-        .set(stockCheck.toJson());
+    channel.sink.add(stockCheck.toJson());
   }
 
   MakeRefreshOfData(StockCheckModel stockCheck) {
     stockCheck.actions.add(StockCheckAction.refrechDone.add);
-    FirebaseDatabase.instance
-        .ref("FstockCheck/${stockCheck.stockCheck_ID}")
-        .set(stockCheck.toJson());
+    channel.sink.add(stockCheck.toJson());
   }
 
   undeleteFraction(StockCheckModel stockCheck) {
@@ -106,7 +92,7 @@ class StokCheck_Controller extends ChangeNotifier {
   DateTime? pickedDateFrom;
   DateTime? pickedDateTo;
   List<DateTime> AllDatesOfOfData() {
-    List<DateTime> v = stockChecks
+    List<DateTime> v = stockChecks.values
         .where((e) => e.actions
             .if_action_exist(StockCheckAction.creat_new_StockCheck.getTitle))
         .map((e) => e.actions
