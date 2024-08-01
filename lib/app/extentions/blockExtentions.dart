@@ -126,6 +126,30 @@ extension A1 on List<BlockModel> {
     return nonRepetitive;
   }
 
+  List<BlockModel> filter_basedOn_Type(String? type) {
+    if (type == null) {
+      return this;
+    } else {
+      return where((test) => test.item.type == type).toList();
+    }
+  }
+
+  List<BlockModel> filter_basedOn_color(String? color) {
+    if (color == null) {
+      return this;
+    } else {
+      return where((test) => test.item.color == color).toList();
+    }
+  }
+
+  List<BlockModel> filter_basedOn_density(double? density) {
+    if (density == null) {
+      return this;
+    } else {
+      return where((test) => test.item.density == density.toDouble()).toList();
+    }
+  }
+
   List<BlockModel> filter_description() {
     List<BlockModel> nonRepetitive = [];
     for (var i = 0; i < length; i++) {

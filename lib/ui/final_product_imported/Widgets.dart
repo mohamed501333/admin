@@ -4,6 +4,8 @@
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:jason_company/app/extentions/blockExtentions.dart';
+import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -275,34 +277,9 @@ class AddUnregular extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
                                     children: [
-                                      CustomTextFormField(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        hint: "النوع",
-                                        keybordtupe: TextInputType.name,
-                                        controller: vm.typecontroller,
-                                        validator: Validation.validateothers,
-                                      ),
-                                      CustomTextFormField(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        hint: "الكثافه",
-                                        controller: vm.densitycontroller,
-                                        validator: Validation.validateothers,
-                                      ),
-                                      CustomTextFormField(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        keybordtupe: TextInputType.number,
-                                        hint: "العميل",
-                                        controller: vm.companycontroller,
-                                        validator:
-                                            Validation.if_cusomer_serial_exist(
-                                                context),
-                                      ),
+                                      DropDdowenForcolor(),
+                                      DropDdowenFordensity(),
+                                      DropDdowenFortype(),
                                     ],
                                   ),
                                   const SizedBox(height: 15),
@@ -320,6 +297,17 @@ class AddUnregular extends StatelessWidget {
                                         controller: vm.amountcontroller,
                                       ),
                                       CustomTextFormField(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .18,
+                                        keybordtupe: TextInputType.number,
+                                        hint: "العميل",
+                                        controller: vm.companycontroller,
+                                        validator:
+                                            Validation.if_cusomer_serial_exist(
+                                                context),
+                                      ),
+                                      CustomTextFormField(
                                         validator: Validation.validateothers,
                                         width:
                                             MediaQuery.of(context).size.width *
@@ -327,15 +315,6 @@ class AddUnregular extends StatelessWidget {
                                         keybordtupe: TextInputType.number,
                                         hint: "مقص",
                                         controller: vm.scissorcontroller,
-                                      ),
-                                      CustomTextFormField(
-                                        validator: Validation.validateothers,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                .18,
-                                        keybordtupe: TextInputType.name,
-                                        hint: "اللون",
-                                        controller: vm.colercontroller,
                                       ),
                                     ],
                                   ),
@@ -394,7 +373,23 @@ class AddUnregular extends StatelessWidget {
                                                     Colors.red)),
                                         onPressed: () {
                                           vm.validate();
-                                          vm.add_unregular(context, true);
+                                          if (context
+                                                      .read<
+                                                          BlockFirebasecontroller>()
+                                                      .selectedDensity !=
+                                                  null &&
+                                              context
+                                                      .read<
+                                                          BlockFirebasecontroller>()
+                                                      .selectedcolor !=
+                                                  null &&
+                                              context
+                                                      .read<
+                                                          BlockFirebasecontroller>()
+                                                      .selectedtype !=
+                                                  null) {
+                                            vm.add_unregular(context, true);
+                                          }
                                         },
                                         child: const Text('أضافه')),
                                   ),
@@ -411,6 +406,26 @@ class AddUnregular extends StatelessWidget {
                                           Navigator.pop(context);
                                         },
                                         child: const Text('الغاء')),
+                                  ),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                WidgetStateProperty.all(
+                                                    Colors.blue)),
+                                        onPressed: () {
+                                          context
+                                              .read<BlockFirebasecontroller>()
+                                              .selectedDensity = null;
+                                          context
+                                              .read<BlockFirebasecontroller>()
+                                              .selectedcolor = null;
+                                          context
+                                              .read<BlockFirebasecontroller>()
+                                              .selectedtype = null;
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('clear')),
                                   ),
                                 ],
                               )
@@ -598,6 +613,129 @@ class pp extends StatelessWidget {
             ),
             Text(
                 "left: ${vm.Total_Notdone_of_cutting_order(context, order, item).toStringAsFixed(0)}")
+          ],
+        );
+      },
+    );
+  }
+}
+
+class DropDdowenFortype extends StatelessWidget {
+  DropDdowenFortype({
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<BlockFirebasecontroller>(
+      builder: (context, Mytype, child) {
+        final data = Mytype.blocks
+            .filter_filter_type_and_density_color()
+            .filter_basedOn_Type(Mytype.selectedtype)
+            .filter_basedOn_color(Mytype.selectedcolor)
+            .filter_basedOn_density(Mytype.selectedDensity);
+        return Column(
+          children: [
+            const Text("النوع"),
+            DropdownButton(
+                value: Mytype.selectedtype,
+                items: data
+                    .map((t) => t.item.type)
+                    .toSet()
+                    .toList()
+                    .map((e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e.toString()),
+                        ))
+                    .toList(),
+                onTap: () {},
+                onChanged: (v) {
+                  if (v != null) {
+                    Mytype.selectedtype = v;
+                    Mytype.Refresh_the_UI();
+                  }
+                }),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class DropDdowenForcolor extends StatelessWidget {
+  DropDdowenForcolor({
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<BlockFirebasecontroller>(
+      builder: (context, Mytype, child) {
+        final data = Mytype.blocks
+            .filter_filter_type_and_density_color()
+            .filter_basedOn_Type(Mytype.selectedtype)
+            .filter_basedOn_color(Mytype.selectedcolor)
+            .filter_basedOn_density(Mytype.selectedDensity);
+        return Column(
+          children: [
+            const Text("اللون"),
+            DropdownButton(
+                value: Mytype.selectedcolor,
+                items: data
+                    .map((t) => t.item.color)
+                    .toSet()
+                    .toList()
+                    .map((e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e.toString()),
+                        ))
+                    .toList(),
+                onTap: () {},
+                onChanged: (v) {
+                  if (v != null) {
+                    Mytype.selectedcolor = v;
+                    Mytype.Refresh_the_UI();
+                  }
+                }),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class DropDdowenFordensity extends StatelessWidget {
+  DropDdowenFordensity({
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<BlockFirebasecontroller>(
+      builder: (context, Mytype, child) {
+        final data = Mytype.blocks
+            .filter_filter_type_and_density_color()
+            .filter_basedOn_Type(Mytype.selectedtype)
+            .filter_basedOn_color(Mytype.selectedcolor)
+            .filter_basedOn_density(Mytype.selectedDensity);
+        return Column(
+          children: [
+            const Text("كثافه"),
+            DropdownButton(
+                value: Mytype.selectedDensity,
+                items: data
+                    .map((t) => t.item.density)
+                    .toSet()
+                    .toList()
+                    .map((e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e.toString()),
+                        ))
+                    .toList(),
+                onTap: () {},
+                onChanged: (v) {
+                  if (v != null) {
+                    Mytype.selectedDensity = v;
+                    Mytype.Refresh_the_UI();
+                  }
+                }),
           ],
         );
       },

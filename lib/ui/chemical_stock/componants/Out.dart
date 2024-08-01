@@ -36,7 +36,8 @@ class Outing extends StatelessWidget {
             title: const Text("امر صرف مخزنى"),
           ),
           body: Column(
-            children: [   errmsg() ,
+            children: [
+              errmsg(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -98,9 +99,8 @@ class Outing extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * .2,
                         controller: vm.quantity),
                     DropForunit(
-                      items: myType.ChemicalCategorys.where((e) => e.unit.isNotEmpty)
-                          .map((e) => e.unit)
-                          .toList(),
+                      items: myType.ChemicalCategorys.where(
+                          (e) => e.unit.isNotEmpty).map((e) => e.unit).toList(),
                     ),
                   ],
                 ),
@@ -284,7 +284,9 @@ class _DroStatee extends State<DropForFamily> {
             ),
           ],
         ),
-        items: widget.items.toSet().toList()
+        items: widget.items
+            .toSet()
+            .toList()
             .map((item) => DropdownMenuItem(
                   value: item,
                   child: Text(item,
@@ -433,7 +435,9 @@ class _DroStatev extends State<DropForunit> {
             ),
           ],
         ),
-        items: widget.items.toSet().toList()
+        items: widget.items
+            .toSet()
+            .toList()
             .map((item) => DropdownMenuItem(
                   value: item,
                   child: Text(
@@ -597,6 +601,8 @@ class _DroStatevcv extends State<DropForItme> {
           ],
         ),
         items: widget.items
+            .toSet()
+            .toList()
             .map((item) => DropdownMenuItem(
                   value: item,
                   child: Text(item,
@@ -714,7 +720,10 @@ class _ChemicaTableForSupplyingState extends State<ChemicaTableForSupplying> {
   Widget build(BuildContext context) {
     List<ChemicalsModel> Chemicals = context
         .read<Chemicals_controller>()
-        .Chemicals.sortedBy<num>((element) => element.supplyOrderNum).reversed.toList()
+        .Chemicals
+        .sortedBy<num>((element) => element.supplyOrderNum)
+        .reversed
+        .toList()
         .where((element) =>
             element.StockRequisitionNum != 0 &&
             element.actions
@@ -770,27 +779,31 @@ class _ChemicaTableForSupplyingState extends State<ChemicaTableForSupplying> {
                   8: FlexColumnWidth(1),
                 },
                 border: TableBorder.all(width: 1, color: Colors.black),
-                children: Chemicals.sortedBy<num>((element) => element.chemical_ID).map((e) => TableRow(
-                    decoration: BoxDecoration(color: Colors.teal[50]
-                        // : Colors.amber[50],
-                        ),
-                    children: [
-                      Center(child: Text(e.StockRequisitionNum.toString())),
-                      Center(child: Text(e.outTo.toString())),
-                      Center(child: Text(e.family.toString())),
-                      Center(child: Text(e.name.toString())),
-                      Center(child: Text(e.unit.toString())),
-                      Center(child: Text(e.quantity.toString())),
-                      Center(child: Text(e.Totalquantity.toString())),
-                      Center(child: Text(e.notes.toString())),
-                      Center(
-                        child: IconButton(
-                            onPressed: () {
-                              vm.DeleteChemical(context, e);
-                            },
-                            icon: const Icon(color: Colors.red, Icons.delete)),
-                      )
-                    ].reversed.toList())).toList(),
+                children: Chemicals.sortedBy<num>(
+                        (element) => element.chemical_ID)
+                    .map((e) => TableRow(
+                        decoration: BoxDecoration(color: Colors.teal[50]
+                            // : Colors.amber[50],
+                            ),
+                        children: [
+                          Center(child: Text(e.StockRequisitionNum.toString())),
+                          Center(child: Text(e.outTo.toString())),
+                          Center(child: Text(e.family.toString())),
+                          Center(child: Text(e.name.toString())),
+                          Center(child: Text(e.unit.toString())),
+                          Center(child: Text(e.quantity.toString())),
+                          Center(child: Text(e.Totalquantity.toString())),
+                          Center(child: Text(e.notes.toString())),
+                          Center(
+                            child: IconButton(
+                                onPressed: () {
+                                  vm.DeleteChemical(context, e);
+                                },
+                                icon: const Icon(
+                                    color: Colors.red, Icons.delete)),
+                          )
+                        ].reversed.toList()))
+                    .toList(),
               ),
             ],
           ),

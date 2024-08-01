@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/controllers/Order_controller.dart';
+import 'package:jason_company/controllers/blockFirebaseController.dart';
 import 'package:jason_company/controllers/dropDowen_controller.dart';
 import 'package:jason_company/controllers/final_product_controller.dart';
 import 'package:jason_company/models/moderls.dart';
@@ -73,14 +74,16 @@ class FinalProductStockViewModel extends BaseViewModel {
   }
 
   add_unregular(BuildContext context, bool isfinal) {
+    final density = context.read<BlockFirebasecontroller>().selectedDensity!;
+    final color = context.read<BlockFirebasecontroller>().selectedcolor!;
+    final type = context.read<BlockFirebasecontroller>().selectedtype!;
     double volume = int.parse(amountcontroller.text) *
         widthcontroller.text.to_double() *
         lenthcontroller.text.to_double() *
         hightncontroller.text.to_double() /
         1000000;
     FinalProductModel user = FinalProductModel(
-                  updatedat: DateTime.now().microsecondsSinceEpoch,
-
+      updatedat: DateTime.now().microsecondsSinceEpoch,
       block_ID: 0,
       fraction_ID: 0,
       sapa_ID: "",
@@ -91,13 +94,12 @@ class FinalProductStockViewModel extends BaseViewModel {
           L: lenthcontroller.text.to_double(),
           W: widthcontroller.text.to_double(),
           H: hightncontroller.text.to_double(),
-          density: densitycontroller.text.to_double(),
+          density: density,
           volume: volume.toStringAsFixed(2).to_double(),
-          theowight: volume.toStringAsFixed(2).to_double() *
-              densitycontroller.text.to_double(),
+          theowight: volume.toStringAsFixed(2).to_double() * density,
           realowight: 0.0,
-          color: colercontroller.text,
-          type: typecontroller.text,
+          color: color,
+          type: type,
           amount: int.parse(amountcontroller.text),
           priceforamount: 0.0),
       stage: N.text.to_int(),

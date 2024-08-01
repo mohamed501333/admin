@@ -6,18 +6,19 @@ import 'package:jason_company/models/moderls.dart';
 
 enum UserPermition {
   show_all,
-  can_get_data_of_blocks,
   can_get_data_of_fractions,
   can_get_data_of_subfractions,
   show_block_incetion,
   show_date_in_block_stock,
   incert_in_block_stock,
 
+  can_get_data_of_blocks,
   show_blockconsume,
   fields_buttoms_consumeBlock,
   show_date_in_block_out_of_stock,
   delete_in_consume_block,
   can_edit_outTo,
+  can_edit_saba,
 
   can_get_data_of_orders,
   show_cutting_orders,
@@ -337,6 +338,8 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "عرض اشعارات اوامر التشغيل");
       case UserPermition.can_edit_in_cutting_order:
         return UserpermitionTittle(tittle: "التعديل فى اوامر الشغل");
+      case UserPermition.can_edit_saba:
+        return UserpermitionTittle(tittle: "تعديل الصبه");
     }
   }
 
@@ -540,6 +543,8 @@ extension QQ on UserPermition {
         return "can_get_data_of_notfinals";
       case UserPermition.show_chemicals_model:
         return "موديول  الكيماويات";
+      case UserPermition.can_edit_saba:
+        return "تعديل الصبه";
     }
   }
 }

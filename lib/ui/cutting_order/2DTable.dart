@@ -212,7 +212,7 @@ class DataRow extends StatelessWidget {
                     ? Colors.black
                     : Colors.red
                 : index % 2 == 0
-                    ? const Color.fromARGB(255, 211, 228, 240)
+                    ? Color.fromARGB(255, 205, 226, 241)
                     : const Color.fromARGB(255, 243, 220, 143)),
         child: IntrinsicHeight(
           child: Row(

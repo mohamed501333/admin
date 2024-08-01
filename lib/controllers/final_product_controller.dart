@@ -169,7 +169,7 @@ class final_prodcut_controller extends ChangeNotifier {
           cuting_order_number: 0,
           actions: [],
           updatedat: 0);
-    }).toList();
+    }).where((test)=>test.item.amount!=0).toList();
   }
 
   List<FinalProductModel> BalanceToDate(DateTime to) {

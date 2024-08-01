@@ -423,12 +423,11 @@ class DropDdowenForList_of_blocks_In_Rstage extends StatelessWidget {
 
 deletefractons_cutted_FromRscissr(
     BuildContext context, List<FractionModel> fractions) {
-   for (var element in fractions) {
-                                  context
-                                      .read<Fractions_Controller>()
-                                      .remove_cuttedFraction_from_R_scissor(
-                                          fraction: element);
-                                }
+  for (var element in fractions) {
+    context
+        .read<Fractions_Controller>()
+        .remove_cuttedFraction_from_R_scissor(fraction: element);
+  }
 }
 
 delete_SUBfractons_cutted_FromRscissr(

@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
 
+//=========================================
 class Itme {
   double L;
   double W;
@@ -870,6 +871,7 @@ class SubFraction {
   }
 }
 
+//===================================
 class FinalProdcutItme {
   double L;
   double W;

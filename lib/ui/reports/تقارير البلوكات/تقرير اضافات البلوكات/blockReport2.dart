@@ -3,13 +3,18 @@
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:jason_company/app/extentions.dart';
 import 'package:jason_company/app/extentions/blockExtentions.dart';
 import 'package:jason_company/app/functions.dart';
+import 'package:jason_company/app/validation.dart';
 import 'package:jason_company/controllers/ObjectBoxController.dart';
 import 'package:jason_company/services/pdfprevei.dart';
+import 'package:jason_company/ui/block_out_of_stock/outOfStock_viewModel.dart';
 import 'package:jason_company/ui/commen/errmsg.dart';
+import 'package:jason_company/ui/commen/textformfield.dart';
 import 'package:jason_company/ui/recources/enums.dart';
+import 'package:jason_company/ui/recources/userpermitions.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/featues.dart';
 import 'package:jason_company/ui/reports/%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D8%B6%D8%A7%D9%81%D8%A7%D8%AA%20%D8%A7%D9%84%D8%A8%D9%84%D9%88%D9%83%D8%A7%D8%AA/pdf.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +28,7 @@ class BlockReport3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    OutOfStockViewModel vm = OutOfStockViewModel();
     return Consumer<BlockFirebasecontroller>(
       builder: (context, myType, child) {
         List<BlockModel> blocks = myType.blocks
@@ -31,56 +37,201 @@ class BlockReport3 extends StatelessWidget {
             .sortedBy<num>((element) => element.number)
             .toList();
         return Column(
+          children: [
+            errmsg(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    if (blocks.isNotEmpty) {
+                      vm.codecontroller.text = blocks.first.serial;
+                      vm.N.text = blocks.first.discreption;
+                      vm.densitycontroller.text =
+                          blocks.first.item.density.toString();
+                      vm.colercontroller.text =
+                          blocks.first.item.color.toString();
+                    }
+                    showDialog(
+                        context: context,
+                        builder: (c) => AlertDialog(
+                              content: SizedBox(
+                                child: SingleChildScrollView(
+                                  child: Form(
+                                    key: vm.formKey,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            CustomTextFormField(
+                                                validator:
+                                                    Validation.validateIFimpty,
+                                                hint: "الى",
+                                                width: 120,
+                                                controller: vm.to),
+                                            CustomTextFormField(
+                                                validator:
+                                                    Validation.validateIFimpty,
+                                                hint: "من",
+                                                width: 120,
+                                                controller: vm.from),
+                                          ],
+                                        ),
+                                        const Gap(14),
+                                        Row(
+                                          children: [
+                                            CustomTextFormField(
+                                                hint: "كود",
+                                                width: 180,
+                                                controller: vm.codecontroller),
+                                            CustomTextFormField(
+                                                hint: "بيان",
+                                                width: 180,
+                                                controller: vm.N),
+                                          ],
+                                        ),
+                                        const Gap(14),
+                                        Row(
+                                          children: [
+                                            CustomTextFormField(
+                                                hint: "كثافه",
+                                                width: 120,
+                                                controller:
+                                                    vm.densitycontroller),
+                                            CustomTextFormField(
+                                                hint: "لون",
+                                                width: 120,
+                                                controller: vm.colercontroller),
+                                          ],
+                                        ),
+                                        const Gap(14),
+                                        Row(
+                                          children: [
+                                            CustomTextFormField(
+                                                hint: "طول",
+                                                width: 120,
+                                                controller: vm.lenthcontroller),
+                                            CustomTextFormField(
+                                                hint: "عرض",
+                                                width: 120,
+                                                controller: vm.widthcontroller),
+                                            CustomTextFormField(
+                                                hint: "ارتفاع",
+                                                width: 120,
+                                                controller:
+                                                    vm.hightncontroller),
+                                          ],
+                                        ),
+                                        const Gap(22),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              if (vm.validate()) {
+                                                for (var element
+                                                    in blocks.where((test) =>
+                                                        test.number >=
+                                                            vm.from.text
+                                                                .to_int() &&
+                                                        test.number <=
+                                                            vm.to.text
+                                                                .to_int())) {
+                                                  element.serial =
+                                                      vm.codecontroller.text;
+
+                                                  element.discreption =
+                                                      vm.N.text;
+
+                                                  element.item.density = vm
+                                                      .densitycontroller.text
+                                                      .to_double();
+
+                                                  element.item.color =
+                                                      vm.colercontroller.text;
+
+                                                  if (vm.lenthcontroller.text
+                                                      .isNotEmpty) {
+                                                    element.item.L = vm
+                                                        .lenthcontroller.text
+                                                        .to_double();
+                                                  }
+                                                  if (vm.widthcontroller.text
+                                                      .isNotEmpty) {
+                                                    element.item.W = vm
+                                                        .widthcontroller.text
+                                                        .to_double();
+                                                  }
+                                                  if (vm.hightncontroller.text
+                                                      .isNotEmpty) {
+                                                    element.item.H = vm
+                                                        .hightncontroller.text
+                                                        .to_double();
+                                                  }
+
+                                                  context
+                                                      .read<
+                                                          BlockFirebasecontroller>()
+                                                      .updateBlock(element);
+                                                }
+                                              }
+                                              context
+                                                  .read<
+                                                      BlockFirebasecontroller>()
+                                                  .Refresh_the_UI();
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('تم'))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ));
+                  },
+                  icon: const Icon(Icons.edit),
+                ).permition(context, UserPermition.can_edit_saba),
+                IconButton(
+                  onPressed: () async {
+                    generateAndSaveExcel(blocks);
+                  },
+                  icon: const Icon(Icons.explicit_outlined),
+                ),
+                IconButton(
+                    onPressed: () {
+                      permission().then((value) async {
+                        PdfBlockReport2.generate(context, blocks)
+                            .then((value) => context.gonext(
+                                context,
+                                PDfpreview(
+                                  v: value.save(),
+                                )));
+                      });
+                    },
+                    icon: const Icon(Icons.picture_as_pdf)),
+                const DropDdowen_forCode(),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    errmsg(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            generateAndSaveExcel(blocks);
-                          },
-                          icon: const Icon(Icons.explicit_outlined),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              permission().then((value) async {
-                                PdfBlockReport2.generate(context, blocks)
-                                    .then((value) => context.gonext(
-                                        context,
-                                        PDfpreview(
-                                          v: value.save(),
-                                        )));
-                              });
-                            },
-                            icon: const Icon(Icons.picture_as_pdf)),
-                        const DropDdowen_forCode(),
-                      ],
-                    ),
-                 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text("اجمالى الصبه : ${blocks.length}"),
-                            Text(
-                                "اجمالى المنصرف : ${blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
-                            Text(
-                                "المتبقى  : ${blocks.length - blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Headerr(),
-                    Column(
-                      children: blocks
-                          .map((e) => RowItem(item: e, i: blocks.indexOf(e)))
-                          .toList(),
-                    )
+                    Text("اجمالى الصبه : ${blocks.length}"),
+                    Text(
+                        "اجمالى المنصرف : ${blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
+                    Text(
+                        "المتبقى  : ${blocks.length - blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
                   ],
-                );
+                ),
+              ],
+            ),
+            const Headerr(),
+            Column(
+              children: blocks
+                  .map((e) => RowItem(item: e, i: blocks.indexOf(e)))
+                  .toList(),
+            )
+          ],
+        );
       },
     );
   }
