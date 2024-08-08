@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:jason_company/controllers/biscol.dart';
+import 'package:jason_company/controllers/industerialSecurityController.dart';
 import 'package:jason_company/controllers/stockCheckController.dart';
 import 'package:jason_company/ui/recources/publicVariables.dart';
 import '../../app/functions.dart';
@@ -126,6 +127,9 @@ void getModulesData(BuildContext context) {
     }
     if (permitionss(context, UserPermition.can_get_data_of_stcokCheck)) {
       context.read<StokCheck_Controller>().get_StokCheck_data();
+    }
+    if (permitionss(context, UserPermition.Industrial_Security)) {
+      context.read<IndusterialSecuritycontroller>().getdata();
     }
     if (Platform.isAndroid) {
       if (permitionss(

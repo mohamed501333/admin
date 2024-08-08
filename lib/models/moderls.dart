@@ -3204,3 +3204,95 @@ class WieghtTecketMOdel {
         lastupdated.hashCode;
   }
 }
+
+//=============================================
+
+class IndusterialSecurityModel {
+  int ID;
+  DateTime date;
+  String place;
+  int ImageId;
+  List<int> image;
+  String note;
+  IndusterialSecurityModel({
+    required this.ID,
+    required this.date,
+    required this.place,
+    required this.ImageId,
+    required this.image,
+    required this.note,
+  });
+
+  IndusterialSecurityModel copyWith({
+    int? ID,
+    DateTime? date,
+    String? place,
+    int? ImageId,
+    List<int>? image,
+    String? note,
+  }) {
+    return IndusterialSecurityModel(
+      ID: ID ?? this.ID,
+      date: date ?? this.date,
+      place: place ?? this.place,
+      ImageId: ImageId ?? this.ImageId,
+      image: image ?? this.image,
+      note: note ?? this.note,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'ID': ID,
+      'date': date.millisecondsSinceEpoch,
+      'place': place,
+      'ImageId': ImageId,
+      'image': image,
+      'note': note,
+    };
+  }
+
+  factory IndusterialSecurityModel.fromMap(Map<String, dynamic> map) {
+    return IndusterialSecurityModel(
+      ID: map['ID'] as int,
+      date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
+      place: map['place'] as String,
+      ImageId: map['ImageId'] as int,
+      image: List<int>.from((map['image'] as List<dynamic>)),
+      note: map['note'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory IndusterialSecurityModel.fromJson(String source) =>
+      IndusterialSecurityModel.fromMap(
+          json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'IndusterialSecurityModel(ID: $ID, date: $date, place: $place, ImageId: $ImageId, image: $image, note: $note)';
+  }
+
+  @override
+  bool operator ==(covariant IndusterialSecurityModel other) {
+    if (identical(this, other)) return true;
+
+    return other.ID == ID &&
+        other.date == date &&
+        other.place == place &&
+        other.ImageId == ImageId &&
+        listEquals(other.image, image) &&
+        other.note == note;
+  }
+
+  @override
+  int get hashCode {
+    return ID.hashCode ^
+        date.hashCode ^
+        place.hashCode ^
+        ImageId.hashCode ^
+        image.hashCode ^
+        note.hashCode;
+  }
+}

@@ -141,6 +141,7 @@ class Header extends StatelessWidget {
             cell('عميل', 100),
             cell('التسليم', 90),
             cell('ملاحظات', 100),
+            cell('م3', 100),
             if (context.read<OrderController>().showAproves)
               cell(
                   '  control                  finance                    sales    ',
@@ -240,6 +241,10 @@ class DataRow extends StatelessWidget {
                 90,
               ),
               cell5(
+                order,
+                100,
+              ),
+              cell7(
                 order,
                 100,
               ),
@@ -579,4 +584,27 @@ class DataRow extends StatelessWidget {
               ),
             )),
       );
+
+  Center cell7(cutingOrder order, double width) {
+    return Center(
+      child: Container(
+          width: width,
+          padding: const EdgeInsets.only(bottom: 3),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  color: Colors.grey,
+                  child: Text(order.items.size()),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: order.items.map((e) => Text(e.size())).toList(),
+                ),
+              ],
+            ),
+          )),
+    );
+  }
 }

@@ -116,6 +116,8 @@ enum UserPermition {
   show_users_actions,
   can_get_data_of_notfinals,
 
+  Industrial_Security,
+
   not_working,
 }
 
@@ -340,11 +342,15 @@ extension QQ on UserPermition {
         return UserpermitionTittle(tittle: "التعديل فى اوامر الشغل");
       case UserPermition.can_edit_saba:
         return UserpermitionTittle(tittle: "تعديل الصبه");
+      case UserPermition.Industrial_Security:
+        return UserpermitionTittle(tittle: "موديول الامن الصناعى");
     }
   }
 
   String get getTitle {
     switch (this) {
+      case UserPermition.Industrial_Security:
+        return "موديول الامن الصناعى";
       case UserPermition.can_edit_in_cutting_order:
         return "التعديل فى اوامر الشغل";
       case UserPermition.show_cutting_order_notifications:

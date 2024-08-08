@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jason_company/controllers/biscol.dart';
+import 'package:jason_company/controllers/industerialSecurityController.dart';
 import 'package:jason_company/data/sharedprefs.dart';
 import 'package:jason_company/notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -123,6 +124,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider(
             create: (context) => StokCheck_Controller(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => IndusterialSecuritycontroller(),
           ),
         ],
         child: MaterialApp(

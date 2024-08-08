@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jason_company/ui/industerial_security/industerialSecurityView.dart';
 import '../../app/extentions.dart';
 import '../../controllers/users_controllers.dart';
 import '../Users_dashboard/users_dashbord.dart';
@@ -29,7 +30,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Consumer<Users_controller>(
       builder: (context, myType, child) {
         return SingleChildScrollView(
@@ -281,6 +281,20 @@ class HomeView extends StatelessWidget {
                           },
                         )
                       : const SizedBox(),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Item0(
+                    MediaQuery.of(context).size.width * .45,
+                    const Color.fromARGB(255, 143, 32, 32),
+                    " الامن الصناعى",
+                    23,
+                    ontap: () {
+                      context.gonext(context, InsusterialSecurityView());
+                    },
+                  ).permition(context, UserPermition.Industrial_Security),
                 ],
               ),
             ],

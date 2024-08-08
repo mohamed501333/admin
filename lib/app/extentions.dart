@@ -13,11 +13,26 @@ import 'package:jason_company/ui/recources/enums.dart';
 import 'package:jason_company/ui/stockCheck/stockchek_veiwModel.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 
+extension Fdf on OperationOrederItems {
+  String size() {
+    return ((Qantity * lenth * widti * hight) / 1000000).toStringAsFixed(1);
+  }
+}
+
+extension Fdfdf on List<OperationOrederItems> {
+  String size() {
+    return map((u) => (u.Qantity * u.lenth * u.widti * u.hight)/1000000)
+        .reduce((a, b) => a + b)
+        .toStringAsFixed(1);
+  }
+}
+
 extension Permition on Widget {
   Widget permition(BuildContext context, UserPermition permition) {
     return permitionss(context, permition) ? this : const SizedBox();
   }
 }
+
 extension Dsd on DateTime {
   String formatt_yMd() {
     String formateeddate = DateFormat('dd-MM-yyyy').format(this);
@@ -37,7 +52,6 @@ extension Brovider on BuildContext {
   }
 
   gonextAnsRemove(BuildContext context, Widget route) {
-
     Navigator.of(this).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => route), (d) => false);
   }
@@ -671,6 +685,6 @@ extension R4 on List<StockCheckModel> {
 
 extension Rd on dynamic {
   caneExecute(BuildContext context, UserPermition permition) {
-    permitionss(context, permition) ? this :(){};
+    permitionss(context, permition) ? this : () {};
   }
 }

@@ -73,6 +73,9 @@ dependencies:
   two_dimensional_scrollables: ^0.2.1
   web_socket_channel: ^3.0.0
   drop_down_search_field: ^1.0.4
+  scan: ^1.6.0
+  qrcode_barcode_scanner: ^3.0.2
+  mobile_scanner: ^5.1.1
 
 dev_dependencies:
   build_runner: ^2.4.6
