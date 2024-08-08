@@ -36,6 +36,16 @@ class BlockReport3 extends StatelessWidget {
                 element.serial == context.read<ObjectBoxController>().serial2)
             .sortedBy<num>((element) => element.number)
             .toList();
+        var consumed = blocks
+            .where((element) => element.actions
+                .if_action_exist(BlockAction.consume_block.getactionTitle))
+            .toList();
+        var remain = blocks
+            .where((element) =>
+                element.actions.if_action_exist(
+                    BlockAction.consume_block.getactionTitle) ==
+                false)
+            .toList();
         return Column(
           children: [
             errmsg(),
@@ -215,11 +225,24 @@ class BlockReport3 extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text("اجمالى الصبه : ${blocks.length}"),
-                    Text(
-                        "اجمالى المنصرف : ${blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
-                    Text(
-                        "المتبقى  : ${blocks.length - blocks.where((element) => element.actions.if_action_exist(BlockAction.consume_block.getactionTitle)).length}"),
+                    Row(
+                      children: [
+                        sizeWidget(blocks),
+                        Text("اجمالى الصبه : ${blocks.length}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        sizeWidget(consumed),
+                        Text("اجمالى المنصرف : ${consumed.length}"),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        sizeWidget(remain),
+                        Text("المتبقى  : ${remain.length}"),
+                      ],
+                    ),
                   ],
                 ),
               ],
@@ -233,6 +256,16 @@ class BlockReport3 extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Padding sizeWidget(List<BlockModel> data) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 15),
+      child: Text(
+        'حجم : ${data.size()}',
+        style: TextStyle(background: Paint(), color: Colors.white),
+      ),
     );
   }
 }

@@ -154,86 +154,29 @@ class Chips extends StatelessWidget {
       width: 150,
       child: Column(
         children: [
-Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Wrap(
-                    spacing: 9,
-                    children: []
-                        .map((e) => InkWell(
-                              onLongPress: () {
-                                context
-                                    .read<ObjectBoxController>()
-                                    .deleteFractionchip(e.id);
-                              },
-                              onTap: () {
-                                vm.addpermanentFractons(context, b, scissor, e);
-                                context.read<ObjectBoxController>().get();
-                                vm.clearfields();
-                              },
-                              child: Chip(
-                                  labelStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                  label: Text(
-                                      "  ${e.hight.removeTrailingZeros.toString()}* ${e.width.removeTrailingZeros.toString()}* ${e.lenth.removeTrailingZeros.toString()}")),
-                            ))
-                        .toList(),
-                  ),
-                ),
-              )
-        ],
-      ),
-    );
-  }
-}
-
-class Chips2FrorNewView extends StatelessWidget {
-  const Chips2FrorNewView({
-    super.key,
-    required this.vm,
-    required this.b,
-    required this.scissor,
-  });
-  final H1VeiwModel vm;
-  final BlockModel b;
-  final int scissor;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      width: 150,
-      child: Column(
-        children: [
-  Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Wrap(
-                    spacing: 9,
-                    children: []
-                        .map((e) => InkWell(
-                              onLongPress: () {
-                                context
-                                    .read<ObjectBoxController>()
-                                    .deleteFractionchip(e.id);
-                              },
-                              onTap: () {
-                                vm.addpermanentFractonsforNewview(
-                                    context, b, scissor, e);
-                                context.read<ObjectBoxController>().get();
-                              },
-                              child: Chip(
-                                  labelStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                  label: Text(
-                                      "  ${e.hight.removeTrailingZeros.toString()}* ${e.width.removeTrailingZeros.toString()}* ${e.lenth.removeTrailingZeros.toString()}")),
-                            ))
-                        .toList(),
-                  ),
-                ),
-              )
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Wrap(
+                spacing: 9,
+                children: []
+                    .map((e) => InkWell(
+                          onLongPress: () {},
+                          onTap: () {
+                            vm.addpermanentFractons(context, b, scissor, e);
+                            context.read<ObjectBoxController>().get();
+                            vm.clearfields();
+                          },
+                          child: Chip(
+                              labelStyle: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                              label: Text(
+                                  "  ${e.hight.removeTrailingZeros.toString()}* ${e.width.removeTrailingZeros.toString()}* ${e.lenth.removeTrailingZeros.toString()}")),
+                        ))
+                    .toList(),
+              ),
+            ),
+          )
         ],
       ),
     );

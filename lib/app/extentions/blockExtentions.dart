@@ -20,6 +20,11 @@ extension A1 on List<BlockModel> {
     }
   }
 
+
+  String size(){
+   return map((e) =>e.item.L*e.item.W*e.item.H/1000000 ,).reduce((a,b)=>a+b).toStringAsFixed(1);
+  }
+
   List<BlockModel> search2(String value) {
     if (value.isEmpty) {
       return this;

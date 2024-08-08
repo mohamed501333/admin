@@ -9,24 +9,9 @@ import 'package:jason_company/ui/sR/Rscissor_viewModel.dart';
 import 'package:provider/provider.dart';
 
 class ObjectBoxController extends ChangeNotifier {
-  addchips(ChipBlockModel chip) {
-
-  }
-
-  addFractionchip(ChipFraction fract) {
-  }
-
-  deletechip(id) {
-
-  }
-
   int lenthInFilter = 0;
   Rfrech_ui() {
     notifyListeners();
-  }
-
-  deleteFractionchip(id) {
-
   }
 
   get() {

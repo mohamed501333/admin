@@ -106,18 +106,18 @@ class Hivecontroller extends ChangeNotifier {
   channelConection() async {
     // get for the first time
     Uri uri = Uri.http('$ip:8080', '/biscol');
-    print("1");
+    // print("1");
 
     var response = await http.get(uri);
     if (response.statusCode == 200) {
-      print("2");
+      // print("2");
 
       allrecords.clear();
       var a = json.decode(response.body) as List;
-      print("3");
+      // print("3");
 
       for (var element in a) {
-        print("4");
+        // print("4");
 
         var block = WieghtTecketMOdel.fromMap(element);
 

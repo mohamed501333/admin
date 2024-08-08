@@ -70,7 +70,8 @@ class _ReportwForHViewState extends State<ReportwForHView> {
         ],
       ),
       body: Column(
-        children: [   errmsg() ,
+        children: [
+          errmsg(),
           TheTable0001(
             vm: vm,
             scissor: widget.scissor,
@@ -833,8 +834,6 @@ dialog_chipsAndResults(
               Row(
                 children: [
                   Results(vm: vm),
-                  Chips2FrorNewView(
-                      vm: vm, b: blockToCutted, scissor: Hscissor),
                 ].reversed.toList(),
               )
             ]),

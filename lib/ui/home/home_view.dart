@@ -19,7 +19,7 @@ import '../recources/color_manager.dart';
 import 'package:jason_company/ui/recources/userpermitions.dart';
 import '../recources/strings_manager.dart';
 import '../final_product_stock/Stock_of_finalProduct_View.dart';
-import '../scissors/scissors_view.dart';
+import '../scissorsview/scissors_view.dart';
 import '../stockCheck/stockcheck.dart';
 import '../users_actions/users_actios.dart';
 import 'package:provider/provider.dart';
